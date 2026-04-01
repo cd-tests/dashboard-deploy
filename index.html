@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Ciberseguridad IES - Marzo 2026</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primario: #020029;
+            --acento: #29c6ff;
+            --fondo: #f8f9fa;
+            --texto: #333;
+            --blanco: #ffffff;
+            --azul-oscuro: #0c0c43;
+        }
+        body {
+            font-family: 'Gotham', 'Montserrat', Arial, sans-serif;
+            background-color: var(--fondo);
+            color: var(--texto);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: var(--blanco);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--acento);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .logo {
+            height: 45px;
+        }
+        .title {
+            text-align: right;
+        }
+        .title h1 {
+            margin: 0;
+            font-size: 22px;
+            color: var(--primario);
+            text-transform: uppercase;
+        }
+        .title p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: 16px;
+            color: var(--primario);
+            border-left: 4px solid var(--acento);
+            padding-left: 10px;
+            text-transform: uppercase;
+        }
+        .kpi-container {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .kpi-box {
+            padding: 15px;
+        }
+        .kpi-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--acento);
+        }
+        .kpi-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th {
+            background: var(--primario);
+            color: #fff;
+            text-align: left;
+            padding: 10px;
+        }
+        td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #eee;
+        }
+        tr:nth-child(even) { background: #fafafa; }
+        .tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .tag-leader { background: #28a745; }
+        .tag-dev { background: #ffc107; color: #000; }
+        .tag-crit { background: #dc3545; }
+        .vuln-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .vuln-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .vuln-name { font-size: 12px; color: #444; }
+        .vuln-count { font-weight: bold; color: var(--primario); }
+        .footer-note {
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023-c1-1024x373.png" alt="Logo CEDIA" class="logo">
+            <div class="title">
+                <h1>Reporte Gerencial IES</h1>
+                <p>Periodo: Marzo 2026</p>
+            </div>
+        </div>
+
+        <div class="kpi-container">
+            <div class="kpi-box">
+                <div class="kpi-value">55%</div>
+                <div class="kpi-label">Madurez Promedio</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-value">21</div>
+                <div class="kpi-label">IES Analizadas</div>
+            </div>
+            <div class="kpi-box">
+                <div class="kpi-value">2,896</div>
+                <div class="kpi-label">Hallazgos Totales</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>Top 10 Madurez Digital</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Institución</th>
+                            <th>Nivel</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>ITSCO</td><td>87%</td><td><span class="tag tag-leader">LÍDER</span></td></tr>
+                        <tr><td>ESPOL</td><td>83%</td><td><span class="tag tag-leader">LÍDER</span></td></tr>
+                        <tr><td>UNL</td><td>81%</td><td><span class="tag tag-leader">LÍDER</span></td></tr>
+                        <tr><td>UTPL</td><td>81%</td><td><span class="tag tag-leader">LÍDER</span></td></tr>
+                        <tr><td>IKIAM</td><td>77%</td><td><span class="tag tag-leader">LÍDER</span></td></tr>
+                        <tr><td>UCUENCA</td><td>73%</td><td><span class="tag tag-dev">EN DESARROLLO</span></td></tr>
+                        <tr><td>ESPE</td><td>73%</td><td><span class="tag tag-dev">EN DESARROLLO</span></td></tr>
+                        <tr><td>PUCE</td><td>68%</td><td><span class="tag tag-dev">EN DESARROLLO</span></td></tr>
+                        <tr><td>UPS</td><td>59%</td><td><span class="tag tag-dev">EN DESARROLLO</span></td></tr>
+                        <tr><td>MCUENCA</td><td>56%</td><td><span class="tag tag-dev">EN DESARROLLO</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>Vulnerabilidades más Frecuentes</h2>
+                <ul class="vuln-list">
+                    <li class="vuln-item">
+                        <span class="vuln-name">Service Vulnerability (Medium)</span>
+                        <span class="vuln-count">260</span>
+                    </li>
+                    <li class="vuln-item">
+                        <span class="vuln-name">Patching Cadence (Medium)</span>
+                        <span class="vuln-count">234</span>
+                    </li>
+                    <li class="vuln-item">
+                        <span class="vuln-name">Service Vulnerability (High)</span>
+                        <span class="vuln-count">214</span>
+                    </li>
+                    <li class="vuln-item">
+                        <span class="vuln-name">Compromised Credentials</span>
+                        <span class="vuln-count">174</span>
+                    </li>
+                    <li class="vuln-item">
+                        <span class="vuln-name">Service Vulnerability (Critical)</span>
+                        <span class="vuln-count">169</span>
+                    </li>
+                    <li class="vuln-item">
+                        <span class="vuln-name">Patching Cadence (High)</span>
+                        <span class="vuln-count">150</span>
+                    </li>
+                </ul>
+                <div style="margin-top: 20px;">
+                    <canvas id="vulnChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Riesgo Financiero Proyectado (Top 5)</h2>
+            <p style="font-size: 12px; color: #666;">Basado en infracciones LOPDP detectadas por la superficie expuesta.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Institución</th>
+                        <th>Leves</th>
+                        <th>Graves</th>
+                        <th>Costo Total ($)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>UCACUE</td><td>15</td><td>19</td><td>$ 17,290,566.64</td></tr>
+                    <tr><td>UDA</td><td>18</td><td>29</td><td>$ 9,456,195.51</td></tr>
+                    <tr><td>UPS</td><td>12</td><td>16</td><td>$ 8,138,645.27</td></tr>
+                    <tr><td>PUCE</td><td>11</td><td>10</td><td>$ 7,499,640.73</td></tr>
+                    <tr><td>ESPAM</td><td>20</td><td>28</td><td>$ 4,452,364.25</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-note">
+            Este reporte ha sido generado automáticamente para uso interno de CEDIA. 
+            La información se basa en análisis de madurez digital y monitoreo de superficie pública.
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('vulnChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['High/Critical', 'Medium', 'Low/Info'],
+                datasets: [{
+                    data: [121, 182, 2593],
+                    backgroundColor: ['#dc3545', '#ffc107', '#29c6ff'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
