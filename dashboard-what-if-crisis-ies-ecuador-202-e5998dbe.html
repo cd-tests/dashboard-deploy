@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', 'Arial', sans-serif;
+    background: #020029;
+    color: #e2e3d5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    background: linear-gradient(135deg, #020029 0%, #0c0c43 50%, #020029 100%);
+    border-bottom: 2px solid #29c6ff;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 20px; }
+  .header img { height: 40px; }
+  .header-title h1 { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+  .header-title p { font-size: 0.65rem; color: #29c6ff; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+  .header-badge {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: #fff; font-size: 0.62rem; font-weight: 700;
+    padding: 6px 14px; border-radius: 20px; letter-spacing: 1px;
+    text-transform: uppercase; animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+  .main { padding: 24px 28px; max-width: 1600px; margin: 0 auto; }
+
+  /* ─── SCENARIO CONTROLS ─── */
+  .scenario-bar {
+    background: linear-gradient(135deg, #0c0c43, #1a1a6e);
+    border: 1px solid #29c6ff44;
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+  .scenario-label { font-size: 0.72rem; font-weight: 700; color: #29c6ff; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+  .scenario-btn {
+    padding: 8px 18px; border-radius: 8px; border: 1px solid #29c6ff55;
+    background: transparent; color: #e2e3d5; font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .scenario-btn:hover { background: #29c6ff22; border-color: #29c6ff; }
+  .scenario-btn.active { background: #29c6ff; color: #020029; border-color: #29c6ff; }
+  .scenario-info { margin-left: auto; font-size: 0.67rem; color: #aaa; font-style: italic; }
+
+  /* ─── KPI STRIP ─── */
+  .kpi-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 24px; }
+  .kpi-card {
+    background: linear-gradient(135deg, #0c0c43, #1a1a6e);
+    border: 1px solid #29c6ff33;
+    border-radius: 12px; padding: 16px 18px;
+    position: relative; overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); border-color: #29c6ff88; }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; border-radius: 12px 0 0 12px;
+  }
+  .kpi-card.red::before { background: #ff4444; }
+  .kpi-card.orange::before { background: #ff8c00; }
+  .kpi-card.yellow::before { background: #ffd700; }
+  .kpi-card.teal::before { background: #29c6ff; }
+  .kpi-card.green::before { background: #00e676; }
+  .kpi-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  .kpi-value { font-size: 1.5rem; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 4px; }
+  .kpi-value.red { color: #ff4444; }
+  .kpi-value.orange { color: #ff8c00; }
+  .kpi-value.yellow { color: #ffd700; }
+  .kpi-value.teal { color: #29c6ff; }
+  .kpi-value.green { color: #00e676; }
+  .kpi-label { font-size: 0.62rem; color: #aaa; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+  .kpi-sub { font-size: 0.65rem; color: #666; margin-top: 4px; }
+
+  /* ─── SECTION HEADER ─── */
+  .section-hdr {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .section-hdr h2 { font-size: 0.82rem; font-weight: 700; color: #29c6ff; text-transform: uppercase; letter-spacing: 1.2px; }
+  .section-hdr .line { flex: 1; height: 1px; background: linear-gradient(to right, #29c6ff44, transparent); }
+
+  /* ─── GRID LAYOUTS ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-bottom: 24px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+
+  /* ─── PANEL ─── */
+  .panel {
+    background: linear-gradient(135deg, #0c0c43, #1a1a6e);
+    border: 1px solid #29c6ff22;
+    border-radius: 12px; padding: 18px;
+  }
+  .panel-title {
+    font-size: 0.72rem; font-weight: 700; color: #e2e3d5;
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .panel-title .badge {
+    background: #29c6ff22; color: #29c6ff; border-radius: 6px;
+    padding: 2px 8px; font-size: 0.6rem; font-weight: 700;
+  }
+  .panel-title .badge.red { background: #ff444422; color: #ff4444; }
+  .panel-title .badge.orange { background: #ff8c0022; color: #ff8c00; }
+  .panel-title .badge.green { background: #00e67622; color: #00e676; }
+
+  /* ─── TABLE ─── */
+  .tbl-wrap { max-height: 360px; overflow-y: auto; }
+  .tbl-wrap::-webkit-scrollbar { width: 4px; }
+  .tbl-wrap::-webkit-scrollbar-thumb { background: #29c6ff44; border-radius: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.68rem; }
+  thead th {
+    background: #020029; color: #29c6ff; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.8px; padding: 8px 10px;
+    position: sticky; top: 0; z-index: 2; white-space: nowrap;
+    border-bottom: 1px solid #29c6ff44;
+  }
+  tbody tr { border-bottom: 1px solid #ffffff08; transition: background 0.15s; cursor: default; }
+  tbody tr:hover { background: #29c6ff11; }
+  tbody td { padding: 7px 10px; color: #e2e3d5; }
+  .grade { display: inline-block; width: 26px; height: 26px; border-radius: 6px; text-align: center; line-height: 26px; font-weight: 800; font-size: 0.72rem; }
+  .gA { background: #00e67633; color: #00e676; }
+  .gB { background: #29c6ff33; color: #29c6ff; }
+  .gC { background: #ffd70033; color: #ffd700; }
+  .gD { background: #ff8c0033; color: #ff8c00; }
+  .gF { background: #ff444433; color: #ff4444; }
+
+  /* ─── RISK BADGE ─── */
+  .risk { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .risk.critical { background: #ff000033; color: #ff4444; border: 1px solid #ff444444; }
+  .risk.high { background: #ff8c0033; color: #ff8c00; border: 1px solid #ff8c0044; }
+  .risk.medium { background: #ffd70033; color: #ffd700; border: 1px solid #ffd70044; }
+  .risk.low { background: #00e67633; color: #00e676; border: 1px solid #00e67644; }
+
+  /* ─── CANVAS CHARTS ─── */
+  canvas { display: block; }
+
+  /* ─── PROGRESS BAR ─── */
+  .prog-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .prog-label { font-size: 0.62rem; color: #aaa; width: 80px; text-align: right; flex-shrink: 0; }
+  .prog-bar-bg { flex: 1; height: 8px; background: #ffffff11; border-radius: 4px; overflow: hidden; }
+  .prog-bar { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+  .prog-val { font-size: 0.62rem; color: #e2e3d5; width: 40px; flex-shrink: 0; text-align: right; }
+
+  /* ─── MAP ─── */
+  #crisis-map { width: 100%; height: 400px; border-radius: 10px; overflow: hidden; }
+
+  /* ─── INSIGHT BOX ─── */
+  .insight-box {
+    background: #29c6ff11; border-left: 3px solid #29c6ff;
+    border-radius: 0 8px 8px 0; padding: 10px 14px;
+    font-size: 0.67rem; color: #c8e6f5; line-height: 1.6;
+    margin-top: 10px;
+  }
+  .insight-box.red { background: #ff444411; border-color: #ff4444; color: #ffb3b3; }
+  .insight-box.orange { background: #ff8c0011; border-color: #ff8c00; color: #ffd09e; }
+  .insight-box.green { background: #00e67611; border-color: #00e676; color: #b3ffd9; }
+
+  /* ─── VULN ITEM ─── */
+  .vuln-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .vuln-bar-bg { flex: 1; height: 22px; background: #ffffff08; border-radius: 6px; overflow: hidden; position: relative; }
+  .vuln-bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 8px; font-size: 0.6rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; }
+  .vuln-label { font-size: 0.62rem; color: #aaa; width: 190px; flex-shrink: 0; text-align: right; }
+  .vuln-count { font-size: 0.65rem; color: #29c6ff; width: 42px; text-align: right; font-weight: 700; flex-shrink: 0; }
+
+  /* ─── SCENARIO IMPACT MATRIX ─── */
+  .matrix-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .matrix-cell {
+    flex: 1; padding: 10px; border-radius: 8px;
+    font-size: 0.65rem; text-align: center; font-weight: 600;
+    border: 1px solid transparent; transition: all 0.2s;
+  }
+  .matrix-cell:hover { transform: scale(1.02); }
+  .mc-low { background: #00e67622; border-color: #00e67644; color: #00e676; }
+  .mc-med { background: #ffd70022; border-color: #ffd70044; color: #ffd700; }
+  .mc-high { background: #ff8c0022; border-color: #ff8c0044; color: #ff8c00; }
+  .mc-crit { background: #ff444422; border-color: #ff444444; color: #ff4444; }
+  .mc-label { font-size: 0.58rem; opacity: 0.7; margin-top: 3px; }
+
+  /* ─── ROI BAR ─── */
+  .roi-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .roi-inst { font-size: 0.68rem; font-weight: 700; color: #e2e3d5; width: 90px; flex-shrink: 0; }
+  .roi-bars { flex: 1; }
+  .roi-bar-wrap { display: flex; gap: 3px; margin-bottom: 3px; align-items: center; }
+  .roi-bar-lbl { font-size: 0.56rem; color: #888; width: 60px; }
+  .roi-bar-bg { flex: 1; height: 10px; background: #ffffff08; border-radius: 4px; overflow: hidden; }
+  .roi-bar-fill { height: 100%; border-radius: 4px; }
+  .roi-bar-fill.remediation { background: linear-gradient(to right, #ff4444, #cc0000); }
+  .roi-bar-fill.prevention { background: linear-gradient(to right, #00e676, #00a854); }
+  .roi-bar-val { font-size: 0.6rem; color: #aaa; width: 70px; text-align: right; }
+
+  /* ─── TIMELINE ─── */
+  .timeline { display: flex; gap: 0; align-items: stretch; }
+  .tl-item { flex: 1; position: relative; padding: 14px 12px 14px 20px; }
+  .tl-item::before { content: ''; position: absolute; left: 0; top: 20px; bottom: 0; width: 2px; background: #29c6ff33; }
+  .tl-dot { position: absolute; left: -5px; top: 18px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #020029; }
+  .tl-phase { font-size: 0.6rem; font-weight: 700; color: #29c6ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .tl-title { font-size: 0.72rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .tl-time { font-size: 0.6rem; color: #ff4444; font-weight: 600; margin-bottom: 6px; }
+  .tl-desc { font-size: 0.6rem; color: #aaa; line-height: 1.5; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    margin-top: 32px; padding: 16px 28px;
+    border-top: 1px solid #29c6ff22;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.6rem; color: #555;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width:900px){
+    .kpi-strip { grid-template-columns: repeat(3,1fr); }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .span-2, .span-3 { grid-column: span 1; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #0c0c43; }
+  ::-webkit-scrollbar-thumb { background: #29c6ff44; border-radius: 3px; }
+</style>
+
+<!-- LEAFLET -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+
+<!-- ─── HEADER ─── -->
+<div class="header">
+  <div class="header-left">
+    <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA">
+    <div class="header-title">
+      <h1>SIMULACIÓN DE CRISIS — WHAT-IF DASHBOARD</h1>
+      <p>Impacto financiero · Riesgo reputacional · Recuperación operativa · IES Ecuador · 2025-12 / 2026-03</p>
+    </div>
+  </div>
+  <div class="header-badge">⚠ ANÁLISIS DE RIESGO CRÍTICO</div>
+</div>
+
+<div class="main">
+
+  <!-- ─── SCENARIO SELECTOR ─── -->
+  <div class="scenario-bar">
+    <span class="scenario-label">🎯 Escenario de Crisis:</span>
+    <button class="scenario-btn active" onclick="setScenario('ransomware')">🔐 Ransomware Masivo</button>
+    <button class="scenario-btn" onclick="setScenario('filtracion')">💧 Filtración de Datos</button>
+    <button class="scenario-btn" onclick="setScenario('combinado')">☠ Ataque Combinado</button>
+    <span class="scenario-info" id="scenario-desc">Cifrado total de sistemas críticos + exfiltración. Factor multiplicador de impacto: 3.5x</span>
+  </div>
+
+  <!-- ─── KPI STRIP ─── -->
+  <div class="kpi-strip">
+    <div class="kpi-card red">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-value red" id="kpi-multa">$49.35M</div>
+      <div class="kpi-label">Multas Proyectadas Total</div>
+      <div class="kpi-sub" id="kpi-multa-sub">21 IES con análisis de madurez</div>
+    </div>
+    <div class="kpi-card orange">
+      <div class="kpi-icon">⚠️</div>
+      <div class="kpi-value orange" id="kpi-criticas">24</div>
+      <div class="kpi-label">IES en Zona Crítica</div>
+      <div class="kpi-sub" id="kpi-criticas-sub">Score combinado &lt; 65 pts</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-icon">📉</div>
+      <div class="kpi-value yellow" id="kpi-recuperacion">47 días</div>
+      <div class="kpi-label">Tiempo Recuperación Prom.</div>
+      <div class="kpi-sub" id="kpi-rec-sub">Instituciones sin controles básicos</div>
+    </div>
+    <div class="kpi-card teal">
+      <div class="kpi-icon">🛡️</div>
+      <div class="kpi-value teal">55%</div>
+      <div class="kpi-label">Madurez Digital Promedio</div>
+      <div class="kpi-sub">Mediana ecosistema: 56%</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-icon">🔬</div>
+      <div class="kpi-value green">71</div>
+      <div class="kpi-label">IES Monitoreadas GLPI</div>
+      <div class="kpi-sub">Nessus + Security Scorecard</div>
+    </div>
+  </div>
+
+  <!-- ─── ROW 1: RANKING + MADUREZ ─── -->
+  <div class="section-hdr"><h2>🏛 Estado Actual de Seguridad por IES</h2><div class="line"></div></div>
+  <div class="grid-2">
+
+    <!-- TABLA RANKING -->
+    <div class="panel span-2">
+      <div class="panel-title">📊 Ranking Consolidado + Proyección de Riesgo What-If <span class="badge red">71 IES</span></div>
+      <div class="tbl-wrap">
+        <table id="ranking-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Institución</th>
+              <th>Grade</th>
+              <th>Score</th>
+              <th>Madurez</th>
+              <th>Multas Base</th>
+              <th>Multas Escenario</th>
+              <th>T. Recuperación</th>
+              <th>Riesgo Reputacional</th>
+              <th>Inversión Preventiva</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ROW 2: CHARTS ─── -->
+  <div class="grid-3">
+
+    <!-- Distribución por Grade -->
+    <div class="panel">
+      <div class="panel-title">🎓 Distribución por Calificación de Seguridad</div>
+      <canvas id="gradeChart" height="200"></canvas>
+      <div class="insight-box">
+        <b>📌 Lectura:</b> Solo el 15% de IES alcanza calificación A. El 36% se ubica en D o F, representando el grupo de mayor exposición ante un incidente.
+      </div>
+    </div>
+
+    <!-- Madurez vs Multas Scatter simulado como barras -->
+    <div class="panel">
+      <div class="panel-title">⚖️ Madurez Digital vs Impacto Financiero</div>
+      <canvas id="madurMulCanvas" height="200"></canvas>
+      <div class="insight-box orange">
+        <b>⚠ Brecha:</b> UCACUE, UDA, UPS y PUCE concentran el 87% del impacto total en multas a pesar de no ser las IES con menor score de seguridad, evidenciando brechas de control interno.
+      </div>
+    </div>
+
+    <!-- Vulnerabilidades Top -->
+    <div class="panel">
+      <div class="panel-title">🔥 Top Vulnerabilidades Activas Ecosistema <span class="badge red">9,425 activas</span></div>
+      <div style="margin-top: 8px;">
+        <div class="vuln-item">
+          <div class="vuln-label">Vuln Servicio Media</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:100%;background:linear-gradient(to right,#ff8c00,#ff4444)">976</div></div>
+          <div class="vuln-count">976</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">Vuln Servicio Alta</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:86%;background:linear-gradient(to right,#ff4444,#cc0000)">838</div></div>
+          <div class="vuln-count">838</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">Cred. Comprometidas</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:60%;background:#cc0000">584</div></div>
+          <div class="vuln-count">584</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">Vuln Servicio Crítica</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:59%;background:#990000">578</div></div>
+          <div class="vuln-count">578</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">Parchado Cadencia Alta</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:56%;background:#ff8c00">544</div></div>
+          <div class="vuln-count">544</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">Parchado Cadencia Med.</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:53%;background:#cc7000">520</div></div>
+          <div class="vuln-count">520</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">TLS Autofirmado</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:32%;background:#ffd700">312</div></div>
+          <div class="vuln-count">312</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">TLS Sin Revocación</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:25%;background:#ccaa00">248</div></div>
+          <div class="vuln-count">248</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">Sin Política CSP</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:22%;background:#29c6ff88">211</div></div>
+          <div class="vuln-count">211</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-label">Cred. Comprometidas Hist.</div>
+          <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:17%;background:#555">169</div></div>
+          <div class="vuln-count">169</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ROW 3: COSTO REMEDIACION vs PREVENCION + MATRIZ ─── -->
+  <div class="section-hdr"><h2>💡 Análisis Costo-Beneficio: Remediación vs Prevención</h2><div class="line"></div></div>
+  <div class="grid-2">
+
+    <!-- ROI Bars -->
+    <div class="panel">
+      <div class="panel-title">📈 Costo Remediación Post-Incidente vs Inversión Preventiva Estimada</div>
+      <div id="roi-container" style="margin-top: 8px;"></div>
+      <div class="insight-box green">
+        <b>✅ ROI de Prevención:</b> Por cada $1 invertido en controles preventivos, las IES de zona crítica podrían evitar hasta $12 en costos de remediación, multas y pérdidas reputacionales estimadas.
+      </div>
+    </div>
+
+    <!-- Matriz de Impacto -->
+    <div class="panel">
+      <div class="panel-title">🔴 Matriz de Impacto por Escenario y Nivel de Madurez</div>
+      <div style="margin-bottom: 10px; font-size: 0.62rem; color: #888; display: flex; gap: 12px; flex-wrap: wrap;">
+        <span>📌 Filas: Tipo de incidente</span>
+        <span>📌 Columnas: Nivel de madurez</span>
+      </div>
+      <!-- Header -->
+      <div style="display:flex; gap:8px; margin-bottom:6px; padding-left: 120px;">
+        <div style="flex:1; text-align:center; font-size:0.62rem; color:#00e676; font-weight:700;">Líderes (≥73%)</div>
+        <div style="flex:1; text-align:center; font-size:0.62rem; color:#ffd700; font-weight:700;">Desarrollo (40-73%)</div>
+        <div style="flex:1; text-align:center; font-size:0.62rem; color:#ff4444; font-weight:700;">Crítico (&lt;40%)</div>
+      </div>
+      <div id="impact-matrix"></div>
+      <canvas id="radarChart" height="220" style="margin-top:16px;"></canvas>
+    </div>
+  </div>
+
+  <!-- ─── ROW 4: TIMELINE + MAPA ─── -->
+  <div class="section-hdr"><h2>⏱ Línea de Tiempo de Recuperación Operativa + Distribución Geográfica</h2><div class="line"></div></div>
+  <div class="grid-2">
+
+    <!-- Timeline -->
+    <div class="panel">
+      <div class="panel-title">🕐 Cronología de Crisis por Nivel de Madurez <span class="badge" id="scenario-timeline-badge">Ransomware</span></div>
+      <div id="timeline-container"></div>
+      <div style="margin-top: 14px;">
+        <div class="section-hdr" style="margin-bottom:10px;"><h2 style="font-size:0.72rem;">📊 Factores de Recuperación</h2><div class="line"></div></div>
+        <div class="prog-wrap"><span class="prog-label">Backup plan</span><div class="prog-bar-bg"><div class="prog-bar" style="width:28%;background:#ff4444;"></div></div><span class="prog-val">28% IES</span></div>
+        <div class="prog-wrap"><span class="prog-label">BCDR activo</span><div class="prog-bar-bg"><div class="prog-bar" style="width:19%;background:#ff6600;"></div></div><span class="prog-val">19% IES</span></div>
+        <div class="prog-wrap"><span class="prog-label">IR Team</span><div class="prog-bar-bg"><div class="prog-bar" style="width:35%;background:#ffd700;"></div></div><span class="prog-val">35% IES</span></div>
+        <div class="prog-wrap"><span class="prog-label">SOC activo</span><div class="prog-bar-bg"><div class="prog-bar" style="width:47%;background:#29c6ff;"></div></div><span class="prog-val">47% IES</span></div>
+        <div class="prog-wrap"><span class="prog-label">MFA impl.</span><div class="prog-bar-bg"><div class="prog-bar" style="width:62%;background:#00e676;"></div></div><span class="prog-val">62% IES</span></div>
+      </div>
+    </div>
+
+    <!-- MAPA -->
+    <div class="panel">
+      <div class="panel-title">🗺 Distribución Geográfica de Riesgo — Ecuador</div>
+      <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+        <button class="scenario-btn active" onclick="filterMap('all')" id="mapBtn-all">Todas</button>
+        <button class="scenario-btn" onclick="filterMap('F')" id="mapBtn-F">🔴 Críticas (D/F)</button>
+        <button class="scenario-btn" onclick="filterMap('B')" id="mapBtn-B">🟡 Medio (B/C)</button>
+        <button class="scenario-btn" onclick="filterMap('A')" id="mapBtn-A">🟢 Líderes (A)</button>
+      </div>
+      <div id="crisis-map"></div>
+      <div class="insight-box" style="margin-top:10px;">
+        <b>🌎 Concentración geográfica:</b> La Sierra concentra las IES con mayor rezago. Riobamba, Ambato y el eje austral presentan alta densidad de riesgo. Quito y Guayaquil muestran polarización entre líderes y rezagadas.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ROW 5: INFRACCIONES + ZONA CRITICA ─── -->
+  <div class="section-hdr"><h2>⚖️ Riesgo Financiero Detallado — Infracciones y Multas PDP</h2><div class="line"></div></div>
+  <div class="grid-2">
+
+    <!-- MULTAS CHART -->
+    <div class="panel">
+      <div class="panel-title">💸 Top 10 IES por Impacto de Multas Proyectado <span class="badge red">LOPD Ecuador</span></div>
+      <canvas id="multasChart" height="250"></canvas>
+    </div>
+
+    <!-- ZONA CRITICA -->
+    <div class="panel">
+      <div class="panel-title">🚨 IES en Zona Crítica — Acción Prioritaria Requerida <span class="badge red">Score &lt; 65</span></div>
+      <div class="tbl-wrap" style="max-height:320px;">
+        <table>
+          <thead>
+            <tr>
+              <th>IES</th>
+              <th>Score</th>
+              <th>Grade</th>
+              <th>Factor Riesgo</th>
+              <th>Prioridad</th>
+            </tr>
+          </thead>
+          <tbody id="critical-body"></tbody>
+        </table>
+      </div>
+      <div class="insight-box red" style="margin-top:12px;">
+        <b>🚨 Alerta ejecutiva:</b> 24 IES presentan score combinado inferior a 65. En un escenario de ransomware, estas instituciones tienen probabilidad de recuperación operativa &gt;60 días sin intervención inmediata.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <div class="footer">
+    <span>CEDIA · SOC-CSIRT · Dashboard What-If de Crisis — Análisis de Riesgo Financiero e Impacto Operativo · IES Ecuador</span>
+    <span>Periodo: 2025-12 ~ 2026-03 · Generado: 02-04-2026 · Fuentes: GLPI / Security Scorecard / Nessus / Modelo de Madurez Digital</span>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════
+const rankingData = [
+  {ins:"UTN",score:97.25,grade:"A",madurez:null,multasBase:null},
+  {ins:"ACAC",score:97.0,grade:"A",madurez:null,multasBase:null},
+  {ins:"ISTE",score:95.0,grade:"A",madurez:43,multasBase:109947},
+  {ins:"PUCE-SA",score:94.0,grade:"A",madurez:null,multasBase:null},
+  {ins:"IKIAM",score:93.75,grade:"A",madurez:77,multasBase:9285},
+  {ins:"UDLA",score:91.0,grade:"A",madurez:null,multasBase:null},
+  {ins:"UTM",score:90.0,grade:"A",madurez:null,multasBase:null},
+  {ins:"USFQ",score:89.5,grade:"B",madurez:null,multasBase:null},
+  {ins:"ESPE",score:89.25,grade:"B",madurez:73,multasBase:110000},
+  {ins:"UTE",score:88.5,grade:"B",madurez:null,multasBase:null},
+  {ins:"CEDIA",score:87.0,grade:"B",madurez:null,multasBase:null},
+  {ins:"ITECSUR",score:87.0,grade:"B",madurez:null,multasBase:null},
+  {ins:"TECSU",score:87.0,grade:"B",madurez:null,multasBase:null},
+  {ins:"UNL",score:87.0,grade:"B",madurez:81,multasBase:32670},
+  {ins:"ESPOL",score:85.25,grade:"B",madurez:83,multasBase:3619},
+  {ins:"UG",score:84.0,grade:"B",madurez:null,multasBase:null},
+  {ins:"UPS",score:83.5,grade:"B",madurez:59,multasBase:8138645},
+  {ins:"IAEN",score:83.0,grade:"B",madurez:null,multasBase:null},
+  {ins:"WISSEN",score:82.5,grade:"B",madurez:null,multasBase:null},
+  {ins:"CES",score:81.0,grade:"B",madurez:null,multasBase:null},
+  {ins:"UISRAEL",score:80.5,grade:"B",madurez:null,multasBase:null},
+  {ins:"UOTAVALO",score:80.5,grade:"B",madurez:null,multasBase:null},
+  {ins:"UEA",score:80.25,grade:"B",madurez:null,multasBase:null},
+  {ins:"INOCAR",score:78.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"PUCE-SM",score:78.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"UEB",score:78.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"UCUENCA",score:77.5,grade:"C",madurez:73,multasBase:38197},
+  {ins:"CACES",score:75.5,grade:"C",madurez:null,multasBase:null},
+  {ins:"UCE",score:75.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"UNAE",score:74.5,grade:"C",madurez:null,multasBase:null},
+  {ins:"UNIBE",score:74.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"UTC",score:74.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"YACHAY",score:74.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"UARTES",score:72.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"UIDE",score:72.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"SUDAMERICANO",score:71.0,grade:"C",madurez:19,multasBase:353194},
+  {ins:"ULEAM",score:70.0,grade:"C",madurez:null,multasBase:null},
+  {ins:"PUCE",score:69.75,grade:"D",madurez:68,multasBase:7499641},
+  {ins:"ITCA",score:69.0,grade:"D",madurez:null,multasBase:null},
+  {ins:"UCSG",score:69.0,grade:"D",madurez:null,multasBase:null},
+  {ins:"UINPIAW",score:67.0,grade:"D",madurez:32,multasBase:99565},
+  {ins:"UTMACH",score:67.0,grade:"D",madurez:null,multasBase:null},
+  {ins:"UTA",score:66.25,grade:"D",madurez:null,multasBase:null},
+  {ins:"ITSCO",score:66.0,grade:"D",madurez:87,multasBase:68929},
+  {ins:"PASOS",score:64.0,grade:"D",madurez:null,multasBase:null},
+  {ins:"UTI",score:64.0,grade:"D",madurez:null,multasBase:null},
+  {ins:"ESPAM",score:63.25,grade:"D",madurez:21,multasBase:4452364},
+  {ins:"EPN",score:62.0,grade:"D",madurez:null,multasBase:null},
+  {ins:"UTPL",score:62.0,grade:"D",madurez:81,multasBase:57103},
+  {ins:"PUCE-SI",score:61.0,grade:"D",madurez:null,multasBase:null},
+  {ins:"UDA",score:61.0,grade:"D",madurez:53,multasBase:9456196},
+  {ins:"UTELVT",score:60.5,grade:"D",madurez:40,multasBase:265818},
+  {ins:"PUCE-SD",score:60.0,grade:"D",madurez:null,multasBase:null},
+  {ins:"ITB",score:59.5,grade:"F",madurez:null,multasBase:null},
+  {ins:"ISTP",score:58.0,grade:"F",madurez:null,multasBase:null},
+  {ins:"ESPOCH",score:57.5,grade:"F",madurez:null,multasBase:null},
+  {ins:"UNACH",score:56.75,grade:"F",madurez:null,multasBase:null},
+  {ins:"USGP",score:56.75,grade:"F",madurez:38,multasBase:740254},
+  {ins:"UPEC",score:56.0,grade:"F",madurez:23,multasBase:224666},
+  {ins:"ISTER",score:55.0,grade:"F",madurez:null,multasBase:null},
+  {ins:"TES",score:55.0,grade:"F",madurez:null,multasBase:null},
+  {ins:"UNIANDES",score:54.0,grade:"F",madurez:56,multasBase:111320},
+  {ins:"UTB",score:52.75,grade:"F",madurez:null,multasBase:null},
+  {ins:"UCACUE",score:50.75,grade:"F",madurez:44,multasBase:17290567},
+  {ins:"ITSVN",score:48.0,grade:"F",madurez:null,multasBase:null},
+  {ins:"ARMADA",score:47.0,grade:"F",madurez:47,multasBase:151861},
+  {ins:"UBE",score:46.0,grade:"F",madurez:null,multasBase:null},
+  {ins:"UTEQ",score:45.5,grade:"F",madurez:null,multasBase:null},
+  {ins:"UESFN",score:22.0,grade:"F",madurez:null,multasBase:null},
+  {ins:"IES",score:0.0,grade:"F",madurez:null,multasBase:null},
+];
+
+const madurezData = [
+  {ins:"ITSCO",mad:87,multa:68929,tipo:"INST PRIVADO"},
+  {ins:"ESPOL",mad:83,multa:3619,tipo:"U PUBLICA"},
+  {ins:"UNL",mad:81,multa:32670,tipo:"U PUBLICA"},
+  {ins:"UTPL",mad:81,multa:57103,tipo:"U PRIVADA"},
+  {ins:"IKIAM",mad:77,multa:9285,tipo:"U PUBLICA"},
+  {ins:"UCUENCA",mad:73,multa:38197,tipo:"U PUBLICA"},
+  {ins:"ESPE",mad:73,multa:110000,tipo:"U PUBLICA"},
+  {ins:"PUCE",mad:68,multa:7499641,tipo:"U PRIVADA"},
+  {ins:"UPS",mad:59,multa:8138645,tipo:"U PRIVADA"},
+  {ins:"MCUENCA",mad:56,multa:141058,tipo:"ENT PUBLICA"},
+  {ins:"UNIANDES",mad:56,multa:111320,tipo:"U PRIVADA"},
+  {ins:"UDA",mad:53,multa:9456196,tipo:"U PRIVADA"},
+  {ins:"ARMADA",mad:47,multa:151861,tipo:"ENT PUBLICA"},
+  {ins:"UCACUE",mad:44,multa:17290567,tipo:"U PRIVADA"},
+  {ins:"ISTE",mad:43,multa:109947,tipo:"INT PRIVADO"},
+  {ins:"UTELVT",mad:40,multa:265818,tipo:"U PUBLICA"},
+  {ins:"USGP",mad:38,multa:740254,tipo:"U PRIVADA"},
+  {ins:"UINPIAW",mad:32,multa:99565,tipo:"U PUBLICA"},
+  {ins:"UPEC",mad:23,multa:224666,tipo:"U PUBLICA"},
+  {ins:"ESPAM",mad:21,multa:4452364,tipo:"U PUBLICA"},
+  {ins:"SUDAMERICANO",mad:19,multa:353194,tipo:"INT PRIVADO"},
+];
+
+// Scenario multipliers
+const scenarios = {
+  ransomware: {label:"Ransomware Masivo", mult:3.5, days:47, desc:"Cifrado total de sistemas críticos + exfiltración. Factor multiplicador de impacto: 3.5x"},
+  filtracion: {label:"Filtración de Datos", mult:2.2, days:28, desc:"Exposición masiva de datos personales de estudiantes y docentes. Factor multiplicador: 2.2x"},
+  combinado: {label:"Ataque Combinado", mult:5.0, days:72, desc:"Ransomware + filtración + denegación de servicio simultáneos. Factor de devastación máxima: 5.0x"},
+};
+let currentScenario = 'ransomware';
+
+function setScenario(s) {
+  currentScenario = s;
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const sc = scenarios[s];
+  document.getElementById('scenario-desc').textContent = sc.desc;
+  document.getElementById('kpi-recuperacion').textContent = sc.days + ' días';
+  document.getElementById('scenario-timeline-badge').textContent = sc.label;
+  buildRankingTable();
+  buildMultasChart();
+  buildRoiPanel();
+  buildTimeline();
+  updateKPIs();
+}
+
+function getRecoveryDays(score, scenarioKey) {
+  const sc = scenarios[scenarioKey];
+  if(score >= 90) return Math.round(sc.days * 0.3);
+  if(score >= 80) return Math.round(sc.days * 0.55);
+  if(score >= 70) return Math.round(sc.days * 0.8);
+  if(score >= 60) return Math.round(sc.days * 1.1);
+  return Math.round(sc.days * 1.6);
+}
+
+function getRepRisk(score) {
+  if(score >= 90) return {label:"Bajo",cls:"low"};
+  if(score >= 80) return {label:"Moderado",cls:"medium"};
+  if(score >= 70) return {label:"Alto",cls:"high"};
+  return {label:"Crítico",cls:"critical"};
+}
+
+function getMultaEscenario(item, scenarioKey) {
+  if(!item.multasBase) {
+    // Estimate from score
+    const base = (100 - item.score) * 8000;
+    return Math.round(base * scenarios[scenarioKey].mult);
+  }
+  return Math.round(item.multasBase * scenarios[scenarioKey].mult);
+}
+
+function getInvPreventiva(score) {
+  if(score >= 90) return "$15K–$30K/año";
+  if(score >= 80) return "$30K–$60K/año";
+  if(score >= 70) return "$60K–$120K/año";
+  if(score >= 60) return "$120K–$250K/año";
+  return "$250K–$500K/año";
+}
+
+function fmtCurrency(v) {
+  if(v >= 1000000) return '$' + (v/1000000).toFixed(2) + 'M';
+  if(v >= 1000) return '$' + Math.round(v/1000) + 'K';
+  return '$' + v;
+}
+
+// ─── RANKING TABLE ───
+function buildRankingTable() {
+  const tbody = document.getElementById('ranking-body');
+  tbody.innerHTML = '';
+  rankingData.forEach((d,i) => {
+    const rec = getRecoveryDays(d.score, currentScenario);
+    const rep = getRepRisk(d.score);
+    const multaEsc = getMultaEscenario(d, currentScenario);
+    const inv = getInvPreventiva(d.score);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:#666;font-size:0.6rem;">${i+1}</td>
+      <td style="font-weight:700;color:#fff;">${d.ins}</td>
+      <td><span class="grade g${d.grade}">${d.grade}</span></td>
+      <td style="color:${d.score>=80?'#00e676':d.score>=70?'#ffd700':d.score>=60?'#ff8c00':'#ff4444'};font-weight:700;">${d.score.toFixed(1)}</td>
+      <td style="color:#29c6ff;">${d.madurez !== null ? d.madurez+'%' : '<span style="color:#444">N/D</span>'}</td>
+      <td style="color:#aaa;">${d.multasBase ? fmtCurrency(d.multasBase) : '<span style="color:#333">—</span>'}</td>
+      <td style="color:#ff4444;font-weight:700;">${fmtCurrency(multaEsc)}</td>
+      <td style="color:${rec<=15?'#00e676':rec<=30?'#ffd700':rec<=50?'#ff8c00':'#ff4444'};font-weight:700;">${rec} días</td>
+      <td><span class="risk ${rep.cls}">${rep.label}</span></td>
+      <td style="color:#29c6ff;font-size:0.6rem;">${inv}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ─── GRADE CHART ───
+function buildGradeChart() {
+  const ctx = document.getElementById('gradeChart').getContext('2d');
+  const labels = ['A', 'B', 'C', 'D', 'F'];
+  const data = [11, 15, 13, 13, 19];
+  const colors = ['#00e676','#29c6ff','#ffd700','#ff8c00','#ff4444'];
+
+  const total = data.reduce((a,b)=>a+b,0);
+  const cx = 130, cy = 85, r = 70, ir = 35;
+  let angle = -Math.PI/2;
+  data.forEach((v, i) => {
+    const slice = (v/total) * 2 * Math.PI;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, angle, angle+slice);
+    ctx.closePath();
+    ctx.fillStyle = colors[i];
+    ctx.fill();
+    ctx.strokeStyle = '#020029';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // label
+    const mid = angle + slice/2;
+    const lx = cx + (r*0.65) * Math.cos(mid);
+    const ly = cy + (r*0.65) * Math.sin(mid);
+    ctx.fillStyle = '#020029';
+    ctx.font = 'bold 9px Montserrat,Arial,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(v, lx, ly);
+    angle += slice;
+  });
+  // inner circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, ir, 0, 2*Math.PI);
+  ctx.fillStyle = '#0c0c43';
+  ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 11px Montserrat,Arial,sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('71', cx, cy-6);
+  ctx.font = '8px Montserrat,Arial,sans-serif';
+  ctx.fillStyle = '#888';
+  ctx.fillText('IES', cx, cy+7);
+
+  // legend
+  const lx0 = 220, ly0 = 30;
+  labels.forEach((l,i) => {
+    ctx.fillStyle = colors[i];
+    ctx.fillRect(lx0, ly0 + i*28, 14, 14);
+    ctx.fillStyle = '#e2e3d5';
+    ctx.font = '9px Montserrat,Arial,sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(`${l}: ${data[i]} IES (${Math.round(data[i]/total*100)}%)`, lx0+18, ly0+2+i*28);
+  });
+}
+
+// ─── MADUREZ/MULTAS CHART ───
+let madurChart = null;
+function buildMadurMulChart() {
+  const ctx = document.getElementById('madurMulCanvas').getContext('2d');
+  const sorted = [...madurezData].sort((a,b)=>b.mad-a.mad);
+  const labels = sorted.map(d=>d.ins);
+  const madVals = sorted.map(d=>d.mad);
+
+  if(madurChart) {
+    // clear
+    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+  }
+  const W = ctx.canvas.width, H = 200;
+  ctx.canvas.height = H;
+  const pad = {l:40,r:10,t:10,b:40};
+  const gw = W - pad.l - pad.r;
+  const gh = H - pad.t - pad.b;
+  const bw = Math.floor(gw / labels.length) - 2;
+
+  // axes
+  ctx.strokeStyle = '#29c6ff33';
+  ctx.lineWidth = 1;
+  [0,25,50,75,100].forEach(v => {
+    const y = pad.t + gh - (v/100)*gh;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W-pad.r, y); ctx.stroke();
+    ctx.fillStyle = '#555'; ctx.font = '8px Montserrat,Arial'; ctx.textAlign = 'right';
+    ctx.fillText(v+'%', pad.l-4, y+3);
+  });
+
+  labels.forEach((l,i) => {
+    const x = pad.l + i*(bw+2);
+    const bh = (madVals[i]/100)*gh;
+    const y = pad.t + gh - bh;
+    // color by score
+    const sc = rankingData.find(d=>d.ins===l);
+    let col = '#29c6ff';
+    if(madVals[i] < 40) col = '#ff4444';
+    else if(madVals[i] < 60) col = '#ff8c00';
+    else if(madVals[i] < 75) col = '#ffd700';
+    else col = '#00e676';
+
+    ctx.fillStyle = col;
+    ctx.fillRect(x, y, bw, bh);
+
+    // label
+    ctx.fillStyle = '#888'; ctx.font = '7px Montserrat,Arial'; ctx.textAlign = 'center';
+    ctx.save(); ctx.translate(x+bw/2, pad.t+gh+4); ctx.rotate(-Math.PI/4);
+    ctx.fillText(l, 0, 0); ctx.restore();
+  });
+}
+
+// ─── MULTAS CHART ───
+let multasChartObj = null;
+function buildMultasChart() {
+  const ctx = document.getElementById('multasChart').getContext('2d');
+  ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+
+  const top10 = madurezData
+    .map(d=>({ins:d.ins, val:getMultaEscenario({multasBase:d.multa,score:rankingData.find(r=>r.ins===d.ins)?.score||60,ins:d.ins}, currentScenario)}))
+    .sort((a,b)=>b.val-a.val).slice(0,10);
+
+  const W = ctx.canvas.width, H = 250;
+  ctx.canvas.height = H;
+  const pad = {l:70,r:20,t:10,b:20};
+  const gw = W-pad.l-pad.r, gh = H-pad.t-pad.b;
+  const bh = Math.floor(gh/top10.length)-4;
+  const maxV = top10[0].val;
+
+  top10.forEach((d,i) => {
+    const y = pad.t + i*(bh+4);
+    const bw = (d.val/maxV)*gw;
+
+    // gradient
+    const grad = ctx.createLinearGradient(pad.l,0,pad.l+bw,0);
+    const pct = d.val/maxV;
+    if(pct > 0.7) { grad.addColorStop(0,'#cc0000'); grad.addColorStop(1,'#ff4444'); }
+    else if(pct > 0.4) { grad.addColorStop(0,'#cc6600'); grad.addColorStop(1,'#ff8c00'); }
+    else { grad.addColorStop(0,'#ccaa00'); grad.addColorStop(1,'#ffd700'); }
+
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(pad.l,y,bw,bh,3) : ctx.rect(pad.l,y,bw,bh);
+    ctx.fill();
+
+    // label
+    ctx.fillStyle = '#e2e3d5'; ctx.font = 'bold 9px Montserrat,Arial'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(d.ins, pad.l-4, y+bh/2);
+
+    // value
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 8px Montserrat,Arial'; ctx.textAlign = 'left';
+    ctx.fillText(fmtCurrency(d.val), pad.l+bw+4, y+bh/2);
+  });
+}
+
+// ─── ROI PANEL ───
+function buildRoiPanel() {
+  const sc = scenarios[currentScenario];
+  const container = document.getElementById('roi-container');
+  const items = madurezData.filter(d=>d.multa>0).sort((a,b)=>b.multa-a.multa).slice(0,8);
+  const maxRemediation = items[0].multa * sc.mult;
+
+  container.innerHTML = items.map(d => {
+    const remediacion = d.multa * sc.mult;
+    const prevention = remediacion * 0.08;
+    const rPct = (remediacion/maxRemediation)*100;
+    const pPct = (prevention/maxRemediation)*100;
+    return `
+      <div class="roi-row">
+        <div class="roi-inst">${d.ins}</div>
+        <div class="roi-bars">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar-lbl">🔴 Remediación</div>
+            <div class="roi-bar-bg"><div class="roi-bar-fill remediation" style="width:${rPct.toFixed(1)}%"></div></div>
+            <div class="roi-bar-val">${fmtCurrency(Math.round(remediacion))}</div>
+          </div>
+          <div class="roi-bar-wrap">
+            <div class="roi-bar-lbl">🟢 Prevención</div>
+            <div class="roi-bar-bg"><div class="roi-bar-fill prevention" style="width:${pPct.toFixed(1)}%"></div></div>
+            <div class="roi-bar-val">${fmtCurrency(Math.round(prevention))}</div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ─── IMPACT MATRIX ───
+function buildImpactMatrix() {
+  const rows = [
+    {incident:"🔐 Ransomware", low:["$30K – 90 días","mc-low"], med:["$800K – 47 días","mc-med"], high:["$17M+ – 72 días","mc-crit"]},
+    {incident:"💧 Filtración PDP", low:["$20K – 60 días","mc-low"], med:["$500K – 35 días","mc-med"], high:["$9.5M+ – 55 días","mc-crit"]},
+    {incident:"☠ Ataque Combinado", low:["$50K – 120 días","mc-med"], med:["$1.5M – 65 días","mc-high"], high:["$25M+ – 90 días","mc-crit"]},
+    {incident:"⚡ DDoS Crítico", low:["$5K – 3 días","mc-low"], med:["$80K – 10 días","mc-low"], high:["$300K – 20 días","mc-med"]},
+  ];
+  const cont = document.getElementById('impact-matrix');
+  cont.innerHTML = rows.map(r=>`
+    <div class="matrix-row">
+      <div style="width:110px;flex-shrink:0;font-size:0.62rem;color:#aaa;padding:10px 8px 10px 0;display:flex;align-items:center;">${r.incident}</div>
+      <div class="matrix-cell ${r.low[1]}">${r.low[0]}<div class="mc-label">Líderes ≥73%</div></div>
+      <div class="matrix-cell ${r.med[1]}">${r.med[0]}<div class="mc-label">Desarrollo 40-73%</div></div>
+      <div class="matrix-cell ${r.high[1]}">${r.high[0]}<div class="mc-label">Crítico &lt;40%</div></div>
+    </div>`).join('');
+}
+
+// ─── RADAR CHART ───
+function buildRadarChart() {
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  const W = ctx.canvas.width, H = 220;
+  ctx.canvas.height = H;
+  const cx = W/2, cy = H/2, r = 75;
+  const axes = ['Controles\nTécnicos','Remediación\nVulns','Gestión\nIdentidad','BCDR\nResilencia','Gobernanza\nSeguridad','Detección\nAmenazas'];
+  const lider = [85,90,82,80,78,88];
+  const desarr = [55,60,58,50,52,57];
+  const critico = [25,30,22,18,20,28];
+  const N = axes.length;
+
+  function poly(vals, stroke, fill) {
+    ctx.beginPath();
+    vals.forEach((v,i) => {
+      const a = (i/N)*2*Math.PI - Math.PI/2;
+      const rv = (v/100)*r;
+      const x = cx + rv*Math.cos(a), y = cy + rv*Math.sin(a);
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    });
+    ctx.closePath();
+    ctx.fillStyle = fill;
+    ctx.fill();
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  // grid
+  [20,40,60,80,100].forEach(pct => {
+    ctx.beginPath();
+    for(let i=0;i<N;i++) {
+      const a=(i/N)*2*Math.PI-Math.PI/2;
+      const rv=(pct/100)*r;
+      const x=cx+rv*Math.cos(a), y=cy+rv*Math.sin(a);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle='#29c6ff22'; ctx.lineWidth=1; ctx.stroke();
+  });
+  // spokes
+  for(let i=0;i<N;i++) {
+    const a=(i/N)*2*Math.PI-Math.PI/2;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));
+    ctx.strokeStyle='#29c6ff22'; ctx.lineWidth=1; ctx.stroke();
+  }
+
+  poly(critico,'#ff4444','#ff444422');
+  poly(desarr,'#ff8c00','#ff8c0022');
+  poly(lider,'#00e676','#00e67622');
+
+  // labels
+  axes.forEach((ax,i) => {
+    const a=(i/N)*2*Math.PI-Math.PI/2;
+    const x=cx+(r+14)*Math.cos(a), y=cy+(r+14)*Math.sin(a);
+    ctx.fillStyle='#888'; ctx.font='7px Montserrat,Arial'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ax.split('\n').forEach((l,li) => ctx.fillText(l, x, y + li*10 - 5));
+  });
+
+  // legend (bottom)
+  const ly = H-8;
+  [{c:'#00e676',t:'Líderes'},{c:'#ff8c00',t:'Desarrollo'},{c:'#ff4444',t:'Crítico'}].forEach((l,i)=>{
+    const lxP = 40 + i*80;
+    ctx.fillStyle=l.c; ctx.fillRect(lxP,ly-6,10,6);
+    ctx.fillStyle='#888'; ctx.font='7px Montserrat,Arial'; ctx.textAlign='left';
+    ctx.fillText(l.t, lxP+12, ly);
+  });
+}
+
+// ─── TIMELINE ───
+function buildTimeline() {
+  const sc = scenarios[currentScenario];
+  const phases = [
+    {phase:"Hora 0", dot:"#ff4444", title:"Detección del Incidente", time: sc.label==="Ransomware Masivo"?"0–4 horas":sc.label==="Filtración de Datos"?"0–24 horas":"0–2 horas",
+     desc:"IES con SOC activo detectan en 4h. Sin SOC, la detección puede tardar días."},
+    {phase:"Fase 1", dot:"#ff8c00", title:"Contención & Evaluación", time:`${Math.round(sc.days*0.1)}–${Math.round(sc.days*0.2)} días`,
+     desc:"Aislamiento de sistemas. IES con BCDR activo contienen en horas. Sin plan: semanas."},
+    {phase:"Fase 2", dot:"#ffd700", title:"Remediación & Recuperación", time:`${Math.round(sc.days*0.3)}–${Math.round(sc.days*0.7)} días`,
+     desc:"Restauración de servicios críticos. El tiempo varía directamente con el nivel de madurez."},
+    {phase:"Fase 3", dot:"#29c6ff", title:"Retorno a Operación Normal", time:`${Math.round(sc.days*0.8)}–${sc.days} días`,
+     desc:"Operación completa restaurada. Inicio de análisis forense y reporte a autoridades."},
+    {phase:"Post-Crisis", dot:"#00e676", title:"Cumplimiento & Notificación", time:`${sc.days}–${sc.days*2} días`,
+     desc:"Notificación ARCOTEL/DPA, implementación de controles adicionales, auditoría post-incidente."},
+  ];
+
+  document.getElementById('timeline-container').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:0;">
+      ${phases.map(p=>`
+        <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+            <div style="width:14px;height:14px;border-radius:50%;background:${p.dot};border:2px solid #020029;flex-shrink:0;margin-top:2px;"></div>
+            <div style="width:2px;flex:1;background:#29c6ff22;min-height:20px;"></div>
+          </div>
+          <div style="padding-bottom:4px;">
+            <div style="font-size:0.6rem;font-weight:700;color:${p.dot};text-transform:uppercase;letter-spacing:1px;">${p.phase}</div>
+            <div style="font-size:0.72rem;font-weight:700;color:#fff;margin:2px 0;">${p.title}</div>
+            <div style="font-size:0.6rem;color:#ff4444;font-weight:600;margin-bottom:3px;">⏱ ${p.time}</div>
+            <div style="font-size:0.6rem;color:#aaa;line-height:1.5;">${p.desc}</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ─── CRITICAL TABLE ───
+function buildCriticalTable() {
+  const tbody = document.getElementById('critical-body');
+  const critical = rankingData.filter(d=>d.score<65).sort((a,b)=>a.score-b.score);
+  tbody.innerHTML = critical.map(d => {
+    const factor = d.score < 50 ? 'Extremo' : d.score < 60 ? 'Muy Alto' : 'Alto';
+    const fcls = d.score < 50 ? 'critical' : d.score < 60 ? 'high' : 'medium';
+    const prio = d.score < 50 ? '🔴 Inmediata' : d.score < 60 ? '🟠 Urgente' : '🟡 Alta';
+    return `<tr>
+      <td style="font-weight:700;color:#fff;">${d.ins}</td>
+      <td style="color:#ff4444;font-weight:700;">${d.score.toFixed(1)}</td>
+      <td><span class="grade g${d.grade}">${d.grade}</span></td>
+      <td><span class="risk ${fcls}">${factor}</span></td>
+      <td style="font-size:0.65rem;font-weight:600;">${prio}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── UPDATE KPIs ───
+function updateKPIs() {
+  const sc = scenarios[currentScenario];
+  const totalMulTask = madurezData.reduce((s,d)=>s+d.multa*sc.mult,0);
+  document.getElementById('kpi-multa').textContent = fmtCurrency(Math.round(totalMulTask));
+  document.getElementById('kpi-multa-sub').textContent = `${currentScenario==='combinado'?'Escenario devastación máxima':currentScenario==='filtracion'?'Filtración masiva PDP':'Cifrado + exfiltración'} · 21 IES analizadas`;
+  document.getElementById('kpi-recuperacion').textContent = sc.days + ' días';
+  document.getElementById('kpi-rec-sub').textContent = sc.label + ' — promedio IES críticas';
+}
+
+// ─── MAP ───
+let map, heatLayer, markersLayer;
+const iesToCoords = {
+  "UTN":{lat:0.3488,lng:-78.1246,score:97.25,grade:"A"},
+  "ESPE":{lat:-0.3341,lng:-78.4522,score:89.25,grade:"B"},
+  "USFQ":{lat:-0.1972,lng:-78.4369,score:89.5,grade:"B"},
+  "UDLA":{lat:-0.2299,lng:-78.5250,score:91.0,grade:"A"},
+  "PUCE":{lat:-0.2299,lng:-78.5250,score:69.75,grade:"D"},
+  "UCE":{lat:-0.2299,lng:-78.5250,score:75.0,grade:"C"},
+  "UTE":{lat:-0.2299,lng:-78.5250,score:88.5,grade:"B"},
+  "UISRAEL":{lat:-0.2299,lng:-78.5250,score:80.5,grade:"B"},
+  "ESPOL":{lat:-2.1960,lng:-79.8860,score:85.25,grade:"B"},
+  "UG":{lat:-2.1960,lng:-79.8860,score:84.0,grade:"B"},
+  "UCSG":{lat:-2.1960,lng:-79.8860,score:69.0,grade:"D"},
+  "UARTES":{lat:-2.1960,lng:-79.8860,score:72.0,grade:"C"},
+  "ITB":{lat:-2.1960,lng:-79.8860,score:59.5,grade:"F"},
+  "UCUENCA":{lat:-2.8950,lng:-78.9960,score:77.5,grade:"C"},
+  "UCACUE":{lat:-2.8950,lng:-78.9960,score:50.75,grade:"F"},
+  "UDA":{lat:-2.8950,lng:-78.9960,score:61.0,grade:"D"},
+  "UPS":{lat:-2.8950,lng:-78.9960,score:83.5,grade:"B"},
+  "ESPOCH":{lat:-1.6743,lng:-78.6484,score:57.5,grade:"F"},
+  "UNACH":{lat:-1.6743,lng:-78.6484,score:56.75,grade:"F"},
+  "UTA":{lat:-1.2490,lng:-78.6170,score:66.25,grade:"D"},
+  "UNAE":{lat:-2.7397,lng:-78.8486,score:74.5,grade:"C"},
+  "ESPAM":{lat:-0.8458,lng:-80.1639,score:63.25,grade:"D"},
+  "IKIAM":{lat:-0.9892,lng:-77.8153,score:93.75,grade:"A"},
+  "UEA":{lat:-1.4916,lng:-78.0034,score:80.25,grade:"B"},
+  "UEB":{lat:-1.5926,lng:-79.0010,score:78.0,grade:"C"},
+  "UOTAVALO":{lat:0.2346,lng:-78.2625,score:80.5,grade:"B"},
+  "UPEC":{lat:0.8124,lng:-77.7171,score:56.0,grade:"F"},
+  "USGP":{lat:-1.0576,lng:-80.4515,score:56.75,grade:"F"},
+  "UTB":{lat:-1.8038,lng:-79.5351,score:52.75,grade:"F"},
+  "UTC":{lat:-0.9342,lng:-78.6152,score:74.0,grade:"C"},
+  "UTELVT":{lat:0.9592,lng:-79.6520,score:60.5,grade:"D"},
+  "UTEQ":{lat:-1.0286,lng:-79.4635,score:45.5,grade:"F"},
+  "UTMACH":{lat:-3.2590,lng:-79.9590,score:67.0,grade:"D"},
+  "UNL":{lat:-3.9930,lng:-79.2040,score:87.0,grade:"B"},
+  "ITSCO":{lat:-0.2299,lng:-78.5250,score:66.0,grade:"D"},
+  "UINPIAW":{lat:-0.2299,lng:-78.5250,score:67.0,grade:"D"},
+  "UESFN":{lat:-1.6743,lng:-78.6484,score:22.0,grade:"F"},
+  "UTPL":{lat:-3.9930,lng:-79.2040,score:62.0,grade:"D"},
+};
+
+function getGradeColor(grade) {
+  return {A:'#00e676',B:'#29c6ff',C:'#ffd700',D:'#ff8c00',F:'#ff4444'}[grade]||'#888';
+}
+
+function initMap() {
+  map = L.map('crisis-map', {
+    center: [-1.5, -78.5],
+    zoom: 6,
+    zoomControl: true,
+    attributionControl: false
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '',
+    subdomains: 'abcd',
+    maxZoom: 18
+  }).addTo(map);
+
+  markersLayer = L.layerGroup().addTo(map);
+  buildHeatAndMarkers('all');
+}
+
+function buildHeatAndMarkers(filter) {
+  if(heatLayer) map.removeLayer(heatLayer);
+  if(markersLayer) markersLayer.clearLayers();
+
+  const pts = [];
+  Object.entries(iesToCoords).forEach(([ins,d]) => {
+    let show = true;
+    if(filter === 'F') show = d.grade === 'D' || d.grade === 'F';
+    else if(filter === 'B') show = d.grade === 'B' || d.grade === 'C';
+    else if(filter === 'A') show = d.grade === 'A';
+    if(!show) return;
+
+    // heat intensity: worse = hotter
+    const intensity = Math.max(0.2, (100 - d.score) / 100 * 1.2);
+    pts.push([d.lat, d.lng, intensity]);
+
+    const col = getGradeColor(d.grade);
+    const circle = L.circleMarker([d.lat, d.lng], {
+      radius: 8,
+      fillColor: col,
+      color: col,
+      weight: 2,
+      opacity: 0.9,
+      fillOpacity: 0.7
+    }).bindPopup(`<div style="font-family:Montserrat,Arial;background:#0c0c43;color:#e2e3d5;padding:10px;border-radius:8px;border:1px solid ${col};min-width:160px;">
+      <b style="color:${col};font-size:14px;">${ins}</b><br>
+      <span style="font-size:11px;">Score: <b style="color:#fff">${d.score.toFixed(1)}</b></span><br>
+      <span style="font-size:11px;">Grade: <b style="color:${col}">${d.grade}</b></span><br>
+      <span style="font-size:10px;color:#888;">Click para detalles</span>
+    </div>`, {
+      className: 'custom-popup',
+      maxWidth: 200
+    });
+    markersLayer.addLayer(circle);
+  });
+
+  heatLayer = L.heatLayer(pts, {
+    radius: 40, blur: 30, maxZoom: 10,
+    gradient: {0.0:'#000066',0.2:'#0000ff',0.4:'#ffd700',0.7:'#ff8c00',1.0:'#ff0000'}
+  }).addTo(map);
+}
+
+function filterMap(f) {
+  document.querySelectorAll('[id^="mapBtn-"]').forEach(b=>b.classList.remove('active'));
+  document.getElementById('mapBtn-'+f).classList.add('active');
+  buildHeatAndMarkers(f);
+}
+
+// ─── INIT ───
+window.addEventListener('load', () => {
+  buildRankingTable();
+  buildGradeChart();
+  buildMadurMulChart();
+  buildMultasChart();
+  buildRoiPanel();
+  buildImpactMatrix();
+  buildRadarChart();
+  buildTimeline();
+  buildCriticalTable();
+  updateKPIs();
+  setTimeout(initMap, 300);
+});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
