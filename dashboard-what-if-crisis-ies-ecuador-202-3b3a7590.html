@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;height:1080px;max-height:1080px;overflow:hidden;font-family:'Montserrat','Arial',sans-serif;background:#020029;color:#e2e3d5;}
+  .dashboard{display:flex;flex-direction:column;height:1080px;max-height:1080px;overflow:hidden;}
+  .header{height:56px;flex-shrink:0;background:linear-gradient(90deg,#020029 0%,#0c0c43 60%,#273dd5 100%);display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:2px solid #29c6ff;}
+  .header-left{display:flex;align-items:center;gap:14px;}
+  .header img{height:28px;object-fit:contain;}
+  .header-title{font-size:13px;font-weight:700;color:#fff;letter-spacing:0.5px;}
+  .header-sub{font-size:10px;color:#29c6ff;font-weight:500;}
+  .header-badge{background:#29c6ff;color:#020029;font-size:9px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:1px;}
+  .nav{height:44px;flex-shrink:0;background:#0c0c43;display:flex;align-items:center;gap:2px;padding:0 16px;border-bottom:1px solid #273dd5;}
+  .tab-btn{background:transparent;border:none;color:#a0a8cc;font-size:10px;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Montserrat','Arial',sans-serif;letter-spacing:0.5px;transition:all .2s;}
+  .tab-btn.active{background:#273dd5;color:#fff;}
+  .tab-btn:hover:not(.active){background:#1a1a5e;color:#29c6ff;}
+  .content{height:960px;max-height:960px;overflow:hidden;position:relative;}
+  .tab-panel{display:none;height:960px;max-height:960px;overflow-y:auto;overflow-x:hidden;padding:16px;}
+  .tab-panel.active{display:block;}
+  /* KPI Row */
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px;}
+  .kpi-card{background:linear-gradient(135deg,#0c0c43,#1a1a5e);border:1px solid #273dd5;border-radius:10px;padding:12px 10px;text-align:center;}
+  .kpi-card.danger{border-color:#ff4d6d;background:linear-gradient(135deg,#1a0018,#3d0030);}
+  .kpi-card.warn{border-color:#ffd166;background:linear-gradient(135deg,#1a1200,#3d2e00);}
+  .kpi-card.ok{border-color:#06d6a0;background:linear-gradient(135deg,#001a14,#003d2e);}
+  .kpi-card.accent{border-color:#29c6ff;background:linear-gradient(135deg,#001a2e,#003d5e);}
+  .kpi-val{font-size:22px;font-weight:900;color:#29c6ff;line-height:1.1;}
+  .kpi-card.danger .kpi-val{color:#ff4d6d;}
+  .kpi-card.warn .kpi-val{color:#ffd166;}
+  .kpi-card.ok .kpi-val{color:#06d6a0;}
+  .kpi-label{font-size:9px;font-weight:600;color:#a0a8cc;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;}
+  .kpi-sub{font-size:8px;color:#7080aa;margin-top:2px;}
+  /* Grid 2col */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+  .card{background:#0c0c43;border:1px solid #1e2a6e;border-radius:10px;padding:14px;}
+  .card-title{font-size:10px;font-weight:700;color:#29c6ff;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;border-bottom:1px solid #1e2a6e;padding-bottom:6px;}
+  .chart-wrap{height:220px;max-height:220px;position:relative;}
+  /* Table */
+  .tbl{width:100%;border-collapse:collapse;font-size:9px;}
+  .tbl th{background:#1a1a5e;color:#29c6ff;padding:5px 8px;text-align:left;font-weight:700;font-size:8px;text-transform:uppercase;}
+  .tbl td{padding:4px 8px;border-bottom:1px solid #1e2a6e;color:#c8d0e8;}
+  .tbl tr:hover td{background:#1a1a5e;}
+  .badge{display:inline-block;padding:2px 7px;border-radius:8px;font-size:8px;font-weight:700;}
+  .badge-A{background:#06d6a0;color:#001a14;}
+  .badge-B{background:#29c6ff;color:#001a2e;}
+  .badge-C{background:#ffd166;color:#1a1200;}
+  .badge-D{background:#ff9f1c;color:#1a0800;}
+  .badge-F{background:#ff4d6d;color:#1a0018;}
+  .badge-ALTO{background:#ff4d6d;color:#fff;}
+  .badge-MEDIO{background:#ffd166;color:#1a1200;}
+  .badge-BAJO{background:#06d6a0;color:#001a14;}
+  /* Simulator */
+  .sim-container{display:grid;grid-template-columns:340px 1fr;gap:14px;height:860px;}
+  .sim-panel{background:#0c0c43;border:1px solid #1e2a6e;border-radius:10px;padding:16px;overflow-y:auto;}
+  .sim-result{background:#0c0c43;border:1px solid #1e2a6e;border-radius:10px;padding:16px;overflow-y:auto;}
+  .form-group{margin-bottom:12px;}
+  .form-label{font-size:9px;font-weight:700;color:#a0a8cc;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;display:block;}
+  .form-select,.form-range{width:100%;background:#020029;border:1px solid #273dd5;color:#e2e3d5;padding:7px 10px;border-radius:6px;font-family:'Montserrat','Arial',sans-serif;font-size:10px;}
+  .form-range{padding:4px 0;accent-color:#29c6ff;}
+  .range-val{font-size:11px;font-weight:700;color:#29c6ff;display:inline-block;margin-left:8px;}
+  .btn-sim{background:linear-gradient(90deg,#273dd5,#29c6ff);border:none;color:#fff;font-weight:800;font-size:11px;padding:10px 0;width:100%;border-radius:8px;cursor:pointer;font-family:'Montserrat','Arial',sans-serif;letter-spacing:1px;margin-top:8px;}
+  .btn-sim:hover{opacity:0.85;}
+  .result-kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+  .result-kpi{background:#020029;border:1px solid #273dd5;border-radius:8px;padding:10px;text-align:center;}
+  .result-kpi.red{border-color:#ff4d6d;}
+  .result-kpi.yellow{border-color:#ffd166;}
+  .result-kpi.green{border-color:#06d6a0;}
+  .result-kpi .rv{font-size:18px;font-weight:900;color:#29c6ff;}
+  .result-kpi.red .rv{color:#ff4d6d;}
+  .result-kpi.yellow .rv{color:#ffd166;}
+  .result-kpi.green .rv{color:#06d6a0;}
+  .result-kpi .rl{font-size:8px;color:#7080aa;font-weight:600;margin-top:3px;text-transform:uppercase;}
+  .progress-bar-wrap{margin-bottom:8px;}
+  .pb-label{font-size:9px;color:#a0a8cc;display:flex;justify-content:space-between;margin-bottom:3px;}
+  .pb-track{background:#020029;border-radius:4px;height:8px;overflow:hidden;}
+  .pb-fill{height:8px;border-radius:4px;transition:width .5s;}
+  .insight-box{background:#020029;border-left:3px solid #29c6ff;border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:8px;font-size:9px;color:#c8d0e8;line-height:1.5;}
+  .insight-box.red{border-color:#ff4d6d;}
+  .insight-box.yellow{border-color:#ffd166;}
+  .insight-box.ok{border-color:#06d6a0;}
+  /* Map tab */
+  #map{height:420px;border-radius:10px;border:1px solid #273dd5;}
+  .map-legend{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;}
+  .map-leg-item{display:flex;align-items:center;gap:5px;font-size:9px;color:#a0a8cc;}
+  .map-leg-dot{width:12px;height:12px;border-radius:50%;}
+  /* Vuln tab */
+  .vuln-bar{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+  .vuln-name{font-size:9px;color:#a0a8cc;width:260px;flex-shrink:0;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+  .vuln-track{flex:1;background:#020029;border-radius:4px;height:14px;overflow:hidden;}
+  .vuln-fill{height:14px;border-radius:4px;display:flex;align-items:center;padding-left:6px;font-size:8px;font-weight:700;color:#fff;}
+  .section-title{font-size:11px;font-weight:800;color:#e2e3d5;margin-bottom:8px;margin-top:4px;}
+  .alert-banner{background:linear-gradient(90deg,#3d0030,#1a0018);border:1px solid #ff4d6d;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:9px;color:#ff9fba;display:flex;align-items:center;gap:10px;}
+  .alert-icon{font-size:16px;}
+</style>
+
+<div class="dashboard">
+  <div class="header">
+    <div class="header-left">
+      <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA">
+      <div>
+        <div class="header-title">SIMULADOR DE CRISIS WHAT-IF &nbsp;|&nbsp; Impacto por Ransomware & Filtración Masiva</div>
+        <div class="header-sub">Ecosistema IES Ecuador &nbsp;·&nbsp; Período: Dic 2025 – Mar 2026 &nbsp;·&nbsp; 71 instituciones analizadas</div>
+      </div>
+    </div>
+    <div class="header-badge">⚡ ANÁLISIS EJECUTIVO · 2026</div>
+  </div>
+
+  <div class="nav">
+    <button class="tab-btn active" onclick="showTab('panorama')">🌐 Panorama General</button>
+    <button class="tab-btn" onclick="showTab('simulator')">⚡ Simulador What-If</button>
+    <button class="tab-btn" onclick="showTab('mapa')">🗺️ Mapa de Riesgo</button>
+    <button class="tab-btn" onclick="showTab('ranking')">🏆 Ranking IES</button>
+    <button class="tab-btn" onclick="showTab('vulnerabilidades')">🛡️ Vulnerabilidades</button>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== TAB 1: PANORAMA ===== -->
+    <div id="tab-panorama" class="tab-panel active">
+      <div class="alert-banner">
+        <span class="alert-icon">⚠️</span>
+        <span><strong>Alerta Crítica del Ecosistema:</strong> El 100% de las issues activas (9,425) permanecen sin resolver. Credenciales comprometidas detectadas en 584 instancias. 5 IES en zona crítica de madurez (&lt;21%). El costo total proyectado en multas supera los <strong>$49.4 millones USD</strong>.</span>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-card danger">
+          <div class="kpi-val">$49.4M</div>
+          <div class="kpi-label">Exposición Total en Multas</div>
+          <div class="kpi-sub">21 IES evaluadas</div>
+        </div>
+        <div class="kpi-card danger">
+          <div class="kpi-val">9,425</div>
+          <div class="kpi-label">Issues Activas Sin Resolver</div>
+          <div class="kpi-sub">100% pendientes</div>
+        </div>
+        <div class="kpi-card warn">
+          <div class="kpi-val">55%</div>
+          <div class="kpi-label">Madurez Promedio Ecosistema</div>
+          <div class="kpi-sub">Mediana: 56% · IQ: 34%</div>
+        </div>
+        <div class="kpi-card warn">
+          <div class="kpi-val">27</div>
+          <div class="kpi-label">IES en Score D/F (Nessus)</div>
+          <div class="kpi-sub">46.6% del ecosistema</div>
+        </div>
+        <div class="kpi-card ok">
+          <div class="kpi-val">6</div>
+          <div class="kpi-label">IES Líderes ≥73% Madurez</div>
+          <div class="kpi-sub">ITSCO, ESPOL, UNL, UTPL…</div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">📊 Distribución de IES por Calificación Combinada (SSC + Nessus)</div>
+          <div class="chart-wrap"><canvas id="chartGrade"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">💰 Top 8 IES — Mayor Exposición en Multas (USD)</div>
+          <div class="chart-wrap"><canvas id="chartMultas"></canvas></div>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <div class="card-title">📈 Madurez vs Multas — Correlación</div>
+          <div class="chart-wrap"><canvas id="chartScatter"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔥 Top Issues por Severidad</div>
+          <div class="chart-wrap"><canvas id="chartSeverity"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">🏗️ Categorías de Madurez Ecosistema</div>
+          <div style="padding-top:8px;">
+            <div class="progress-bar-wrap">
+              <div class="pb-label"><span>🟢 Líderes (≥73%)</span><span>6 IES — 28.6%</span></div>
+              <div class="pb-track"><div class="pb-fill" style="width:28.6%;background:#06d6a0;"></div></div>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="pb-label"><span>🟡 En Desarrollo (40–73%)</span><span>10 IES — 47.6%</span></div>
+              <div class="pb-track"><div class="pb-fill" style="width:47.6%;background:#ffd166;"></div></div>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="pb-label"><span>🔴 Zona Crítica (&lt;40%)</span><span>5 IES — 23.8%</span></div>
+              <div class="pb-track"><div class="pb-fill" style="width:23.8%;background:#ff4d6d;"></div></div>
+            </div>
+            <div style="height:10px;"></div>
+            <div class="insight-box">
+              <strong>Zona Crítica:</strong> USGP (38%), UINPIAW (32%), UPEC (23%), ESPAM (21%), SUDAMERICANO (19%). Estas 5 instituciones combinan alta exposición en multas con las capacidades defensivas más bajas del ecosistema.
+            </div>
+            <div class="insight-box ok">
+              <strong>IES mejor posicionadas:</strong> ITSCO (87%), ESPOL (83%), UNL y UTPL (81%), IKIAM (77%), UCUENCA (73%). Su inversión preventiva ha generado la menor exposición financiera relativa del ecosistema.
+            </div>
+            <div class="insight-box red">
+              <strong>Riesgo de volatilidad:</strong> El coeficiente de variación de multas alcanza 193.96%, señalando que el impacto financiero es extremadamente asimétrico: pocas IES concentran la mayor parte del riesgo total.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 2: SIMULADOR ===== -->
+    <div id="tab-simulator" class="tab-panel">
+      <div class="sim-container">
+        <div class="sim-panel">
+          <div class="card-title" style="font-size:12px;margin-bottom:14px;">⚙️ CONFIGURAR ESCENARIO DE CRISIS</div>
+
+          <div class="form-group">
+            <label class="form-label">Institución objetivo</label>
+            <select class="form-select" id="simIES" onchange="updateSim()">
+              <option value="ITSCO|87|68929|LIDER">ITSCO — Madurez 87%</option>
+              <option value="ESPOL|83|3619|LIDER">ESPOL — Madurez 83%</option>
+              <option value="UNL|81|32670|LIDER">UNL — Madurez 81%</option>
+              <option value="UTPL|81|57103|LIDER">UTPL — Madurez 81%</option>
+              <option value="IKIAM|77|9285|LIDER">IKIAM — Madurez 77%</option>
+              <option value="UCUENCA|73|38197|LIDER">UCUENCA — Madurez 73%</option>
+              <option value="ESPE|73|109997|DESARROLLO" selected>ESPE — Madurez 73%</option>
+              <option value="PUCE|68|7499641|DESARROLLO">PUCE — Madurez 68%</option>
+              <option value="UPS|59|8138645|DESARROLLO">UPS — Madurez 59%</option>
+              <option value="MCUENCA|56|141058|DESARROLLO">MCUENCA — Madurez 56%</option>
+              <option value="UNIANDES|56|111320|DESARROLLO">UNIANDES — Madurez 56%</option>
+              <option value="UDA|53|9456196|DESARROLLO">UDA — Madurez 53%</option>
+              <option value="ARMADA|47|151861|DESARROLLO">ARMADA — Madurez 47%</option>
+              <option value="UCACUE|44|17290567|DESARROLLO">UCACUE — Madurez 44%</option>
+              <option value="ISTE|43|109947|DESARROLLO">ISTE — Madurez 43%</option>
+              <option value="UTELVT|40|265818|CRITICO">UTELVT — Madurez 40% ⚠️</option>
+              <option value="USGP|38|740254|CRITICO">USGP — Madurez 38% ⚠️</option>
+              <option value="UINPIAW|32|99565|CRITICO">UINPIAW — Madurez 32% 🔴</option>
+              <option value="UPEC|23|224666|CRITICO">UPEC — Madurez 23% 🔴</option>
+              <option value="ESPAM|21|4452364|CRITICO">ESPAM — Madurez 21% 🔴</option>
+              <option value="SUDAMERICANO|19|353194|CRITICO">SUDAMERICANO — Madurez 19% 🔴</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tipo de incidente</label>
+            <select class="form-select" id="simTipo" onchange="updateSim()">
+              <option value="ransomware">🔒 Ransomware Masivo</option>
+              <option value="filtracion">📤 Filtración Masiva de Datos</option>
+              <option value="ambos">⚡ Ransomware + Filtración Combinados</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Escala del incidente: <span class="range-val" id="escalaVal">5</span> / 10</label>
+            <input type="range" class="form-range" id="simEscala" min="1" max="10" value="5" oninput="document.getElementById('escalaVal').textContent=this.value;updateSim()">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Inversión preventiva aplicada: $<span class="range-val" id="inversion">50K</span></label>
+            <input type="range" class="form-range" id="simInversion" min="0" max="500" value="50" oninput="document.getElementById('inversion').textContent=this.value+'K';updateSim()">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Registros de datos personales afectados</label>
+            <select class="form-select" id="simRegistros" onchange="updateSim()">
+              <option value="1000">Bajo (< 5,000 registros)</option>
+              <option value="10000" selected>Medio (10,000 – 50,000)</option>
+              <option value="100000">Alto (50,000 – 500,000)</option>
+              <option value="500000">Crítico (> 500,000)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">¿Tiene plan de continuidad activo?</label>
+            <select class="form-select" id="simBCP" onchange="updateSim()">
+              <option value="no">No / No documentado</option>
+              <option value="parcial">Parcial / En desarrollo</option>
+              <option value="si">Sí / Implementado y probado</option>
+            </select>
+          </div>
+
+          <button class="btn-sim" onclick="updateSim()">▶ CALCULAR ESCENARIO</button>
+        </div>
+
+        <div class="sim-result">
+          <div class="card-title" style="font-size:12px;margin-bottom:12px;" id="simTitulo">📋 RESULTADO: ESPE — Ransomware Masivo · Escala 5</div>
+          <div class="result-kpi-row">
+            <div class="result-kpi red"><div class="rv" id="rCostoTotal">$0</div><div class="rl">Costo Total Estimado</div></div>
+            <div class="result-kpi red"><div class="rv" id="rMulta">$0</div><div class="rl">Multa Regulatoria Proyectada</div></div>
+            <div class="result-kpi yellow"><div class="rv" id="rRecuperacion">0 días</div><div class="rl">Tiempo Recuperación Operativa</div></div>
+            <div class="result-kpi yellow"><div class="rv" id="rReputacion">0/10</div><div class="rl">Impacto Reputacional</div></div>
+            <div class="result-kpi green"><div class="rv" id="rPreventivo">$0</div><div class="rl">Ahorro c/ Inversión Preventiva</div></div>
+            <div class="result-kpi green"><div class="rv" id="rROI">0x</div><div class="rl">ROI de Prevención</div></div>
+          </div>
+
+          <div class="grid2" style="margin-bottom:10px;">
+            <div>
+              <div class="section-title">📉 Distribución del Costo del Incidente</div>
+              <div style="height:160px;max-height:160px;position:relative;"><canvas id="chartCosto"></canvas></div>
+            </div>
+            <div>
+              <div class="section-title">⏱️ Fases de Recuperación Operativa</div>
+              <div style="height:160px;max-height:160px;position:relative;"><canvas id="chartRecuperacion"></canvas></div>
+            </div>
+          </div>
+
+          <div id="simInsights">
+            <div class="insight-box" id="ins1"></div>
+            <div class="insight-box red" id="ins2"></div>
+            <div class="insight-box yellow" id="ins3"></div>
+            <div class="insight-box ok" id="ins4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 3: MAPA ===== -->
+    <div id="tab-mapa" class="tab-panel">
+      <div class="grid2" style="margin-bottom:10px;">
+        <div>
+          <div class="section-title">🗺️ Distribución Geográfica del Riesgo de Seguridad — Ecuador</div>
+          <div id="map"></div>
+          <div class="map-legend">
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#06d6a0;"></div>Score A — Excelente</div>
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#29c6ff;"></div>Score B — Bueno</div>
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#ffd166;"></div>Score C — Moderado</div>
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#ff9f1c;"></div>Score D — Deficiente</div>
+            <div class="map-leg-item"><div class="map-leg-dot" style="background:#ff4d6d;"></div>Score F — Crítico</div>
+          </div>
+        </div>
+        <div class="card" style="overflow-y:auto;max-height:480px;">
+          <div class="card-title">🔍 Análisis por Región</div>
+          <div class="insight-box">
+            <strong>🔴 Riobamba — Alta criticidad:</strong> ESPOCH (57.5) y UNACH (56.75) concentran dos instituciones con score F en el centro del país. Zona de mayor rezago técnico en la Sierra central.
+          </div>
+          <div class="insight-box red">
+            <strong>🔴 Guayaquil — Riesgo mixto:</strong> ESPOL lidera la región con score B (85.25), pero ITB (59.5, F) y UCSG (69, D) elevan el riesgo del litoral. La disparidad intraregional es marcada.
+          </div>
+          <div class="insight-box yellow">
+            <strong>🟡 Quito — Zona heterogénea:</strong> UCE (75, C), UISRAEL (80.5, B) y PUCE (69.75, D) conviven en la capital. Ninguna institución quiteña alcanza score A en el combinado.
+          </div>
+          <div class="insight-box">
+            <strong>🟢 Ibarra — Mejor rendimiento:</strong> UTN (97.25) es la institución mejor rankeada de todo el ecosistema, posicionando al norte del país como la zona de mayor madurez relativa.
+          </div>
+          <div class="insight-box ok">
+            <strong>🟢 Portoviejo / Manabí — Alerta doble:</strong> USGP (56.75, F) y ESPAM (63.25, D) representan las mayores vulnerabilidades de la costa central. Su exposición en multas combinada supera los $5.2M.
+          </div>
+          <div class="insight-box">
+            <strong>🟡 Sierra Sur — Cuenca:</strong> UCUENCA (77.5, C) y UDA (61, D) muestran una brecha interna importante. UCACUE con score F es la institución con mayor exposición financiera del ecosistema ($17.3M en multas).
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Score Combinado por Ciudad Sede</div>
+        <div style="height:160px;max-height:160px;position:relative;"><canvas id="chartCiudad"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 4: RANKING ===== -->
+    <div id="tab-ranking" class="tab-panel">
+      <div class="kpi-row" style="grid-template-columns:repeat(5,1fr);">
+        <div class="kpi-card ok"><div class="kpi-val">7</div><div class="kpi-label">IES Grado A</div><div class="kpi-sub">Score ≥90 combinado</div></div>
+        <div class="kpi-card accent"><div class="kpi-val">16</div><div class="kpi-label">IES Grado B</div><div class="kpi-sub">Score 80–89</div></div>
+        <div class="kpi-card warn"><div class="kpi-val">14</div><div class="kpi-label">IES Grado C</div><div class="kpi-sub">Score 70–79</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="color:#ff9f1c;">14</div><div class="kpi-label">IES Grado D</div><div class="kpi-sub">Score 60–69</div></div>
+        <div class="kpi-card danger"><div class="kpi-val">20</div><div class="kpi-label">IES Grado F</div><div class="kpi-sub">Score &lt;60 — Crítico</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card" style="overflow-y:auto;max-height:720px;">
+          <div class="card-title">🏆 TOP 20 — Mejores IES</div>
+          <table class="tbl">
+            <tr><th>#</th><th>Institución</th><th>Score</th><th>Grade</th><th>SSC</th><th>Nessus</th></tr>
+            <tr><td>1</td><td>UTN</td><td>97.25</td><td><span class="badge badge-A">A</span></td><td>95</td><td>99.5</td></tr>
+            <tr><td>2</td><td>ACAC</td><td>97.0</td><td><span class="badge badge-A">A</span></td><td>97</td><td>—</td></tr>
+            <tr><td>3</td><td>ISTE</td><td>95.0</td><td><span class="badge badge-A">A</span></td><td>95</td><td>—</td></tr>
+            <tr><td>4</td><td>PUCE-SA</td><td>94.0</td><td><span class="badge badge-A">A</span></td><td>—</td><td>94</td></tr>
+            <tr><td>5</td><td>IKIAM</td><td>93.75</td><td><span class="badge badge-A">A</span></td><td>94</td><td>93.5</td></tr>
+            <tr><td>6</td><td>UDLA</td><td>91.0</td><td><span class="badge badge-A">A</span></td><td>89</td><td>93</td></tr>
+            <tr><td>7</td><td>UTM</td><td>90.0</td><td><span class="badge badge-A">A</span></td><td>90</td><td>—</td></tr>
+            <tr><td>8</td><td>USFQ</td><td>89.5</td><td><span class="badge badge-B">B</span></td><td>84</td><td>95</td></tr>
+            <tr><td>9</td><td>ESPE</td><td>89.25</td><td><span class="badge badge-B">B</span></td><td>92</td><td>86.5</td></tr>
+            <tr><td>10</td><td>UTE</td><td>88.5</td><td><span class="badge badge-B">B</span></td><td>80</td><td>97</td></tr>
+            <tr><td>11</td><td>CEDIA</td><td>87.0</td><td><span class="badge badge-B">B</span></td><td>87</td><td>—</td></tr>
+            <tr><td>12</td><td>TECSU</td><td>87.0</td><td><span class="badge badge-B">B</span></td><td>95</td><td>79</td></tr>
+            <tr><td>13</td><td>UNL</td><td>87.0</td><td><span class="badge badge-B">B</span></td><td>84</td><td>90</td></tr>
+            <tr><td>14</td><td>ESPOL</td><td>85.25</td><td><span class="badge badge-B">B</span></td><td>73</td><td>97.5</td></tr>
+            <tr><td>15</td><td>UG</td><td>84.0</td><td><span class="badge badge-B">B</span></td><td>77</td><td>91</td></tr>
+            <tr><td>16</td><td>UPS</td><td>83.5</td><td><span class="badge badge-B">B</span></td><td>87</td><td>80</td></tr>
+            <tr><td>17</td><td>IAEN</td><td>83.0</td><td><span class="badge badge-B">B</span></td><td>100</td><td>66</td></tr>
+            <tr><td>18</td><td>WISSEN</td><td>82.5</td><td><span class="badge badge-B">B</span></td><td>92</td><td>73</td></tr>
+            <tr><td>19</td><td>CES</td><td>81.0</td><td><span class="badge badge-B">B</span></td><td>81</td><td>—</td></tr>
+            <tr><td>20</td><td>UISRAEL</td><td>80.5</td><td><span class="badge badge-B">B</span></td><td>61</td><td>100</td></tr>
+          </table>
+        </div>
+        <div class="card" style="overflow-y:auto;max-height:720px;">
+          <div class="card-title">🔴 BOTTOM 20 — IES en Mayor Riesgo</div>
+          <table class="tbl">
+            <tr><th>#</th><th>Institución</th><th>Score</th><th>Grade</th><th>Riesgo</th><th>Madurez</th></tr>
+            <tr><td>52</td><td>ESPOCH</td><td>57.5</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>53</td><td>UNACH</td><td>56.75</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>54</td><td>USGP</td><td>56.75</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>38%</td></tr>
+            <tr><td>55</td><td>UPEC</td><td>56.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>23%</td></tr>
+            <tr><td>56</td><td>ISTER</td><td>55.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>57</td><td>TES</td><td>55.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>58</td><td>UNIANDES</td><td>54.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>56%</td></tr>
+            <tr><td>59</td><td>UTB</td><td>52.75</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>60</td><td>UCACUE</td><td>50.75</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>44%</td></tr>
+            <tr><td>61</td><td>ITSVN</td><td>48.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>62</td><td>ARMADA</td><td>47.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>47%</td></tr>
+            <tr><td>63</td><td>UBE</td><td>46.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>64</td><td>UTEQ</td><td>45.5</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>65</td><td>UESFN</td><td>22.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+            <tr><td>66</td><td>ESPAM</td><td>63.25</td><td><span class="badge badge-D">D</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>21%</td></tr>
+            <tr><td>67</td><td>UINPIAW</td><td>67.0</td><td><span class="badge badge-D">D</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>32%</td></tr>
+            <tr><td>68</td><td>UTELVT</td><td>60.5</td><td><span class="badge badge-D">D</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>40%</td></tr>
+            <tr><td>69</td><td>SUDAMERICANO</td><td>71.0</td><td><span class="badge badge-C">C</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>19%</td></tr>
+            <tr><td>70</td><td>PUCE</td><td>69.75</td><td><span class="badge badge-D">D</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>68%</td></tr>
+            <tr><td>71</td><td>IES</td><td>0.0</td><td><span class="badge badge-F">F</span></td><td><span class="badge badge-ALTO">ALTO</span></td><td>—</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB 5: VULNERABILIDADES ===== -->
+    <div id="tab-vulnerabilidades" class="tab-panel">
+      <div class="kpi-row">
+        <div class="kpi-card danger"><div class="kpi-val">578</div><div class="kpi-label">Vulnerabilidades Críticas</div><div class="kpi-sub">Requieren acción inmediata</div></div>
+        <div class="kpi-card danger"><div class="kpi-val">838</div><div class="kpi-label">Issues Alta Severidad</div><div class="kpi-sub">Explotables activamente</div></div>
+        <div class="kpi-card warn"><div class="kpi-val">584</div><div class="kpi-label">Credenciales Comprometidas</div><div class="kpi-sub">Vector principal de acceso</div></div>
+        <div class="kpi-card warn"><div class="kpi-val">1,263</div><div class="kpi-label">Parches Pendientes</div><div class="kpi-sub">High + Critical cadence</div></div>
+        <div class="kpi-card"><div class="kpi-val" style="color:#a0a8cc;">13.5%</div><div class="kpi-label">Issues Resueltas</div><div class="kpi-sub">Solo 1,279 de 9,425</div></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">🔬 Top 15 Issues Más Frecuentes — Ecosistema CEDIA</div>
+          <div id="vulnBars"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">📊 Distribución por Severidad y Estado de Issues</div>
+          <div class="chart-wrap"><canvas id="chartVulnSev"></canvas></div>
+          <div style="margin-top:10px;">
+            <div class="insight-box red">
+              <strong>Credenciales comprometidas (584 instancias):</strong> Este es el vector de entrada más peligroso para ransomware. Una sola credencial válida puede comprometer una red entera en horas.
+            </div>
+            <div class="insight-box yellow">
+              <strong>Déficit crítico de parcheo:</strong> Con 544 instancias de alta severidad y 199 críticas sin parche, el ecosistema presenta una superficie de ataque masiva. El tiempo promedio de explotación post-publicación de CVE es de 15 días.
+            </div>
+            <div class="insight-box">
+              <strong>Certificados TLS sin revocar / auto-firmados (560 instancias):</strong> Facilitan ataques de intermediario (MITM) y phishing avanzado, comunes en etapas previas a ransomware.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+// ===== TAB NAVIGATION =====
+function showTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='mapa') setTimeout(initMap,200);
+}
+
+// ===== CHART 1: Grade Distribution =====
+const ctxGrade=document.getElementById('chartGrade').getContext('2d');
+new Chart(ctxGrade,{type:'doughnut',data:{labels:['A (97+)','B (80-89)','C (70-79)','D (60-69)','F (<60)'],datasets:[{data:[7,16,14,14,20],backgroundColor:['#06d6a0','#29c6ff','#ffd166','#ff9f1c','#ff4d6d'],borderColor:'#020029',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#c8d0e8',font:{size:10},padding:8}}}}});
+
+// ===== CHART 2: Multas Top 8 =====
+const ctxMultas=document.getElementById('chartMultas').getContext('2d');
+new Chart(ctxMultas,{type:'bar',data:{labels:['UCACUE','UDA','UPS','PUCE','ESPAM','USGP','SUDAMERICANO','UTELVT'],datasets:[{label:'Multas (USD)',data:[17290567,9456196,8138645,7499641,4452364,740254,353194,265818],backgroundColor:['#ff4d6d','#ff4d6d','#ff4d6d','#ff4d6d','#ff9f1c','#ff9f1c','#ffd166','#ffd166'],borderRadius:5}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#a0a8cc',font:{size:8},callback:v=>'$'+(v/1000000).toFixed(1)+'M'},grid:{color:'#1e2a6e'}},y:{ticks:{color:'#c8d0e8',font:{size:9}},grid:{display:false}}}}});
+
+// ===== CHART 3: Scatter Madurez vs Multas =====
+const ctxScatter=document.getElementById('chartScatter').getContext('2d');
+const scatterData=[
+  {x:87,y:68929,label:'ITSCO'},{x:83,y:3619,label:'ESPOL'},{x:81,y:32670,label:'UNL'},
+  {x:81,y:57103,label:'UTPL'},{x:77,y:9285,label:'IKIAM'},{x:73,y:38197,label:'UCUENCA'},
+  {x:73,y:109997,label:'ESPE'},{x:68,y:7499641,label:'PUCE'},{x:59,y:8138645,label:'UPS'},
+  {x:56,y:141058,label:'MCUENCA'},{x:56,y:111320,label:'UNIANDES'},{x:53,y:9456196,label:'UDA'},
+  {x:47,y:151861,label:'ARMADA'},{x:44,y:17290567,label:'UCACUE'},{x:43,y:109947,label:'ISTE'},
+  {x:40,y:265818,label:'UTELVT'},{x:38,y:740254,label:'USGP'},{x:32,y:99565,label:'UINPIAW'},
+  {x:23,y:224666,label:'UPEC'},{x:21,y:4452364,label:'ESPAM'},{x:19,y:353194,label:'SUDAMERICANO'}
+];
+new Chart(ctxScatter,{type:'scatter',data:{datasets:[{label:'IES',data:scatterData,backgroundColor:'#29c6ff',pointRadius:5,pointHoverRadius:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:d=>d.raw.label+': Madurez '+d.raw.x+'% | Multas $'+(d.raw.y/1000).toFixed(0)+'K'}}},scales:{x:{title:{display:true,text:'Madurez Digital (%)',color:'#a0a8cc',font:{size:9}},ticks:{color:'#a0a8cc',font:{size:8}},grid:{color:'#1e2a6e'}},y:{title:{display:true,text:'Multas (USD)',color:'#a0a8cc',font:{size:9}},ticks:{color:'#a0a8cc',font:{size:8},callback:v=>'$'+(v/1000000).toFixed(1)+'M'},grid:{color:'#1e2a6e'}}}}});
+
+// ===== CHART 4: Severity =====
+const ctxSev=document.getElementById('chartSeverity').getContext('2d');
+new Chart(ctxSev,{type:'polarArea',data:{labels:['Critical','High','Medium','Low'],datasets:[{data:[578,491,617,5626],backgroundColor:['rgba(255,77,109,0.8)','rgba(255,159,28,0.8)','rgba(255,209,102,0.8)','rgba(41,198,255,0.5)'],borderColor:['#ff4d6d','#ff9f1c','#ffd166','#29c6ff'],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#c8d0e8',font:{size:9},padding:6}}}}});
+
+// ===== MAP =====
+let mapInit=false;
+function initMap(){
+  if(mapInit)return;
+  mapInit=true;
+  const m=L.map('map',{zoomControl:true}).setView([-1.5,-78.5],6);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; CartoDB'}).addTo(m);
+  
+  const ies=[
+    {name:'UTN',lat:0.3488,lng:-78.1246,score:97.25,grade:'A'},
+    {name:'ESPE',lat:-0.3341,lng:-78.4522,score:89.25,grade:'B'},
+    {name:'UDLA',lat:-0.2299,lng:-78.5250,score:91.0,grade:'A'},
+    {name:'USFQ',lat:-0.1972,lng:-78.4369,score:89.5,grade:'B'},
+    {name:'PUCE',lat:-0.2299,lng:-78.5250,score:69.75,grade:'D'},
+    {name:'UCE',lat:-0.2299,lng:-78.5250,score:75.0,grade:'C'},
+    {name:'UTE',lat:-0.2299,lng:-78.5250,score:88.5,grade:'B'},
+    {name:'UISRAEL',lat:-0.2299,lng:-78.5250,score:80.5,grade:'B'},
+    {name:'ESPOL',lat:-2.196,lng:-79.886,score:85.25,grade:'B'},
+    {name:'UG',lat:-2.196,lng:-79.886,score:84.0,grade:'B'},
+    {name:'UCSG',lat:-2.196,lng:-79.886,score:69.0,grade:'D'},
+    {name:'ITB',lat:-2.196,lng:-79.886,score:59.5,grade:'F'},
+    {name:'UCUENCA',lat:-2.895,lng:-78.996,score:77.5,grade:'C'},
+    {name:'UCACUE',lat:-2.895,lng:-78.996,score:50.75,grade:'F'},
+    {name:'UDA',lat:-2.895,lng:-78.996,score:61.0,grade:'D'},
+    {name:'UPS',lat:-2.895,lng:-78.996,score:83.5,grade:'B'},
+    {name:'ESPOCH',lat:-1.6743,lng:-78.6484,score:57.5,grade:'F'},
+    {name:'UNACH',lat:-1.6743,lng:-78.6484,score:56.75,grade:'F'},
+    {name:'UTA',lat:-1.249,lng:-78.617,score:66.25,grade:'D'},
+    {name:'IKIAM',lat:-0.9892,lng:-77.8153,score:93.75,grade:'A'},
+    {name:'UEA',lat:-1.4916,lng:-78.0034,score:80.25,grade:'B'},
+    {name:'UEB',lat:-1.5926,lng:-79.001,score:78.0,grade:'C'},
+    {name:'UOTAVALO',lat:0.2346,lng:-78.2625,score:80.5,grade:'B'},
+    {name:'UPEC',lat:0.8124,lng:-77.7171,score:56.0,grade:'F'},
+    {name:'USGP',lat:-1.0576,lng:-80.4515,score:56.75,grade:'F'},
+    {name:'ESPAM',lat:-0.8458,lng:-80.1639,score:63.25,grade:'D'},
+    {name:'UTB',lat:-1.8038,lng:-79.5351,score:52.75,grade:'F'},
+    {name:'UTC',lat:-0.9342,lng:-78.6152,score:74.0,grade:'C'},
+    {name:'UTELVT',lat:0.9592,lng:-79.652,score:60.5,grade:'D'},
+    {name:'UTEQ',lat:-1.0286,lng:-79.4635,score:45.5,grade:'F'},
+    {name:'UTMACH',lat:-3.259,lng:-79.959,score:67.0,grade:'D'},
+    {name:'UNL',lat:-3.993,lng:-79.204,score:87.0,grade:'B'},
+    {name:'UNAE',lat:-2.7397,lng:-78.8486,score:74.5,grade:'C'},
+    {name:'IAEN',lat:-0.2299,lng:-78.525,score:83.0,grade:'B'}
+  ];
+  
+  const colorMap={A:'#06d6a0',B:'#29c6ff',C:'#ffd166',D:'#ff9f1c',F:'#ff4d6d'};
+  const heatPts=[];
+  ies.forEach(inst=>{
+    const intensity=(100-inst.score)/100;
+    heatPts.push([inst.lat,inst.lng,intensity+0.3]);
+    const col=colorMap[inst.grade]||'#a0a8cc';
+    L.circleMarker([inst.lat,inst.lng],{radius:7,fillColor:col,color:'#020029',weight:2,fillOpacity:0.9}).addTo(m).bindPopup(`<b>${inst.name}</b><br>Score: ${inst.score}<br>Grade: ${inst.grade}`);
+  });
+  
+  L.heatLayer(heatPts,{radius:45,blur:30,maxZoom:8,gradient:{0.0:'#06d6a0',0.3:'#29c6ff',0.55:'#ffd166',0.75:'#ff9f1c',1.0:'#ff4d6d'}}).addTo(m);
+}
+
+// ===== CHART CIUDAD =====
+const ctxCiudad=document.getElementById('chartCiudad').getContext('2d');
+new Chart(ctxCiudad,{type:'bar',data:{labels:['Ibarra','Cumbayá/Q','Sangolquí','Tena','Cuenca','Guayaquil','Latacunga','Riobamba','Machala','Loja','Portoviejo','Quevedo','Babahoyo'],datasets:[{label:'Score Promedio',data:[97.25,89.5,89.25,93.75,64.8,74.3,74.0,57.1,67.0,87.0,56.75,45.5,52.75],backgroundColor:['#06d6a0','#29c6ff','#29c6ff','#06d6a0','#ffd166','#ffd166','#ffd166','#ff4d6d','#ff9f1c','#29c6ff','#ff4d6d','#ff4d6d','#ff4d6d'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#a0a8cc',font:{size:8}},grid:{display:false}},y:{min:0,max:100,ticks:{color:'#a0a8cc',font:{size:8}},grid:{color:'#1e2a6e'}}}}});
+
+// ===== VULN BARS =====
+const vulnData=[
+  {name:'Vuln Servicio Medio',count:976,color:'#ffd166'},
+  {name:'Vuln Servicio Alto',count:838,color:'#ff9f1c'},
+  {name:'Credenciales Comprometidas',count:584,color:'#ff4d6d'},
+  {name:'Vuln Servicio Crítico',count:578,color:'#ff4d6d'},
+  {name:'Parcheo Pendiente Alto',count:544,color:'#ff9f1c'},
+  {name:'Parcheo Pendiente Medio',count:520,color:'#ffd166'},
+  {name:'Certificado TLS Auto-firmado',count:312,color:'#a78bfa'},
+  {name:'TLS Sin Revocación',count:248,color:'#a78bfa'},
+  {name:'CSP Ausente',count:211,color:'#60a5fa'},
+  {name:'Parcheo Pendiente Crítico',count:199,color:'#ff4d6d'},
+  {name:'X-Content-Type Incorrecto',count:197,color:'#60a5fa'},
+  {name:'Credenciales Históricas',count:169,color:'#f97316'},
+  {name:'HSTS Incorrecto',count:121,color:'#60a5fa'},
+  {name:'TLS Expiración Excesiva',count:83,color:'#a78bfa'},
+  {name:'SRI Inseguro',count:47,color:'#60a5fa'}
+];
+const maxV=976;
+const vContainer=document.getElementById('vulnBars');
+vulnData.forEach(v=>{
+  const pct=(v.count/maxV*100).toFixed(1);
+  vContainer.innerHTML+=`<div class="vuln-bar"><div class="vuln-name">${v.name}</div><div class="vuln-track"><div class="vuln-fill" style="width:${pct}%;background:${v.color};">${v.count}</div></div></div>`;
+});
+
+// ===== CHART VULN SEV =====
+const ctxVS=document.getElementById('chartVulnSev').getContext('2d');
+new Chart(ctxVS,{type:'bar',data:{labels:['Critical','High','Medium','Low','Info'],datasets:[{label:'Issues',data:[578,491,617,5626,2691],backgroundColor:['#ff4d6d','#ff9f1c','#ffd166','#29c6ff','#a0a8cc'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#a0a8cc',font:{size:9}},grid:{display:false}},y:{ticks:{color:'#a0a8cc',font:{size:8}},grid:{color:'#1e2a6e'}}}}});
+
+// ===== SIMULATOR =====
+let cChart=null,rChart=null;
+function updateSim(){
+  const sel=document.getElementById('simIES').value.split('|');
+  const iesName=sel[0],madurez=parseInt(sel[1]),multaBase=parseInt(sel[2]),categoria=sel[3];
+  const tipo=document.getElementById('simTipo').value;
+  const escala=parseInt(document.getElementById('simEscala').value);
+  const inversion=parseInt(document.getElementById('simInversion').value)*1000;
+  const registros=parseInt(document.getElementById('simRegistros').value);
+  const bcp=document.getElementById('simBCP').value;
+  
+  const riskFactor=(100-madurez)/100;
+  const escalaFactor=escala/5;
+  const bcpFactor=bcp==='si'?0.4:bcp==='parcial'?0.7:1.0;
+  const tipoFactor=tipo==='ambos'?1.6:tipo==='filtracion'?1.2:1.0;
+  
+  let costoRemed=Math.round(riskFactor*escalaFactor*bcpFactor*tipoFactor*(registros*0.5+500000));
+  let multaProyect=Math.round(multaBase*escalaFactor*tipoFactor*bcpFactor);
+  let diasRecup=Math.round(riskFactor*escalaFactor*bcpFactor*tipoFactor*45);
+  let impactRep=Math.min(10,Math.round(riskFactor*10*escalaFactor*tipoFactor));
+  
+  let costoConPrevencion=Math.round(costoRemed*(1-Math.min(0.7,inversion/500000)));
+  let ahorro=costoRemed-costoConPrevencion;
+  let roi=inversion>0?Math.round(ahorro/inversion*10)/10:0;
+  
+  document.getElementById('simTitulo').textContent=`📋 RESULTADO: ${iesName} — ${tipo==='ransomware'?'Ransomware':tipo==='filtracion'?'Filtración':'Ransomware+Filtración'} · Escala ${escala}/10`;
+  document.getElementById('rCostoTotal').textContent='$'+(costoRemed/1000000).toFixed(2)+'M';
+  document.getElementById('rMulta').textContent='$'+(multaProyect/1000000).toFixed(2)+'M';
+  document.getElementById('rRecuperacion').textContent=diasRecup+' días';
+  document.getElementById('rReputacion').textContent=impactRep+'/10';
+  document.getElementById('rPreventivo').textContent='$'+(ahorro/1000).toFixed(0)+'K';
+  document.getElementById('rROI').textContent=roi+'x';
+  
+  const costoBreakdown=[
+    Math.round(costoRemed*0.30),
+    Math.round(costoRemed*0.25),
+    Math.round(costoRemed*0.20),
+    Math.round(costoRemed*0.15),
+    Math.round(costoRemed*0.10)
+  ];
+  const ctxC=document.getElementById('chartCosto').getContext('2d');
+  if(cChart)cChart.destroy();
+  cChart=new Chart(ctxC,{type:'doughnut',data:{labels:['Recuperación TI','Multas Reg.','Pérdida Negocio','Honorarios Legales','Notificaciones'],datasets:[{data:costoBreakdown,backgroundColor:['#ff4d6d','#ff9f1c','#ffd166','#a78bfa','#29c6ff'],borderColor:'#020029',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#c8d0e8',font:{size:8},padding:4}}}}});
+  
+  const fases=[
+    Math.round(diasRecup*0.05),
+    Math.round(diasRecup*0.15),
+    Math.round(diasRecup*0.35),
+    Math.round(diasRecup*0.30),
+    Math.round(diasRecup*0.15)
+  ];
+  const ctxR=document.getElementById('chartRecuperacion').getContext('2d');
+  if(rChart)rChart.destroy();
+  rChart=new Chart(ctxR,{type:'bar',data:{labels:['Detección','Contención','Erradicación','Recuperación','Validación'],datasets:[{data:fases,backgroundColor:['#ff4d6d','#ff9f1c','#ffd166','#29c6ff','#06d6a0'],borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#a0a8cc',font:{size:8}},grid:{display:false}},y:{ticks:{color:'#a0a8cc',font:{size:8},callback:v=>v+' d'},grid:{color:'#1e2a6e'}}}}});
+  
+  document.getElementById('ins1').innerHTML=`<strong>Nivel de riesgo ${categoria}:</strong> ${iesName} opera con ${madurez}% de madurez digital. Ante un incidente de escala ${escala}/10, el costo total proyectado asciende a <strong>$${(costoRemed/1000000).toFixed(2)}M USD</strong>, incluyendo recuperación técnica, multas regulatorias, pérdidas operativas y costos legales.`;
+  document.getElementById('ins2').innerHTML=`<strong>Tiempo de recuperación:</strong> Con un plan de continuidad <strong>${bcp==='si'?'implementado':bcp==='parcial'?'parcial':'ausente'}</strong>, el tiempo estimado para restaurar operaciones es de <strong>${diasRecup} días</strong>. El impacto reputacional proyectado es <strong>${impactRep}/10</strong>, afectando confianza de estudiantes, personal y organismos reguladores.`;
+  document.getElementById('ins3').innerHTML=`<strong>Comparativa preventiva:</strong> Una inversión de <strong>$${(inversion/1000).toFixed(0)}K</strong> en medidas preventivas podría reducir el costo total en <strong>$${(ahorro/1000).toFixed(0)}K</strong>, generando un ROI estimado de <strong>${roi}x</strong>. La prevención es ${roi>=2?'significativamente':'marginalmente'} más eficiente que la remediación reactiva.`;
+  document.getElementById('ins4').innerHTML=`<strong>Recomendación prioritaria:</strong> ${madurez<40?'Prioridad CRÍTICA: Implementar plan de respuesta a incidentes, segmentación de red y backups offline inmediatamente.':madurez<60?'Prioridad ALTA: Fortalecer controles de identidad, parcheo sistemático y plan de continuidad documentado.':madurez<75?'Prioridad MEDIA: Completar plan BCP, validar capacidades de detección y reducir credenciales expuestas.':'Prioridad MANTENIMIENTO: Mantener ciclo de mejora continua y simular escenarios de crisis anualmente.'}`;
+}
+updateSim();
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
