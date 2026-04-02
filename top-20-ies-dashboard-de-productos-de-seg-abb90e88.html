@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<title>Top 20 IES – Seguridad CEDIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Montserrat',sans-serif;background:#020029;color:#e2e3d5;min-height:100vh;overflow-x:hidden;}
+
+  /* HEADER */
+  .header{background:linear-gradient(135deg,#020029 0%,#0c0c43 60%,#273dd5 100%);padding:18px 36px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #29c6ff;position:sticky;top:0;z-index:1000;}
+  .header img{height:40px;}
+  .header-title{text-align:right;}
+  .header-title h1{font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:.5px;}
+  .header-title p{font-size:.72rem;color:#29c6ff;font-weight:500;margin-top:2px;}
+
+  /* LAYOUT */
+  .main{padding:18px 24px 30px;}
+
+  /* KPI ROW */
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px;}
+  .kpi{background:linear-gradient(135deg,#0c0c43,#273dd5);border:1px solid rgba(41,198,255,.25);border-radius:12px;padding:14px 12px;text-align:center;}
+  .kpi .val{font-size:1.85rem;font-weight:800;color:#29c6ff;line-height:1;}
+  .kpi .lbl{font-size:.65rem;color:#c0c8e8;margin-top:5px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;}
+  .kpi .sub{font-size:.72rem;color:#29c6ff;margin-top:3px;font-weight:600;}
+
+  /* GRID 2-COL */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .grid3{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-bottom:14px;}
+
+  /* CARDS */
+  .card{background:rgba(12,12,67,.7);border:1px solid rgba(41,198,255,.18);border-radius:12px;padding:16px;}
+  .card h3{font-size:.75rem;font-weight:700;color:#29c6ff;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;border-bottom:1px solid rgba(41,198,255,.2);padding-bottom:6px;}
+
+  /* CHART CONTAINERS */
+  .chart-wrap{position:relative;height:220px;}
+  .chart-wrap-tall{position:relative;height:290px;}
+  .chart-wrap-sm{position:relative;height:180px;}
+
+  /* MAP */
+  #map{height:320px;border-radius:10px;border:1px solid rgba(41,198,255,.3);}
+
+  /* TABLE */
+  .tbl{width:100%;border-collapse:collapse;font-size:.7rem;}
+  .tbl thead th{background:rgba(41,198,255,.12);color:#29c6ff;padding:7px 8px;text-align:left;font-weight:600;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
+  .tbl tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;}
+  .tbl tbody tr:hover{background:rgba(41,198,255,.06);}
+  .tbl tbody td{padding:6px 8px;color:#d0d8f0;}
+  .rank-num{font-weight:800;color:#29c6ff;font-size:.8rem;}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:700;}
+  .grade-A{background:rgba(34,197,94,.2);color:#4ade80;}
+  .grade-B{background:rgba(59,130,246,.2);color:#60a5fa;}
+  .grade-C{background:rgba(234,179,8,.2);color:#fbbf24;}
+  .grade-D{background:rgba(249,115,22,.2);color:#fb923c;}
+  .grade-F{background:rgba(239,68,68,.2);color:#f87171;}
+  .na{color:#555;font-style:italic;font-size:.65rem;}
+
+  /* FILTER BTNS */
+  .filter-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .fbtn{padding:5px 14px;border-radius:20px;border:1px solid rgba(41,198,255,.35);background:transparent;color:#c0c8e8;font-size:.68rem;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all .2s;text-transform:uppercase;letter-spacing:.4px;}
+  .fbtn.active,.fbtn:hover{background:#29c6ff;color:#020029;border-color:#29c6ff;}
+
+  /* INSIGHTS */
+  .insights{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+  .insight-item{background:rgba(41,198,255,.07);border-left:3px solid #29c6ff;border-radius:0 8px 8px 0;padding:10px 12px;}
+  .insight-item .i-title{font-size:.65rem;font-weight:700;color:#29c6ff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+  .insight-item .i-text{font-size:.68rem;color:#c0c8e8;line-height:1.5;}
+
+  /* FOOTER */
+  .footer{text-align:center;padding:14px;font-size:.62rem;color:#444;border-top:1px solid rgba(41,198,255,.1);margin-top:10px;}
+</style>
+
+
+
+<!-- HEADER -->
+<div class="header">
+  <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA"/>
+  <div class="header-title">
+    <h1>Top 20 IES – Productos de Seguridad</h1>
+    <p>Security Scorecard + Nessus &nbsp;|&nbsp; Período: Dic 2025 – Mar 2026</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="val">97.25</div><div class="lbl">#1 Score Combinado</div><div class="sub">UTN</div></div>
+    <div class="kpi"><div class="val">20</div><div class="lbl">IES en Top 20</div><div class="sub">Ranking Combinado</div></div>
+    <div class="kpi"><div class="val">8</div><div class="lbl">Grade A</div><div class="sub">en Top 20</div></div>
+    <div class="kpi"><div class="val">71</div><div class="lbl">Total IES</div><div class="sub">Ecosistema CEDIA</div></div>
+    <div class="kpi"><div class="val">2</div><div class="lbl">Fuentes</div><div class="sub">SSC + Nessus</div></div>
+  </div>
+
+  <!-- ROW 1: Ranking bars + Comparativa SSC vs Nessus -->
+  <div class="grid3">
+    <!-- Tabla ranking Top 20 -->
+    <div class="card">
+      <h3>🏆 Ranking Top 20 – Score Combinado</h3>
+      <div style="max-height:310px;overflow-y:auto;">
+      <table class="tbl">
+        <thead><tr><th>#</th><th>IES</th><th>Score</th><th>Grade</th><th>SSC</th><th>Nessus</th></tr></thead>
+        <tbody id="rankBody"></tbody>
+      </table>
+      </div>
+    </div>
+    <!-- Score combinado bar chart -->
+    <div class="card">
+      <h3>📊 Score Combinado – Top 20</h3>
+      <div class="chart-wrap-tall"><canvas id="chartCombinado"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ROW 2: SSC vs Nessus + Distribución grades -->
+  <div class="grid2">
+    <div class="card">
+      <h3>⚖️ Security Scorecard vs Nessus – Top 20</h3>
+      <div class="chart-wrap"><canvas id="chartCompar"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>📈 Distribución de Grades – Ecosistema</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <p style="font-size:.63rem;color:#29c6ff;font-weight:700;margin-bottom:6px;">SECURITY SCORECARD</p>
+          <div class="chart-wrap-sm"><canvas id="chartSSC"></canvas></div>
+        </div>
+        <div>
+          <p style="font-size:.63rem;color:#29c6ff;font-weight:700;margin-bottom:6px;">NESSUS</p>
+          <div class="chart-wrap-sm"><canvas id="chartNessus"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Mapa + IES con ambas fuentes -->
+  <div class="grid3">
+    <div class="card">
+      <h3>🗺️ Mapa de Calor – Nivel de Seguridad Ecuador (Top 20)</h3>
+      <div class="filter-row" id="filterRow">
+        <button class="fbtn active" onclick="filterMap('ALL',this)">Todos</button>
+        <button class="fbtn" onclick="filterMap('A',this)">Grade A</button>
+        <button class="fbtn" onclick="filterMap('B',this)">Grade B</button>
+        <button class="fbtn" onclick="filterMap('C',this)">Grade C</button>
+      </div>
+      <div id="map"></div>
+    </div>
+    <div class="card">
+      <h3>🔬 IES con Doble Cobertura (SSC + Nessus)</h3>
+      <div class="chart-wrap-sm" style="height:155px;"><canvas id="chartDoble"></canvas></div>
+      <div style="margin-top:10px;">
+        <h3 style="margin-top:0;">📋 Brechas SSC vs Nessus Top 10</h3>
+        <div style="max-height:120px;overflow-y:auto;margin-top:8px;">
+        <table class="tbl">
+          <thead><tr><th>IES</th><th>SSC</th><th>Nessus</th><th>Δ</th></tr></thead>
+          <tbody id="brechaBody"></tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="card" style="margin-top:14px;">
+    <h3>💡 Hallazgos Ejecutivos</h3>
+    <div class="insights">
+      <div class="insight-item">
+        <div class="i-title">🥇 Institución Líder</div>
+        <div class="i-text"><strong>UTN</strong> lidera el ecosistema con score combinado de <strong>97.25</strong>, respaldado por un score Nessus de 99.5 y SSC de 95. Consistencia sobresaliente en ambas plataformas.</div>
+      </div>
+      <div class="insight-item">
+        <div class="i-title">⚠️ Brecha Significativa – PUCE</div>
+        <div class="i-text"><strong>PUCE</strong> evidencia la mayor brecha del Top 20: Nessus en 90.5 (A) vs SSC en 49 (F). Sugiere exposición crítica de superficie externa con buena gestión interna de vulnerabilidades.</div>
+      </div>
+      <div class="insight-item">
+        <div class="i-title">📉 Riesgo en Score Combinado</div>
+        <div class="i-text">Posiciones 8-20 del ranking presentan scores combinados entre 83 y 89, muchas con grado B. <strong>IAEN</strong> alcanza SSC 100 pero su Nessus de 66 arrastra el combinado a 83.</div>
+      </div>
+      <div class="insight-item">
+        <div class="i-title">✅ Doble Cobertura</div>
+        <div class="i-text">Solo <strong>12 de las 20</strong> IES del top cuentan con cobertura simultánea de ambas plataformas. Las 8 restantes operan con un único producto, limitando la visibilidad real del riesgo.</div>
+      </div>
+      <div class="insight-item">
+        <div class="i-title">🌐 Concentración Geográfica</div>
+        <div class="i-text">Las IES de mayor rendimiento se concentran en <strong>Ibarra (UTN), Tena (IKIAM), Quito (UDLA, UTE)</strong> y la región amazónica. Menor presencia de IES top en costa y sur del país.</div>
+      </div>
+      <div class="insight-item">
+        <div class="i-title">🔄 Nessus supera a SSC</div>
+        <div class="i-text">En promedio, las IES del Top 20 con doble cobertura obtienen <strong>+5 puntos</strong> más en Nessus que en SSC, indicando mayor madurez en gestión de vulnerabilidades internas que en postura pública.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">CEDIA – SOC/CSIRT | Dashboard de Productos de Seguridad | Datos: Security Scorecard + Nessus | Período: Dic 2025 – Mar 2026 | Generado: Abr 2026</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const top20 = [
+  {r:1, ies:"UTN",      sc:97.25, g:"A", ssc:95.0,  nessus:99.5,  lat:-0.3488, lng:-78.1246},
+  {r:2, ies:"ACAC",     sc:97.0,  g:"A", ssc:97.0,  nessus:null,  lat:-0.2299, lng:-78.5250},
+  {r:3, ies:"ISTE",     sc:95.0,  g:"A", ssc:95.0,  nessus:null,  lat:-0.2299, lng:-78.5260},
+  {r:4, ies:"PUCE-SA",  sc:94.0,  g:"A", ssc:null,  nessus:94.0,  lat:-0.2299, lng:-78.5270},
+  {r:5, ies:"IKIAM",    sc:93.75, g:"A", ssc:94.0,  nessus:93.5,  lat:-0.9892, lng:-77.8153},
+  {r:6, ies:"UDLA",     sc:91.0,  g:"A", ssc:89.0,  nessus:93.0,  lat:-0.1972, lng:-78.4369},
+  {r:7, ies:"UTM",      sc:90.0,  g:"A", ssc:90.0,  nessus:null,  lat:-1.0576, lng:-80.4515},
+  {r:8, ies:"USFQ",     sc:89.5,  g:"B", ssc:84.0,  nessus:95.0,  lat:-0.1972, lng:-78.4370},
+  {r:9, ies:"ESPE",     sc:89.25, g:"B", ssc:92.0,  nessus:86.5,  lat:-0.3341, lng:-78.4522},
+  {r:10,ies:"UTE",      sc:88.5,  g:"B", ssc:80.0,  nessus:97.0,  lat:-0.2299, lng:-78.5280},
+  {r:11,ies:"CEDIA",    sc:87.0,  g:"B", ssc:87.0,  nessus:null,  lat:-2.8950, lng:-78.9960},
+  {r:12,ies:"ITECSUR",  sc:87.0,  g:"B", ssc:87.0,  nessus:null,  lat:-2.8950, lng:-78.9970},
+  {r:13,ies:"TECSU",    sc:87.0,  g:"B", ssc:95.0,  nessus:79.0,  lat:-2.8950, lng:-78.9950},
+  {r:14,ies:"UNL",      sc:87.0,  g:"B", ssc:84.0,  nessus:90.0,  lat:-3.9930, lng:-79.2040},
+  {r:15,ies:"ESPOL",    sc:85.25, g:"B", ssc:73.0,  nessus:97.5,  lat:-2.1960, lng:-79.8860},
+  {r:16,ies:"UG",       sc:84.0,  g:"B", ssc:77.0,  nessus:91.0,  lat:-2.1960, lng:-79.8870},
+  {r:17,ies:"UPS",      sc:83.5,  g:"B", ssc:87.0,  nessus:80.0,  lat:-2.8950, lng:-78.9940},
+  {r:18,ies:"IAEN",     sc:83.0,  g:"B", ssc:100.0, nessus:66.0,  lat:-0.2299, lng:-78.5290},
+  {r:19,ies:"WISSEN",   sc:82.5,  g:"B", ssc:92.0,  nessus:73.0,  lat:-2.8950, lng:-78.9930},
+  {r:20,ies:"CES",      sc:81.0,  g:"B", ssc:81.0,  nessus:null,  lat:-0.2299, lng:-78.5300},
+];
+
+const gradeColor = {A:"#4ade80",B:"#60a5fa",C:"#fbbf24",D:"#fb923c",F:"#f87171"};
+const gradeColorBg = {A:"rgba(74,222,128,.18)",B:"rgba(96,165,250,.18)",C:"rgba(251,191,36,.18)",D:"rgba(251,146,60,.18)",F:"rgba(248,113,113,.18)"};
+
+// ─── TABLE ─────────────────────────────────────────────────────────────────
+const tbody = document.getElementById("rankBody");
+top20.forEach(d=>{
+  const ssc = d.ssc !== null ? `<span class="badge grade-${d.ssc>=90?'A':d.ssc>=80?'B':d.ssc>=70?'C':d.ssc>=60?'D':'F'}">${d.ssc}</span>` : '<span class="na">N/D</span>';
+  const nes = d.nessus !== null ? `<span class="badge grade-${d.nessus>=90?'A':d.nessus>=80?'B':d.nessus>=70?'C':d.nessus>=60?'D':'F'}">${d.nessus}</span>` : '<span class="na">N/D</span>';
+  tbody.innerHTML += `<tr>
+    <td class="rank-num">${d.r}</td>
+    <td style="font-weight:600;color:#fff">${d.ies}</td>
+    <td style="font-weight:700;color:#29c6ff">${d.sc}</td>
+    <td><span class="badge grade-${d.g}">${d.g}</span></td>
+    <td>${ssc}</td>
+    <td>${nes}</td>
+  </tr>`;
+});
+
+// ─── CHART: SCORE COMBINADO ─────────────────────────────────────────────────
+new Chart(document.getElementById("chartCombinado"),{
+  type:"bar",
+  data:{
+    labels: top20.map(d=>d.ies),
+    datasets:[{
+      label:"Score Combinado",
+      data: top20.map(d=>d.sc),
+      backgroundColor: top20.map(d=>gradeColorBg[d.g]),
+      borderColor: top20.map(d=>gradeColor[d.g]),
+      borderWidth:1.5,
+      borderRadius:4,
+    }]
+  },
+  options:{
+    indexAxis:"y",
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`Score: ${ctx.raw}`}}},
+    scales:{
+      x:{min:75,max:100,ticks:{color:"#c0c8e8",font:{size:9}},grid:{color:"rgba(255,255,255,.05)"}},
+      y:{ticks:{color:"#e2e3d5",font:{size:9,weight:"600"}},grid:{display:false}}
+    }
+  }
+});
+
+// ─── CHART: SSC vs Nessus ───────────────────────────────────────────────────
+const doble = top20.filter(d=>d.ssc!==null && d.nessus!==null);
+new Chart(document.getElementById("chartCompar"),{
+  type:"bar",
+  data:{
+    labels: doble.map(d=>d.ies),
+    datasets:[
+      {label:"Security Scorecard",data:doble.map(d=>d.ssc),backgroundColor:"rgba(41,198,255,.7)",borderRadius:3,borderSkipped:false},
+      {label:"Nessus",data:doble.map(d=>d.nessus),backgroundColor:"rgba(99,102,241,.7)",borderRadius:3,borderSkipped:false}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:"#c0c8e8",font:{size:9}}}},
+    scales:{
+      x:{ticks:{color:"#c0c8e8",font:{size:8}},grid:{color:"rgba(255,255,255,.05)"}},
+      y:{min:50,max:105,ticks:{color:"#c0c8e8",font:{size:9}},grid:{color:"rgba(255,255,255,.05)"}}
+    }
+  }
+});
+
+// ─── CHART: SSC pie ─────────────────────────────────────────────────────────
+new Chart(document.getElementById("chartSSC"),{
+  type:"doughnut",
+  data:{
+    labels:["A","B","C","D","F"],
+    datasets:[{data:[11,15,13,13,12],backgroundColor:["#4ade80","#60a5fa","#fbbf24","#fb923c","#f87171"],borderWidth:0}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{color:"#c0c8e8",font:{size:9},padding:6}}}}
+});
+
+// ─── CHART: Nessus pie ──────────────────────────────────────────────────────
+new Chart(document.getElementById("chartNessus"),{
+  type:"doughnut",
+  data:{
+    labels:["A","B","C","D","F"],
+    datasets:[{data:[11,6,14,10,17],backgroundColor:["#4ade80","#60a5fa","#fbbf24","#fb923c","#f87171"],borderWidth:0}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{color:"#c0c8e8",font:{size:9},padding:6}}}}
+});
+
+// ─── CHART: Doble cobertura ─────────────────────────────────────────────────
+new Chart(document.getElementById("chartDoble"),{
+  type:"bar",
+  data:{
+    labels: doble.map(d=>d.ies),
+    datasets:[
+      {label:"SSC",data:doble.map(d=>d.ssc),backgroundColor:"rgba(41,198,255,.8)",borderRadius:3},
+      {label:"Nessus",data:doble.map(d=>d.nessus),backgroundColor:"rgba(167,139,250,.8)",borderRadius:3}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:"#c0c8e8",font:{size:8}}}},
+    scales:{
+      x:{ticks:{color:"#c0c8e8",font:{size:7.5}},grid:{display:false}},
+      y:{min:60,max:105,ticks:{color:"#c0c8e8",font:{size:8}},grid:{color:"rgba(255,255,255,.05)"}}
+    }
+  }
+});
+
+// ─── TABLE: Brechas ─────────────────────────────────────────────────────────
+const brechaBody = document.getElementById("brechaBody");
+const sorted = doble.map(d=>({...d,delta:Math.abs(d.ssc-d.nessus)})).sort((a,b)=>b.delta-a.delta);
+sorted.slice(0,10).forEach(d=>{
+  const color = d.delta > 15 ? "#f87171" : d.delta > 8 ? "#fbbf24" : "#4ade80";
+  brechaBody.innerHTML += `<tr>
+    <td style="font-weight:600;color:#fff">${d.ies}</td>
+    <td>${d.ssc}</td>
+    <td>${d.nessus}</td>
+    <td style="color:${color};font-weight:700">±${d.delta.toFixed(1)}</td>
+  </tr>`;
+});
+
+// ─── MAP ────────────────────────────────────────────────────────────────────
+const map = L.map("map",{zoomControl:true}).setView([-1.5,−78.5],6);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{
+  attribution:"©OpenStreetMap ©CARTO",maxZoom:18
+}).addTo(map);
+
+// Score → intensity
+const heatData = top20.map(d=>[d.lat, d.lng, d.sc/100]);
+let heatLayer = L.heatLayer(heatData,{radius:38,blur:28,maxZoom:10,
+  gradient:{"0.0":"#f87171","0.5":"#fbbf24","0.75":"#60a5fa","0.9":"#4ade80","1.0":"#29c6ff"}
+}).addTo(map);
+
+// Markers
+let markers = [];
+top20.forEach(d=>{
+  const col = gradeColor[d.g];
+  const mk = L.circleMarker([d.lat,d.lng],{
+    radius:7, fillColor:col, color:"#020029", weight:1.5, fillOpacity:.9
+  }).bindPopup(`<b style='color:#020029'>${d.ies}</b><br>Score: ${d.sc} | Grade: ${d.g}`);
+  mk.addTo(map);
+  markers.push({m:mk,g:d.g});
+});
+
+function filterMap(grade, btn){
+  document.querySelectorAll(".fbtn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  markers.forEach(o=>{
+    if(grade==="ALL" || o.g===grade) o.m.setStyle({fillOpacity:.9,opacity:1});
+    else o.m.setStyle({fillOpacity:.1,opacity:.2});
+  });
+}
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
