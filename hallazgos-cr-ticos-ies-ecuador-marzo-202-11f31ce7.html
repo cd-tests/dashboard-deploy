@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<title>Hallazgos Críticos IES Ecuador – Marzo 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Montserrat','Arial',sans-serif;background:#f0f2f8;color:#020029;min-height:100vh;}
+
+  /* HEADER */
+  .header{background:#020029;padding:22px 36px;display:flex;align-items:center;gap:18px;border-bottom:3px solid #29c6ff;}
+  .header img{height:38px;}
+  .header-text h1{color:#fff;font-size:1.18rem;font-weight:700;letter-spacing:0.02em;}
+  .header-text p{color:#29c6ff;font-size:0.78rem;font-weight:500;margin-top:2px;}
+
+  /* LAYOUT */
+  .container{max-width:1280px;margin:0 auto;padding:28px 24px 40px;}
+
+  /* KPI STRIP */
+  .kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:26px;}
+  .kpi{background:#fff;border-radius:12px;padding:18px 14px 14px;border-top:4px solid #29c6ff;box-shadow:0 2px 10px rgba(2,0,41,.07);text-align:center;}
+  .kpi.red{border-top-color:#e74c3c;}
+  .kpi.orange{border-top-color:#e67e22;}
+  .kpi.yellow{border-top-color:#f1c40f;}
+  .kpi.green{border-top-color:#27ae60;}
+  .kpi-val{font-size:2rem;font-weight:800;color:#020029;line-height:1.1;}
+  .kpi-val.red{color:#e74c3c;}
+  .kpi-val.orange{color:#e67e22;}
+  .kpi-val.green{color:#27ae60;}
+  .kpi-lbl{font-size:0.7rem;font-weight:600;color:#666;margin-top:5px;text-transform:uppercase;letter-spacing:0.04em;}
+
+  /* GRID 2 COL */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:18px;}
+  .card{background:#fff;border-radius:12px;padding:20px 20px 18px;box-shadow:0 2px 10px rgba(2,0,41,.07);}
+  .card-title{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#020029;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e2e3d5;}
+  .card-title span{color:#29c6ff;}
+
+  /* DISTRIBUCIÓN GRADES */
+  .grade-bars{display:flex;flex-direction:column;gap:10px;}
+  .grade-row{display:flex;align-items:center;gap:10px;}
+  .grade-label{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:#fff;flex-shrink:0;}
+  .ga{background:#27ae60;}.gb{background:#2ecc71;}.gc{background:#f1c40f;color:#333;}
+  .gd{background:#e67e22;}.gf{background:#e74c3c;}
+  .grade-bar-wrap{flex:1;background:#f0f2f8;border-radius:6px;height:20px;overflow:hidden;}
+  .grade-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;}
+  .grade-bar span{font-size:0.68rem;font-weight:700;color:#fff;}
+  .grade-count{width:30px;text-align:right;font-size:0.8rem;font-weight:700;color:#020029;}
+  .grade-pct{width:36px;text-align:right;font-size:0.7rem;color:#888;}
+
+  /* TOP VULNERABILIDADES */
+  .vuln-list{display:flex;flex-direction:column;gap:7px;}
+  .vuln-item{display:flex;align-items:center;gap:8px;}
+  .vuln-badge{font-size:0.6rem;font-weight:800;padding:2px 7px;border-radius:10px;text-transform:uppercase;flex-shrink:0;}
+  .vcrit{background:#fde8e8;color:#c0392b;}
+  .vhigh{background:#fef3e2;color:#d35400;}
+  .vmed{background:#fffbec;color:#b7950b;}
+  .vlow{background:#eafaf1;color:#1e8449;}
+  .vuln-name{font-size:0.72rem;color:#333;flex:1;line-height:1.3;}
+  .vuln-bar-wrap{width:90px;background:#f0f2f8;border-radius:4px;height:12px;overflow:hidden;flex-shrink:0;}
+  .vuln-bar{height:100%;border-radius:4px;background:#29c6ff;}
+  .vuln-cnt{font-size:0.7rem;font-weight:700;color:#020029;width:28px;text-align:right;flex-shrink:0;}
+
+  /* SEVERIDAD DONUT placeholder → barras horizontales */
+  .sev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .sev-item{background:#f7f9fc;border-radius:8px;padding:12px 14px;}
+  .sev-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#888;margin-bottom:4px;}
+  .sev-val{font-size:1.55rem;font-weight:800;line-height:1.1;}
+  .sev-pct{font-size:0.7rem;color:#aaa;margin-top:2px;}
+  .sc{color:#e74c3c;}.sh{color:#e67e22;}.sm{color:#f1c40f;}.sl{color:#27ae60;}
+
+  /* ESTADO ISSUES */
+  .estado-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+  .estado-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+  .dot-act{background:#e74c3c;}.dot-dep{background:#95a5a6;}.dot-res{background:#27ae60;}
+  .estado-label{font-size:0.73rem;color:#444;flex:1;}
+  .estado-bar-wrap{width:120px;background:#f0f2f8;border-radius:4px;height:12px;overflow:hidden;}
+  .estado-bar{height:100%;border-radius:4px;}
+  .estado-val{font-size:0.73rem;font-weight:700;color:#020029;width:36px;text-align:right;}
+  .estado-pct{font-size:0.68rem;color:#aaa;width:38px;text-align:right;}
+
+  /* INSTITUCIONES CRÍTICAS */
+  .inst-table{width:100%;border-collapse:collapse;}
+  .inst-table th{font-size:0.66rem;font-weight:700;text-transform:uppercase;color:#888;padding:6px 8px;border-bottom:2px solid #e2e3d5;text-align:left;}
+  .inst-table td{font-size:0.72rem;padding:7px 8px;border-bottom:1px solid #f0f2f8;vertical-align:middle;}
+  .inst-table tr:last-child td{border-bottom:none;}
+  .chip{display:inline-block;padding:2px 9px;border-radius:10px;font-size:0.65rem;font-weight:800;}
+  .chipF{background:#fde8e8;color:#c0392b;}
+  .chipD{background:#fef3e2;color:#d35400;}
+  .score-chip{display:inline-block;padding:2px 8px;border-radius:6px;font-size:0.72rem;font-weight:700;color:#fff;}
+
+  /* INSIGHTS */
+  .insights-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .insight-item{background:#f7f9fc;border-left:3px solid #29c6ff;border-radius:0 8px 8px 0;padding:10px 12px;}
+  .insight-item.warn{border-left-color:#e74c3c;}
+  .insight-item.orange{border-left-color:#e67e22;}
+  .insight-title{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#29c6ff;margin-bottom:4px;}
+  .insight-item.warn .insight-title{color:#e74c3c;}
+  .insight-item.orange .insight-title{color:#e67e22;}
+  .insight-text{font-size:0.72rem;color:#333;line-height:1.5;}
+
+  /* FOOTER */
+  .footer{text-align:center;margin-top:32px;font-size:0.68rem;color:#aaa;padding-bottom:10px;}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    .kpi-strip{grid-template-columns:repeat(3,1fr);}
+    .grid2,.grid3{grid-template-columns:1fr;}
+    .insights-grid{grid-template-columns:1fr;}
+  }
+</style>
+
+
+
+<!-- HEADER -->
+<div class="header">
+  <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA"/>
+  <div class="header-text">
+    <h1>Hallazgos Críticos de Seguridad — Ecosistema IES Ecuador</h1>
+    <p>Período: Marzo 2026 · Fuente: Security Scorecard · 64 Instituciones analizadas</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="kpi-val">64</div>
+      <div class="kpi-lbl">IES Analizadas</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-val red">12</div>
+      <div class="kpi-lbl">IES con Grade F 🔴</div>
+    </div>
+    <div class="kpi orange">
+      <div class="kpi-val orange">13</div>
+      <div class="kpi-lbl">IES con Grade D</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-val green">11</div>
+      <div class="kpi-lbl">IES con Grade A ✅</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" style="color:#e74c3c;">2,896</div>
+      <div class="kpi-lbl">Issues Activas Totales</div>
+    </div>
+  </div>
+
+  <!-- FILA 1 -->
+  <div class="grid2">
+
+    <!-- DISTRIBUCIÓN GRADES -->
+    <div class="card">
+      <div class="card-title">Distribución por <span>Nivel de Seguridad</span></div>
+      <div class="grade-bars">
+        <div class="grade-row">
+          <div class="grade-label ga">A</div>
+          <div class="grade-bar-wrap"><div class="grade-bar ga" style="width:77%"><span>17%</span></div></div>
+          <div class="grade-count">11</div>
+          <div class="grade-pct">17.2%</div>
+        </div>
+        <div class="grade-row">
+          <div class="grade-label gb">B</div>
+          <div class="grade-bar-wrap"><div class="grade-bar gb" style="width:88%"><span>23%</span></div></div>
+          <div class="grade-count">15</div>
+          <div class="grade-pct">23.4%</div>
+        </div>
+        <div class="grade-row">
+          <div class="grade-label gc">C</div>
+          <div class="grade-bar-wrap"><div class="grade-bar gc" style="width:76%"><span>20%</span></div></div>
+          <div class="grade-count">13</div>
+          <div class="grade-pct">20.3%</div>
+        </div>
+        <div class="grade-row">
+          <div class="grade-label gd">D</div>
+          <div class="grade-bar-wrap"><div class="grade-bar gd" style="width:76%"><span>20%</span></div></div>
+          <div class="grade-count">13</div>
+          <div class="grade-pct">20.3%</div>
+        </div>
+        <div class="grade-row">
+          <div class="grade-label gf">F</div>
+          <div class="grade-bar-wrap"><div class="grade-bar gf" style="width:70%"><span>19%</span></div></div>
+          <div class="grade-count">12</div>
+          <div class="grade-pct">18.8%</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;background:#fff3f3;border-radius:8px;padding:10px 12px;font-size:0.72rem;color:#c0392b;border-left:3px solid #e74c3c;">
+        <strong>⚠ Alerta crítica:</strong> El 39.1% del ecosistema (25 IES) opera en nivel D o F, indicando exposición significativa a amenazas externas.
+      </div>
+    </div>
+
+    <!-- TOP VULNERABILIDADES -->
+    <div class="card">
+      <div class="card-title">Top <span>Vulnerabilidades</span> del Ecosistema</div>
+      <div class="vuln-list">
+        <div class="vuln-item">
+          <div class="vuln-badge vmed">MED</div>
+          <div class="vuln-name">Vulnerabilidades en servicios de host</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:100%"></div></div>
+          <div class="vuln-cnt">260</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vmed">MED</div>
+          <div class="vuln-name">Cadencia de parches pendientes</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:90%"></div></div>
+          <div class="vuln-cnt">234</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vhigh">HIGH</div>
+          <div class="vuln-name">Vulnerabilidades de host críticas altas</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:82%;background:#e67e22;"></div></div>
+          <div class="vuln-cnt">214</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vcrit">CRIT</div>
+          <div class="vuln-name">Credenciales comprometidas detectadas</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:67%;background:#e74c3c;"></div></div>
+          <div class="vuln-cnt">174</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vcrit">CRIT</div>
+          <div class="vuln-name">Vulnerabilidades críticas en host v3</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:65%;background:#e74c3c;"></div></div>
+          <div class="vuln-cnt">169</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vhigh">HIGH</div>
+          <div class="vuln-name">Cadencia de parches – alta severidad</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:58%;background:#e67e22;"></div></div>
+          <div class="vuln-cnt">150</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vmed">MED</div>
+          <div class="vuln-name">Certificados TLS autofirmados</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:55%"></div></div>
+          <div class="vuln-cnt">143</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vmed">MED</div>
+          <div class="vuln-name">Ausencia de Content Security Policy</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:54%"></div></div>
+          <div class="vuln-cnt">140</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vlow">LOW</div>
+          <div class="vuln-name">X-Content-Type-Options incorrecto</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:51%;background:#27ae60;"></div></div>
+          <div class="vuln-cnt">133</div>
+        </div>
+        <div class="vuln-item">
+          <div class="vuln-badge vlow">LOW</div>
+          <div class="vuln-name">HSTS mal configurado</div>
+          <div class="vuln-bar-wrap"><div class="vuln-bar" style="width:47%;background:#27ae60;"></div></div>
+          <div class="vuln-cnt">121</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILA 2 -->
+  <div class="grid3">
+
+    <!-- SEVERIDAD -->
+    <div class="card">
+      <div class="card-title">Issues por <span>Severidad</span></div>
+      <div class="sev-grid">
+        <div class="sev-item">
+          <div class="sev-label">Crítica</div>
+          <div class="sev-val sc">169</div>
+          <div class="sev-pct">2.9% del total</div>
+        </div>
+        <div class="sev-item">
+          <div class="sev-label">Alta</div>
+          <div class="sev-val sh">121</div>
+          <div class="sev-pct">4.2% del total</div>
+        </div>
+        <div class="sev-item">
+          <div class="sev-label">Media</div>
+          <div class="sev-val sm">182</div>
+          <div class="sev-pct">6.3% del total</div>
+        </div>
+        <div class="sev-item">
+          <div class="sev-label">Baja / Info</div>
+          <div class="sev-val sl">2,424</div>
+          <div class="sev-pct">83.7% restante</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:0.7rem;color:#888;line-height:1.5;">
+        290 issues de alta o crítica severidad requieren atención inmediata y plan de remediación urgente.
+      </div>
+    </div>
+
+    <!-- ESTADO ISSUES -->
+    <div class="card">
+      <div class="card-title">Estado de <span>Issues Activas</span></div>
+      <div style="margin-bottom:14px;">
+        <div class="estado-row">
+          <div class="estado-dot dot-act"></div>
+          <div class="estado-label">Activas (abiertas)</div>
+          <div class="estado-bar-wrap"><div class="estado-bar" style="width:100%;background:#e74c3c;"></div></div>
+          <div class="estado-val">2,896</div>
+          <div class="estado-pct">49.3%</div>
+        </div>
+        <div class="estado-row">
+          <div class="estado-dot dot-dep"></div>
+          <div class="estado-label">Salientes (departed)</div>
+          <div class="estado-bar-wrap"><div class="estado-bar" style="width:84%;background:#95a5a6;"></div></div>
+          <div class="estado-val">2,430</div>
+          <div class="estado-pct">41.4%</div>
+        </div>
+        <div class="estado-row">
+          <div class="estado-dot dot-res"></div>
+          <div class="estado-label">Resueltas</div>
+          <div class="estado-bar-wrap"><div class="estado-bar" style="width:18%;background:#27ae60;"></div></div>
+          <div class="estado-val">514</div>
+          <div class="estado-pct">8.8%</div>
+        </div>
+      </div>
+      <div style="background:#fff3f3;border-radius:8px;padding:9px 11px;font-size:0.7rem;color:#c0392b;border-left:3px solid #e74c3c;">
+        Solo el <strong>8.8%</strong> de issues ha sido resuelto. El 100% de issues activas permanece sin remediación en este período.
+      </div>
+    </div>
+
+    <!-- MEJORES IES -->
+    <div class="card">
+      <div class="card-title">Top <span>Mejores IES</span> — Grade A</div>
+      <table class="inst-table">
+        <thead><tr><th>#</th><th>Institución</th><th>Score</th><th>Grade</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>IAEN</td><td><span class="score-chip" style="background:#27ae60;">100</span></td><td><span class="chip chipF" style="background:#eafaf1;color:#1e8449;">A</span></td></tr>
+          <tr><td>2</td><td>ACAC</td><td><span class="score-chip" style="background:#27ae60;">97</span></td><td><span class="chip chipF" style="background:#eafaf1;color:#1e8449;">A</span></td></tr>
+          <tr><td>3</td><td>CACES</td><td><span class="score-chip" style="background:#27ae60;">96</span></td><td><span class="chip chipF" style="background:#eafaf1;color:#1e8449;">A</span></td></tr>
+          <tr><td>4</td><td>ISTE</td><td><span class="score-chip" style="background:#2ecc71;">95</span></td><td><span class="chip chipF" style="background:#eafaf1;color:#1e8449;">A</span></td></tr>
+          <tr><td>5</td><td>UTN</td><td><span class="score-chip" style="background:#2ecc71;">95</span></td><td><span class="chip chipF" style="background:#eafaf1;color:#1e8449;">A</span></td></tr>
+          <tr><td>6</td><td>IKIAM</td><td><span class="score-chip" style="background:#2ecc71;">94</span></td><td><span class="chip chipF" style="background:#eafaf1;color:#1e8449;">A</span></td></tr>
+          <tr><td>7</td><td>ESPE</td><td><span class="score-chip" style="background:#2ecc71;">92</span></td><td><span class="chip chipF" style="background:#eafaf1;color:#1e8449;">A</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- IES CRÍTICAS -->
+  <div class="card" style="margin-bottom:18px;">
+    <div class="card-title">Instituciones en <span>Nivel Crítico</span> — Grade D y F (25 IES)</div>
+    <table class="inst-table">
+      <thead><tr><th>Institución</th><th>Score</th><th>Grade</th><th>Nivel de Riesgo</th><th>Prioridad</th></tr></thead>
+      <tbody>
+        <tr><td>ITB</td><td><span class="score-chip" style="background:#c0392b;">44</span></td><td><span class="chip chipF">F</span></td><td>Extremo</td><td>🔴 Inmediata</td></tr>
+        <tr><td>UBE</td><td><span class="score-chip" style="background:#c0392b;">46</span></td><td><span class="chip chipF">F</span></td><td>Extremo</td><td>🔴 Inmediata</td></tr>
+        <tr><td>ARMADA</td><td><span class="score-chip" style="background:#c0392b;">47</span></td><td><span class="chip chipF">F</span></td><td>Extremo</td><td>🔴 Inmediata</td></tr>
+        <tr><td>ITSVN</td><td><span class="score-chip" style="background:#c0392b;">48</span></td><td><span class="chip chipF">F</span></td><td>Extremo</td><td>🔴 Inmediata</td></tr>
+        <tr><td>PUCE</td><td><span class="score-chip" style="background:#c0392b;">49</span></td><td><span class="chip chipF">F</span></td><td>Extremo</td><td>🔴 Inmediata</td></tr>
+        <tr><td>UCACUE</td><td><span class="score-chip" style="background:#c0392b;">49</span></td><td><span class="chip chipF">F</span></td><td>Extremo</td><td>🔴 Inmediata</td></tr>
+        <tr><td>UNIANDES</td><td><span class="score-chip" style="background:#c0392b;">54</span></td><td><span class="chip chipF">F</span></td><td>Crítico</td><td>🔴 Urgente</td></tr>
+        <tr><td>ISTER / TES</td><td><span class="score-chip" style="background:#c0392b;">55</span></td><td><span class="chip chipF">F</span></td><td>Crítico</td><td>🔴 Urgente</td></tr>
+        <tr><td>UPEC</td><td><span class="score-chip" style="background:#e74c3c;">59</span></td><td><span class="chip chipF">F</span></td><td>Crítico</td><td>🟠 Alta</td></tr>
+        <tr><td>UTEQ</td><td><span class="score-chip" style="background:#e67e22;">60</span></td><td><span class="chip chipD" style="background:#fef3e2;color:#d35400;">D</span></td><td>Alto</td><td>🟠 Alta</td></tr>
+        <tr><td>UDA / UISRAEL</td><td><span class="score-chip" style="background:#e67e22;">61</span></td><td><span class="chip chipD" style="background:#fef3e2;color:#d35400;">D</span></td><td>Alto</td><td>🟠 Alta</td></tr>
+        <tr><td>EPN / UTB / UTPL</td><td><span class="score-chip" style="background:#e67e22;">62</span></td><td><span class="chip chipD" style="background:#fef3e2;color:#d35400;">D</span></td><td>Alto</td><td>🟠 Alta</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="card" style="margin-bottom:0;">
+    <div class="card-title">Análisis e <span>Implicaciones Ejecutivas</span></div>
+    <div class="insights-grid">
+      <div class="insight-item warn">
+        <div class="insight-title">⚠ Rezago masivo en remediación</div>
+        <div class="insight-text">El 100% de las issues activas (2,896) permanece sin resolver en marzo 2026. Esto indica ausencia de procesos sistemáticos de gestión de vulnerabilidades en gran parte del ecosistema.</div>
+      </div>
+      <div class="insight-item warn">
+        <div class="insight-title">🔐 Credenciales comprometidas — alerta crítica</div>
+        <div class="insight-text">174 detecciones de credenciales comprometidas representan un vector de ataque inmediato. Cada credencial expuesta puede derivar en acceso no autorizado a sistemas institucionales y datos sensibles.</div>
+      </div>
+      <div class="insight-item orange">
+        <div class="insight-title">🔧 Falla estructural en gestión de parches</div>
+        <div class="insight-text">Con 234 hallazgos de cadencia de parches media y 150 alta, la actualización de sistemas es un problema sistémico del ecosistema. Los sistemas sin parchear son el principal vector de explotación de vulnerabilidades conocidas.</div>
+      </div>
+      <div class="insight-item orange">
+        <div class="insight-title">📉 39% del ecosistema en nivel D o F</div>
+        <div class="insight-text">25 instituciones presentan calificaciones críticas. La mayor concentración de riesgo se da en institutos tecnológicos y universidades de menor tamaño con presupuestos limitados de TI.</div>
+      </div>
+      <div class="insight-item">
+        <div class="insight-title">🔒 TLS y cabeceras HTTP — exposición web</div>
+        <div class="insight-text">143 certificados TLS autofirmados y 261 hallazgos de cabeceras HTTP incorrectas (CSP, HSTS, X-Content-Type) indican configuraciones de seguridad web deficientes, exponiendo a usuarios a ataques de intercepción y phishing.</div>
+      </div>
+      <div class="insight-item">
+        <div class="insight-title">✅ Referentes de buenas prácticas identificados</div>
+        <div class="insight-text">IAEN (100), ACAC (97) y CACES (96) lideran el ranking con grade A. Sus prácticas pueden servir como modelo de referencia para el plan de mejora de las IES con rezago en el ecosistema CEDIA.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">CEDIA — Centro de Operaciones de Seguridad · Análisis del ecosistema IES Ecuador · Marzo 2026</div>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
