@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100vh;max-height:100vh;overflow:hidden;font-family:'Montserrat','Arial',sans-serif;background:#020029;color:#fff;}
+  .app{display:flex;flex-direction:column;height:100vh;max-height:100vh;overflow:hidden;}
+
+  /* HEADER */
+  .header{background:linear-gradient(135deg,#020029 0%,#0c0c43 100%);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:2px solid #29c6ff;height:56px;}
+  .header img{height:32px;}
+  .header-center{text-align:center;}
+  .header-center h1{font-size:14px;font-weight:700;color:#29c6ff;letter-spacing:1px;text-transform:uppercase;}
+  .header-center p{font-size:10px;color:#a0b4cc;margin-top:1px;}
+  .badge{background:#29c6ff22;border:1px solid #29c6ff55;border-radius:20px;padding:4px 12px;font-size:10px;color:#29c6ff;font-weight:600;}
+
+  /* TABS NAV */
+  .tabs-nav{display:flex;background:#0c0c43;border-bottom:1px solid #273dd533;flex-shrink:0;height:40px;padding:0 16px;}
+  .tab-btn{background:none;border:none;color:#a0b4cc;font-family:inherit;font-size:11px;font-weight:600;padding:0 18px;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.5px;height:40px;}
+  .tab-btn.active{color:#29c6ff;border-bottom-color:#29c6ff;}
+  .tab-btn:hover{color:#fff;}
+
+  /* CONTENT */
+  .tab-content{display:none;height:calc(100vh - 96px);max-height:calc(100vh - 96px);overflow-y:auto;padding:16px 20px;flex-shrink:0;}
+  .tab-content.active{display:block;}
+
+  /* KPIs */
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+  .kpi{background:linear-gradient(135deg,#0c0c43,#181860);border:1px solid #273dd555;border-radius:10px;padding:14px 16px;position:relative;overflow:hidden;}
+  .kpi::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:#29c6ff;}
+  .kpi.warn::before{background:#f59e0b;}
+  .kpi.danger::before{background:#ef4444;}
+  .kpi.ok::before{background:#22c55e;}
+  .kpi .val{font-size:26px;font-weight:800;color:#29c6ff;line-height:1;}
+  .kpi.warn .val{color:#f59e0b;}
+  .kpi.danger .val{color:#ef4444;}
+  .kpi.ok .val{color:#22c55e;}
+  .kpi .lbl{font-size:10px;color:#a0b4cc;margin-top:4px;text-transform:uppercase;letter-spacing:.5px;}
+  .kpi .sub{font-size:9px;color:#6b7a8d;margin-top:2px;}
+
+  /* CHARTS */
+  .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+  .charts-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
+  .card{background:linear-gradient(135deg,#0c0c43,#181860);border:1px solid #273dd533;border-radius:10px;padding:14px;}
+  .card h3{font-size:11px;font-weight:700;color:#29c6ff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;}
+  .chart-wrap{position:relative;height:200px;}
+  .chart-wrap-sm{position:relative;height:170px;}
+  .chart-wrap-lg{position:relative;height:220px;}
+
+  /* SCORE BADGE */
+  .score-display{display:flex;align-items:center;justify-content:center;gap:20px;padding:10px 0;}
+  .grade-circle{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;border:3px solid;}
+  .grade-F{color:#ef4444;border-color:#ef4444;background:#ef444422;}
+  .grade-D{color:#f59e0b;border-color:#f59e0b;background:#f59e0b22;}
+  .score-info .big{font-size:36px;font-weight:800;color:#fff;}
+  .score-info .sm{font-size:10px;color:#a0b4cc;text-transform:uppercase;}
+  .trend{font-size:10px;color:#ef4444;margin-top:4px;}
+
+  /* ISSUES TABLE */
+  .issues-list{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto;}
+  .issue-row{display:flex;align-items:center;gap:10px;padding:6px 10px;background:#020029aa;border-radius:6px;font-size:10px;}
+  .issue-bar-bg{flex:1;background:#0c0c43;border-radius:4px;height:8px;overflow:hidden;}
+  .issue-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,#29c6ff,#273dd5);}
+  .issue-name{width:220px;color:#e2e3d5;font-size:10px;}
+  .issue-cnt{width:28px;text-align:right;font-weight:700;color:#29c6ff;font-size:11px;}
+  .sev-badge{padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;}
+  .sev-critical{background:#ef444433;color:#ef4444;}
+  .sev-high{background:#f59e0b33;color:#f59e0b;}
+  .sev-medium{background:#3b82f633;color:#3b82f6;}
+  .sev-low{background:#22c55e33;color:#22c55e;}
+  .sev-info{background:#a0b4cc33;color:#a0b4cc;}
+
+  /* APURA */
+  .apura-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .apura-pill{background:#29c6ff22;border:1px solid #29c6ff44;border-radius:8px;padding:8px 14px;font-size:11px;color:#29c6ff;font-weight:600;}
+
+  /* EVENTS TABLE */
+  .ev-row{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-radius:6px;background:#020029aa;margin-bottom:5px;font-size:11px;}
+  .ev-cat{color:#e2e3d5;}
+  .ev-cnt{font-weight:700;color:#29c6ff;}
+
+  /* INSIGHT BOX */
+  .insight{background:#29c6ff11;border:1px solid #29c6ff33;border-radius:8px;padding:12px 14px;font-size:10px;color:#c8dbe8;line-height:1.6;margin-bottom:12px;}
+  .insight strong{color:#29c6ff;}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:4px;}
+  ::-webkit-scrollbar-track{background:#020029;}
+  ::-webkit-scrollbar-thumb{background:#273dd5;border-radius:4px;}
+</style>
+
+<div class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA">
+    <div class="header-center">
+      <h1>Dashboard de Seguridad — Universidad del Azuay</h1>
+      <p>Periodo: Diciembre 2025 – Marzo 2026 &nbsp;|&nbsp; Fuente: GLPI / Security Scorecard</p>
+    </div>
+    <span class="badge">UDA</span>
+  </div>
+
+  <!-- NAV TABS -->
+  <nav class="tabs-nav">
+    <button class="tab-btn active" onclick="showTab('resumen')">Resumen General</button>
+    <button class="tab-btn" onclick="showTab('score')">Score & Tendencia</button>
+    <button class="tab-btn" onclick="showTab('issues')">Issues & Severidad</button>
+    <button class="tab-btn" onclick="showTab('incidentes')">Eventos & Tickets</button>
+    <button class="tab-btn" onclick="showTab('credenciales')">Credenciales</button>
+  </nav>
+
+  <!-- TAB 1: RESUMEN -->
+  <div class="tab-content active" id="tab-resumen">
+    <div class="kpi-grid">
+      <div class="kpi danger">
+        <div class="val">F / 56</div>
+        <div class="lbl">Score Mínimo Alcanzado</div>
+        <div class="sub">Mar-12-2026 | Calificación: F</div>
+      </div>
+      <div class="kpi warn">
+        <div class="val">61</div>
+        <div class="lbl">Score Actual (Mar-26)</div>
+        <div class="sub">Calificación D — nivel bajo</div>
+      </div>
+      <div class="kpi danger">
+        <div class="val">201</div>
+        <div class="lbl">Issues Notificadas</div>
+        <div class="sub">14 tipos únicos | 1,636 activos afectados</div>
+      </div>
+      <div class="kpi danger">
+        <div class="val">94</div>
+        <div class="lbl">Credenciales Comprometidas</div>
+        <div class="sub">Pico: 33 el 26-Mar-2026</div>
+      </div>
+      <div class="kpi warn">
+        <div class="val">128</div>
+        <div class="lbl">Tickets Totales</div>
+        <div class="sub">39 incidentes · 89 solicitudes</div>
+      </div>
+      <div class="kpi ok">
+        <div class="val">37</div>
+        <div class="lbl">Incidentes Cerrados</div>
+        <div class="sub">2 aún abiertos</div>
+      </div>
+      <div class="kpi warn">
+        <div class="val">87</div>
+        <div class="lbl">Eventos CSIRT</div>
+        <div class="sub">77 SS · 10 Servicios CSIRT</div>
+      </div>
+      <div class="kpi warn">
+        <div class="val">7</div>
+        <div class="lbl">Exposiciones SaaS / Shodan</div>
+        <div class="sub">Superficie externa monitorizada</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <strong>Lectura ejecutiva:</strong> La Universidad del Azuay mantiene un nivel de seguridad <strong>bajo-crítico</strong> durante el periodo analizado. Su score osciló entre 56 (F) y 67 (D), con una tendencia de deterioro hacia marzo de 2026. Se registraron 94 credenciales comprometidas, 201 issues activas en 1,636 activos, y un total de 128 tickets gestionados. Las áreas de mayor riesgo son vulnerabilidades de servicio, misconfiguraciones web y fuga de credenciales.
+    </div>
+
+    <div class="charts-row">
+      <div class="card">
+        <h3>Distribución de Tickets</h3>
+        <div class="chart-wrap-sm">
+          <canvas id="chartTickets"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Issues por Severidad</h3>
+        <div class="chart-wrap-sm">
+          <canvas id="chartSeveridad"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: SCORE -->
+  <div class="tab-content" id="tab-score">
+    <div class="insight">
+      <strong>Tendencia del Score:</strong> El score inició en <strong>61 (D)</strong> en diciembre 2025 y alcanzó su punto más bajo en <strong>56 (F)</strong> el 12 de marzo de 2026. Aunque cerró el periodo en 61 (D), la inestabilidad indica que la situación no está bajo control sostenido. La institución no logró superar la calificación D en ningún momento del periodo.
+    </div>
+    <div class="charts-row" style="grid-template-columns:1fr 2fr;">
+      <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+        <h3 style="align-self:flex-start;">Estado Actual</h3>
+        <div class="score-display" style="flex-direction:column;gap:10px;">
+          <div class="grade-circle grade-D">D</div>
+          <div class="score-info" style="text-align:center;">
+            <div class="big">61</div>
+            <div class="sm">Score al 26 de Marzo 2026</div>
+            <div class="trend">⚠ Mínimo histórico: 56 (F) el 12-Mar</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Evolución Histórica del Score</h3>
+        <div class="chart-wrap-lg">
+          <canvas id="chartScore"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Calificaciones Semanales</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 5-Dic-25 (61)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 12-Dic-25 (61)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 19-Dic-25 (62)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 26-Dic-25 (66)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 5-Ene-26 (67)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 12-Ene-26 (63)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 26-Ene-26 (63)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 5-Feb-26 (63)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 12-Feb-26 (63)</span>
+        <span class="sev-badge sev-critical" style="font-size:10px;padding:4px 10px;">E · 19-Feb-26 (57)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 26-Feb-26 (63)</span>
+        <span class="sev-badge sev-critical" style="font-size:10px;padding:4px 10px;">E · 5-Mar-26 (59)</span>
+        <span class="sev-badge sev-critical" style="font-size:10px;padding:4px 10px;">F · 12-Mar-26 (56)</span>
+        <span class="sev-badge sev-critical" style="font-size:10px;padding:4px 10px;">F · 19-Mar-26 (59)</span>
+        <span class="sev-badge sev-medium" style="font-size:10px;padding:4px 10px;">D · 26-Mar-26 (61)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: ISSUES -->
+  <div class="tab-content" id="tab-issues">
+    <div class="insight">
+      <strong>Issues de Seguridad:</strong> Se identificaron <strong>201 notificaciones</strong> en 14 tipos únicos afectando 1,636 activos. La categoría de mayor frecuencia son las <strong>vulnerabilidades de servicios expuestos</strong> (high/medium/critical), seguidas de configuraciones inseguras en recursos web (SRI, CSP, HTTPS). También se detectaron <strong>10 registros de credenciales comprometidas activas</strong>.
+    </div>
+    <div class="charts-row">
+      <div class="card">
+        <h3>Issues por Severidad</h3>
+        <div class="chart-wrap">
+          <canvas id="chartSev2"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Issues por Estado</h3>
+        <div class="chart-wrap">
+          <canvas id="chartEstado"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Top Issues Detectadas</h3>
+      <div class="issues-list" id="issuesList"></div>
+    </div>
+  </div>
+
+  <!-- TAB 4: EVENTOS -->
+  <div class="tab-content" id="tab-incidentes">
+    <div class="insight">
+      <strong>Gestión operativa:</strong> Se procesaron <strong>128 tickets</strong> (39 incidentes + 89 solicitudes). El 94.8% de los incidentes fueron cerrados satisfactoriamente. Los eventos CSIRT suman 87, siendo Security Scorecard la fuente principal con 77 eventos, complementada por 10 de Servicios CSIRT. Las categorías de mayor volumen incluyen filtración de datos (37) y scanning de redes (2).
+    </div>
+    <div class="charts-row">
+      <div class="card">
+        <h3>Incidentes vs. Solicitudes</h3>
+        <div class="chart-wrap-sm">
+          <canvas id="chartGlpi"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Categorías de Eventos CSIRT</h3>
+        <div style="margin-top:8px;">
+          <div class="ev-row"><span class="ev-cat">Security Scorecard [SS]</span><span class="ev-cnt">77</span></div>
+          <div class="ev-row"><span class="ev-cat">Filtración de datos</span><span class="ev-cnt">37</span></div>
+          <div class="ev-row"><span class="ev-cat">Servicios CSIRT</span><span class="ev-cnt">10</span></div>
+          <div class="ev-row"><span class="ev-cat">Escaneo de redes (scanning)</span><span class="ev-cnt">2</span></div>
+          <div class="ev-row"><span class="ev-cat">Gestión de EGSI</span><span class="ev-cnt">2</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Estado de Tickets</h3>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px;">
+        <div style="background:#020029aa;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:#ef4444;">2</div>
+          <div style="font-size:9px;color:#a0b4cc;text-transform:uppercase;margin-top:3px;">Incidentes Abiertos</div>
+        </div>
+        <div style="background:#020029aa;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:#22c55e;">37</div>
+          <div style="font-size:9px;color:#a0b4cc;text-transform:uppercase;margin-top:3px;">Incidentes Cerrados</div>
+        </div>
+        <div style="background:#020029aa;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:#f59e0b;">7</div>
+          <div style="font-size:9px;color:#a0b4cc;text-transform:uppercase;margin-top:3px;">Solicitudes Abiertas</div>
+        </div>
+        <div style="background:#020029aa;border-radius:8px;padding:12px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:#22c55e;">82</div>
+          <div style="font-size:9px;color:#a0b4cc;text-transform:uppercase;margin-top:3px;">Solicitudes Cerradas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: CREDENCIALES -->
+  <div class="tab-content" id="tab-credenciales">
+    <div class="insight">
+      <strong>Credenciales y superficie expuesta:</strong> Se detectaron <strong>94 credenciales comprometidas</strong> en el periodo, con un pico crítico de <strong>33 credenciales el 26 de marzo de 2026</strong>. Además se identificaron <strong>7 exposiciones en servicios SaaS / Shodan</strong>. Esta actividad sugiere filtración activa de datos de identidad institucional que requiere atención urgente.
+    </div>
+    <div class="charts-row" style="grid-template-columns:2fr 1fr;">
+      <div class="card">
+        <h3>Credenciales Comprometidas — Serie Temporal (Mar 2026)</h3>
+        <div class="chart-wrap-lg">
+          <canvas id="chartApura"></canvas>
+        </div>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;">
+        <h3>Resumen de Exposición</h3>
+        <div style="text-align:center;">
+          <div style="font-size:40px;font-weight:800;color:#ef4444;">94</div>
+          <div style="font-size:10px;color:#a0b4cc;text-transform:uppercase;">Total Credenciales</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#f59e0b;">33</div>
+          <div style="font-size:10px;color:#a0b4cc;text-transform:uppercase;">Pico Máximo</div>
+          <div style="font-size:9px;color:#6b7a8d;">26-Mar-2026</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#3b82f6;">7</div>
+          <div style="font-size:10px;color:#a0b4cc;text-transform:uppercase;">Exposiciones SaaS/Shodan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const palette = ['#29c6ff','#273dd5','#f59e0b','#ef4444','#22c55e','#a0b4cc','#8b5cf6'];
+const gridColor = '#ffffff11';
+const lblColor = '#a0b4cc';
+
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  setTimeout(()=>window.dispatchEvent(new Event('resize')),50);
+}
+
+// -- CHART: TICKETS (tab resumen)
+new Chart(document.getElementById('chartTickets'),{
+  type:'doughnut',
+  data:{
+    labels:['Incidentes Cerrados','Incidentes Abiertos','Solicitudes Cerradas','Solicitudes Abiertas'],
+    datasets:[{data:[37,2,82,7],backgroundColor:['#22c55e','#ef4444','#29c6ff','#f59e0b'],borderWidth:0}]
+  },
+  options:{maintainAspectRatio:false,plugins:{legend:{labels:{color:lblColor,font:{size:10}}}}}
+});
+
+// -- CHART: SEVERIDAD MINI (tab resumen)
+new Chart(document.getElementById('chartSeveridad'),{
+  type:'bar',
+  data:{
+    labels:['High','Medium','Low','Info'],
+    datasets:[{data:[17,29,113,42],backgroundColor:['#ef4444','#3b82f6','#22c55e','#a0b4cc'],borderRadius:4}]
+  },
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:lblColor,font:{size:9}},grid:{color:gridColor}},y:{ticks:{color:lblColor,font:{size:9}},grid:{color:gridColor}}}}
+});
+
+// -- CHART: SCORE HISTÓRICO
+const labels=['5-Dic','12-Dic','19-Dic','26-Dic','5-Ene','12-Ene','19-Ene','26-Ene','5-Feb','12-Feb','19-Feb','26-Feb','5-Mar','12-Mar','19-Mar','26-Mar'];
+const scores=[61,61,62,66,67,63,63,63,63,63,57,63,59,56,59,61];
+new Chart(document.getElementById('chartScore'),{
+  type:'line',
+  data:{
+    labels,
+    datasets:[{
+      label:'Score',
+      data:scores,
+      borderColor:'#29c6ff',
+      backgroundColor:'#29c6ff22',
+      fill:true,
+      tension:0.35,
+      pointBackgroundColor:scores.map(s=>s<60?'#ef4444':s<65?'#f59e0b':'#29c6ff'),
+      pointRadius:5,
+      pointHoverRadius:7,
+      borderWidth:2
+    }]
+  },
+  options:{
+    maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>`Score: ${c.raw}`}}},
+    scales:{
+      x:{ticks:{color:lblColor,font:{size:9},maxRotation:45},grid:{color:gridColor}},
+      y:{min:50,max:75,ticks:{color:lblColor,font:{size:9}},grid:{color:gridColor}}
+    }
+  }
+});
+
+// -- CHART: SEVERIDAD DETALLE
+new Chart(document.getElementById('chartSev2'),{
+  type:'bar',
+  data:{
+    labels:['High','Medium','Low','Info'],
+    datasets:[{data:[17,29,113,42],backgroundColor:['#ef4444','#3b82f6','#22c55e99','#a0b4cc'],borderRadius:5}]
+  },
+  options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:lblColor,font:{size:10}},grid:{color:gridColor}},y:{ticks:{color:lblColor,font:{size:10}},grid:{color:gridColor}}}}
+});
+
+// -- CHART: ESTADO ISSUES
+new Chart(document.getElementById('chartEstado'),{
+  type:'doughnut',
+  data:{
+    labels:['Activas','Departed','Resueltas'],
+    datasets:[{data:[201,159,22],backgroundColor:['#ef4444','#f59e0b','#22c55e'],borderWidth:0}]
+  },
+  options:{maintainAspectRatio:false,plugins:{legend:{labels:{color:lblColor,font:{size:10}}}}}
+});
+
+// -- ISSUES LIST
+const issues=[
+  {name:'Vuln. Servicio Host (High v3)',cnt:28,sev:'high'},
+  {name:'Unsafe SRI',cnt:16,sev:'medium'},
+  {name:'Patching Cadence (High v3)',cnt:16,sev:'high'},
+  {name:'Vuln. Servicio Host (Medium v3)',cnt:14,sev:'medium'},
+  {name:'CSP sin política',cnt:14,sev:'medium'},
+  {name:'HTTPS Redirect inseguro',cnt:14,sev:'medium'},
+  {name:'X-Content-Type-Options incorrecto',cnt:11,sev:'low'},
+  {name:'Credenciales comprometidas activas',cnt:10,sev:'critical'},
+  {name:'Vuln. Servicio Host (Medium)',cnt:9,sev:'medium'},
+  {name:'Vuln. Servicio Host (Critical v3)',cnt:9,sev:'critical'},
+  {name:'CSP política insegura',cnt:8,sev:'medium'},
+  {name:'Patching Cadence (Medium v3)',cnt:8,sev:'medium'},
+];
+const maxCnt=28;
+const el=document.getElementById('issuesList');
+issues.forEach(i=>{
+  el.innerHTML+=`<div class="issue-row">
+    <span class="issue-name">${i.name}</span>
+    <span class="sev-badge sev-${i.sev}">${i.sev}</span>
+    <div class="issue-bar-bg"><div class="issue-bar" style="width:${(i.cnt/maxCnt*100)}%"></div></div>
+    <span class="issue-cnt">${i.cnt}</span>
+  </div>`;
+});
+
+// -- CHART: GLPI INCIDENTES/SOLICITUDES
+new Chart(document.getElementById('chartGlpi'),{
+  type:'bar',
+  data:{
+    labels:['Incidentes','Solicitudes'],
+    datasets:[
+      {label:'Cerrados',data:[37,82],backgroundColor:'#22c55e',borderRadius:4},
+      {label:'Abiertos',data:[2,7],backgroundColor:'#ef4444',borderRadius:4}
+    ]
+  },
+  options:{maintainAspectRatio:false,plugins:{legend:{labels:{color:lblColor,font:{size:10}}}},scales:{x:{stacked:true,ticks:{color:lblColor,font:{size:10}},grid:{color:gridColor}},y:{stacked:true,ticks:{color:lblColor,font:{size:10}},grid:{color:gridColor}}}}
+});
+
+// -- CHART: APURA SERIE
+const apuraLabels=['4-Mar','15-Mar','17-Mar','20-Mar','23-Mar','26-Mar'];
+const apuraData=[9,1,29,10,12,33];
+new Chart(document.getElementById('chartApura'),{
+  type:'bar',
+  data:{
+    labels:apuraLabels,
+    datasets:[{
+      label:'Credenciales comprometidas',
+      data:apuraData,
+      backgroundColor:apuraData.map(v=>v>=25?'#ef4444':v>=10?'#f59e0b':'#29c6ff'),
+      borderRadius:5
+    }]
+  },
+  options:{
+    maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:lblColor,font:{size:10}}}},
+    scales:{
+      x:{ticks:{color:lblColor,font:{size:11}},grid:{color:gridColor}},
+      y:{ticks:{color:lblColor,font:{size:11}},grid:{color:gridColor}}
+    }
+  }
+});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
