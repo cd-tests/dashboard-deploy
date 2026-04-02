@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<title>Top 20 IES - Seguridad CEDIA</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Montserrat',sans-serif;background:#020029;color:#e2e3d5;min-height:100vh;}
+
+  /* HEADER */
+  .header{background:linear-gradient(135deg,#020029 0%,#0c0c43 60%,#1a1a6e 100%);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #29c6ff;box-shadow:0 4px 24px rgba(41,198,255,.18);}
+  .header img{height:38px;}
+  .header-info{text-align:right;}
+  .header-title{font-size:1.18rem;font-weight:700;color:#29c6ff;letter-spacing:.5px;}
+  .header-sub{font-size:.72rem;color:#a0b4cc;margin-top:2px;}
+
+  /* KPI ROW */
+  .kpi-row{display:flex;gap:14px;padding:18px 28px 8px;flex-wrap:wrap;}
+  .kpi{flex:1;min-width:130px;background:linear-gradient(135deg,#0c0c43,#131364);border:1px solid #29c6ff33;border-radius:12px;padding:14px 16px;text-align:center;position:relative;overflow:hidden;}
+  .kpi::before{content:'';position:absolute;top:-20px;right:-20px;width:70px;height:70px;background:radial-gradient(circle,#29c6ff22,transparent 70%);}
+  .kpi-val{font-size:1.85rem;font-weight:800;color:#29c6ff;line-height:1;}
+  .kpi-lbl{font-size:.65rem;color:#a0b4cc;margin-top:5px;text-transform:uppercase;letter-spacing:.6px;}
+  .kpi.gold .kpi-val{color:#ffd700;}
+  .kpi.green .kpi-val{color:#4ade80;}
+  .kpi.orange .kpi-val{color:#fb923c;}
+
+  /* GRADE BADGE */
+  .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.5px;}
+  .badge-A{background:#0d4f2e;color:#4ade80;border:1px solid #4ade80;}
+  .badge-B{background:#1a3a5c;color:#60a5fa;border:1px solid #60a5fa;}
+  .badge-C{background:#3d3000;color:#fcd34d;border:1px solid #fcd34d;}
+  .badge-D{background:#3d1a00;color:#fb923c;border:1px solid #fb923c;}
+  .badge-F{background:#3d0d0d;color:#f87171;border:1px solid #f87171;}
+  .badge-null{background:#1e1e3a;color:#888;border:1px solid #555;}
+
+  /* GRID */
+  .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:8px 28px 14px;}
+  .full{grid-column:1/-1;}
+
+  /* CARD */
+  .card{background:linear-gradient(145deg,#0c0c43,#0a0a35);border:1px solid #29c6ff22;border-radius:14px;padding:16px;overflow:hidden;}
+  .card-title{font-size:.75rem;font-weight:700;color:#29c6ff;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .card-title svg{flex-shrink:0;}
+
+  /* TABLE */
+  .tbl{width:100%;border-collapse:collapse;font-size:.68rem;}
+  .tbl thead th{background:#09092e;color:#29c6ff;text-transform:uppercase;letter-spacing:.5px;padding:7px 10px;text-align:left;border-bottom:1px solid #29c6ff44;position:sticky;top:0;}
+  .tbl tbody tr{border-bottom:1px solid #29c6ff11;transition:background .15s;}
+  .tbl tbody tr:hover{background:#29c6ff0a;}
+  .tbl td{padding:6px 10px;vertical-align:middle;}
+  .rank-num{font-weight:700;color:#29c6ff;font-size:.75rem;}
+  .inst-name{font-weight:600;color:#e2e3d5;}
+  .score-val{font-weight:700;color:#fff;}
+  .score-bar-wrap{width:80px;background:#09092e;border-radius:4px;height:6px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:6px;}
+  .score-bar{height:100%;border-radius:4px;transition:width .3s;}
+  .tbl-scroll{max-height:340px;overflow-y:auto;}
+  .tbl-scroll::-webkit-scrollbar{width:4px;}
+  .tbl-scroll::-webkit-scrollbar-track{background:#09092e;}
+  .tbl-scroll::-webkit-scrollbar-thumb{background:#29c6ff55;border-radius:4px;}
+
+  /* CHART CONTAINER */
+  .chart-wrap{position:relative;height:280px;}
+
+  /* DISTRIBUTION PILLS */
+  .dist-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+  .dist-pill{flex:1;min-width:80px;border-radius:10px;padding:10px 8px;text-align:center;}
+  .dist-pill .dp-val{font-size:1.4rem;font-weight:800;}
+  .dist-pill .dp-lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+  .pill-A{background:#0d4f2e22;border:1px solid #4ade80;} .pill-A .dp-val{color:#4ade80;}
+  .pill-B{background:#1a3a5c22;border:1px solid #60a5fa;} .pill-B .dp-val{color:#60a5fa;}
+  .pill-C{background:#3d300022;border:1px solid #fcd34d;} .pill-C .dp-val{color:#fcd34d;}
+  .pill-D{background:#3d1a0022;border:1px solid #fb923c;} .pill-D .dp-val{color:#fb923c;}
+  .pill-F{background:#3d0d0d22;border:1px solid #f87171;} .pill-F .dp-val{color:#f87171;}
+
+  /* COMPARISON BARS */
+  .comp-item{margin-bottom:10px;}
+  .comp-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+  .comp-name{font-size:.68rem;font-weight:600;color:#e2e3d5;}
+  .comp-vals{display:flex;gap:8px;font-size:.62rem;}
+  .comp-bar-row{display:flex;gap:4px;align-items:center;}
+  .comp-bar-bg{flex:1;height:8px;background:#09092e;border-radius:4px;overflow:hidden;}
+  .comp-bar-fill{height:100%;border-radius:4px;}
+  .bar-ssc{background:linear-gradient(90deg,#29c6ff,#273dd5);}
+  .bar-ness{background:linear-gradient(90deg,#4ade80,#0d9488);}
+  .comp-bar-label{font-size:.55rem;width:28px;text-align:right;color:#a0b4cc;}
+  .comp-scroll{max-height:280px;overflow-y:auto;padding-right:4px;}
+  .comp-scroll::-webkit-scrollbar{width:3px;}
+  .comp-scroll::-webkit-scrollbar-track{background:#09092e;}
+  .comp-scroll::-webkit-scrollbar-thumb{background:#29c6ff44;border-radius:4px;}
+
+  /* LEGEND */
+  .legend{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;}
+  .leg-item{display:flex;align-items:center;gap:5px;font-size:.62rem;color:#a0b4cc;}
+  .leg-dot{width:10px;height:10px;border-radius:2px;}
+
+  /* INSIGHTS */
+  .insights{background:#09092e;border-left:3px solid #29c6ff;border-radius:0 8px 8px 0;padding:10px 14px;margin-top:10px;}
+  .insight-item{font-size:.68rem;color:#c8d8e8;line-height:1.5;padding:3px 0;display:flex;gap:8px;}
+  .insight-item::before{content:'›';color:#29c6ff;font-weight:700;flex-shrink:0;}
+
+  /* FOOTER */
+  .footer{text-align:center;padding:10px;font-size:.6rem;color:#4a5568;border-top:1px solid #29c6ff15;}
+
+  /* TABS */
+  .tab-row{display:flex;gap:4px;margin-bottom:12px;}
+  .tab-btn{padding:5px 12px;border-radius:6px;border:1px solid #29c6ff33;background:transparent;color:#a0b4cc;cursor:pointer;font-size:.65rem;font-family:'Montserrat',sans-serif;transition:all .2s;}
+  .tab-btn.active{background:#29c6ff22;border-color:#29c6ff;color:#29c6ff;font-weight:600;}
+
+  @media(max-width:700px){.main-grid{grid-template-columns:1fr;}.kpi-row{gap:8px;padding:12px 16px 6px;}.main-grid{padding:6px 14px 10px;}}
+</style>
+
+
+
+<!-- HEADER -->
+<div class="header">
+  <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA">
+  <div class="header-info">
+    <div class="header-title">Dashboard · Top 20 IES — Productos de Seguridad</div>
+    <div class="header-sub">Security Scorecard + Nessus &nbsp;|&nbsp; Periodo: Dic 2025 – Mar 2026 &nbsp;|&nbsp; 71 IES consolidadas</div>
+  </div>
+</div>
+
+<!-- KPI ROW -->
+<div class="kpi-row">
+  <div class="kpi gold">
+    <div class="kpi-val">97.25</div>
+    <div class="kpi-lbl">Mejor score combinado (UTN)</div>
+  </div>
+  <div class="kpi green">
+    <div class="kpi-val">7</div>
+    <div class="kpi-lbl">Top 20 con Grade A</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val">6</div>
+    <div class="kpi-lbl">Top 20 escaneados Nessus</div>
+  </div>
+  <div class="kpi orange">
+    <div class="kpi-val">71</div>
+    <div class="kpi-lbl">IES totales evaluadas</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-val">26 / 03</div>
+    <div class="kpi-lbl">Última actualización SSC</div>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="main-grid">
+
+  <!-- TABLA TOP 20 -->
+  <div class="card full">
+    <div class="card-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#29c6ff" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      Ranking Top 20 — Score Combinado (Security Scorecard + Nessus)
+    </div>
+    <div class="tbl-scroll">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Institución</th>
+            <th>Score Combinado</th>
+            <th>Grade</th>
+            <th>SSC Score</th>
+            <th>SSC Grade</th>
+            <th>Nessus Score</th>
+            <th>Nessus Grade</th>
+            <th>Escaneado Nessus</th>
+          </tr>
+        </thead>
+        <tbody id="rankTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BARRAS COMPARATIVAS -->
+  <div class="card">
+    <div class="card-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#29c6ff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+      Comparativa SSC vs Nessus — Top 20
+    </div>
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot" style="background:linear-gradient(90deg,#29c6ff,#273dd5)"></div>Security Scorecard</div>
+      <div class="leg-item"><div class="leg-dot" style="background:linear-gradient(90deg,#4ade80,#0d9488)"></div>Nessus</div>
+    </div>
+    <div class="comp-scroll" id="compBars" style="margin-top:10px;"></div>
+  </div>
+
+  <!-- GRÁFICO BARRAS CHART.JS -->
+  <div class="card">
+    <div class="card-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#29c6ff" stroke-width="2"><rect x="2" y="10" width="4" height="11" rx="1"/><rect x="9" y="5" width="4" height="16" rx="1"/><rect x="16" y="2" width="4" height="19" rx="1"/></svg>
+      Score Combinado Top 20 — Gráfico Comparativo
+    </div>
+    <div class="chart-wrap">
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+
+  <!-- DISTRIBUCIÓN GRADES -->
+  <div class="card">
+    <div class="card-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#29c6ff" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Distribución por Grade — Security Scorecard (64 IES)
+    </div>
+    <div class="dist-row">
+      <div class="dist-pill pill-A"><div class="dp-val">11</div><div class="dp-lbl">A</div></div>
+      <div class="dist-pill pill-B"><div class="dp-val">15</div><div class="dp-lbl">B</div></div>
+      <div class="dist-pill pill-C"><div class="dp-val">13</div><div class="dp-lbl">C</div></div>
+      <div class="dist-pill pill-D"><div class="dp-val">13</div><div class="dp-lbl">D</div></div>
+      <div class="dist-pill pill-F"><div class="dp-val">12</div><div class="dp-lbl">F</div></div>
+    </div>
+    <div class="chart-wrap" style="height:190px;margin-top:12px;">
+      <canvas id="donutSSC"></canvas>
+    </div>
+  </div>
+
+  <!-- DISTRIBUCIÓN NESSUS -->
+  <div class="card">
+    <div class="card-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Distribución por Grade — Nessus (58 IES escaneadas)
+    </div>
+    <div class="dist-row">
+      <div class="dist-pill pill-A"><div class="dp-val">11</div><div class="dp-lbl">A</div></div>
+      <div class="dist-pill pill-B"><div class="dp-val">6</div><div class="dp-lbl">B</div></div>
+      <div class="dist-pill pill-C"><div class="dp-val">14</div><div class="dp-lbl">C</div></div>
+      <div class="dist-pill pill-D"><div class="dp-val">10</div><div class="dp-lbl">D</div></div>
+      <div class="dist-pill pill-F"><div class="dp-val">17</div><div class="dp-lbl">F</div></div>
+    </div>
+    <div class="chart-wrap" style="height:190px;margin-top:12px;">
+      <canvas id="donutNessus"></canvas>
+    </div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="card full">
+    <div class="card-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#29c6ff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Insights Ejecutivos — Top 20 IES
+    </div>
+    <div class="insights">
+      <div class="insight-item">UTN lidera el ranking combinado con un score de 97.25, respaldado por calificación A en ambos productos: SSC 95 y Nessus 99.5, lo que la posiciona como referente de madurez de seguridad en el ecosistema CEDIA.</div>
+      <div class="insight-item">De las 20 mejores IES, 7 obtienen grade A combinado (UTN, ACAC, ISTE, PUCE-SA, IKIAM, UDLA, UTM) y 7 obtienen grade B; solo 3 en posiciones 8–10 bajan a B (USFQ, ESPE, UTE).</div>
+      <div class="insight-item">ACAC e ISTE alcanzan el top 3 exclusivamente por su score en Security Scorecard (97 y 95 respectivamente), sin cobertura Nessus activa, lo que indica que aún no han sido escaneadas internamente.</div>
+      <div class="insight-item">UTE presenta la mayor brecha entre productos: SSC 80 (B) vs Nessus 97 (A), con diferencia de 17 puntos, señal de que su infraestructura interna supera su exposición externa perimetral.</div>
+      <div class="insight-item">ESPOL aparece en el puesto 15 con SSC 73 (C), pero Nessus 97.5 (A), la brecha más marcada del top 20; sugiere exposición externa moderada con controles internos robustos.</div>
+      <div class="insight-item">IAEN destaca con un perfecto 100 en Security Scorecard (1er lugar SSC individual), pero Nessus 66 (D) arrastra su score combinado a 83, evidenciando un riesgo interno no resuelto.</div>
+      <div class="insight-item">En Nessus, 47% de las IES escaneadas (27 de 58) están en grade D o F, reflejando que la postura de seguridad interna del ecosistema requiere atención prioritaria más allá del Top 20.</div>
+      <div class="insight-item">UISRAEL obtiene el score perfecto 100 en Nessus (con 2 trimestres, Q2 y Q4), el único en el ecosistema; sin embargo, su SSC de 61 (D) la ubica en posición 21 del ranking combinado.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">CEDIA · Centro de Seguridad Digital · Datos al 26-Mar-2026 · Dashboard generado para uso ejecutivo interno</div>
+
+<script>
+// DATA TOP 20
+const top20 = [
+  {r:1, inst:"UTN", sc:97.25, g:"A", ssc:95, sg:"A", ness:99.5, ng:"A", scan:true},
+  {r:2, inst:"ACAC", sc:97.0, g:"A", ssc:97, sg:"A", ness:null, ng:null, scan:false},
+  {r:3, inst:"ISTE", sc:95.0, g:"A", ssc:95, sg:"A", ness:null, ng:null, scan:false},
+  {r:4, inst:"PUCE-SA", sc:94.0, g:"A", ssc:null, sg:null, ness:94, ng:"A", scan:true},
+  {r:5, inst:"IKIAM", sc:93.75, g:"A", ssc:94, sg:"A", ness:93.5, ng:"A", scan:true},
+  {r:6, inst:"UDLA", sc:91.0, g:"A", ssc:89, sg:"B", ness:93, ng:"A", scan:true},
+  {r:7, inst:"UTM", sc:90.0, g:"A", ssc:90, sg:"A", ness:null, ng:null, scan:false},
+  {r:8, inst:"USFQ", sc:89.5, g:"B", ssc:84, sg:"B", ness:95, ng:"A", scan:true},
+  {r:9, inst:"ESPE", sc:89.25, g:"B", ssc:92, sg:"A", ness:86.5, ng:"B", scan:true},
+  {r:10, inst:"UTE", sc:88.5, g:"B", ssc:80, sg:"B", ness:97, ng:"A", scan:true},
+  {r:11, inst:"CEDIA", sc:87.0, g:"B", ssc:87, sg:"B", ness:null, ng:null, scan:false},
+  {r:12, inst:"ITECSUR", sc:87.0, g:"B", ssc:87, sg:"B", ness:null, ng:null, scan:false},
+  {r:13, inst:"TECSU", sc:87.0, g:"B", ssc:95, sg:"A", ness:79, ng:"C", scan:true},
+  {r:14, inst:"UNL", sc:87.0, g:"B", ssc:84, sg:"B", ness:90, ng:"B", scan:true},
+  {r:15, inst:"ESPOL", sc:85.25, g:"B", ssc:73, sg:"C", ness:97.5, ng:"A", scan:true},
+  {r:16, inst:"UG", sc:84.0, g:"B", ssc:77, sg:"C", ness:91, ng:"A", scan:true},
+  {r:17, inst:"UPS", sc:83.5, g:"B", ssc:87, sg:"B", ness:80, ng:"B", scan:true},
+  {r:18, inst:"IAEN", sc:83.0, g:"B", ssc:100, sg:"A", ness:66, ng:"D", scan:true},
+  {r:19, inst:"WISSEN", sc:82.5, g:"B", ssc:92, sg:"A", ness:73, ng:"C", scan:true},
+  {r:20, inst:"CES", sc:81.0, g:"B", ssc:81, sg:"B", ness:null, ng:null, scan:false}
+];
+
+function gradeBadge(g){
+  if(!g) return '<span class="badge badge-null">N/A</span>';
+  return `<span class="badge badge-${g}">${g}</span>`;
+}
+function barColor(sc){
+  if(sc>=90) return '#4ade80';
+  if(sc>=80) return '#60a5fa';
+  if(sc>=70) return '#fcd34d';
+  if(sc>=60) return '#fb923c';
+  return '#f87171';
+}
+
+// TABLA
+const tbody = document.getElementById('rankTableBody');
+top20.forEach(d=>{
+  const tr = document.createElement('tr');
+  const sc = d.sc; const pct = sc;
+  tr.innerHTML = `
+    <td><span class="rank-num">${d.r}</span></td>
+    <td><span class="inst-name">${d.inst}</span></td>
+    <td>
+      <span class="score-val">${d.sc}</span>
+      <span class="score-bar-wrap"><span class="score-bar" style="width:${pct}%;background:${barColor(d.sc)}"></span></span>
+    </td>
+    <td>${gradeBadge(d.g)}</td>
+    <td><span class="score-val" style="color:${d.ssc?barColor(d.ssc):'#666'}">${d.ssc??'—'}</span></td>
+    <td>${gradeBadge(d.sg)}</td>
+    <td><span class="score-val" style="color:${d.ness?barColor(d.ness):'#666'}">${d.ness??'—'}</span></td>
+    <td>${gradeBadge(d.ng)}</td>
+    <td style="text-align:center;font-size:.7rem;">${d.scan?'<span style="color:#4ade80">✓ Sí</span>':'<span style="color:#f87171">✗ No</span>'}</td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// BARRAS COMPARATIVAS
+const compDiv = document.getElementById('compBars');
+top20.forEach(d=>{
+  const sscW = d.ssc ? (d.ssc/100)*100 : 0;
+  const nessW = d.ness ? (d.ness/100)*100 : 0;
+  const html = `
+  <div class="comp-item">
+    <div class="comp-header">
+      <span class="comp-name">${d.r}. ${d.inst}</span>
+      <div class="comp-vals">
+        <span style="color:#29c6ff">${d.ssc??'N/A'}</span>
+        <span style="color:#a0b4cc">/</span>
+        <span style="color:#4ade80">${d.ness??'N/A'}</span>
+      </div>
+    </div>
+    <div class="comp-bar-row">
+      <span class="comp-bar-label" style="color:#29c6ff;font-size:.55rem;">SSC</span>
+      <div class="comp-bar-bg"><div class="comp-bar-fill bar-ssc" style="width:${sscW}%"></div></div>
+    </div>
+    <div class="comp-bar-row" style="margin-top:2px;">
+      <span class="comp-bar-label" style="color:#4ade80;font-size:.55rem;">NES</span>
+      <div class="comp-bar-bg"><div class="comp-bar-fill bar-ness" style="width:${nessW}%"></div></div>
+    </div>
+  </div>`;
+  compDiv.innerHTML += html;
+});
+
+// BAR CHART
+const labels = top20.map(d=>d.inst);
+const combScores = top20.map(d=>d.sc);
+const sscScores = top20.map(d=>d.ssc??0);
+const nessScores = top20.map(d=>d.ness??0);
+
+const barCtx = document.getElementById('barChart').getContext('2d');
+new Chart(barCtx,{
+  type:'bar',
+  data:{
+    labels,
+    datasets:[
+      {label:'Score Combinado',data:combScores,backgroundColor:'rgba(41,198,255,0.75)',borderColor:'#29c6ff',borderWidth:1,borderRadius:3},
+      {label:'SSC',data:sscScores,backgroundColor:'rgba(39,61,213,0.55)',borderColor:'#273dd5',borderWidth:1,borderRadius:3},
+      {label:'Nessus',data:nessScores,backgroundColor:'rgba(74,222,128,0.5)',borderColor:'#4ade80',borderWidth:1,borderRadius:3}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#a0b4cc',font:{size:10,family:'Montserrat'}},position:'bottom'},tooltip:{backgroundColor:'#0c0c43',titleColor:'#29c6ff',bodyColor:'#e2e3d5',borderColor:'#29c6ff33',borderWidth:1}},
+    scales:{
+      x:{ticks:{color:'#a0b4cc',font:{size:8,family:'Montserrat'},maxRotation:45},grid:{color:'#29c6ff11'}},
+      y:{min:0,max:105,ticks:{color:'#a0b4cc',font:{size:9,family:'Montserrat'},stepSize:20},grid:{color:'#29c6ff11'}}
+    }
+  }
+});
+
+// DONUT SSC
+const dSSC = document.getElementById('donutSSC').getContext('2d');
+new Chart(dSSC,{
+  type:'doughnut',
+  data:{labels:['A','B','C','D','F'],datasets:[{data:[11,15,13,13,12],backgroundColor:['#4ade80','#60a5fa','#fcd34d','#fb923c','#f87171'],borderColor:'#0c0c43',borderWidth:2,hoverOffset:6}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#0c0c43',titleColor:'#29c6ff',bodyColor:'#e2e3d5',borderColor:'#29c6ff33',borderWidth:1}}}
+});
+
+// DONUT NESSUS
+const dNess = document.getElementById('donutNessus').getContext('2d');
+new Chart(dNess,{
+  type:'doughnut',
+  data:{labels:['A','B','C','D','F'],datasets:[{data:[11,6,14,10,17],backgroundColor:['#4ade80','#60a5fa','#fcd34d','#fb923c','#f87171'],borderColor:'#0c0c43',borderWidth:2,hoverOffset:6}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#0c0c43',titleColor:'#29c6ff',bodyColor:'#e2e3d5',borderColor:'#29c6ff33',borderWidth:1}}}
+});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
