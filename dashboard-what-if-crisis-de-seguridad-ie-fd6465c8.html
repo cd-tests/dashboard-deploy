@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<title>Dashboard What-If · Crisis IES Ecuador</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:#020029;color:#e2e3d5;min-height:100vh;}
+
+/* ── HEADER ── */
+.header{background:linear-gradient(135deg,#020029 0%,#0c0c43 60%,#273dd5 100%);padding:28px 40px 22px;border-bottom:2px solid #29c6ff33;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.header-logo img{height:46px;filter:brightness(1.1);}
+.header-title{text-align:right;}
+.header-title h1{font-size:1.45rem;font-weight:800;color:#fff;letter-spacing:.5px;line-height:1.2;}
+.header-title .sub{font-size:.78rem;color:#29c6ff;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+.header-title .periodo{font-size:.72rem;color:#8899bb;margin-top:3px;}
+
+/* ── SCENARIO SELECTOR ── */
+.scenario-bar{background:#0c0c43;padding:16px 40px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid #29c6ff22;}
+.scenario-label{font-size:.72rem;font-weight:700;color:#8899bb;text-transform:uppercase;letter-spacing:1px;margin-right:4px;}
+.scenario-btn{padding:8px 20px;border-radius:20px;border:1.5px solid #29c6ff44;background:transparent;color:#8899bb;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .25s;letter-spacing:.5px;}
+.scenario-btn.active{background:#29c6ff;color:#020029;border-color:#29c6ff;box-shadow:0 0 18px #29c6ff55;}
+.scenario-btn:hover:not(.active){border-color:#29c6ff;color:#29c6ff;}
+.whatif-tag{margin-left:auto;background:linear-gradient(90deg,#ff4444,#ff8800);color:#fff;font-size:.68rem;font-weight:800;padding:5px 14px;border-radius:12px;letter-spacing:1.5px;text-transform:uppercase;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.7;}}
+
+/* ── LAYOUT ── */
+.main{padding:28px 36px;display:grid;gap:22px;}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;}
+.kpi{background:linear-gradient(145deg,#0c0c43,#111155);border:1px solid #29c6ff22;border-radius:14px;padding:20px 22px;position:relative;overflow:hidden;transition:transform .2s;}
+.kpi:hover{transform:translateY(-2px);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi.red::before{background:linear-gradient(90deg,#ff4444,#ff8800);}
+.kpi.amber::before{background:linear-gradient(90deg,#ff8800,#ffd700);}
+.kpi.blue::before{background:linear-gradient(90deg,#29c6ff,#273dd5);}
+.kpi.green::before{background:linear-gradient(90deg,#00e676,#00b0ff);}
+.kpi.purple::before{background:linear-gradient(90deg,#e040fb,#7c4dff);}
+.kpi-label{font-size:.64rem;font-weight:700;color:#8899bb;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.kpi-value{font-size:1.65rem;font-weight:800;line-height:1;}
+.kpi.red .kpi-value{color:#ff6b6b;}
+.kpi.amber .kpi-value{color:#ffd700;}
+.kpi.blue .kpi-value{color:#29c6ff;}
+.kpi.green .kpi-value{color:#00e676;}
+.kpi.purple .kpi-value{color:#e040fb;}
+.kpi-sub{font-size:.64rem;color:#667799;margin-top:6px;}
+.kpi-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:2.2rem;opacity:.15;}
+
+/* ── SECTION TITLE ── */
+.section-title{font-size:.78rem;font-weight:800;color:#29c6ff;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#29c6ff33,transparent);}
+
+/* ── GRID LAYOUTS ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;}
+
+/* ── CARD ── */
+.card{background:linear-gradient(145deg,#0a0a3a,#0f0f4a);border:1px solid #29c6ff1a;border-radius:14px;padding:22px;}
+.card-title{font-size:.72rem;font-weight:700;color:#8899bb;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+
+/* ── CHART CONTAINERS ── */
+.chart-wrap{position:relative;height:240px;}
+.chart-wrap.tall{height:300px;}
+.chart-wrap.xtall{height:360px;}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;font-size:.72rem;}
+.tbl th{background:#0c0c43;color:#29c6ff;font-weight:700;padding:10px 12px;text-align:left;text-transform:uppercase;letter-spacing:.8px;font-size:.65rem;border-bottom:1px solid #29c6ff33;}
+.tbl td{padding:9px 12px;border-bottom:1px solid #29c6ff0f;color:#c8d0e0;vertical-align:middle;}
+.tbl tr:hover td{background:#29c6ff08;}
+.tbl-scroll{max-height:340px;overflow-y:auto;}
+.tbl-scroll::-webkit-scrollbar{width:4px;}
+.tbl-scroll::-webkit-scrollbar-thumb{background:#29c6ff44;border-radius:2px;}
+.badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:.62rem;font-weight:700;}
+.badge-A{background:#00e67622;color:#00e676;border:1px solid #00e67644;}
+.badge-B{background:#29c6ff22;color:#29c6ff;border:1px solid #29c6ff44;}
+.badge-C{background:#ffd70022;color:#ffd700;border:1px solid #ffd70044;}
+.badge-D{background:#ff880022;color:#ff8800;border:1px solid #ff880044;}
+.badge-F{background:#ff444422;color:#ff6b6b;border:1px solid #ff444444;}
+.badge-CRITICO{background:#ff000033;color:#ff4444;border:1px solid #ff444466;}
+.badge-ALTO{background:#ff880033;color:#ff8800;border:1px solid #ff880066;}
+.badge-MEDIO{background:#ffd70033;color:#ffd700;border:1px solid #ffd70066;}
+.badge-BAJO{background:#00e67633;color:#00e676;border:1px solid #00e67666;}
+
+/* ── RISK METER ── */
+.risk-meter{display:flex;flex-direction:column;gap:8px;}
+.risk-item{display:flex;align-items:center;gap:10px;}
+.risk-name{font-size:.68rem;color:#c8d0e0;width:90px;flex-shrink:0;}
+.risk-bar-bg{flex:1;height:10px;background:#111133;border-radius:5px;overflow:hidden;}
+.risk-bar-fill{height:100%;border-radius:5px;transition:width 1s ease;}
+.risk-val{font-size:.68rem;font-weight:700;width:40px;text-align:right;}
+
+/* ── INSIGHT BOX ── */
+.insight-box{background:linear-gradient(135deg,#0c1040,#0a0a2a);border-left:3px solid #29c6ff;padding:14px 18px;border-radius:0 10px 10px 0;margin-top:12px;}
+.insight-box.warn{border-left-color:#ff8800;}
+.insight-box.danger{border-left-color:#ff4444;}
+.insight-item{font-size:.72rem;color:#b0bcd0;margin-bottom:6px;display:flex;gap:8px;}
+.insight-item:last-child{margin-bottom:0;}
+.insight-item::before{content:'▸';color:#29c6ff;flex-shrink:0;}
+.insight-box.warn .insight-item::before{color:#ff8800;}
+.insight-box.danger .insight-item::before{color:#ff6b6b;}
+
+/* ── MAP ── */
+#crisis-map{height:360px;border-radius:10px;border:1px solid #29c6ff22;}
+
+/* ── SLIDER ── */
+.slider-group{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.slider-row{display:flex;align-items:center;gap:12px;}
+.slider-row label{font-size:.68rem;color:#8899bb;width:160px;flex-shrink:0;}
+.slider-row input[type=range]{flex:1;accent-color:#29c6ff;cursor:pointer;}
+.slider-val{font-size:.72rem;font-weight:700;color:#29c6ff;width:60px;text-align:right;}
+
+/* ── WHATIF PANEL ── */
+.whatif-result{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;}
+.whatif-card{background:#0c0c43;border:1px solid #29c6ff22;border-radius:12px;padding:16px;text-align:center;}
+.whatif-card .wf-label{font-size:.62rem;color:#8899bb;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.whatif-card .wf-val{font-size:1.3rem;font-weight:800;}
+.whatif-card.red .wf-val{color:#ff6b6b;}
+.whatif-card.amber .wf-val{color:#ffd700;}
+.whatif-card.green .wf-val{color:#00e676;}
+.whatif-card .wf-sub{font-size:.6rem;color:#667799;margin-top:4px;}
+
+/* ── VULN BARS ── */
+.vuln-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.vuln-name{font-size:.65rem;color:#b0bcd0;width:220px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.vuln-bar-bg{flex:1;height:8px;background:#111133;border-radius:4px;overflow:hidden;}
+.vuln-bar-fill{height:100%;border-radius:4px;}
+.vuln-count{font-size:.65rem;font-weight:700;color:#29c6ff;width:36px;text-align:right;}
+
+/* ── FOOTER ── */
+.footer{background:#0c0c43;border-top:1px solid #29c6ff22;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:10px;}
+.footer-logo img{height:28px;opacity:.7;}
+.footer-text{font-size:.62rem;color:#445566;}
+
+@media(max-width:900px){
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+  .whatif-result{grid-template-columns:1fr 1fr;}
+  .header{flex-direction:column;text-align:center;}
+  .header-title{text-align:center;}
+}
+</style>
+
+
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">
+    <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA"/>
+  </div>
+  <div class="header-title">
+    <h1>SIMULACIÓN DE CRISIS · WHAT-IF</h1>
+    <div class="sub">Impacto Financiero · Riesgo Reputacional · Recuperación Operativa</div>
+    <div class="periodo">IES Ecuador · Periodo 2025-12 a 2026-03 · Actualizado: 02 Abril 2026</div>
+  </div>
+</div>
+
+<!-- SCENARIO BAR -->
+<div class="scenario-bar">
+  <span class="scenario-label">Escenario:</span>
+  <button class="scenario-btn active" onclick="setScenario('ransomware')">🔒 Ransomware Masivo</button>
+  <button class="scenario-btn" onclick="setScenario('filtracion')">💧 Filtración de Datos</button>
+  <button class="scenario-btn" onclick="setScenario('ddos')">⚡ Ataque DDoS Crítico</button>
+  <button class="scenario-btn" onclick="setScenario('mixto')">☠️ Incidente Combinado</button>
+  <span class="whatif-tag">⚠ SIMULACIÓN</span>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- KPIs GLOBALES -->
+<div>
+  <div class="section-title">🌐 Panorama Global del Ecosistema</div>
+  <div class="kpi-row">
+    <div class="kpi red">
+      <div class="kpi-label">IES en zona crítica (F/D)</div>
+      <div class="kpi-value">32</div>
+      <div class="kpi-sub">De 71 IES monitoreadas · 45%</div>
+      <div class="kpi-icon">🔴</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-label">Score promedio ecosistema</div>
+      <div class="kpi-value">71.8</div>
+      <div class="kpi-sub">Grado promedio: C · Rango 0–97.25</div>
+      <div class="kpi-icon">📊</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-label">Madurez digital promedio</div>
+      <div class="kpi-value">55%</div>
+      <div class="kpi-sub">Media 21 IES evaluadas · Mediana 56%</div>
+      <div class="kpi-icon">🧠</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-label">Multa promedio proyectada</div>
+      <div class="kpi-value">$2.35M</div>
+      <div class="kpi-sub">Por IES · Desv. Est. $4.56M</div>
+      <div class="kpi-icon">⚖️</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-label">Issues activas ecosistema</div>
+      <div class="kpi-value">9,425</div>
+      <div class="kpi-sub">100% sin resolver en el periodo</div>
+      <div class="kpi-icon">🚨</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">Credenciales comprometidas</div>
+      <div class="kpi-value">584</div>
+      <div class="kpi-sub">3er issue más frecuente del ecosistema</div>
+      <div class="kpi-icon">🔑</div>
+    </div>
+  </div>
+</div>
+
+<!-- SIMULADOR WHAT-IF -->
+<div class="card">
+  <div class="section-title" id="sim-title">🔒 Simulador de Crisis · Ransomware Masivo</div>
+  <div class="grid-2">
+    <div>
+      <div class="card-title">Parámetros de Simulación</div>
+      <div class="slider-group">
+        <div class="slider-row">
+          <label>IES afectadas (%)</label>
+          <input type="range" id="sl-ies" min="5" max="100" value="40" oninput="updateWhatIf()"/>
+          <span class="slider-val" id="v-ies">40%</span>
+        </div>
+        <div class="slider-row">
+          <label>Tiempo inactividad (días)</label>
+          <input type="range" id="sl-down" min="1" max="90" value="21" oninput="updateWhatIf()"/>
+          <span class="slider-val" id="v-down">21d</span>
+        </div>
+        <div class="slider-row">
+          <label>Registros expuestos (miles)</label>
+          <input type="range" id="sl-rec" min="1" max="500" value="120" oninput="updateWhatIf()"/>
+          <span class="slider-val" id="v-rec">120K</span>
+        </div>
+        <div class="slider-row">
+          <label>Rescate exigido ($K)</label>
+          <input type="range" id="sl-ran" min="10" max="2000" value="350" oninput="updateWhatIf()"/>
+          <span class="slider-val" id="v-ran">$350K</span>
+        </div>
+        <div class="slider-row">
+          <label>Inversión preventiva ($K)</label>
+          <input type="range" id="sl-prev" min="10" max="1000" value="180" oninput="updateWhatIf()"/>
+          <span class="slider-val" id="v-prev">$180K</span>
+        </div>
+      </div>
+      <div class="whatif-result">
+        <div class="whatif-card red">
+          <div class="wf-label">Costo total incidente</div>
+          <div class="wf-val" id="wf-costo">$12.4M</div>
+          <div class="wf-sub">Remediación + multas + pérdidas</div>
+        </div>
+        <div class="whatif-card amber">
+          <div class="wf-label">Tiempo recuperación</div>
+          <div class="wf-val" id="wf-tiempo">63 días</div>
+          <div class="wf-sub">Según madurez promedio</div>
+        </div>
+        <div class="whatif-card green">
+          <div class="wf-label">Ahorro vs Inversión prev.</div>
+          <div class="wf-val" id="wf-ahorro">68x ROI</div>
+          <div class="wf-sub">Retorno de la prevención</div>
+        </div>
+        <div class="whatif-card red">
+          <div class="wf-label">Riesgo reputacional</div>
+          <div class="wf-val" id="wf-rep">CRÍTICO</div>
+          <div class="wf-sub">Índice proyectado</div>
+        </div>
+        <div class="whatif-card amber">
+          <div class="wf-label">Multas PDP estimadas</div>
+          <div class="wf-val" id="wf-multas">$4.8M</div>
+          <div class="wf-sub">Bajo Ley Orgánica PDP Ecuador</div>
+        </div>
+        <div class="whatif-card green">
+          <div class="wf-label">IES a prioridad máxima</div>
+          <div class="wf-val" id="wf-ies-crit">28</div>
+          <div class="wf-sub">Score D/F en zona de impacto</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card-title">Proyección Financiera Comparativa</div>
+      <div class="chart-wrap tall">
+        <canvas id="chartWhatif"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DISTRIBUCIÓN Y RANKING -->
+<div class="grid-2">
+  <div class="card">
+    <div class="section-title">📊 Distribución de IES por Nivel de Seguridad</div>
+    <div class="chart-wrap">
+      <canvas id="chartDist"></canvas>
+    </div>
+    <div class="insight-box">
+      <div class="insight-item">7 IES con grado A representan el núcleo seguro del ecosistema.</div>
+      <div class="insight-item">45% de las IES (D+F) son elegibles directas como vector de ataque.</div>
+      <div class="insight-item">13 IES en grado C representan superficie de riesgo moderado-alto.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">💰 Top 10 IES · Impacto Financiero por Multas PDP</div>
+    <div class="chart-wrap">
+      <canvas id="chartMultas"></canvas>
+    </div>
+    <div class="insight-box warn">
+      <div class="insight-item">UCACUE lidera con $17.3M en multas proyectadas a pesar de solo 44% de madurez.</div>
+      <div class="insight-item">UDA y UPS superan los $8M — 3.5-4x el promedio del ecosistema.</div>
+      <div class="insight-item">PUCE presenta una brecha paradójica: 68% madurez pero $7.5M en multas.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MADUREZ vs RIESGO -->
+<div class="card">
+  <div class="section-title">🎯 Madurez Digital vs Riesgo Financiero · Posicionamiento Institucional</div>
+  <div class="grid-2">
+    <div>
+      <div class="chart-wrap xtall">
+        <canvas id="chartBubble"></canvas>
+      </div>
+    </div>
+    <div>
+      <div class="card-title">Tabla de Riesgo Consolidado por IES</div>
+      <div class="tbl-scroll">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>IES</th>
+              <th>Madurez</th>
+              <th>Score</th>
+              <th>Multas ($)</th>
+              <th>Riesgo</th>
+            </tr>
+          </thead>
+          <tbody id="riesgo-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VULNERABILIDADES -->
+<div class="grid-2">
+  <div class="card">
+    <div class="section-title">🔍 Top Issues · Ecosistema CEDIA</div>
+    <div id="vuln-chart"></div>
+    <div class="insight-box danger">
+      <div class="insight-item">976 instancias de vulnerabilidades de servicio nivel medio — la más extendida.</div>
+      <div class="insight-item">584 credenciales comprometidas activas — vector directo de ransomware.</div>
+      <div class="insight-item">578 vulns críticas de host sin parchear — superficie de ataque inmediata.</div>
+      <div class="insight-item">100% de issues (9,425) permanecen activas sin resolución en el periodo.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">⏱️ Tiempo Estimado de Recuperación por Categoría</div>
+    <div class="chart-wrap tall">
+      <canvas id="chartRecovery"></canvas>
+    </div>
+    <div class="insight-box warn">
+      <div class="insight-item">IES con madurez &lt;25% pueden requerir más de 90 días para recuperarse.</div>
+      <div class="insight-item">La zona crítica (5 IES) no cuenta con planes de continuidad verificados.</div>
+      <div class="insight-item">Solo las IES líderes (6) tienen capacidad de recuperación en menos de 14 días.</div>
+    </div>
+  </div>
+</div>
+
+<!-- REMEDIACIÓN vs PREVENCIÓN -->
+<div class="card">
+  <div class="section-title">⚖️ Costo de Remediación vs Inversión Preventiva Necesaria · Por Categoría de Madurez</div>
+  <div class="grid-2">
+    <div>
+      <div class="chart-wrap tall">
+        <canvas id="chartRemPrev"></canvas>
+      </div>
+    </div>
+    <div>
+      <div class="card-title">Riesgo Reputacional Proyectado</div>
+      <div class="risk-meter" id="rep-meter"></div>
+      <div style="margin-top:16px;">
+        <div class="card-title">Costo Promedio por Nivel de Madurez</div>
+        <table class="tbl" style="margin-top:8px;">
+          <thead>
+            <tr><th>Categoría</th><th>Madurez</th><th>Costo Remediación</th><th>Inversión Prev.</th><th>ROI Prev.</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="badge badge-CRITICO">Zona Crítica</span></td><td>21-38%</td><td style="color:#ff6b6b;">$6.2M–$17.3M</td><td style="color:#00e676;">$280K</td><td style="color:#00e676;font-weight:700;">22–62x</td></tr>
+            <tr><td><span class="badge badge-ALTO">En Desarrollo</span></td><td>40-73%</td><td style="color:#ff8800;">$110K–$7.5M</td><td style="color:#ffd700;">$120K</td><td style="color:#ffd700;font-weight:700;">1–62x</td></tr>
+            <tr><td><span class="badge badge-MEDIO">Líderes</span></td><td>73-87%</td><td style="color:#ffd700;">$4K–$70K</td><td style="color:#29c6ff;">$60K</td><td style="color:#29c6ff;font-weight:700;">0.1–1.2x</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAPA -->
+<div class="card">
+  <div class="section-title">🗺️ Mapa de Calor · Riesgo de Seguridad por Región — Ecuador</div>
+  <div class="grid-2" style="align-items:start;">
+    <div>
+      <div id="crisis-map"></div>
+    </div>
+    <div>
+      <div class="card-title">Filtrar por Calificación</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+        <button class="scenario-btn active" id="mf-all" onclick="filterMap('all')">Todas</button>
+        <button class="scenario-btn" id="mf-A" onclick="filterMap('A')">Grado A</button>
+        <button class="scenario-btn" id="mf-B" onclick="filterMap('B')">Grado B</button>
+        <button class="scenario-btn" id="mf-C" onclick="filterMap('C')">Grado C</button>
+        <button class="scenario-btn" id="mf-D" onclick="filterMap('D')">Grado D</button>
+        <button class="scenario-btn" id="mf-F" onclick="filterMap('F')">Grado F</button>
+      </div>
+      <div class="card-title">Distribución Regional</div>
+      <div class="risk-meter" id="regional-meter"></div>
+      <div class="insight-box" style="margin-top:14px;">
+        <div class="insight-item">Sierra Centro y Sierra Sur concentran la mayor densidad de IES en zona crítica.</div>
+        <div class="insight-item">Quito y Guayaquil mantienen mayor diversidad de niveles, con instituciones A y F coexistiendo.</div>
+        <div class="insight-item">Regiones amazónica y costera periférica presentan menor cobertura de monitoreo.</div>
+        <div class="insight-item">El riesgo sistémico es mayor en ciudades con múltiples IES en zona D/F.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RANKING COMPLETO -->
+<div class="card">
+  <div class="section-title">🏆 Ranking Completo IES · Score Combinado (Nessus + Scorecard)</div>
+  <div class="tbl-scroll">
+    <table class="tbl" id="ranking-full">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Institución</th>
+          <th>Score Combinado</th>
+          <th>Grade</th>
+          <th>Scorecard</th>
+          <th>Nessus</th>
+          <th>Riesgo Incidente</th>
+          <th>Tiempo Recup.</th>
+          <th>Multa Est.</th>
+        </tr>
+      </thead>
+      <tbody id="ranking-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-logo">
+    <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA"/>
+  </div>
+  <div class="footer-text">Dashboard de Simulación de Crisis What-If · SOC-CSIRT CEDIA · Datos: Periodo 2025-12 a 2026-03 · Generado: 02 Abril 2026 · Valores financieros son proyecciones estimadas con fines analíticos</div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────
+const rankingData = [
+  {ies:'UTN',score:97.25,grade:'A',ssc:95,nessus:99.5,lat:-0.3488,lng:-78.1246},
+  {ies:'ACAC',score:97,grade:'A',ssc:97,nessus:null,lat:-0.2299,lng:-78.5250},
+  {ies:'ISTE',score:95,grade:'A',ssc:95,nessus:null,lat:-0.2299,lng:-78.5260},
+  {ies:'PUCE-SA',score:94,grade:'A',ssc:null,nessus:94,lat:-0.2299,lng:-78.5240},
+  {ies:'IKIAM',score:93.75,grade:'A',ssc:94,nessus:93.5,lat:-0.9892,lng:-77.8153},
+  {ies:'UDLA',score:91,grade:'A',ssc:89,nessus:93,lat:-0.2299,lng:-78.5200},
+  {ies:'UTM',score:90,grade:'A',ssc:90,nessus:null,lat:-1.0576,lng:-80.4515},
+  {ies:'USFQ',score:89.5,grade:'B',ssc:84,nessus:95,lat:-0.1972,lng:-78.4369},
+  {ies:'ESPE',score:89.25,grade:'B',ssc:92,nessus:86.5,lat:-0.3341,lng:-78.4522},
+  {ies:'UTE',score:88.5,grade:'B',ssc:80,nessus:97,lat:-0.2299,lng:-78.5230},
+  {ies:'CEDIA',score:87,grade:'B',ssc:87,nessus:null,lat:-2.8950,lng:-78.9960},
+  {ies:'TECSU',score:87,grade:'B',ssc:95,nessus:79,lat:-2.8950,lng:-78.9970},
+  {ies:'UNL',score:87,grade:'B',ssc:84,nessus:90,lat:-3.9930,lng:-79.2040},
+  {ies:'ESPOL',score:85.25,grade:'B',ssc:73,nessus:97.5,lat:-2.1960,lng:-79.8860},
+  {ies:'UG',score:84,grade:'B',ssc:77,nessus:91,lat:-2.1960,lng:-79.8870},
+  {ies:'UPS',score:83.5,grade:'B',ssc:87,nessus:80,lat:-2.8950,lng:-78.9980},
+  {ies:'IAEN',score:83,grade:'B',ssc:100,nessus:66,lat:-0.2299,lng:-78.5210},
+  {ies:'WISSEN',score:82.5,grade:'B',ssc:92,nessus:73,lat:-2.8950,lng:-78.9950},
+  {ies:'CES',score:81,grade:'B',ssc:81,nessus:null,lat:-0.2299,lng:-78.5220},
+  {ies:'UISRAEL',score:80.5,grade:'B',ssc:61,nessus:100,lat:-0.2299,lng:-78.5215},
+  {ies:'UOTAVALO',score:80.5,grade:'B',ssc:85,nessus:76,lat:0.2346,lng:-78.2625},
+  {ies:'UEA',score:80.25,grade:'B',ssc:91,nessus:69.5,lat:-1.4916,lng:-78.0034},
+  {ies:'INOCAR',score:78,grade:'C',ssc:78,nessus:null,lat:-2.1960,lng:-79.8850},
+  {ies:'UCUENCA',score:77.5,grade:'C',ssc:78,nessus:77,lat:-2.8950,lng:-78.9940},
+  {ies:'UEB',score:78,grade:'C',ssc:78,nessus:null,lat:-1.5926,lng:-79.0010},
+  {ies:'CACES',score:75.5,grade:'C',ssc:96,nessus:55,lat:-0.2299,lng:-78.5205},
+  {ies:'UCE',score:75,grade:'C',ssc:86,nessus:64,lat:-0.2299,lng:-78.5195},
+  {ies:'UNAE',score:74.5,grade:'C',ssc:89,nessus:60,lat:-2.7397,lng:-78.8486},
+  {ies:'UNIBE',score:74,grade:'C',ssc:74,nessus:null,lat:-2.1960,lng:-79.8840},
+  {ies:'UTC',score:74,grade:'C',ssc:74,nessus:null,lat:-0.9342,lng:-78.6152},
+  {ies:'YACHAY',score:74,grade:'C',ssc:74,nessus:null,lat:0.3488,lng:-78.1246},
+  {ies:'UARTES',score:72,grade:'C',ssc:68,nessus:76,lat:-2.1960,lng:-79.8830},
+  {ies:'UIDE',score:72,grade:'C',ssc:72,nessus:null,lat:-0.2299,lng:-78.5180},
+  {ies:'SUDAMERICANO',score:71,grade:'C',ssc:71,nessus:null,lat:-2.8950,lng:-78.9930},
+  {ies:'ULEAM',score:70,grade:'C',ssc:70,nessus:null,lat:-0.8458,lng:-80.1639},
+  {ies:'PUCE',score:69.75,grade:'D',ssc:49,nessus:90.5,lat:-0.2299,lng:-78.5190},
+  {ies:'ITCA',score:69,grade:'D',ssc:69,nessus:null,lat:-0.2299,lng:-78.5185},
+  {ies:'UCSG',score:69,grade:'D',ssc:68,nessus:70,lat:-2.1960,lng:-79.8820},
+  {ies:'UINPIAW',score:67,grade:'D',ssc:58,nessus:76,lat:-0.2299,lng:-78.5175},
+  {ies:'UTMACH',score:67,grade:'D',ssc:81,nessus:53,lat:-3.2590,lng:-79.9590},
+  {ies:'UTA',score:66.25,grade:'D',ssc:82,nessus:50.5,lat:-1.2490,lng:-78.6170},
+  {ies:'ITSCO',score:66,grade:'D',ssc:85,nessus:47,lat:-0.2299,lng:-78.5170},
+  {ies:'PASOS',score:64,grade:'D',ssc:64,nessus:null,lat:-0.2299,lng:-78.5165},
+  {ies:'UTI',score:64,grade:'D',ssc:64,nessus:null,lat:-1.2490,lng:-78.6160},
+  {ies:'ESPAM',score:63.25,grade:'D',ssc:88,nessus:38.5,lat:-0.8458,lng:-80.1650},
+  {ies:'EPN',score:62,grade:'D',ssc:62,nessus:null,lat:-0.2299,lng:-78.5160},
+  {ies:'UTPL',score:62,grade:'D',ssc:62,nessus:null,lat:-3.9930,lng:-79.2050},
+  {ies:'UDA',score:61,grade:'D',ssc:61,nessus:null,lat:-2.8950,lng:-78.9920},
+  {ies:'UTELVT',score:60.5,grade:'D',ssc:64,nessus:57,lat:0.9592,lng:-79.6520},
+  {ies:'ITB',score:59.5,grade:'F',ssc:44,nessus:75,lat:-2.1960,lng:-79.8810},
+  {ies:'ISTP',score:58,grade:'F',ssc:58,nessus:null,lat:-0.2299,lng:-78.5155},
+  {ies:'ESPOCH',score:57.5,grade:'F',ssc:71,nessus:44,lat:-1.6743,lng:-78.6484},
+  {ies:'UNACH',score:56.75,grade:'F',ssc:63,nessus:50.5,lat:-1.6743,lng:-78.6490},
+  {ies:'USGP',score:56.75,grade:'F',ssc:77,nessus:36.5,lat:-1.0576,lng:-80.4520},
+  {ies:'UPEC',score:56,grade:'F',ssc:59,nessus:53,lat:0.8124,lng:-77.7171},
+  {ies:'ISTER',score:55,grade:'F',ssc:55,nessus:null,lat:-0.2299,lng:-78.5150},
+  {ies:'TES',score:55,grade:'F',ssc:55,nessus:null,lat:-0.2299,lng:-78.5145},
+  {ies:'UNIANDES',score:54,grade:'F',ssc:54,nessus:null,lat:-1.2490,lng:-78.6155},
+  {ies:'UTB',score:52.75,grade:'F',ssc:62,nessus:43.5,lat:-1.8038,lng:-79.5351},
+  {ies:'UCACUE',score:50.75,grade:'F',ssc:49,nessus:52.5,lat:-2.8950,lng:-78.9910},
+  {ies:'ITSVN',score:48,grade:'F',ssc:48,nessus:null,lat:-1.2490,lng:-78.6145},
+  {ies:'ARMADA',score:47,grade:'F',ssc:47,nessus:null,lat:-2.1960,lng:-79.8800},
+  {ies:'UBE',score:46,grade:'F',ssc:46,nessus:null,lat:-0.2299,lng:-78.5140},
+  {ies:'UTEQ',score:45.5,grade:'F',ssc:60,nessus:31,lat:-1.0286,lng:-79.4635},
+  {ies:'UESFN',score:22,grade:'F',ssc:null,nessus:22,lat:-1.6743,lng:-78.6478},
+  {ies:'IES',score:0,grade:'F',ssc:null,nessus:0,lat:-0.2299,lng:-78.5135}
+];
+
+// Madurez data
+const madData = [
+  {ies:'ITSCO',mad:87,multas:68929,tipo:'INST PRIVADO'},
+  {ies:'ESPOL',mad:83,multas:3619,tipo:'U PUBLICA'},
+  {ies:'UNL',mad:81,multas:32670,tipo:'U PUBLICA'},
+  {ies:'UTPL',mad:81,multas:57103,tipo:'U PRIVADA'},
+  {ies:'IKIAM',mad:77,multas:9285,tipo:'U PUBLICA'},
+  {ies:'UCUENCA',mad:73,multas:38197,tipo:'U PUBLICA'},
+  {ies:'ESPE',mad:73,multas:109997,tipo:'U PUBLICA'},
+  {ies:'PUCE',mad:68,multas:7499641,tipo:'U PRIVADA'},
+  {ies:'UPS',mad:59,multas:8138645,tipo:'U PRIVADA'},
+  {ies:'MCUENCA',mad:56,multas:141058,tipo:'ENT PUBLICA'},
+  {ies:'UNIANDES',mad:56,multas:111320,tipo:'U PRIVADA'},
+  {ies:'UDA',mad:53,multas:9456196,tipo:'U PRIVADA'},
+  {ies:'ARMADA',mad:47,multas:151861,tipo:'ENT PUBLICA'},
+  {ies:'UCACUE',mad:44,multas:17290567,tipo:'U PRIVADA'},
+  {ies:'ISTE',mad:43,multas:109947,tipo:'INT PRIVADO'},
+  {ies:'UTELVT',mad:40,multas:265818,tipo:'U PUBLICA'},
+  {ies:'USGP',mad:38,multas:740254,tipo:'U PRIVADA'},
+  {ies:'UINPIAW',mad:32,multas:99565,tipo:'U PUBLICA'},
+  {ies:'UPEC',mad:23,multas:224666,tipo:'U PUBLICA'},
+  {ies:'ESPAM',mad:21,multas:4452364,tipo:'U PUBLICA'},
+  {ies:'SUDAMERICANO',mad:19,multas:353194,tipo:'INT PRIVADO'},
+];
+
+// Scenarios config
+const scenarios = {
+  ransomware:{title:'🔒 Simulador de Crisis · Ransomware Masivo',ies:40,down:21,rec:120,ran:350,prev:180,costMult:2.8,multaMult:1.0},
+  filtracion:{title:'💧 Simulador de Crisis · Filtración Masiva de Datos',ies:25,down:7,rec:280,ran:0,prev:140,costMult:1.8,multaMult:2.2},
+  ddos:{title:'⚡ Simulador de Crisis · Ataque DDoS Crítico',ies:60,down:5,rec:10,ran:0,prev:90,costMult:0.9,multaMult:0.4},
+  mixto:{title:'☠️ Simulador de Crisis · Incidente Combinado',ies:70,down:45,rec:400,ran:700,prev:350,costMult:4.2,multaMult:3.0},
+};
+
+let currentScenario='ransomware';
+let chartWhatif,chartDist,chartMultas,chartBubble,chartRecovery,chartRemPrev;
+let mapInstance,heatLayer,markerLayer;
+let currentMapFilter='all';
+
+function setScenario(s){
+  currentScenario=s;
+  document.querySelectorAll('.scenario-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  const sc=scenarios[s];
+  document.getElementById('sim-title').textContent=sc.title;
+  document.getElementById('sl-ies').value=sc.ies;
+  document.getElementById('sl-down').value=sc.down;
+  document.getElementById('sl-rec').value=sc.rec;
+  document.getElementById('sl-ran').value=sc.ran;
+  document.getElementById('sl-prev').value=sc.prev;
+  updateWhatIf();
+}
+
+function fmt(n){
+  if(n>=1e6) return '$'+(n/1e6).toFixed(1)+'M';
+  if(n>=1e3) return '$'+(n/1e3).toFixed(0)+'K';
+  return '$'+n.toFixed(0);
+}
+
+function updateWhatIf(){
+  const ies=parseInt(document.getElementById('sl-ies').value);
+  const down=parseInt(document.getElementById('sl-down').value);
+  const rec=parseInt(document.getElementById('sl-rec').value);
+  const ran=parseInt(document.getElementById('sl-ran').value);
+  const prev=parseInt(document.getElementById('sl-prev').value);
+  document.getElementById('v-ies').textContent=ies+'%';
+  document.getElementById('v-down').textContent=down+'d';
+  document.getElementById('v-rec').textContent=rec+'K';
+  document.getElementById('v-ran').textContent='$'+ran+'K';
+  document.getElementById('v-prev').textContent='$'+prev+'K';
+
+  const sc=scenarios[currentScenario];
+  const affIES=Math.round(71*ies/100);
+  const remCost=(ran*1000)+(rec*800)+(down*affIES*15000)+(affIES*45000);
+  const multasEst=(rec*1000)*0.04*sc.multaMult;
+  const total=remCost+multasEst;
+  const roi=total/(prev*1000);
+  const recovDays=Math.round(down*(100-55)/50*sc.costMult*1.2);
+  const repIdx=Math.min(100,Math.round((100-55)*0.7+ies*0.3));
+  const iesCrit=Math.round(32*ies/100);
+  document.getElementById('wf-costo').textContent=fmt(total);
+  document.getElementById('wf-tiempo').textContent=recovDays+' días';
+  document.getElementById('wf-ahorro').textContent=roi.toFixed(0)+'x ROI';
+  document.getElementById('wf-rep').textContent=repIdx>70?'CRÍTICO':repIdx>40?'ALTO':'MEDIO';
+  document.getElementById('wf-multas').textContent=fmt(multasEst);
+  document.getElementById('wf-ies-crit').textContent=iesCrit;
+
+  const el=document.getElementById('wf-rep');
+  el.style.color=repIdx>70?'#ff6b6b':repIdx>40?'#ffd700':'#29c6ff';
+
+  if(chartWhatif){
+    chartWhatif.data.datasets[0].data=[remCost/1e6,multasEst/1e6,(prev*1000)/1e6,(prev*1000*0.15)/1e6];
+    chartWhatif.update();
+  }
+}
+
+// ─── CHARTS INIT ────────────────────────────────────────────────
+function initCharts(){
+  // Distribution
+  const distCtx=document.getElementById('chartDist').getContext('2d');
+  const gradeCount={A:0,B:0,C:0,D:0,F:0};
+  rankingData.forEach(d=>{ if(gradeCount[d.grade]!==undefined) gradeCount[d.grade]++; });
+  chartDist=new Chart(distCtx,{
+    type:'doughnut',
+    data:{
+      labels:['Grado A (Seguro)','Grado B (Bueno)','Grado C (Moderado)','Grado D (Riesgo)','Grado F (Crítico)'],
+      datasets:[{data:Object.values(gradeCount),backgroundColor:['#00e676','#29c6ff','#ffd700','#ff8800','#ff4444'],borderColor:'#020029',borderWidth:3,hoverOffset:8}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#b0bcd0',font:{family:'Montserrat',size:11},padding:10}},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw} IES (${(c.raw/71*100).toFixed(0)}%)`}}}}
+  });
+
+  // Multas top 10
+  const multasCtx=document.getElementById('chartMultas').getContext('2d');
+  const top10=madData.sort((a,b)=>b.multas-a.multas).slice(0,10);
+  chartMultas=new Chart(multasCtx,{
+    type:'bar',
+    data:{
+      labels:top10.map(d=>d.ies),
+      datasets:[{label:'Multas Proyectadas ($)',data:top10.map(d=>d.multas/1e6),backgroundColor:top10.map(d=>d.multas>5e6?'#ff4444':d.multas>1e6?'#ff8800':'#ffd700'),borderRadius:6,borderSkipped:false}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+(c.raw).toFixed(2)+'M'}}},scales:{x:{ticks:{color:'#8899bb',callback:v=>v+'M'},grid:{color:'#ffffff08'}},y:{ticks:{color:'#c8d0e0',font:{size:11}},grid:{display:false}}}}
+  });
+
+  // What-If chart
+  const wfCtx=document.getElementById('chartWhatif').getContext('2d');
+  chartWhatif=new Chart(wfCtx,{
+    type:'bar',
+    data:{
+      labels:['Costo Remediación','Multas PDP','Inversión Preventiva','Costo si Prevenido'],
+      datasets:[{label:'USD Millones',data:[12.4,4.8,0.18,0.03],backgroundColor:['#ff4444','#ff8800','#29c6ff','#00e676'],borderRadius:8,borderSkipped:false}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+c.raw.toFixed(2)+'M'}}},scales:{y:{ticks:{color:'#8899bb',callback:v=>'$'+v+'M'},grid:{color:'#ffffff08'}},x:{ticks:{color:'#c8d0e0'},grid:{display:false}}}}
+  });
+  updateWhatIf();
+
+  // Bubble chart (madurez vs multas)
+  const bubCtx=document.getElementById('chartBubble').getContext('2d');
+  const rankMap={};
+  rankingData.forEach(d=>rankMap[d.ies]=d.score);
+  chartBubble=new Chart(bubCtx,{
+    type:'bubble',
+    data:{
+      datasets:[{
+        label:'IES',
+        data:madData.map(d=>({x:d.mad,y:Math.log10(Math.max(d.multas,1)),r:Math.max(5,Math.min(28,d.multas/500000)),label:d.ies})),
+        backgroundColor:madData.map(d=>d.mad<30?'#ff444488':d.mad<50?'#ff880088':d.mad<70?'#ffd70088':'#00e67688'),
+        borderColor:madData.map(d=>d.mad<30?'#ff4444':d.mad<50?'#ff8800':d.mad<70?'#ffd700':'#00e676'),
+        borderWidth:1.5
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.label} · Madurez:${c.raw.x}% · Multas:$${(Math.pow(10,c.raw.y)/1e6).toFixed(2)}M`}}},scales:{x:{title:{display:true,text:'Madurez Digital (%)',color:'#8899bb'},ticks:{color:'#8899bb'},grid:{color:'#ffffff08'},min:0,max:100},y:{title:{display:true,text:'Multas (log10 USD)',color:'#8899bb'},ticks:{color:'#8899bb'},grid:{color:'#ffffff08'}}}}
+  });
+
+  // Recovery chart
+  const recCtx=document.getElementById('chartRecovery').getContext('2d');
+  chartRecovery=new Chart(recCtx,{
+    type:'bar',
+    data:{
+      labels:['Líderes\n(73-87%\nmadurez)','En Desarrollo\n(40-73%)','Zona Crítica\n(<40%)'],
+      datasets:[
+        {label:'Ransomware (días)',data:[14,45,95],backgroundColor:'#ff444488',borderColor:'#ff4444',borderWidth:1.5,borderRadius:6},
+        {label:'Filtración (días)',data:[7,21,60],backgroundColor:'#ff880088',borderColor:'#ff8800',borderWidth:1.5,borderRadius:6},
+        {label:'DDoS (días)',data:[2,8,25],backgroundColor:'#29c6ff88',borderColor:'#29c6ff',borderWidth:1.5,borderRadius:6},
+        {label:'Mixto (días)',data:[30,90,150],backgroundColor:'#e040fb88',borderColor:'#e040fb',borderWidth:1.5,borderRadius:6}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b0bcd0',font:{size:10}}}},scales:{y:{ticks:{color:'#8899bb',callback:v=>v+'d'},grid:{color:'#ffffff08'},title:{display:true,text:'Días',color:'#8899bb'}},x:{ticks:{color:'#c8d0e0',font:{size:10}},grid:{display:false}}}}
+  });
+
+  // Remediación vs Prevención
+  const rpCtx=document.getElementById('chartRemPrev').getContext('2d');
+  chartRemPrev=new Chart(rpCtx,{
+    type:'bar',
+    data:{
+      labels:['Zona Crítica\n(<P25)','En Desarrollo\n(P25-P75)','Líderes\n(>P75)'],
+      datasets:[
+        {label:'Costo Remediación ($M)',data:[11.8,3.2,0.04],backgroundColor:'#ff444466',borderColor:'#ff4444',borderWidth:1.5,borderRadius:6},
+        {label:'Multas Proyectadas ($M)',data:[4.5,1.8,0.01],backgroundColor:'#ff880066',borderColor:'#ff8800',borderWidth:1.5,borderRadius:6},
+        {label:'Inversión Preventiva ($M)',data:[0.28,0.12,0.06],backgroundColor:'#00e67666',borderColor:'#00e676',borderWidth:1.5,borderRadius:6}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b0bcd0',font:{size:10}}}},scales:{y:{ticks:{color:'#8899bb',callback:v=>v+'M'},grid:{color:'#ffffff08'}},x:{ticks:{color:'#c8d0e0'},grid:{display:false}}}}
+  });
+}
+
+// ─── VULN BARS ───────────────────────────────────────────────────
+function renderVulnBars(){
+  const vulns=[
+    {name:'Vuln. Servicio Host Medio',count:976,color:'#ffd700'},
+    {name:'Vuln. Servicio Host Alto',count:838,color:'#ff8800'},
+    {name:'Credenciales Comprometidas',count:584,color:'#ff4444'},
+    {name:'Vuln. Servicio Host Crítico',count:578,color:'#ff0000'},
+    {name:'Parcheo Pendiente Alto',count:544,color:'#ff6600'},
+    {name:'Parcheo Pendiente Medio',count:520,color:'#ff9900'},
+    {name:'Cert. TLS Auto-Firmado',count:312,color:'#e040fb'},
+    {name:'Cert. TLS Sin Revocación',count:248,color:'#7c4dff'},
+    {name:'CSP Sin Política',count:211,color:'#29c6ff'},
+    {name:'Parcheo Pendiente Crítico',count:199,color:'#ff3300'},
+    {name:'X-Content-Type Incorrecto',count:197,color:'#00e676'},
+    {name:'Credenciales Hist. Comprometidas',count:169,color:'#29c6ff66'},
+    {name:'HSTS Incorrecto',count:121,color:'#8899bb'},
+    {name:'Cert. TLS Expiración Excesiva',count:83,color:'#667799'},
+    {name:'SRI Inseguro',count:47,color:'#445566'},
+  ];
+  const max=976;
+  const html=vulns.map(v=>`
+    <div class="vuln-row">
+      <span class="vuln-name" title="${v.name}">${v.name}</span>
+      <div class="vuln-bar-bg"><div class="vuln-bar-fill" style="width:${v.count/max*100}%;background:${v.color};"></div></div>
+      <span class="vuln-count">${v.count}</span>
+    </div>`).join('');
+  document.getElementById('vuln-chart').innerHTML=html;
+}
+
+// ─── RISK TABLE ──────────────────────────────────────────────────
+function renderRiskTable(){
+  const madMap={};
+  madData.forEach(d=>madMap[d.ies]=d);
+  const tbody=document.getElementById('riesgo-tbody');
+  tbody.innerHTML=madData.sort((a,b)=>b.multas-a.multas).map(d=>{
+    const rk=rankingData.find(r=>r.ies===d.ies);
+    const score=rk?rk.score:'-';
+    const grade=rk?rk.grade:'-';
+    const risk=d.mad<30?'CRÍTICO':d.mad<50?'ALTO':d.mad<70?'MEDIO':'BAJO';
+    const rc=`badge-${risk}`;
+    return `<tr>
+      <td><strong>${d.ies}</strong></td>
+      <td>${d.mad}%</td>
+      <td>${score}</td>
+      <td style="color:${d.multas>5e6?'#ff6b6b':d.multas>1e6?'#ff8800':'#ffd700'};font-weight:700;">$${(d.multas/1e6).toFixed(2)}M</td>
+      <td><span class="badge ${rc}">${risk}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── RISK METER ──────────────────────────────────────────────────
+function renderRepMeter(){
+  const items=[
+    {name:'UCACUE',val:95,color:'#ff4444'},
+    {name:'ESPAM',val:88,color:'#ff4444'},
+    {name:'UDA',val:85,color:'#ff6600'},
+    {name:'UPS',val:82,color:'#ff8800'},
+    {name:'PUCE',val:75,color:'#ff8800'},
+    {name:'USGP',val:70,color:'#ff8800'},
+    {name:'SUDAMERICANO',val:65,color:'#ffd700'},
+    {name:'UTELVT',val:60,color:'#ffd700'},
+    {name:'UPEC',val:58,color:'#ffd700'},
+    {name:'ARMADA',val:52,color:'#29c6ff'},
+  ];
+  document.getElementById('rep-meter').innerHTML=items.map(i=>`
+    <div class="risk-item">
+      <span class="risk-name">${i.name}</span>
+      <div class="risk-bar-bg"><div class="risk-bar-fill" style="width:${i.val}%;background:${i.color};"></div></div>
+      <span class="risk-val" style="color:${i.color};">${i.val}</span>
+    </div>`).join('');
+}
+
+// ─── REGIONAL METER ──────────────────────────────────────────────
+function renderRegionalMeter(){
+  const regions=[
+    {name:'Sierra Centro',val:72,color:'#ff4444'},
+    {name:'Sierra Sur',val:68,color:'#ff6600'},
+    {name:'Costa Norte',val:55,color:'#ff8800'},
+    {name:'Quito',val:48,color:'#ffd700'},
+    {name:'Guayaquil',val:44,color:'#ffd700'},
+    {name:'Amazonía',val:30,color:'#29c6ff'},
+    {name:'Norte Sierra',val:28,color:'#00e676'},
+  ];
+  document.getElementById('regional-meter').innerHTML=regions.map(r=>`
+    <div class="risk-item">
+      <span class="risk-name">${r.name}</span>
+      <div class="risk-bar-bg"><div class="risk-bar-fill" style="width:${r.val}%;background:${r.color};"></div></div>
+      <span class="risk-val" style="color:${r.color};">${r.val}</span>
+    </div>`).join('');
+}
+
+// ─── RANKING TABLE ───────────────────────────────────────────────
+function renderRanking(){
+  const madMap={};
+  madData.forEach(d=>madMap[d.ies]=d);
+  const tbody=document.getElementById('ranking-tbody');
+  const gradeRisk={A:'BAJO',B:'BAJO-MEDIO',C:'MODERADO',D:'ALTO',F:'CRÍTICO'};
+  const gradeRecov={A:'3-7d',B:'7-14d',C:'14-30d',D:'30-60d',F:'60-120d'};
+  const gradeMulta={A:'<$10K',B:'$10K-$500K',C:'$500K-$2M',D:'$2M-$8M',F:'$8M+'};
+  tbody.innerHTML=rankingData.map((d,i)=>{
+    const g=d.grade;
+    const mad=madMap[d.ies];
+    const multaText=mad?'$'+(mad.multas/1e6).toFixed(2)+'M':gradeMulta[g];
+    return `<tr>
+      <td style="color:#667799;">${i+1}</td>
+      <td><strong style="color:#e2e3d5;">${d.ies}</strong></td>
+      <td><div style="display:flex;align-items:center;gap:6px;">
+        <div style="height:6px;width:${d.score}px;max-width:80px;background:${g==='A'?'#00e676':g==='B'?'#29c6ff':g==='C'?'#ffd700':g==='D'?'#ff8800':'#ff4444'};border-radius:3px;"></div>
+        <span style="color:#c8d0e0;">${d.score}</span>
+      </div></td>
+      <td><span class="badge badge-${g}">${g}</span></td>
+      <td style="color:#8899bb;">${d.ssc||'–'}</td>
+      <td style="color:#8899bb;">${d.nessus||'–'}</td>
+      <td><span class="badge badge-${g==='A'||g==='B'?'BAJO':g==='C'?'MEDIO':g==='D'?'ALTO':'CRITICO'}">${gradeRisk[g]}</span></td>
+      <td style="color:#8899bb;font-size:.65rem;">${gradeRecov[g]}</td>
+      <td style="color:${g==='F'||g==='D'?'#ff8800':'#8899bb'};font-size:.68rem;font-weight:${g==='F'?700:400};">${multaText}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── MAP ─────────────────────────────────────────────────────────
+function initMap(){
+  mapInstance=L.map('crisis-map',{zoomControl:true,scrollWheelZoom:false}).setView([-1.5,−78.5],6);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'',maxZoom:18}).addTo(mapInstance);
+  updateMap('all');
+}
+
+function getHeatIntensity(grade){
+  const m={A:0.1,B:0.3,C:0.55,D:0.8,F:1.0};
+  return m[grade]||0.5;
+}
+
+function filterMap(f){
+  currentMapFilter=f;
+  document.querySelectorAll('[id^="mf-"]').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('mf-'+f);
+  if(el) el.classList.add('active');
+  updateMap(f);
+}
+
+function updateMap(filter){
+  if(heatLayer){ mapInstance.removeLayer(heatLayer); }
+  if(markerLayer){ mapInstance.removeLayer(markerLayer); }
+  const filtered=filter==='all'?rankingData:rankingData.filter(d=>d.grade===filter);
+  const heatData=filtered.map(d=>[d.lat,d.lng,getHeatIntensity(d.grade)*2.5]);
+  heatLayer=L.heatLayer(heatData,{radius:45,blur:35,maxZoom:10,gradient:{0.1:'#00e676',0.35:'#29c6ff',0.55:'#ffd700',0.75:'#ff8800',1.0:'#ff0000'},minOpacity:0.4}).addTo(mapInstance);
+  markerLayer=L.layerGroup();
+  filtered.forEach(d=>{
+    const col={A:'#00e676',B:'#29c6ff',C:'#ffd700',D:'#ff8800',F:'#ff4444'}[d.grade]||'#8899bb';
+    const m=L.circleMarker([d.lat,d.lng],{radius:7,fillColor:col,color:'#020029',weight:1.5,fillOpacity:0.9})
+      .bindPopup(`<b style="color:${col}">${d.ies}</b><br>Score: ${d.score} · Grade: ${d.grade}<br>Scorecard: ${d.ssc||'–'} · Nessus: ${d.nessus||'–'}`);
+    markerLayer.addLayer(m);
+  });
+  markerLayer.addTo(mapInstance);
+}
+
+// ─── INIT ────────────────────────────────────────────────────────
+window.addEventListener('load',()=>{
+  initCharts();
+  renderVulnBars();
+  renderRiskTable();
+  renderRepMeter();
+  renderRegionalMeter();
+  renderRanking();
+  setTimeout(initMap,300);
+});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
