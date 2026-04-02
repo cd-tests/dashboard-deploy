@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<title>Mapa de Calor IES - CEDIA</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cedia-blue-dark: #020029;
+            --cedia-blue-light: #29c6ff;
+            --cedia-gray: #e2e3d5;
+            --cedia-bg: #f4f4f9;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cedia-bg);
+            color: var(--cedia-blue-dark);
+        }
+
+        .header {
+            background-color: var(--cedia-blue-dark);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .header img {
+            height: 40px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+            height: calc(100vh - 80px);
+        }
+
+        .controls {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--cedia-blue-dark);
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--cedia-blue-light);
+            background: transparent;
+            color: var(--cedia-blue-dark);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background-color: var(--cedia-blue-light);
+            color: var(--cedia-blue-dark);
+        }
+
+        .filter-btn:hover {
+            background-color: rgba(41, 198, 255, 0.2);
+        }
+
+        #map {
+            flex-grow: 1;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-bottom: 4px solid var(--cedia-blue-light);
+        }
+
+        .stat-card h4 {
+            margin: 0;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--cedia-blue-dark);
+            margin-top: 5px;
+        }
+
+        .legend {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+
+        /* Tooltip style */
+        .leaflet-tooltip-cedia {
+            background: var(--cedia-blue-dark);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-weight: bold;
+        }
+    </style>
+
+
+
+    
+        <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="Logo CEDIA">
+        <h1>Mapa de Ciberseguridad IES Ecuador</h1>
+    
+
+    <div class="container">
+        <div class="stats-panel">
+            <div class="stat-card">
+                <h4>Total IES</h4>
+                <div class="value" id="stat-total">52</div>
+            </div>
+            <div class="stat-card">
+                <h4>Score Promedio</h4>
+                <div class="value" id="stat-avg">72.4</div>
+            </div>
+            <div class="stat-card">
+                <h4>Nivel A</h4>
+                <div class="value" id="stat-a">7</div>
+            </div>
+            <div class="stat-card">
+                <h4>Nivel F</h4>
+                <div class="value" id="stat-f">10</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <h3>Filtrar por Categoría:</h3>
+            <button class="filter-btn active" data-grade="ALL">Todas</button>
+            <button class="filter-btn" data-grade="A">A</button>
+            <button class="filter-btn" data-grade="B">B</button>
+            <button class="filter-btn" data-grade="C">C</button>
+            <button class="filter-btn" data-grade="D">D</button>
+            <button class="filter-btn" data-grade="F">F</button>
+        </div>
+
+        <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+    <script>
+        const iesData = [
+            { name: 'UTN', grade: 'A', score: 97.25, lat: 0.3488, lng: -78.1246 },
+            { name: 'ISTE', grade: 'A', score: 95, lat: -1.2490, lng: -78.6170 },
+            { name: 'PUCE - SA', grade: 'A', score: 94, lat: -0.2299, lng: -78.5250 },
+            { name: 'IKIAM', grade: 'A', score: 93.75, lat: -0.9892, lng: -77.8153 },
+            { name: 'UDLA', grade: 'A', score: 91, lat: -0.2299, lng: -78.5250 },
+            { name: 'UTM', grade: 'A', score: 90, lat: -1.0576, lng: -80.4515 },
+            { name: 'USFQ', grade: 'B', score: 89.5, lat: -0.1972, lng: -78.4369 },
+            { name: 'ESPE', grade: 'B', score: 89.25, lat: -0.3341, lng: -78.4522 },
+            { name: 'UTE', grade: 'B', score: 88.5, lat: -0.2299, lng: -78.5250 },
+            { name: 'CEDIA', grade: 'B', score: 87, lat: -2.8950, lng: -78.9960 },
+            { name: 'TECSU', grade: 'B', score: 87, lat: -2.8950, lng: -78.9960 },
+            { name: 'UNL', grade: 'B', score: 87, lat: -3.9930, lng: -79.2040 },
+            { name: 'ESPOL', grade: 'B', score: 85.25, lat: -2.1960, lng: -79.8860 },
+            { name: 'UG', grade: 'B', score: 84, lat: -2.1960, lng: -79.8860 },
+            { name: 'UPS', grade: 'B', score: 83.5, lat: -2.8950, lng: -78.9960 },
+            { name: 'IAEN', grade: 'B', score: 83, lat: -0.2299, lng: -78.5250 },
+            { name: 'WISSEN', grade: 'B', score: 82.5, lat: -2.8950, lng: -78.9960 },
+            { name: 'UISRAEL', grade: 'B', score: 80.5, lat: -0.2299, lng: -78.5250 },
+            { name: 'UOTAVALO', grade: 'B', score: 80.5, lat: 0.2346, lng: -78.2625 },
+            { name: 'UEA', grade: 'B', score: 80.25, lat: -1.4916, lng: -78.0034 },
+            { name: 'UEB', grade: 'C', score: 78, lat: -1.5926, lng: -79.0010 },
+            { name: 'UCUENCA', grade: 'C', score: 77.5, lat: -2.8950, lng: -78.9960 },
+            { name: 'CACES', grade: 'C', score: 75.5, lat: -0.2299, lng: -78.5250 },
+            { name: 'UCE', grade: 'C', score: 75, lat: -0.2299, lng: -78.5250 },
+            { name: 'UNAE', grade: 'C', score: 74.5, lat: -2.7397, lng: -78.8486 },
+            { name: 'UTC', grade: 'C', score: 74, lat: -0.9342, lng: -78.6152 },
+            { name: 'UARTES', grade: 'C', score: 72, lat: -2.1960, lng: -79.8860 },
+            { name: 'UIDE', grade: 'C', score: 72, lat: -0.2299, lng: -78.5250 },
+            { name: 'PUCE', grade: 'D', score: 69.75, lat: -0.2299, lng: -78.5250 },
+            { name: 'UCSG', grade: 'D', score: 69, lat: -2.1960, lng: -79.8860 },
+            { name: 'UINPIAW', grade: 'D', score: 67, lat: -0.2299, lng: -78.5250 },
+            { name: 'UTMACH', grade: 'D', score: 67, lat: -3.2590, lng: -79.9590 },
+            { name: 'UTA', grade: 'D', score: 66.25, lat: -1.2490, lng: -78.6170 },
+            { name: 'ITSCO', grade: 'D', score: 66, lat: -0.2299, lng: -78.5250 },
+            { name: 'ESPAM', grade: 'D', score: 63.25, lat: -0.8458, lng: -80.1639 },
+            { name: 'EPN', grade: 'D', score: 62, lat: -0.2299, lng: -78.5250 },
+            { name: 'UTPL', grade: 'D', score: 62, lat: -3.9930, lng: -79.2040 },
+            { name: 'UDA', grade: 'D', score: 61, lat: -2.8950, lng: -78.9960 },
+            { name: 'UTELVT', grade: 'D', score: 60.5, lat: 0.9592, lng: -79.6520 },
+            { name: 'ITB', grade: 'F', score: 59.5, lat: -2.1960, lng: -79.8860 },
+            { name: 'ESPOCH', grade: 'F', score: 57.5, lat: -1.6743, lng: -78.6484 },
+            { name: 'UNACH', grade: 'F', score: 56.75, lat: -1.6743, lng: -78.6484 },
+            { name: 'USGP', grade: 'F', score: 56.75, lat: -1.0576, lng: -80.4515 },
+            { name: 'UPEC', grade: 'F', score: 56, lat: 0.8124, lng: -77.7171 },
+            { name: 'UTB', grade: 'F', score: 52.75, lat: -1.8038, lng: -79.5351 },
+            { name: 'UCACUE', grade: 'F', score: 50.75, lat: -2.8950, lng: -78.9960 },
+            { name: 'UTEQ', grade: 'F', score: 45.5, lat: -1.0286, lng: -79.4635 },
+            { name: 'UESFN', grade: 'F', score: 22, lat: -1.6743, lng: -78.6484 }
+        ];
+
+        // Inicializar Mapa
+        const map = L.map('map').setView([-1.8312, -78.1834], 7);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO'
+        }).addTo(map);
+
+        let heatLayer;
+        let markers = [];
+
+        function updateMap(filterGrade = 'ALL') {
+            // Limpiar capa anterior
+            if (heatLayer) map.removeLayer(heatLayer);
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+
+            const filteredData = filterGrade === 'ALL' 
+                ? iesData 
+                : iesData.filter(d => d.grade === filterGrade);
+
+            // Preparar puntos para el Heatmap
+            // La intensidad se basa en el score (normalizado 0-1)
+            const heatPoints = filteredData.map(d => [d.lat, d.lng, d.score / 100]);
+
+            heatLayer = L.heatLayer(heatPoints, {
+                radius: 40,
+                blur: 25,
+                maxZoom: 10,
+                gradient: {
+                    0.2: 'blue',
+                    0.4: 'cyan',
+                    0.6: 'lime',
+                    0.8: 'yellow',
+                    1.0: 'red'
+                }
+            }).addTo(map);
+
+            // Añadir marcadores sutiles para interactividad
+            filteredData.forEach(d => {
+                const marker = L.circleMarker([d.lat, d.lng], {
+                    radius: 6,
+                    fillColor: getColor(d.grade),
+                    color: "#fff",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(map);
+
+                marker.bindTooltip(`<b>${d.name}</b><br>Score: ${d.score}<br>Grade: ${d.grade}`, {
+                    className: 'leaflet-tooltip-cedia'
+                });
+                markers.push(marker);
+            });
+
+            updateStats(filteredData);
+        }
+
+        function getColor(grade) {
+            switch(grade) {
+                case 'A': return '#2ecc71';
+                case 'B': return '#27ae60';
+                case 'C': return '#f1c40f';
+                case 'D': return '#e67e22';
+                case 'F': return '#e74c3c';
+                default: return '#95a5a6';
+            }
+        }
+
+        function updateStats(data) {
+            document.getElementById('stat-total').innerText = data.length;
+            const avg = data.reduce((acc, curr) => acc + curr.score, 0) / (data.length || 1);
+            document.getElementById('stat-avg').innerText = avg.toFixed(1);
+            document.getElementById('stat-a').innerText = data.filter(d => d.grade === 'A').length;
+            document.getElementById('stat-f').innerText = data.filter(d => d.grade === 'F').length;
+        }
+
+        // Event Listeners
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                updateMap(btn.getAttribute('data-grade'));
+            });
+        });
+
+        // Inicio
+        updateMap();
+
+    </script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
