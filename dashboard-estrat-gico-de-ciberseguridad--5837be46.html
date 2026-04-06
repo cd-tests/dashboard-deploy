@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    :root {
+        --cedia-dark: #020029;
+        --cedia-blue: #29c6ff;
+        --cedia-accent: #273dd5;
+        --cedia-bg: #e2e3d5;
+        --white: #ffffff;
+        --gray-100: #f8f9fa;
+        --gray-200: #e9ecef;
+        --gray-700: #495057;
+        --risk-a: #22c55e;
+        --risk-b: #3b82f6;
+        --risk-c: #0ea5e9;
+        --risk-d: #f59e0b;
+        --risk-f: #ef4444;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { 
+        height: 1080px; 
+        max-height: 1080px; 
+        margin: 0; 
+        padding: 0; 
+        font-family: 'Montserrat', sans-serif; 
+        background-color: var(--cedia-bg);
+        overflow: hidden;
+    }
+
+    .dashboard-container {
+        display: flex;
+        flex-direction: column;
+        height: 1080px;
+        max-height: 1080px;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    header {
+        height: 56px;
+        background-color: var(--cedia-dark);
+        color: var(--white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+        flex-shrink: 0;
+    }
+
+    .logo { height: 32px; }
+
+    nav.tabs-bar {
+        height: 44px;
+        background-color: var(--cedia-accent);
+        display: flex;
+        padding: 0 24px;
+        gap: 2px;
+        flex-shrink: 0;
+    }
+
+    .tab-button {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.7);
+        padding: 0 20px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+        border-bottom: 3px solid transparent;
+    }
+
+    .tab-button:hover { color: var(--white); }
+    .tab-button.active {
+        color: var(--white);
+        border-bottom-color: var(--cedia-blue);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .tab-content {
+        height: 960px;
+        max-height: 960px;
+        overflow-y: auto;
+        padding: 24px;
+        display: none;
+        background-color: var(--gray-100);
+    }
+
+    .tab-content.active { display: block; }
+
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .card {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid var(--gray-200);
+    }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+    .kpi-card {
+        padding: 20px;
+        border-radius: 12px;
+        background: var(--white);
+        text-align: center;
+        border-bottom: 4px solid var(--cedia-blue);
+    }
+    .kpi-value { font-size: 2rem; font-weight: 700; color: var(--cedia-dark); margin: 8px 0; }
+    .kpi-label { font-size: 0.75rem; text-transform: uppercase; color: var(--gray-700); letter-spacing: 1px; }
+
+    #map { height: 600px; width: 100%; border-radius: 12px; z-index: 1; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
+    th { text-align: left; background: var(--gray-200); padding: 12px; color: var(--cedia-dark); }
+    td { padding: 12px; border-bottom: 1px solid var(--gray-200); }
+    
+    .grade-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: 700;
+        color: white;
+        text-align: center;
+        display: inline-block;
+        min-width: 35px;
+    }
+    .grade-a { background-color: var(--risk-a); }
+    .grade-b { background-color: var(--risk-b); }
+    .grade-c { background-color: var(--risk-c); }
+    .grade-d { background-color: var(--risk-d); }
+    .grade-f { background-color: var(--risk-f); }
+
+    .chart-container { height: 350px; position: relative; }
+    
+    .filter-section {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: 1px solid var(--gray-200);
+        background: var(--white);
+        cursor: pointer;
+        font-size: 0.8rem;
+    }
+    .filter-btn.active { background: var(--cedia-dark); color: white; border-color: var(--cedia-dark); }
+</style>
+
+<div class="dashboard-container">
+    
+        <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" class="logo" alt="CEDIA Logo">
+        <h1 style="font-size: 1.2rem; margin: 0;">Ecosistema IES - Panorama de Ciberseguridad (2026)</h1>
+        <div style="font-size: 0.8rem; opacity: 0.8;">Datos: GLPI + Security Scorecard (Anonimizado)</div>
+    
+
+    <nav class="tabs-bar">
+        <button class="tab-button active" onclick="openTab(event, 'general')">PANORAMA GENERAL</button>
+        <button class="tab-button" onclick="openTab(event, 'ranking')">RANKING DETALLADO</button>
+        <button class="tab-button" onclick="openTab(event, 'mapa')">MAPA DE RIESGO</button>
+        <button class="tab-button" onclick="openTab(event, 'vulnerabilidades')">VULNERABILIDADES TOP</button>
+    </nav>
+
+    <!-- TAB: PANORAMA GENERAL -->
+    <div id="general" class="tab-content active">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">IES Analizadas</div>
+                <div class="kpi-value">64</div>
+                <div style="font-size: 0.7rem; color: var(--risk-a);">+5 vs periodo anterior</div>
+            </div>
+            <div class="kpi-card" style="border-bottom-color: var(--risk-f);">
+                <div class="kpi-label">IES en Nivel Crítico (F)</div>
+                <div class="kpi-value">17</div>
+                <div style="font-size: 0.7rem; color: var(--risk-f);">26.5% del total</div>
+            </div>
+            <div class="kpi-card" style="border-bottom-color: var(--cedia-accent);">
+                <div class="kpi-label">Vulnerabilidades Activas</div>
+                <div class="kpi-value">9,575</div>
+                <div style="font-size: 0.7rem; color: var(--risk-d);">Alta exposición</div>
+            </div>
+            <div class="kpi-card" style="border-bottom-color: var(--risk-a);">
+                <div class="kpi-label">Score Promedio</div>
+                <div class="kpi-value">65.8</div>
+                <div style="font-size: 0.7rem; color: var(--risk-c);">Grade C-</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3 style="margin-top: 0;">Distribución de Calificaciones (Nessus)</h3>
+                <div class="chart-container">
+                    <canvas id="nessusDistChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3 style="margin-top: 0;">Top Issues de Seguridad (Ecosistema)</h3>
+                <div class="chart-container">
+                    <canvas id="topIssuesChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+            <h3 style="margin-top: 0; color: var(--cedia-accent);">Insights Gerenciales</h3>
+            <ul style="font-size: 0.9rem; line-height: 1.6; color: var(--gray-700);">
+                <li><strong>Concentración de Riesgo:</strong> El 46.6% de las instituciones se encuentran en los niveles más bajos (D o F), lo que sugiere una falta de controles técnicos básicos generalizada.</li>
+                <li><strong>Amenazas Críticas:</strong> Las vulnerabilidades de tipo <code>service_vuln_host_v3_medium/high</code> y credenciales comprometidas son los vectores más recurrentes.</li>
+                <li><strong>Gestión de Parches:</strong> El alto volumen de issues de "Patching Cadence" indica que los ciclos de actualización en las IES están rezagados respecto a la aparición de nuevas amenazas.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TAB: RANKING DETALLADO -->
+    <div id="ranking" class="tab-content">
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0;">Ranking Combinado de Seguridad</h3>
+                <div class="filter-section">
+                    <button class="filter-btn active">Todas</button>
+                    <button class="filter-btn">Excelentes (A)</button>
+                    <button class="filter-btn">Críticas (F)</button>
+                </div>
+            </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Institución (Anon)</th>
+                            <th>Grade Nessus</th>
+                            <th>Score Scorecard</th>
+                            <th>Puntaje Combinado</th>
+                            <th>Estado de Riesgo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingTableBody">
+                        <!-- Data populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: MAPA DE CALOR -->
+    <div id="mapa" class="tab-content">
+        <div class="card" style="height: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0;">Concentración Geográfica de Riesgo Tecnológico</h3>
+                <div style="font-size: 0.8rem; color: var(--gray-700);">
+                    <span style="display: inline-block; width: 12px; height: 12px; background: red; border-radius: 50%;"></span> Mayor Intensidad de Vulnerabilidades
+                </div>
+            </div>
+            <div id="map"></div>
+            <p style="font-size: 0.8rem; color: var(--gray-700); margin-top: 15px; border-left: 3px solid var(--cedia-blue); padding-left: 10px;">
+                Nota: La ubicación es referencial por ciudad sede. Las zonas con mayor "calor" indican concentraciones de instituciones con calificaciones críticas (F) y alto volumen de vulnerabilidades activas.
+            </p>
+        </div>
+    </div>
+
+    <!-- TAB: VULNERABILIDADES -->
+    <div id="vulnerabilidades" class="tab-content">
+        <div class="grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="card">
+                <h3>Distribución por Severidad</h3>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="severityChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Estado de Remediación</h3>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 20px;">
+            <h3>Top 15 Vulnerabilidades Identificadas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo de Vulnerabilidad / Issue</th>
+                        <th>Severidad</th>
+                        <th>Frecuencia (Incidencias)</th>
+                    </tr>
+                </thead>
+                <tbody id="vulnTableBody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Tab Navigation
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+        
+        // Refresh map if tab is Mapa
+        if (tabName === 'mapa') {
+            setTimeout(function(){ map.invalidateSize(); }, 200);
+        }
+    }
+
+    // Data for Charts
+    const nessusData = {
+        labels: ['Grade A', 'Grade B', 'Grade C', 'Grade D', 'Grade F'],
+        datasets: [{
+            data: [11, 6, 14, 10, 17],
+            backgroundColor: ['#22c55e', '#3b82f6', '#0ea5e9', '#f59e0b', '#ef4444'],
+            borderWidth: 0
+        }]
+    };
+
+    const issuesData = {
+        labels: ['Vuln Host Med', 'Vuln Host High', 'Compromised Creds', 'Vuln Host Crit', 'Patching High', 'Patching Med'],
+        datasets: [{
+            label: 'Incidencias',
+            data: [979, 840, 584, 579, 546, 522],
+            backgroundColor: '#273dd5'
+        }]
+    };
+
+    const severityData = {
+        labels: ['Critical', 'High', 'Medium', 'Low', 'Info'],
+        datasets: [{
+            data: [199, 499, 622, 5714, 2740],
+            backgroundColor: ['#7c3aed', '#ef4444', '#f59e0b', '#3b82f6', '#94a3b8']
+        }]
+    };
+
+    // Initialize Charts
+    window.onload = function() {
+        const ctxNessus = document.getElementById('nessusDistChart').getContext('2d');
+        new Chart(ctxNessus, {
+            type: 'doughnut',
+            data: nessusData,
+            options: { maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+        });
+
+        const ctxIssues = document.getElementById('topIssuesChart').getContext('2d');
+        new Chart(ctxIssues, {
+            type: 'bar',
+            data: issuesData,
+            options: { 
+                indexAxis: 'y',
+                maintainAspectRatio: false, 
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true } }
+            }
+        });
+
+        const ctxSev = document.getElementById('severityChart').getContext('2d');
+        new Chart(ctxSev, {
+            type: 'pie',
+            data: severityData,
+            options: { maintainAspectRatio: false }
+        });
+
+        const ctxStatus = document.getElementById('statusChart').getContext('2d');
+        new Chart(ctxStatus, {
+            type: 'doughnut',
+            data: {
+                labels: ['Activas', 'Resueltas', 'No Aplica'],
+                datasets: [{
+                    data: [9575, 1339, 7902],
+                    backgroundColor: ['#ef4444', '#22c55e', '#94a3b8']
+                }]
+            },
+            options: { maintainAspectRatio: false }
+        });
+
+        // Populate Tables
+        const rankingBody = document.getElementById('rankingTableBody');
+        const rankingData = [
+            { name: 'IES_ANON_TOP_1', nessus: 'A', scorecard: 95, combined: 97.25 },
+            { name: 'IES_ANON_TOP_2', nessus: 'A', scorecard: 97, combined: 97.00 },
+            { name: 'IES_ANON_AVG_1', nessus: 'C', scorecard: 78, combined: 78.00 },
+            { name: 'IES_ANON_AVG_2', nessus: 'C', scorecard: 78, combined: 77.50 },
+            { name: 'IES_ANON_RISK_5', nessus: 'F', scorecard: 55, combined: 55.00 },
+            { name: 'IES_ANON_RISK_4', nessus: 'F', scorecard: 49, combined: 50.75 },
+            { name: 'IES_ANON_RISK_3', nessus: 'F', scorecard: 60, combined: 45.50 },
+            { name: 'IES_ANON_RISK_2', nessus: 'F', scorecard: 22, combined: 22.00 },
+            { name: 'IES_ANON_RISK_1', nessus: 'F', scorecard: 0, combined: 0.00 }
+        ];
+
+        rankingData.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.name}</td>
+                <td><span class="grade-badge grade-${row.nessus.toLowerCase()}">${row.nessus}</span></td>
+                <td>${row.scorecard}</td>
+                <td style="font-weight:700;">${row.combined.toFixed(2)}</td>
+                <td style="color:${row.combined < 60 ? 'red' : row.combined > 85 ? 'green' : 'orange'}">
+                    ${row.combined < 60 ? 'CRÍTICO' : row.combined > 85 ? 'ESTABLE' : 'ALERTA'}
+                </td>
+            `;
+            rankingBody.appendChild(tr);
+        });
+
+        const vulnBody = document.getElementById('vulnTableBody');
+        const topVulns = [
+            { type: 'service_vuln_host_v3_medium', sev: 'Medium', freq: 979 },
+            { type: 'service_vuln_host_v3_high', sev: 'High', freq: 840 },
+            { type: 'compromised_credentials_found', sev: 'High', freq: 584 },
+            { type: 'service_vuln_host_v3_critical', sev: 'Critical', freq: 579 },
+            { type: 'patching_cadence_v3_high', sev: 'High', freq: 546 },
+            { type: 'patching_cadence_v3_medium', sev: 'Medium', freq: 522 },
+            { type: 'tlscert_self_signed', sev: 'Medium', freq: 321 }
+        ];
+
+        topVulns.forEach(v => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><code>${v.type}</code></td>
+                <td><span class="grade-badge grade-${v.sev.toLowerCase().charAt(0)}">${v.sev}</span></td>
+                <td>${v.freq}</td>
+            `;
+            vulnBody.appendChild(tr);
+        });
+    };
+
+    // Initialize Map
+    const map = L.map('map').setView([-1.5, -78.5], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Heatmap data: [lat, lon, intensity]
+    // Cities with Grade F institutions concentrated in Guayaquil, Quito, Riobamba for this view
+    const heatPoints = [
+        [-0.2299, -78.5250, 0.7],  // Quito
+        [-2.1960, -79.8860, 0.9],  // Guayaquil (Alta concentración)
+        [-2.8950, -78.9960, 0.5],  // Cuenca
+        [-1.6743, -78.6484, 0.8],  // Riobamba
+        [-1.2490, -78.6170, 0.6],  // Ambato
+        [-1.0576, -80.4515, 0.75], // Portoviejo
+        [0.9592, -79.6520, 0.65],  // Esmeraldas
+        [-3.2590, -79.9590, 0.6],  // Machala
+        [-3.9930, -79.2040, 0.4],  // Loja
+        [-0.9342, -78.6152, 0.85]  // Latacunga
+    ];
+
+    const heat = L.heatLayer(heatPoints, {
+        radius: 35,
+        blur: 20,
+        maxZoom: 1,
+        gradient: {0.4: 'blue', 0.6: 'lime', 0.8: 'yellow', 1: 'red'}
+    }).addTo(map);
+
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
