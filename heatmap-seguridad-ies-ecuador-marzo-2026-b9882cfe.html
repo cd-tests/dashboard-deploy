@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<div id="dashboard-container" style="font-family: 'Gotham', sans-serif; color: #020029; background: #f4f7f6; height: 1080px; display: flex; flex-direction: column; overflow: hidden;">
+    <!-- Header -->
+    
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA Logo" style="height: 32px;">
+            <span style="font-size: 18px; font-weight: 500; border-left: 1px solid #29c6ff; padding-left: 12px;">Mapa de Calor de Seguridad IES - Marzo 2026</span>
+        </div>
+        <div style="font-size: 14px; opacity: 0.8;">Análisis Operativo Ecosistema IES</div>
+    
+
+    <!-- Navigation Tabs -->
+    <nav style="background: white; border-bottom: 1px solid #e2e3d5; display: flex; gap: 4px; padding: 0 24px; height: 44px; flex-shrink: 0;">
+        <button onclick="switchTab('heatmap-tab')" class="tab-btn active" style="padding: 0 16px; border: none; background: transparent; cursor: pointer; border-bottom: 3px solid #29c6ff; color: #020029; font-weight: 600;">Mapa de Calor</button>
+        <button onclick="switchTab('analysis-tab')" class="tab-btn" style="padding: 0 16px; border: none; background: transparent; cursor: pointer; border-bottom: 3px solid transparent; color: #666;">Distribución y Análisis</button>
+        <button onclick="switchTab('insights-tab')" class="tab-btn" style="padding: 0 16px; border: none; background: transparent; cursor: pointer; border-bottom: 3px solid transparent; color: #666;">Insights Ejecutivos</button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="tab-content" style="flex-grow: 1; height: 960px; overflow-y: auto; position: relative;">
+        <!-- Heatmap Tab -->
+        <section id="heatmap-tab" class="tab-pane active" style="display: block; padding: 24px; height: 912px;">
+            <div style="display: grid; grid-template-columns: 300px 1fr; gap: 24px; height: 100%;">
+                <!-- Sidebar Controls -->
+                <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <h3 style="font-size: 16px; margin-bottom: 12px; color: #020029;">Filtros por Categoría</h3>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" checked onchange="toggleGrade('A')" style="accent-color: #29c6ff;"> 
+                                <span style="background: #4caf50; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; width: 20px; text-align: center;">A</span> Excelente
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" checked onchange="toggleGrade('B')" style="accent-color: #29c6ff;"> 
+                                <span style="background: #8bc34a; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; width: 20px; text-align: center;">B</span> Bueno
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" checked onchange="toggleGrade('C')" style="accent-color: #ffeb3b; color: #333;"> 
+                                <span style="background: #ffeb3b; color: #333; padding: 2px 8px; border-radius: 4px; font-size: 12px; width: 20px; text-align: center;">C</span> Satisfactorio
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" checked onchange="toggleGrade('D')" style="accent-color: #ff9800;"> 
+                                <span style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; width: 20px; text-align: center;">D</span> En Riesgo
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" checked onchange="toggleGrade('F')" style="accent-color: #f44336;"> 
+                                <span style="background: #f44336; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; width: 20px; text-align: center;">F</span> Crítico
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                        <h4 style="font-size: 14px; margin-bottom: 8px;">Resumen Visual</h4>
+                        <p style="font-size: 12px; line-height: 1.5; color: #666;">
+                            La intensidad del calor refleja la puntuación de seguridad. Zonas más densas indican concentración de instituciones con el nivel de seguridad seleccionado.
+                        </p>
+                    </div>
+
+                    <div style="margin-top: auto; padding: 12px; background: #eefbff; border-radius: 8px; border-left: 4px solid #29c6ff;">
+                        <span style="font-size: 11px; font-weight: 600; color: #29c6ff; display: block; margin-bottom: 4px;">ESTADO DEL MES</span>
+                        <span style="font-size: 18px; font-weight: 700; color: #020029;">Marzo 2026</span>
+                    </div>
+                </div>
+
+                <!-- Map Container -->
+                <div id="map" style="background: #e5e3df; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden; position: relative;">
+                    <!-- Map will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Tab -->
+        <section id="analysis-tab" class="tab-pane" style="display: none; padding: 24px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <h3 style="font-size: 16px; margin-bottom: 16px;">Distribución por Calificación</h3>
+                    <canvas id="gradeChart" style="height: 280px; width: 100%;"></canvas>
+                </div>
+                <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <h3 style="font-size: 16px; margin-bottom: 16px;">Top 10 IES con Mejor Score (Anonimizado)</h3>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid #eee; text-align: left;">
+                                <th style="padding: 8px;">Posición</th>
+                                <th style="padding: 8px;">Institución</th>
+                                <th style="padding: 8px;">Grado</th>
+                                <th style="padding: 8px;">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 8px;">#1</td>
+                                <td style="padding: 8px;">IES_7241</td>
+                                <td style="padding: 8px;"><span style="background: #4caf50; color: white; padding: 2px 6px; border-radius: 4px;">A</span></td>
+                                <td style="padding: 8px; font-weight: 600;">100.0</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 8px;">#2</td>
+                                <td style="padding: 8px;">IES_1928</td>
+                                <td style="padding: 8px;"><span style="background: #4caf50; color: white; padding: 2px 6px; border-radius: 4px;">A</span></td>
+                                <td style="padding: 8px; font-weight: 600;">97.0</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 8px;">#3</td>
+                                <td style="padding: 8px;">IES_4432</td>
+                                <td style="padding: 8px;"><span style="background: #4caf50; color: white; padding: 2px 6px; border-radius: 4px;">A</span></td>
+                                <td style="padding: 8px; font-weight: 600;">96.0</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 8px;">#4</td>
+                                <td style="padding: 8px;">IES_8821</td>
+                                <td style="padding: 8px;"><span style="background: #4caf50; color: white; padding: 2px 6px; border-radius: 4px;">A</span></td>
+                                <td style="padding: 8px; font-weight: 600;">95.0</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #eee;">
+                                <td style="padding: 8px;">#5</td>
+                                <td style="padding: 8px;">IES_5563</td>
+                                <td style="padding: 8px;"><span style="background: #4caf50; color: white; padding: 2px 6px; border-radius: 4px;">A</span></td>
+                                <td style="padding: 8px; font-weight: 600;">95.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); height: 400px; overflow-y: auto;">
+                <h3 style="font-size: 16px; margin-bottom: 16px;">Panorama Regional de Seguridad</h3>
+                <p style="font-size: 14px; line-height: 1.6; color: #444;">
+                    El análisis de marzo 2026 muestra una concentración de instituciones con calificación 'A' en las regiones de <b>Quito, Ibarra y Tena</b>. Guayaquil presenta una distribución mixta, con instituciones en rangos B y C, pero también con una presencia notable de categorías D y F. 
+                    <br><br>
+                    La región Sierra Central (Riobamba, Ambato, Latacunga) mantiene un desempeño intermedio (C-D), mientras que las zonas de frontera y costa sur presentan brechas importantes que requieren atención prioritaria para elevar los estándares de ciberseguridad.
+                </p>
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <div style="flex: 1; padding: 16px; background: #f1f8e9; border-radius: 8px; border-top: 4px solid #4caf50;">
+                        <h4 style="margin: 0 0 8px 0; color: #2e7d32; font-size: 14px;">Fortaleza Regional</h4>
+                        <p style="margin: 0; font-size: 12px;">Pichincha e Imbabura lideran el ecosistema con el 65% de las instituciones en grado A.</p>
+                    </div>
+                    <div style="flex: 1; padding: 16px; background: #fff3e0; border-radius: 8px; border-top: 4px solid #ff9800;">
+                        <h4 style="margin: 0 0 8px 0; color: #ef6c00; font-size: 14px;">Zona de Mejora</h4>
+                        <p style="margin: 0; font-size: 12px;">La región Costa presenta la mayor densidad de instituciones en grados D y F.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights Tab -->
+        <section id="insights-tab" class="tab-pane" style="display: none; padding: 24px;">
+            <div style="background: white; border-radius: 12px; padding: 32px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <div style="width: 48px; height: 48px; background: #29c6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    </div>
+                    <h2 style="margin: 0; font-size: 24px; color: #020029;">Hallazgos Gerenciales - Marzo 2026</h2>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div style="display: flex; gap: 20px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #29c6ff; width: 40px;">01</div>
+                        <div>
+                            <h4 style="margin: 0 0 8px 0; font-size: 18px;">Liderazgo Tecnológico Estable</h4>
+                            <p style="margin: 0; color: #555; line-height: 1.6;">Las instituciones en el Top 10 han mantenido sus puntuaciones por encima de 90/100, demostrando una madurez operativa consolidada en controles perimetrales y gestión de vulnerabilidades externas.</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #29c6ff; width: 40px;">02</div>
+                        <div>
+                            <h4 style="margin: 0 0 8px 0; font-size: 18px;">Brecha Regional Marcada</h4>
+                            <p style="margin: 0; color: #555; line-height: 1.6;">Existe una correlación directa entre la ubicación geográfica y el nivel de score. Las instituciones en nodos urbanos principales (Quito/Guayaquil) tienen mayores recursos pero también mayor superficie de ataque, mientras que instituciones periféricas sufren de rezago tecnológico evidente.</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #29c6ff; width: 40px;">03</div>
+                        <div>
+                            <h4 style="margin: 0 0 8px 0; font-size: 18px;">Oportunidad de Mitigación</h4>
+                            <p style="margin: 0; color: #555; line-height: 1.6;">El 40% de las instituciones en grado F tienen vulnerabilidades críticas que podrían resolverse con actualizaciones de parches básicos. La gestión centralizada desde CEDIA podría reducir este riesgo en un 25% en el próximo trimestre.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; padding: 24px; background: #020029; color: white; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #29c6ff;">Recomendación Estratégica</h3>
+                        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Priorizar auditorías técnicas en instituciones con Grado D y F ubicadas en la región Costa y Amazonía.</p>
+                    </div>
+                    <button style="background: #29c6ff; border: none; color: #020029; padding: 12px 24px; border-radius: 6px; font-weight: 700; cursor: pointer;">Descargar Informe Completo</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-pane').forEach(tab => tab.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.borderBottomColor = 'transparent';
+                btn.style.color = '#666';
+            });
+            
+            document.getElementById(tabId).style.display = tabId === 'heatmap-tab' ? 'block' : 'block';
+            if (tabId !== 'heatmap-tab') {
+                 document.getElementById('heatmap-tab').style.display = 'none';
+            }
+            
+            const activeBtn = document.querySelector(`button[onclick="switchTab('${tabId}')"]`);
+            activeBtn.style.borderBottomColor = '#29c6ff';
+            activeBtn.style.color = '#020029';
+            activeBtn.style.fontWeight = '600';
+            
+            if(tabId === 'heatmap-tab') setTimeout(() => map.invalidateSize(), 200);
+        }
+
+        // Data for Heatmap
+        const iesData = [
+            {n: "IES_01", g: "A", s: 100, lat: -0.2299, lng: -78.5243},
+            {n: "IES_02", g: "A", s: 96, lat: -0.2299, lng: -78.5243},
+            {n: "IES_03", g: "A", s: 95, lat: -1.2490, lng: -78.6170},
+            {n: "IES_04", g: "A", s: 95, lat: -2.8950, lng: -78.9960},
+            {n: "IES_05", g: "A", s: 95, lat: 0.3488, lng: -78.1246},
+            {n: "IES_06", g: "A", s: 94, lat: -0.9892, lng: -77.8153},
+            {n: "IES_07", g: "A", s: 92, lat: -0.3341, lng: -78.4522},
+            {n: "IES_08", g: "A", s: 92, lat: -2.8950, lng: -78.9960},
+            {n: "IES_09", g: "A", s: 91, lat: -1.4916, lng: -78.0034},
+            {n: "IES_10", g: "B", s: 89, lat: -0.2299, lng: -78.5243},
+            {n: "IES_11", g: "B", s: 89, lat: -2.7397, lng: -78.8486},
+            {n: "IES_12", g: "B", s: 88, lat: -0.8458, lng: -80.1639},
+            {n: "IES_13", g: "B", s: 87, lat: -2.8950, lng: -78.9960},
+            {n: "IES_14", g: "B", s: 87, lat: -2.8950, lng: -78.9960},
+            {n: "IES_15", g: "B", s: 86, lat: -0.2299, lng: -78.5243},
+            {n: "IES_16", g: "B", s: 85, lat: -0.2299, lng: -78.5243},
+            {n: "IES_17", g: "B", s: 85, lat: 0.2346, lng: -78.2625},
+            {n: "IES_18", g: "B", s: 84, lat: -3.9930, lng: -79.2040},
+            {n: "IES_19", g: "B", s: 84, lat: -0.1972, lng: -78.4369},
+            {n: "IES_20", g: "B", s: 82, lat: -1.2490, lng: -78.6170},
+            {n: "IES_21", g: "B", s: 81, lat: -3.2590, lng: -79.9590},
+            {n: "IES_22", g: "B", s: 80, lat: -0.2299, lng: -78.5243},
+            {n: "IES_23", g: "C", s: 78, lat: -2.8950, lng: -78.9960},
+            {n: "IES_24", g: "C", s: 78, lat: -1.5926, lng: -79.0010},
+            {n: "IES_25", g: "C", s: 77, lat: -2.1960, lng: -79.8860},
+            {n: "IES_26", g: "C", s: 77, lat: -1.0576, lng: -80.4515},
+            {n: "IES_27", g: "C", s: 74, lat: -0.9342, lng: -78.6152},
+            {n: "IES_28", g: "C", s: 73, lat: -2.1960, lng: -79.8860},
+            {n: "IES_29", g: "C", s: 71, lat: -1.6743, lng: -78.6484},
+            {n: "IES_30", g: "D", s: 68, lat: -2.1960, lng: -79.8860},
+            {n: "IES_31", g: "D", s: 68, lat: -2.1960, lng: -79.8860},
+            {n: "IES_32", g: "D", s: 64, lat: 0.9592, lng: -79.6520},
+            {n: "IES_33", g: "D", s: 63, lat: -1.6743, lng: -78.6484},
+            {n: "IES_34", g: "D", s: 62, lat: -1.8038, lng: -79.5351},
+            {n: "IES_35", g: "D", s: 61, lat: -2.8950, lng: -78.9960},
+            {n: "IES_36", g: "D", s: 61, lat: -0.2299, lng: -78.5243},
+            {n: "IES_37", g: "D", s: 60, lat: -1.0286, lng: -79.4635},
+            {n: "IES_38", g: "F", s: 59, lat: 0.8124, lng: -77.7171},
+            {n: "IES_39", g: "F", s: 58, lat: -0.2299, lng: -78.5243},
+            {n: "IES_40", g: "F", s: 49, lat: -0.2299, lng: -78.5243},
+            {n: "IES_41", g: "F", s: 49, lat: -2.8950, lng: -78.9960},
+            {n: "IES_42", g: "F", s: 44, lat: -2.1960, lng: -79.8860}
+        ];
+
+        let activeGrades = { A: true, B: true, C: true, D: true, F: true };
+        let map, heatLayer;
+
+        function initMap() {
+            map = L.map('map').setView([-1.5, -78.5], 6.5);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap, © CartoDB'
+            }).addTo(map);
+
+            updateHeatmap();
+        }
+
+        function updateHeatmap() {
+            if (heatLayer) map.removeLayer(heatLayer);
+
+            const heatPoints = iesData
+                .filter(d => activeGrades[d.g])
+                .map(d => [d.lat, d.lng, d.s / 100]);
+
+            heatLayer = L.heatLayer(heatPoints, {
+                radius: 35,
+                blur: 15,
+                maxZoom: 10,
+                max: 1.0,
+                gradient: {
+                    0.2: 'blue',
+                    0.4: 'cyan',
+                    0.6: 'lime',
+                    0.8: 'yellow',
+                    1.0: 'red'
+                }
+            }).addTo(map);
+        }
+
+        function toggleGrade(grade) {
+            activeGrades[grade] = !activeGrades[grade];
+            updateHeatmap();
+        }
+
+        // Initialize Charts
+        function initCharts() {
+            const ctx = document.getElementById('gradeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['A (Exc)', 'B (Bue)', 'C (Sat)', 'D (Rie)', 'F (Cri)'],
+                    datasets: [{
+                        label: 'Número de IES',
+                        data: [11, 15, 13, 13, 12],
+                        backgroundColor: ['#4caf50', '#8bc34a', '#ffeb3b', '#ff9800', '#f44336'],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } }
+                }
+            });
+        }
+
+        // Start everything
+        window.onload = () => {
+            initMap();
+            initCharts();
+        };
+    </script>
+
+    <!-- CSS Injected -->
+    <style>
+        .tab-btn.active { font-weight: 700; color: #020029 !important; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #999; }
+        #map { width: 100%; height: 100%; z-index: 1; }
+    </style>
+</div>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
