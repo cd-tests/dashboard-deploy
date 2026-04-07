@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 1080px; max-height: 1080px; font-family: 'Gotham', 'Montserrat', 'Arial', sans-serif; background: #f8f9fa; overflow: hidden; }
+.dashboard-container { width: 100%; height: 1080px; display: flex; flex-direction: column; background: linear-gradient(135deg, #020029 0%, #0c0c43 100%); }
+.header { height: 56px; flex-shrink: 0; background: linear-gradient(90deg, #020029 0%, #0c0c43 100%); display: flex; align-items: center; padding: 0 20px; border-bottom: 2px solid #29c6ff; }
+.header-title { color: #29c6ff; font-size: 16px; font-weight: 700; flex: 1; margin-left: 12px; }
+.header-period { color: #e2e3d5; font-size: 11px; }
+.nav-tabs { height: 44px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(41, 198, 255, 0.2); display: flex; padding: 0 12px; gap: 4px; overflow-x: auto; }
+.tab-button { padding: 6px 14px; background: rgba(41, 198, 255, 0.1); border: 1px solid rgba(41, 198, 255, 0.3); color: #e2e3d5; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 3px; white-space: nowrap; transition: all 0.2s; }
+.tab-button:hover { background: rgba(41, 198, 255, 0.2); }
+.tab-button.active { background: #29c6ff; color: #020029; }
+.content-area { flex: 1; overflow: hidden; }
+.tab-content { width: 100%; height: 960px; padding: 16px; overflow-y: auto; display: none; background: #f8f9fa; }
+.tab-content.active { display: block; }
+.kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px; }
+.kpi-card { background: white; border-radius: 6px; padding: 12px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); border-top: 3px solid #29c6ff; }
+.kpi-label { font-size: 10px; color: #666; font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
+.kpi-value { font-size: 20px; color: #020029; font-weight: 700; margin-bottom: 2px; }
+.kpi-subtitle { font-size: 9px; color: #999; }
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.chart-container { background: white; border-radius: 6px; padding: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); }
+.chart-title { font-size: 11px; font-weight: 700; color: #020029; margin-bottom: 6px; text-transform: uppercase; }
+canvas { width: 100% !important; height: 260px !important; }
+.insights-box { background: white; border-radius: 6px; padding: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); border-left: 3px solid #29c6ff; }
+.insights-title { font-size: 11px; font-weight: 700; color: #020029; margin-bottom: 6px; text-transform: uppercase; }
+.insight-item { font-size: 10px; color: #333; margin-bottom: 4px; line-height: 1.3; }
+.table-container { background: white; border-radius: 6px; padding: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); max-height: 300px; overflow-y: auto; margin-top: 10px; }
+.table-container table { width: 100%; font-size: 10px; border-collapse: collapse; }
+.table-container th { background: #f5f5f5; padding: 6px; text-align: left; font-weight: 700; color: #020029; border-bottom: 1px solid #ddd; }
+.table-container td { padding: 5px 6px; border-bottom: 1px solid #eee; }
+.badge { display: inline-block; padding: 2px 5px; border-radius: 2px; font-size: 8px; font-weight: 700; }
+.badge-a { background: #d4edda; color: #155724; }
+.badge-f { background: #f8d7da; color: #721c24; }
+.footer { height: 16px; flex-shrink: 0; background: #020029; border-top: 1px solid rgba(41, 198, 255, 0.2); font-size: 8px; color: #999; display: flex; align-items: center; padding: 0 12px; }
+</style>
+
+<div class="dashboard-container">
+  <div class="header">
+    <div style="color: #29c6ff; font-size: 14px;">📊</div>
+    <div class="header-title">Panorama General de Seguridad - IES Ecuador</div>
+    <div class="header-period">2025-12 a 2026-03 | Anonimizado</div>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="tab-button active" onclick="showTab(event, 'tab1')">Resumen Ejecutivo</button>
+    <button class="tab-button" onclick="showTab(event, 'tab2')">Ranking Seguridad</button>
+    <button class="tab-button" onclick="showTab(event, 'tab3')">Vulnerabilidades</button>
+    <button class="tab-button" onclick="showTab(event, 'tab4')">Madurez Digital</button>
+    <button class="tab-button" onclick="showTab(event, 'tab5')">Impacto Financiero</button>
+  </div>
+
+  <div class="content-area">
+    <!-- TAB 1 -->
+    <div id="tab1" class="tab-content active">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Total IES</div><div class="kpi-value">71</div><div class="kpi-subtitle">Evaluadas</div></div>
+        <div class="kpi-card"><div class="kpi-label">Score Prom.</div><div class="kpi-value">72.4</div><div class="kpi-subtitle">Combinado</div></div>
+        <div class="kpi-card"><div class="kpi-label">Grado A</div><div class="kpi-value">11</div><div class="kpi-subtitle">15.5%</div></div>
+        <div class="kpi-card"><div class="kpi-label">Grado F</div><div class="kpi-value">22</div><div class="kpi-subtitle">31.0%</div></div>
+        <div class="kpi-card"><div class="kpi-label">Issues Activas</div><div class="kpi-value">9,575</div><div class="kpi-subtitle">100% sin resolver</div></div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-container">
+          <div class="chart-title">Distribución por Grado</div>
+          <canvas id="chart1"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">Top 10 vs Bottom 10</div>
+          <canvas id="chart2"></canvas>
+        </div>
+      </div>
+
+      <div class="insights-box">
+        <div class="insights-title">⚡ Hallazgos Críticos</div>
+        <div class="insight-item">🔴 <strong>Crisis de remediación:</strong> 100% de issues activas. Requiere fortalecer procesos de cierre.</div>
+        <div class="insight-item">🟠 <strong>Polarización severa:</strong> 31% en grado F vs 15.5% en A. Distribución altamente desigual.</div>
+        <div class="insight-item">🟡 <strong>Vulnerabilidades de servicio:</strong> 63% del top de issues afectan múltiples IES simultáneamente.</div>
+        <div class="insight-item">🔵 <strong>Credenciales comprometidas:</strong> 584 registros indicando acceso no autorizado masivo.</div>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div id="tab2" class="tab-content">
+      <div class="charts-row">
+        <div class="chart-container">
+          <div class="chart-title">Top 10 IES por Score</div>
+          <canvas id="chart3"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">Bottom 10 IES por Score</div>
+          <canvas id="chart4"></canvas>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead><tr><th>Pos</th><th>IES</th><th>Combinado</th><th>Scorecard</th><th>Nessus</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>IES_1</td><td>97.25</td><td><span class="badge badge-a">A</span></td><td><span class="badge badge-a">A</span></td><td>Óptimo</td></tr>
+            <tr><td>2</td><td>IES_2</td><td>97.00</td><td><span class="badge badge-a">A</span></td><td>—</td><td>Óptimo</td></tr>
+            <tr><td>3</td><td>IES_3</td><td>95.00</td><td><span class="badge badge-a">A</span></td><td>—</td><td>Óptimo</td></tr>
+            <tr><td colspan="6" style="text-align: center; color: #999; font-size: 9px;">... 67 instituciones más</td></tr>
+            <tr><td>68</td><td>IES_68</td><td>22.00</td><td>—</td><td><span class="badge badge-f">F</span></td><td>Crítico</td></tr>
+            <tr><td>69</td><td>IES_69</td><td>0.00</td><td>—</td><td><span class="badge badge-f">F</span></td><td>Crítico</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insights-box">
+        <div class="insights-title">📊 Análisis de Ranking</div>
+        <div class="insight-item"><strong>Divergencia técnica:</strong> Algunas IES altas en Nessus pero bajas en Scorecard indica brechas en gestión web.</div>
+        <div class="insight-item"><strong>10 IES críticas:</strong> Score por debajo de 50, requieren intervención inmediata.</div>
+        <div class="insight-item"><strong>13 IES sin Nessus:</strong> Reducida visibilidad operativa. Priorizar cobertura completa.</div>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div id="tab3" class="tab-content">
+      <div class="charts-row">
+        <div class="chart-container">
+          <div class="chart-title">Top Issues Frecuentes</div>
+          <canvas id="chart5"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">Distribución por Severidad</div>
+          <canvas id="chart6"></canvas>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-container">
+          <div class="chart-title">Estado de Issues</div>
+          <canvas id="chart7"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">Análisis de Patching</div>
+          <canvas id="chart8"></canvas>
+        </div>
+      </div>
+
+      <div class="insights-box">
+        <div class="insights-title">🔍 Amenazas Prevalentes</div>
+        <div class="insight-item"><strong>1. Vulns de Servicio (43%):</strong> 2,398 notificaciones. Requiere patcheo y hardening.</div>
+        <div class="insight-item"><strong>2. Credenciales (6%):</strong> 753 registros. Implementar rotación y MFA urgente.</div>
+        <div class="insight-item"><strong>3. Patching (7%):</strong> 767 issues. Acelerar ciclos de actualización.</div>
+        <div class="insight-item"><strong>4. TLS/Certificados (6%):</strong> 652 issues. Auditar y renovar PKI.</div>
+        <div class="insight-item"><strong>5. Seguridad Web (4%):</strong> 447 issues. Implementar HSTS, CSP y headers.</div>
+      </div>
+    </div>
+
+    <!-- TAB 4 -->
+    <div id="tab4" class="tab-content">
+      <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="kpi-card"><div class="kpi-label">Madurez Prom.</div><div class="kpi-value">55%</div><div class="kpi-subtitle">21 IES</div></div>
+        <div class="kpi-card"><div class="kpi-label">Líderes (≥73%)</div><div class="kpi-value">6</div><div class="kpi-subtitle">Zona superior</div></div>
+        <div class="kpi-card"><div class="kpi-label">Crítica (&lt;40%)</div><div class="kpi-value">5</div><div class="kpi-subtitle">Requiere mejora</div></div>
+        <div class="kpi-card"><div class="kpi-label">Volatilidad Multas</div><div class="kpi-value">193.96%</div><div class="kpi-subtitle">Alto riesgo</div></div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-container">
+          <div class="chart-title">Madurez Digital por IES</div>
+          <canvas id="chart9"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">Categorización de IES</div>
+          <canvas id="chart10"></canvas>
+        </div>
+      </div>
+
+      <div class="insights-box">
+        <div class="insights-title">📈 Análisis de Madurez</div>
+        <div class="insight-item"><strong>Distribución bimodal:</strong> 6 líderes (73%+) vs 5 críticas (&lt;40%). Requiere estrategias diferenciadas.</div>
+        <div class="insight-item"><strong>Correlación débil (-0.1286):</strong> Madurez no predice score técnico. Brechas en implementación de controles.</div>
+        <div class="insight-item"><strong>Zona media desatendida:</strong> 10 IES en desarrollo (40-73%) sin impulso suficiente.</div>
+      </div>
+    </div>
+
+    <!-- TAB 5 -->
+    <div id="tab5" class="tab-content">
+      <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="kpi-card"><div class="kpi-label">Multas Totales</div><div class="kpi-value">$49.4M</div><div class="kpi-subtitle">Ecosistema</div></div>
+        <div class="kpi-card"><div class="kpi-label">Promedio</div><div class="kpi-value">$2.35M</div><div class="kpi-subtitle">Por IES</div></div>
+        <div class="kpi-card"><div class="kpi-label">Máxima</div><div class="kpi-value">$17.3M</div><div class="kpi-subtitle">Una institución</div></div>
+        <div class="kpi-card"><div class="kpi-label">Top 6 IES</div><div class="kpi-value">96%</div><div class="kpi-subtitle">De total</div></div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-container">
+          <div class="chart-title">Top 10 IES por Impacto Financiero</div>
+          <canvas id="chart11"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">Madurez vs Multas</div>
+          <canvas id="chart12"></canvas>
+        </div>
+      </div>
+
+      <div class="insights-box">
+        <div class="insights-title">💰 Riesgos Financieros</div>
+        <div class="insight-item"><strong>Concentración extrema:</strong> 6 IES con $47.5M (96% del total). UCACUE = $17.3M = 35%.</div>
+        <div class="insight-item"><strong>Anomalía PUCE/UPS:</strong> 68% y 59% madurez pero $7.5M y $8.1M en multas. Deficiencias en controles graves.</div>
+        <div class="insight-item"><strong>Volatilidad 193.96%:</strong> Sanciones desproporcionadas. Requiere auditoría de clasificación.</div>
+        <div class="insight-item"><strong>Benchmark ESPOL:</strong> 83% madurez = solo $3.6K en multas. Modelo replicable.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Consolidado de GLPI, Security Scorecard, Nessus, madurez digital GEANT. Período: 2025-12 a 2026-03.
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+function showTab(e, tabId) {
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  e.target.classList.add('active');
+}
+
+const ctx = (id) => document.getElementById(id).getContext('2d');
+
+new Chart(ctx('chart1'), { type: 'doughnut', data: { labels: ['A (15.5%)', 'B (21.1%)', 'C (29.6%)', 'D (22.5%)', 'F (31.0%)'], datasets: [{ data: [11, 15, 21, 16, 22], backgroundColor: ['#27ae60', '#2980b9', '#f39c12', '#e67e22', '#c0392b'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+
+new Chart(ctx('chart2'), { type: 'bar', data: { labels: ['Top 10', 'Bottom 10'], datasets: [{ label: 'Score Prom.', data: [91.2, 47.3], backgroundColor: ['#27ae60', '#c0392b'] }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { max: 100 } } } });
+
+new Chart(ctx('chart3'), { type: 'barH', data: { labels: ['IES_1', 'IES_2', 'IES_3', 'IES_4', 'IES_5', 'IES_6', 'IES_7', 'IES_8', 'IES_9', 'IES_10'], datasets: [{ data: [97.25, 97, 95, 94, 93.75, 91, 90, 89.5, 89.25, 88.5], backgroundColor: '#29c6ff' }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { max: 100 } } } });
+
+new Chart(ctx('chart4'), { type: 'barH', data: { labels: ['IES_61', 'IES_62', 'IES_63', 'IES_64', 'IES_65', 'IES_66', 'IES_67', 'IES_68', 'IES_69', 'IES_70'], datasets: [{ data: [60.5, 60, 59.5, 58, 57.5, 56.75, 56, 55, 22, 0], backgroundColor: '#c0392b' }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { max: 100 } } } });
+
+new Chart(ctx('chart5'), { type: 'barH', data: { labels: ['Service Vuln Medium', 'Service Vuln High', 'Compromised Creds', 'Service Vuln Critical', 'Patching High', 'Patching Medium', 'TLS Self-Signed', 'No Revocation', 'CSP No Policy', 'X-Content-Type'], datasets: [{ data: [979, 840, 584, 579, 546, 522, 321, 248, 224, 212], backgroundColor: '#e67e22' }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } });
+
+new Chart(ctx('chart6'), { type: 'doughnut', data: { labels: ['Low', 'Info', 'Medium', 'High'], datasets: [{ data: [5714, 2740, 622, 499], backgroundColor: ['#27ae60', '#3498db', '#f39c12', '#c0392b'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+
+new Chart(ctx('chart7'), { type: 'doughnut', data: { labels: ['Active', 'Departed', 'Resolved'], datasets: [{ data: [9575, 7902, 1339], backgroundColor: ['#c0392b', '#f39c12', '#27ae60'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+
+new Chart(ctx('chart8'), { type: 'bar', data: { labels: ['High', 'Medium', 'Critical'], datasets: [{ label: 'Issues', data: [546, 522, 199], backgroundColor: ['#e67e22', '#f39c12', '#c0392b'] }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } } });
+
+new Chart(ctx('chart9'), { type: 'barH', data: { labels: ['ITSCO', 'ESPOL', 'UNL', 'UTPL', 'IKIAM', 'UCUENCA', 'ESPE', 'PUCE', 'UPS', 'MCUENCA', 'UNIANDES', 'UDA', 'ARMADA', 'UCACUE', 'ISTE', 'UTELVT', 'USGP', 'UINPIAW', 'UPEC', 'ESPAM', 'SUDAMERICANO'], datasets: [{ data: [87, 83, 81, 81, 77, 73, 73, 68, 59, 56, 56, 53, 47, 44, 43, 40, 38, 32, 23, 21, 19], backgroundColor: '#29c6ff' }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { max: 100 } } } });
+
+new Chart(ctx('chart10'), { type: 'doughnut', data: { labels: ['Líderes (29%)', 'En Desarrollo (48%)', 'Crítica (24%)'], datasets: [{ data: [6, 10, 5], backgroundColor: ['#27ae60', '#f39c12', '#c0392b'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+
+new Chart(ctx('chart11'), { type: 'barH', data: { labels: ['UCACUE', 'UDA', 'UPS', 'PUCE', 'ESPAM', 'USGP', 'SUDAMERICANO', 'UTELVT', 'UPEC', 'ARMADA'], datasets: [{ data: [17.3, 9.5, 8.1, 7.5, 4.5, 0.74, 0.35, 0.27, 0.22, 0.15], backgroundColor: '#c0392b' }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } } });
+
+new Chart(ctx('chart12'), { type: 'scatter', data: { datasets: [{ label: 'Madurez vs Multas', data: [{x:87,y:0.07},{x:83,y:0.0036},{x:81,y:0.033},{x:81,y:0.057},{x:77,y:0.009},{x:73,y:0.038},{x:73,y:0.11},{x:68,y:7.5},{x:59,y:8.1},{x:56,y:0.14},{x:56,y:0.11},{x:53,y:9.5},{x:47,y:0.15},{x:44,y:17.3},{x:43,y:0.11},{x:40,y:0.27},{x:38,y:0.74},{x:32,y:0.10},{x:23,y:0.22},{x:21,y:4.5},{x:19,y:0.35}], backgroundColor: 'rgba(41, 198, 255, 0.6)' }] }, options: { responsive: true, maintainAspectRatio: false, scales: { x: { title: { display: true, text: 'Madurez (%)' }, max: 100 }, y: { title: { display: true, text: 'Multas ($M)' } } } } });
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
