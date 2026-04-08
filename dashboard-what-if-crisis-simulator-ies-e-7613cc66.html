@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 1080px; max-height: 1080px;
+    width: 100%; overflow: hidden;
+    font-family: "Gotham", "Montserrat", "Arial", sans-serif;
+    background: #020029; color: #e2e3d5;
+  }
+
+  .dashboard {
+    display: flex; flex-direction: column;
+    height: 1080px; max-height: 1080px; width: 100%; overflow: hidden;
+    background: linear-gradient(160deg, #020029 0%, #0c0c43 60%, #020029 100%);
+  }
+
+  /* HEADER */
+  .header {
+    height: 56px; flex-shrink: 0;
+    background: linear-gradient(90deg, #020029 0%, #0c0c43 50%, #020029 100%);
+    border-bottom: 2px solid #29c6ff33;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-logo { height: 28px; }
+  .header-title { font-size: 14px; font-weight: 700; color: #29c6ff; letter-spacing: 1.5px; text-transform: uppercase; }
+  .header-subtitle { font-size: 10px; color: #e2e3d599; letter-spacing: 0.5px; }
+  .header-badge {
+    background: linear-gradient(90deg, #ff4444, #ff8800);
+    color: #fff; font-size: 9px; font-weight: 800;
+    padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase;
+    animation: pulse-badge 2s infinite;
+  }
+  @keyframes pulse-badge { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+  /* TABS */
+  .tab-nav {
+    height: 44px; flex-shrink: 0;
+    display: flex; align-items: flex-end;
+    background: #020029; border-bottom: 2px solid #29c6ff22;
+    padding: 0 24px; gap: 4px;
+  }
+  .tab-btn {
+    height: 36px; padding: 0 16px;
+    background: transparent; border: none; border-bottom: 2px solid transparent;
+    color: #e2e3d566; font-family: inherit; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.8px; text-transform: uppercase; cursor: pointer;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .tab-btn:hover { color: #29c6ff88; }
+  .tab-btn.active { color: #29c6ff; border-bottom-color: #29c6ff; }
+  .tab-icon { margin-right: 5px; font-size: 12px; }
+
+  /* CONTENT */
+  .tab-content { display: none; height: 960px; max-height: 960px; overflow-y: auto; overflow-x: hidden; padding: 16px 20px; }
+  .tab-content.active { display: block; }
+
+  /* SCROLLBAR */
+  .tab-content::-webkit-scrollbar { width: 4px; }
+  .tab-content::-webkit-scrollbar-track { background: #020029; }
+  .tab-content::-webkit-scrollbar-thumb { background: #29c6ff44; border-radius: 2px; }
+
+  /* GRID LAYOUTS */
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .grid-52 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; margin-bottom: 14px; }
+
+  /* CARDS */
+  .card {
+    background: linear-gradient(135deg, #0c0c4388 0%, #020029cc 100%);
+    border: 1px solid #29c6ff22; border-radius: 10px; padding: 14px;
+  }
+  .card-title { font-size: 9px; font-weight: 700; color: #29c6ffaa; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 10px; }
+
+  /* KPI CARDS */
+  .kpi-card {
+    background: linear-gradient(135deg, #0c0c43 0%, #020029 100%);
+    border: 1px solid #29c6ff33; border-radius: 10px; padding: 14px 12px;
+    display: flex; flex-direction: column; gap: 4px; position: relative; overflow: hidden;
+  }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .kpi-card.blue::before { background: linear-gradient(90deg, #29c6ff, #0c0c43); }
+  .kpi-card.red::before { background: linear-gradient(90deg, #ff4444, #ff8800); }
+  .kpi-card.amber::before { background: linear-gradient(90deg, #ffbb00, #ff8800); }
+  .kpi-card.green::before { background: linear-gradient(90deg, #00e676, #00acc1); }
+  .kpi-card.purple::before { background: linear-gradient(90deg, #ab47bc, #7e57c2); }
+  .kpi-label { font-size: 9px; color: #e2e3d566; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; }
+  .kpi-value { font-size: 22px; font-weight: 800; color: #fff; line-height: 1; }
+  .kpi-value.red { color: #ff6060; }
+  .kpi-value.amber { color: #ffcc44; }
+  .kpi-value.green { color: #00e676; }
+  .kpi-value.blue { color: #29c6ff; }
+  .kpi-sub { font-size: 10px; color: #e2e3d577; margin-top: 2px; }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-size: 10px; font-weight: 700; color: #29c6ff; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 10px; padding-bottom: 6px;
+    border-bottom: 1px solid #29c6ff22;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::before { content: ''; width: 3px; height: 14px; background: #29c6ff; border-radius: 2px; }
+
+  /* CANVAS CONTAINERS */
+  .chart-wrap { position: relative; height: 200px; max-height: 200px; width: 100%; }
+  .chart-wrap-sm { position: relative; height: 160px; max-height: 160px; width: 100%; }
+  .chart-wrap-lg { position: relative; height: 240px; max-height: 240px; width: 100%; }
+  .chart-wrap-xl { position: relative; height: 280px; max-height: 280px; width: 100%; }
+
+  /* RISK BADGE */
+  .risk-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+  }
+  .risk-critical { background: #ff444422; color: #ff6060; border: 1px solid #ff444444; }
+  .risk-high { background: #ff880022; color: #ffaa44; border: 1px solid #ff880044; }
+  .risk-medium { background: #ffbb0022; color: #ffcc44; border: 1px solid #ffbb0044; }
+  .risk-low { background: #00e67622; color: #00e676; border: 1px solid #00e67644; }
+  .risk-safe { background: #29c6ff22; color: #29c6ff; border: 1px solid #29c6ff44; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+  .data-table th {
+    background: #29c6ff15; color: #29c6ffcc; font-size: 9px; font-weight: 700;
+    letter-spacing: 0.8px; text-transform: uppercase; padding: 6px 8px;
+    border-bottom: 1px solid #29c6ff22; text-align: left;
+  }
+  .data-table td { padding: 5px 8px; border-bottom: 1px solid #ffffff08; color: #e2e3d5cc; }
+  .data-table tr:hover td { background: #29c6ff08; }
+
+  /* SCENARIO SELECTOR */
+  .scenario-selector {
+    display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .scenario-btn {
+    padding: 6px 14px; border-radius: 20px; border: 1px solid #29c6ff33;
+    background: transparent; color: #e2e3d577; font-family: inherit;
+    font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .scenario-btn:hover { border-color: #29c6ff88; color: #e2e3d5aa; }
+  .scenario-btn.active {
+    background: linear-gradient(90deg, #29c6ff22, #273dd522);
+    border-color: #29c6ff; color: #29c6ff;
+  }
+  .scenario-btn.danger.active {
+    background: linear-gradient(90deg, #ff444422, #ff880022);
+    border-color: #ff6060; color: #ff6060;
+  }
+
+  /* SLIDER */
+  .slider-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .slider-row { display: flex; align-items: center; gap: 10px; }
+  .slider-label { font-size: 10px; color: #e2e3d5aa; min-width: 160px; }
+  .slider-val { font-size: 11px; font-weight: 700; color: #29c6ff; min-width: 50px; text-align: right; }
+  input[type=range] {
+    flex: 1; height: 4px; border-radius: 2px;
+    background: linear-gradient(90deg, #29c6ff 0%, #0c0c43 100%);
+    -webkit-appearance: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 14px; height: 14px;
+    border-radius: 50%; background: #29c6ff; border: 2px solid #020029;
+    box-shadow: 0 0 6px #29c6ff88;
+  }
+
+  /* PROGRESS BAR */
+  .prog-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .prog-label { font-size: 10px; color: #e2e3d5aa; min-width: 55px; }
+  .prog-bar-bg { flex: 1; height: 8px; background: #ffffff10; border-radius: 4px; overflow: hidden; }
+  .prog-bar { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  .prog-val { font-size: 10px; font-weight: 700; min-width: 36px; text-align: right; }
+
+  /* TIMELINE */
+  .timeline { display: flex; flex-direction: column; gap: 6px; }
+  .tl-item { display: flex; align-items: flex-start; gap: 10px; }
+  .tl-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
+    box-shadow: 0 0 6px currentColor;
+  }
+  .tl-content { flex: 1; }
+  .tl-time { font-size: 9px; font-weight: 700; color: #29c6ffaa; letter-spacing: 0.5px; }
+  .tl-desc { font-size: 10px; color: #e2e3d5bb; }
+
+  /* INSIGHT BOX */
+  .insight-box {
+    background: linear-gradient(90deg, #29c6ff08, transparent);
+    border-left: 3px solid #29c6ff; border-radius: 0 6px 6px 0;
+    padding: 10px 12px; margin-top: 10px;
+  }
+  .insight-box.warn { border-left-color: #ffcc44; background: linear-gradient(90deg, #ffcc4408, transparent); }
+  .insight-box.danger { border-left-color: #ff6060; background: linear-gradient(90deg, #ff606008, transparent); }
+  .insight-title { font-size: 9px; font-weight: 700; color: #29c6ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .insight-title.warn { color: #ffcc44; }
+  .insight-title.danger { color: #ff6060; }
+  .insight-text { font-size: 10px; color: #e2e3d5aa; line-height: 1.5; }
+
+  /* DONUT LEGEND */
+  .legend-list { display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-text { font-size: 10px; color: #e2e3d5bb; }
+  .legend-val { font-size: 10px; font-weight: 700; color: #fff; margin-left: auto; }
+
+  /* GRADE BAR */
+  .grade-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .grade-badge {
+    width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0;
+  }
+  .grade-A { background: #00e67622; color: #00e676; border: 1px solid #00e67644; }
+  .grade-B { background: #29c6ff22; color: #29c6ff; border: 1px solid #29c6ff44; }
+  .grade-C { background: #ffcc4422; color: #ffcc44; border: 1px solid #ffcc4444; }
+  .grade-D { background: #ff880022; color: #ff8800; border: 1px solid #ff880044; }
+  .grade-F { background: #ff444422; color: #ff4444; border: 1px solid #ff444444; }
+
+  /* FOOTER */
+  .footer {
+    height: 22px; flex-shrink: 0; background: #020029;
+    border-top: 1px solid #29c6ff11;
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+  }
+  .footer-text { font-size: 8px; color: #e2e3d533; letter-spacing: 0.5px; }
+  .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: #29c6ff33; }
+
+  /* HEAT CELL */
+  .heat-cell {
+    padding: 4px 6px; border-radius: 4px; font-size: 10px; font-weight: 600;
+    text-align: center; cursor: default;
+  }
+  .heat-critical { background: #ff444433; color: #ff6060; }
+  .heat-high { background: #ff880033; color: #ffaa44; }
+  .heat-medium { background: #ffcc4433; color: #ffcc44; }
+  .heat-low { background: #00e67633; color: #00e676; }
+
+  /* SCENARIO RESULTS */
+  #sim-results { transition: all 0.3s; }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<div class="dashboard">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" class="header-logo" alt="CEDIA"/>
+      <div>
+        <div class="header-title">⚡ Simulador de Crisis What-If — IES Ecuador</div>
+        <div class="header-subtitle">Proyección de impacto financiero, reputacional y operativo ante incidentes críticos • Periodo 2026-01~2026-03</div>
+      </div>
+    </div>
+    <div class="header-badge">🔴 Crisis Simulation Mode</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('panorama')"><span class="tab-icon">🌐</span>Panorama General</button>
+    <button class="tab-btn" onclick="switchTab('simulator')"><span class="tab-icon">⚙️</span>Simulador What-If</button>
+    <button class="tab-btn" onclick="switchTab('financiero')"><span class="tab-icon">💰</span>Impacto Financiero</button>
+    <button class="tab-btn" onclick="switchTab('remediacion')"><span class="tab-icon">🛡️</span>Remediación vs Prevención</button>
+    <button class="tab-btn" onclick="switchTab('vulnerabilidades')"><span class="tab-icon">🎯</span>Hallazgos Críticos</button>
+    <button class="tab-btn" onclick="switchTab('recuperacion')"><span class="tab-icon">⏱️</span>Recuperación Operativa</button>
+  </div>
+
+  <!-- ===================== TAB 1: PANORAMA ===================== -->
+  <div id="tab-panorama" class="tab-content active">
+
+    <div class="grid-4">
+      <div class="kpi-card blue">
+        <div class="kpi-label">IES Monitoreadas</div>
+        <div class="kpi-value blue">64</div>
+        <div class="kpi-sub">Score combinado disponible</div>
+      </div>
+      <div class="kpi-card amber">
+        <div class="kpi-label">Score Promedio</div>
+        <div class="kpi-value amber">76.5</div>
+        <div class="kpi-sub">Sobre 100 puntos</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">IES en Zona Crítica</div>
+        <div class="kpi-value red">25</div>
+        <div class="kpi-sub">Grade D o F — 39% del total</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">IES Nivel A</div>
+        <div class="kpi-value green">11</div>
+        <div class="kpi-sub">Score ≥ 90 puntos</div>
+      </div>
+    </div>
+
+    <div class="grid-4" style="margin-bottom:14px">
+      <div class="kpi-card purple">
+        <div class="kpi-label">Madurez Digital Prom.</div>
+        <div class="kpi-value" style="color:#ab47bc">55%</div>
+        <div class="kpi-sub">21 IES evaluadas GEANT</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Issues Activas</div>
+        <div class="kpi-value red">6,866</div>
+        <div class="kpi-sub">100% sin resolver en el periodo</div>
+      </div>
+      <div class="kpi-card amber">
+        <div class="kpi-label">Multa Promedio</div>
+        <div class="kpi-value amber">$2.35M</div>
+        <div class="kpi-sub">Desv. estándar: $4.56M</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Máx. Exposición Multas</div>
+        <div class="kpi-value red">$17.3M</div>
+        <div class="kpi-sub">IES con peor perfil de riesgo</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📊 Distribución por Calificación de Seguridad (64 IES)</div>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div class="chart-wrap-sm" style="width:150px;flex-shrink:0"><canvas id="gradeDonut"></canvas></div>
+          <div class="legend-list" style="flex:1">
+            <div class="legend-item"><div class="legend-dot" style="background:#00e676"></div><div class="legend-text">Grado A (Score ≥90)</div><div class="legend-val">11 <span class="risk-low" style="font-size:8px">17%</span></div></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#29c6ff"></div><div class="legend-text">Grado B (80–89)</div><div class="legend-val">15 <span class="risk-safe" style="font-size:8px">23%</span></div></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ffcc44"></div><div class="legend-text">Grado C (70–79)</div><div class="legend-val">13 <span class="risk-medium" style="font-size:8px">20%</span></div></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ff8800"></div><div class="legend-text">Grado D (60–69)</div><div class="legend-val">13 <span class="risk-high" style="font-size:8px">20%</span></div></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#ff4444"></div><div class="legend-text">Grado F (< 60)</div><div class="legend-val">12 <span class="risk-critical" style="font-size:8px">19%</span></div></div>
+          </div>
+        </div>
+        <div class="insight-box warn" style="margin-top:8px">
+          <div class="insight-title warn">⚠ Alerta</div>
+          <div class="insight-text">El 39% del ecosistema opera con calificación D o F — indicando alta probabilidad de compromiso ante cualquier escenario de ataque.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📉 Madurez Digital vs Exposición Financiera (21 IES)</div>
+        <div class="chart-wrap-sm"><canvas id="maturityScatter"></canvas></div>
+        <div class="insight-box danger" style="margin-top:6px">
+          <div class="insight-title danger">🔴 Hallazgo Crítico</div>
+          <div class="insight-text">Correlación inversa débil (r=-0.13): instituciones con baja madurez no siempre tienen mayores multas por el tamaño del dato que procesan. PUCE, UDA, UPS y UCACUE concentran el 87% del riesgo financiero total del ecosistema.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">🏆 Top 5 Mejor Posicionadas</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="color:#00e676;background:#00e676"></div><div class="tl-content"><div class="tl-time">IES-01 <span class="risk-low">A · 100</span></div><div class="tl-desc">Perfil de riesgo bajo. Recuperación estimada: 12h</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#00e676;background:#00c664"></div><div class="tl-content"><div class="tl-time">IES-02 <span class="risk-low">A · 97</span></div><div class="tl-desc">Controles maduros. Baja probabilidad de compromiso</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#29c6ff;background:#29c6ff"></div><div class="tl-content"><div class="tl-time">IES-03 <span class="risk-low">A · 96</span></div><div class="tl-desc">Superficie de ataque controlada</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#29c6ff;background:#29a6df"></div><div class="tl-content"><div class="tl-time">IES-04 <span class="risk-low">A · 95</span></div><div class="tl-desc">Parches y vulnerabilidades gestionadas</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#29c6ff;background:#1990cc"></div><div class="tl-content"><div class="tl-time">IES-05 <span class="risk-low">A · 95</span></div><div class="tl-desc">Credenciales comprometidas bajo control</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🚨 Top 5 Mayor Exposición al Riesgo</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="color:#ff4444;background:#ff4444"></div><div class="tl-content"><div class="tl-time">IES-60 <span class="risk-critical">F · 44</span></div><div class="tl-desc">Sin parches. Credenciales expuestas. RTO &gt;72h</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#ff4444;background:#ee3333"></div><div class="tl-content"><div class="tl-time">IES-59 <span class="risk-critical">F · 46</span></div><div class="tl-desc">Certificados autofirmados. Sin política CSP</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#ff6060;background:#dd4444"></div><div class="tl-content"><div class="tl-time">IES-58 <span class="risk-critical">F · 47</span></div><div class="tl-desc">Alta densidad de issues críticas sin resolver</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#ff8800;background:#ee7700"></div><div class="tl-content"><div class="tl-time">IES-57 <span class="risk-critical">F · 48</span></div><div class="tl-desc">Parches caducados. Superficie pública expuesta</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#ff8800;background:#dd6600"></div><div class="tl-content"><div class="tl-time">IES-56 <span class="risk-critical">F · 49</span></div><div class="tl-desc">Credenciales comprometidas activas</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📈 Distribución de Scores (64 IES)</div>
+        <div class="chart-wrap-sm"><canvas id="scoreHist"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB 2: SIMULADOR ===================== -->
+  <div id="tab-simulator" class="tab-content">
+
+    <div class="section-label">Configuración del Escenario de Crisis</div>
+
+    <div class="scenario-selector">
+      <button class="scenario-btn active" id="scen-ransomware" onclick="setScenario('ransomware')">🔒 Ransomware Masivo</button>
+      <button class="scenario-btn danger" id="scen-filtracion" onclick="setScenario('filtracion')">💀 Filtración Masiva de Datos</button>
+      <button class="scenario-btn" id="scen-ddos" onclick="setScenario('ddos')">⚡ Ataque DDoS Coordinado</button>
+      <button class="scenario-btn" id="scen-apt" onclick="setScenario('apt')">🕵️ APT — Acceso Persistente</button>
+    </div>
+
+    <div class="grid-52">
+      <div class="card">
+        <div class="card-title">⚙️ Parámetros del Simulador</div>
+        <div class="slider-group">
+          <div class="slider-row">
+            <span class="slider-label">Nº de IES Afectadas</span>
+            <input type="range" min="1" max="64" value="25" id="sl-ies" oninput="updateSim()"/>
+            <span class="slider-val" id="sv-ies">25</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Score Promedio Afectadas</span>
+            <input type="range" min="44" max="89" value="62" id="sl-score" oninput="updateSim()"/>
+            <span class="slider-val" id="sv-score">62</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">% Issues Activas Críticas</span>
+            <input type="range" min="5" max="60" value="28" id="sl-issues" oninput="updateSim()"/>
+            <span class="slider-val" id="sv-issues">28%</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Días sin Parchear (Promedio)</span>
+            <input type="range" min="30" max="365" value="120" id="sl-patch" oninput="updateSim()"/>
+            <span class="slider-val" id="sv-patch">120d</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">Registros Personales Expuestos</span>
+            <input type="range" min="1000" max="500000" step="1000" value="80000" id="sl-records" oninput="updateSim()"/>
+            <span class="slider-val" id="sv-records">80K</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-label">% Cobertura Backup Actual</span>
+            <input type="range" min="0" max="100" value="35" id="sl-backup" oninput="updateSim()"/>
+            <span class="slider-val" id="sv-backup">35%</span>
+          </div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-title" id="sim-scenario-title">🔒 Escenario: Ransomware Masivo</div>
+          <div class="insight-text" id="sim-scenario-desc">Cifrado de sistemas críticos en múltiples IES simultáneamente. Basado en score &lt;70, issues de parches sin resolver y credenciales comprometidas activas.</div>
+        </div>
+      </div>
+
+      <div class="card" id="sim-results">
+        <div class="card-title">📊 Proyección del Impacto</div>
+        <div style="display:flex;flex-direction:column;gap:10px" id="sim-metrics">
+          <div>
+            <div style="font-size:9px;color:#e2e3d566;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">Impacto Financiero Estimado</div>
+            <div style="font-size:26px;font-weight:800;color:#ff6060" id="sim-financial">$42.8M</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#e2e3d566;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">Tiempo de Recuperación Promedio</div>
+            <div style="font-size:20px;font-weight:800;color:#ffcc44" id="sim-rto">34 días</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#e2e3d566;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">Riesgo Reputacional</div>
+            <div style="font-size:20px;font-weight:800;color:#ff8800" id="sim-rep">SEVERO</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#e2e3d566;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">IES con Recuperación &gt;72h</div>
+            <div style="font-size:20px;font-weight:800;color:#ff4444" id="sim-critical-ies">18</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#e2e3d566;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">Costo Preventivo Estimado</div>
+            <div style="font-size:20px;font-weight:800;color:#00e676" id="sim-preventive">$3.2M</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#e2e3d566;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px">ROI de Prevención</div>
+            <div style="font-size:20px;font-weight:800;color:#29c6ff" id="sim-roi">13.4x</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📊 Impacto por Nivel de Score vs Escenario Actual</div>
+        <div class="chart-wrap-lg"><canvas id="impactByGrade"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">⏱️ Tiempo Recuperación por Calificación (días)</div>
+        <div class="chart-wrap-lg"><canvas id="rtoChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB 3: FINANCIERO ===================== -->
+  <div id="tab-financiero" class="tab-content">
+
+    <div class="grid-4" style="margin-bottom:14px">
+      <div class="kpi-card red">
+        <div class="kpi-label">Total Multas Proyectadas</div>
+        <div class="kpi-value red">$49.3M</div>
+        <div class="kpi-sub">21 IES con evaluación GEANT</div>
+      </div>
+      <div class="kpi-card amber">
+        <div class="kpi-label">Media por IES</div>
+        <div class="kpi-value amber">$2.35M</div>
+        <div class="kpi-sub">Mediana: $141K</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Mayor Exposición</div>
+        <div class="kpi-value red">$17.3M</div>
+        <div class="kpi-sub">IES-UCACUE (madurez 44%)</div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-label">Volatilidad Financiera</div>
+        <div class="kpi-value" style="color:#ab47bc">194%</div>
+        <div class="kpi-sub">Alta dispersión de riesgo</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">💰 Desglose Multas por IES (Top 12)</div>
+        <div class="chart-wrap-xl"><canvas id="finesChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Infracciones Leves vs Graves (Top 12 IES)</div>
+        <div class="chart-wrap-xl"><canvas id="infractionsChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card" style="grid-column:1/3">
+        <div class="card-title">🎯 Concentración de Riesgo Financiero</div>
+        <table class="data-table">
+          <thead><tr><th>IES</th><th>Madurez</th><th>Infracc. Leves</th><th>Infracc. Graves</th><th>Multa Total</th><th>vs Media</th><th>Nivel</th></tr></thead>
+          <tbody>
+            <tr><td>IES-UCACUE</td><td><span style="color:#ff6060">44%</span></td><td>15</td><td>19</td><td style="color:#ff6060;font-weight:700">$17,290,567</td><td style="color:#ff6060">7.4x</td><td><span class="risk-critical">CRÍTICO</span></td></tr>
+            <tr><td>IES-UDA</td><td><span style="color:#ff8800">53%</span></td><td>18</td><td>29</td><td style="color:#ff6060;font-weight:700">$9,456,196</td><td style="color:#ff6060">4.0x</td><td><span class="risk-critical">CRÍTICO</span></td></tr>
+            <tr><td>IES-UPS</td><td><span style="color:#ff8800">59%</span></td><td>12</td><td>16</td><td style="color:#ff8800;font-weight:700">$8,138,645</td><td style="color:#ff8800">3.5x</td><td><span class="risk-critical">CRÍTICO</span></td></tr>
+            <tr><td>IES-PUCE</td><td><span style="color:#ffcc44">68%</span></td><td>11</td><td>10</td><td style="color:#ff8800;font-weight:700">$7,499,641</td><td style="color:#ff8800">3.2x</td><td><span class="risk-high">ALTO</span></td></tr>
+            <tr><td>IES-ESPAM</td><td><span style="color:#ff4444">21%</span></td><td>20</td><td>28</td><td style="color:#ffcc44;font-weight:700">$4,452,364</td><td style="color:#ffcc44">1.9x</td><td><span class="risk-high">ALTO</span></td></tr>
+            <tr><td>IES-USGP</td><td><span style="color:#ff4444">38%</span></td><td>17</td><td>23</td><td style="color:#e2e3d5">$740,254</td><td style="color:#e2e3d566">Bajo</td><td><span class="risk-medium">MODERADO</span></td></tr>
+            <tr><td>IES-SUDAMER.</td><td><span style="color:#ff4444">19%</span></td><td>21</td><td>24</td><td style="color:#e2e3d5">$353,194</td><td style="color:#e2e3d566">Bajo</td><td><span class="risk-medium">MODERADO</span></td></tr>
+            <tr><td>IES-UTELVT</td><td><span style="color:#ffcc44">40%</span></td><td>18</td><td>26</td><td style="color:#e2e3d5">$265,818</td><td style="color:#e2e3d566">Bajo</td><td><span class="risk-low">BAJO</span></td></tr>
+            <tr><td>IES-ESPE</td><td><span style="color:#29c6ff">73%</span></td><td>13</td><td>18</td><td style="color:#e2e3d5">$109,997</td><td style="color:#e2e3d566">Bajo</td><td><span class="risk-low">BAJO</span></td></tr>
+            <tr><td>IES-ESPOL</td><td><span style="color:#00e676">83%</span></td><td>7</td><td>0</td><td style="color:#00e676">$3,619</td><td style="color:#e2e3d566">Mínimo</td><td><span class="risk-safe">SEGURO</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">📈 Relación Madurez → Multas</div>
+        <div class="chart-wrap-sm" style="height:140px;max-height:140px"><canvas id="matFinesCorr"></canvas></div>
+        <div class="insight-box danger" style="margin-top:8px">
+          <div class="insight-title danger">Hallazgo</div>
+          <div class="insight-text">4 IES concentran $42.4M (86%) del riesgo total. Madurez baja + alto volumen de datos personales = multiplicador de riesgo financiero extremo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB 4: REMEDIACIÓN ===================== -->
+  <div id="tab-remediacion" class="tab-content">
+
+    <div class="grid-4" style="margin-bottom:14px">
+      <div class="kpi-card red">
+        <div class="kpi-label">Costo Remediación Post-Crisis</div>
+        <div class="kpi-value red">$42.8M</div>
+        <div class="kpi-sub">Escenario ransomware — 25 IES</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Inversión Preventiva Estimada</div>
+        <div class="kpi-value green">$3.2M</div>
+        <div class="kpi-sub">Para alcanzar Score ≥80 en D/F</div>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label">ROI de Prevención</div>
+        <div class="kpi-value blue">13.4x</div>
+        <div class="kpi-sub">Cada $1 invertido evita $13.4</div>
+      </div>
+      <div class="kpi-card amber">
+        <div class="kpi-label">Ahorro Neto Proyectado</div>
+        <div class="kpi-value amber">$39.6M</div>
+        <div class="kpi-sub">Con plan preventivo completo</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📊 Costo Remediación vs Inversión Preventiva por Nivel</div>
+        <div class="chart-wrap-xl"><canvas id="remVsPrevChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎯 Plan de Inversión Preventiva Priorizada</div>
+        <div style="margin-bottom:10px">
+          <div class="section-label" style="font-size:9px;border:none;padding:0;margin-bottom:8px">PRIORIDAD 1 — IES Grade F (12 IES)</div>
+          <div class="prog-row"><span class="prog-label">Parches</span><div class="prog-bar-bg"><div class="prog-bar" style="width:85%;background:linear-gradient(90deg,#ff4444,#ff8800)"></div></div><span class="prog-val" style="color:#ff6060">85%</span></div>
+          <div class="prog-row"><span class="prog-label">Credenciales</span><div class="prog-bar-bg"><div class="prog-bar" style="width:78%;background:linear-gradient(90deg,#ff8800,#ffcc44)"></div></div><span class="prog-val" style="color:#ff8800">78%</span></div>
+          <div class="prog-row"><span class="prog-label">Certs TLS</span><div class="prog-bar-bg"><div class="prog-bar" style="width:65%;background:linear-gradient(90deg,#ffcc44,#ffee88)"></div></div><span class="prog-val" style="color:#ffcc44">65%</span></div>
+          <div class="prog-row"><span class="prog-label">CSP/HSTS</span><div class="prog-bar-bg"><div class="prog-bar" style="width:55%;background:linear-gradient(90deg,#29c6ff,#273dd5)"></div></div><span class="prog-val" style="color:#29c6ff">55%</span></div>
+        </div>
+        <div style="margin-bottom:10px">
+          <div class="section-label" style="font-size:9px;border:none;padding:0;margin-bottom:8px">PRIORIDAD 2 — IES Grade D (13 IES)</div>
+          <div class="prog-row"><span class="prog-label">Parches</span><div class="prog-bar-bg"><div class="prog-bar" style="width:60%;background:linear-gradient(90deg,#ff8800,#ffcc44)"></div></div><span class="prog-val" style="color:#ff8800">60%</span></div>
+          <div class="prog-row"><span class="prog-label">Vuln. críticas</span><div class="prog-bar-bg"><div class="prog-bar" style="width:52%;background:linear-gradient(90deg,#ffcc44,#ffee88)"></div></div><span class="prog-val" style="color:#ffcc44">52%</span></div>
+          <div class="prog-row"><span class="prog-label">Madurez digital</span><div class="prog-bar-bg"><div class="prog-bar" style="width:45%;background:linear-gradient(90deg,#29c6ff,#273dd5)"></div></div><span class="prog-val" style="color:#29c6ff">45%</span></div>
+        </div>
+        <div class="insight-box">
+          <div class="insight-title">💡 Recomendación Ejecutiva</div>
+          <div class="insight-text">Priorizar inversión en las 25 IES con Grade D/F. Un plan preventivo de $3.2M reduce el riesgo financiero total en $39.6M — equivalente a 1 dólar invertido ahorrando 13 en remediación.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">💸 Desglose Costo de Recuperación</div>
+        <div class="chart-wrap-sm"><canvas id="recoveryCostDonut"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📅 Horizonte de Recuperación por Fase</div>
+        <div class="timeline" style="gap:8px">
+          <div class="tl-item"><div class="tl-dot" style="color:#ff4444;background:#ff4444"></div><div class="tl-content"><div class="tl-time">0-72h — Contención Inmediata</div><div class="tl-desc">Aislamiento de sistemas, activación IR, notificación ARCOTEL. Costo: 8% total</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#ff8800;background:#ff8800"></div><div class="tl-content"><div class="tl-time">3-15 días — Respuesta Activa</div><div class="tl-desc">Análisis forense, restauración parcial, comunicación pública. Costo: 22%</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#ffcc44;background:#ffcc44"></div><div class="tl-content"><div class="tl-time">15-60 días — Remediación</div><div class="tl-desc">Parches masivos, reconstrucción de sistemas, auditorías. Costo: 35%</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#29c6ff;background:#29c6ff"></div><div class="tl-content"><div class="tl-time">2-6 meses — Normativa/Legal</div><div class="tl-desc">Multas LOPDP, litigios, sanciones regulatorias. Costo: 35%</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔑 Inversión Preventiva por Acción</div>
+        <div class="chart-wrap-sm"><canvas id="preventiveActions"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB 5: VULNERABILIDADES ===================== -->
+  <div id="tab-vulnerabilidades" class="tab-content">
+
+    <div class="grid-4" style="margin-bottom:14px">
+      <div class="kpi-card red">
+        <div class="kpi-label">Issues Críticas/Altas</div>
+        <div class="kpi-value red">956</div>
+        <div class="kpi-sub">Service vuln + patching critico</div>
+      </div>
+      <div class="kpi-card amber">
+        <div class="kpi-label">Issues Medias</div>
+        <div class="kpi-value amber">471</div>
+        <div class="kpi-sub">Activas sin remediación</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Issues Resueltas</div>
+        <div class="kpi-value green">995</div>
+        <div class="kpi-sub">Solo 12.7% del total</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Credenciales Comprometidas</div>
+        <div class="kpi-value red">325</div>
+        <div class="kpi-sub">Vector #1 de acceso inicial</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🎯 Top 13 Issues por Frecuencia</div>
+        <div class="chart-wrap-xl"><canvas id="topIssuesChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Distribución por Severidad y Estado</div>
+        <div class="chart-wrap" style="height:150px;max-height:150px"><canvas id="severityChart"></canvas></div>
+        <div style="margin-top:10px">
+          <div class="card-title">Estado de Issues</div>
+          <div class="chart-wrap-sm" style="height:100px;max-height:100px"><canvas id="statusChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card" style="grid-column:1/3">
+        <div class="card-title">🔥 Mapa de Calor: Vector de Ataque × Severidad</div>
+        <table class="data-table" style="font-size:10px">
+          <thead><tr><th>Vector</th><th>Cantidad</th><th>Severidad</th><th>% Activo</th><th>Impacto Crisis</th><th>Prioridad</th></tr></thead>
+          <tbody>
+            <tr><td>Vulnerabilidades de servicio críticas</td><td>419</td><td><div class="heat-cell heat-critical">CRÍTICO</div></td><td>100%</td><td>Ejecución remota / ransomware</td><td><span class="risk-critical">INMEDIATA</span></td></tr>
+            <tr><td>Vulnerabilidades de servicio altas</td><td>537</td><td><div class="heat-cell heat-high">ALTO</div></td><td>100%</td><td>Escalada de privilegios</td><td><span class="risk-critical">INMEDIATA</span></td></tr>
+            <tr><td>Parches críticos sin aplicar</td><td>126</td><td><div class="heat-cell heat-critical">CRÍTICO</div></td><td>100%</td><td>Explotación conocida (CVE)</td><td><span class="risk-critical">INMEDIATA</span></td></tr>
+            <tr><td>Credenciales comprometidas</td><td>325</td><td><div class="heat-cell heat-critical">CRÍTICO</div></td><td>100%</td><td>Acceso inicial / pivoting</td><td><span class="risk-critical">INMEDIATA</span></td></tr>
+            <tr><td>Parches altos sin aplicar</td><td>450</td><td><div class="heat-cell heat-high">ALTO</div></td><td>100%</td><td>Movimiento lateral</td><td><span class="risk-high">URGENTE</span></td></tr>
+            <tr><td>Certificados autofirmados</td><td>321</td><td><div class="heat-cell heat-medium">MEDIO</div></td><td>100%</td><td>MITM / phishing interno</td><td><span class="risk-high">URGENTE</span></td></tr>
+            <tr><td>Sin política CSP</td><td>224</td><td><div class="heat-cell heat-medium">MEDIO</div></td><td>100%</td><td>XSS / inyección de contenido</td><td><span class="risk-medium">MODERADA</span></td></tr>
+            <tr><td>HSTS incorrecto</td><td>134</td><td><div class="heat-cell heat-medium">MEDIO</div></td><td>100%</td><td>Downgrade HTTPS</td><td><span class="risk-medium">MODERADA</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title">⚡ Parches sin Aplicar (Impacto Acumulado)</div>
+        <div class="chart-wrap-sm"><canvas id="patchChart"></canvas></div>
+        <div class="insight-box danger" style="margin-top:8px">
+          <div class="insight-title danger">🔴 Crítico</div>
+          <div class="insight-text">1,003 issues de parches sin resolver en el ecosistema. En un ataque de ransomware, cada vulnerabilidad sin parchear es una puerta abierta.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB 6: RECUPERACIÓN ===================== -->
+  <div id="tab-recuperacion" class="tab-content">
+
+    <div class="grid-4" style="margin-bottom:14px">
+      <div class="kpi-card red">
+        <div class="kpi-label">RTO Promedio (Grade F)</div>
+        <div class="kpi-value red">72h+</div>
+        <div class="kpi-sub">Sin backup confiable</div>
+      </div>
+      <div class="kpi-card amber">
+        <div class="kpi-label">RTO Promedio (Grade D)</div>
+        <div class="kpi-value amber">48h</div>
+        <div class="kpi-sub">Recuperación parcial</div>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label">RTO Promedio (Grade A)</div>
+        <div class="kpi-value blue">8h</div>
+        <div class="kpi-sub">Con controles maduros</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">IES con Plan de Continuidad</div>
+        <div class="kpi-value green">~30%</div>
+        <div class="kpi-sub">Estimado por madurez digital</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">⏱️ RTO Estimado por Tipo de Incidente y Calificación</div>
+        <div class="chart-wrap-xl"><canvas id="rtoMatrix"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📈 Línea de Recuperación Operativa — Ransomware (% Operatividad)</div>
+        <div class="chart-wrap-xl"><canvas id="recoveryLine"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">🏗️ Factores de Riesgo Operativo</div>
+        <div class="timeline" style="gap:8px;margin-top:6px">
+          <div class="tl-item"><div class="tl-dot" style="color:#ff4444;background:#ff4444"></div><div class="tl-content"><div class="tl-time">Sin plan de backup verificado</div><div class="tl-desc">~65% de IES Grade D/F no tienen backup probado. RTO se extiende a semanas.</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#ff8800;background:#ff8800"></div><div class="tl-content"><div class="tl-time">Sin plan de continuidad (BCP)</div><div class="tl-desc">Estimado 70% de IES sin BCP formal. Impacto: descoordinación en respuesta.</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#ffcc44;background:#ffcc44"></div><div class="tl-content"><div class="tl-time">Issues de parches activas</div><div class="tl-desc">1,003 alertas de parches sin resolver facilitan re-infección durante recuperación.</div></div></div>
+          <div class="tl-item"><div class="tl-dot" style="color:#29c6ff;background:#29c6ff"></div><div class="tl-content"><div class="tl-time">Credenciales comprometidas</div><div class="tl-desc">325 credenciales activas expuestas — el atacante puede mantener persistencia post-respuesta.</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">📊 Riesgo Reputacional por Nivel de Score</div>
+        <div class="chart-wrap-sm"><canvas id="repRiskChart"></canvas></div>
+        <div class="insight-box warn" style="margin-top:8px">
+          <div class="insight-title warn">⚠ Riesgo Reputacional</div>
+          <div class="insight-text">Una filtración masiva en IES con Score F expone datos de miles de estudiantes y docentes. El daño reputacional puede durar 2-5 años y afectar matrícula, acreditaciones y financiamiento.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎯 Puntuación de Resiliencia por Segmento</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+          <div><div class="prog-row"><span class="prog-label">Grade A (11)</span><div class="prog-bar-bg"><div class="prog-bar" style="width:90%;background:linear-gradient(90deg,#00e676,#00c664)"></div></div><span class="prog-val" style="color:#00e676">90%</span></div></div>
+          <div><div class="prog-row"><span class="prog-label">Grade B (15)</span><div class="prog-bar-bg"><div class="prog-bar" style="width:72%;background:linear-gradient(90deg,#29c6ff,#0099cc)"></div></div><span class="prog-val" style="color:#29c6ff">72%</span></div></div>
+          <div><div class="prog-row"><span class="prog-label">Grade C (13)</span><div class="prog-bar-bg"><div class="prog-bar" style="width:52%;background:linear-gradient(90deg,#ffcc44,#ffaa22)"></div></div><span class="prog-val" style="color:#ffcc44">52%</span></div></div>
+          <div><div class="prog-row"><span class="prog-label">Grade D (13)</span><div class="prog-bar-bg"><div class="prog-bar" style="width:32%;background:linear-gradient(90deg,#ff8800,#ff6600)"></div></div><span class="prog-val" style="color:#ff8800">32%</span></div></div>
+          <div><div class="prog-row"><span class="prog-label">Grade F (12)</span><div class="prog-bar-bg"><div class="prog-bar" style="width:12%;background:linear-gradient(90deg,#ff4444,#cc2222)"></div></div><span class="prog-val" style="color:#ff4444">12%</span></div></div>
+        </div>
+        <div class="insight-box" style="margin-top:10px">
+          <div class="insight-title">Resiliencia Ecosistema</div>
+          <div class="insight-text">El 39% del ecosistema tiene una resiliencia operativa menor al 32%. Un ataque coordinado podría dejar sin servicio a múltiples IES simultáneamente por semanas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-text">CEDIA — Centro de Operaciones de Seguridad</span>
+    <div class="footer-dot"></div>
+    <span class="footer-text">Simulación What-If basada en datos reales del ecosistema IES Ecuador • Periodo 2026-01~2026-03</span>
+    <div class="footer-dot"></div>
+    <span class="footer-text">Datos anonimizados conforme a política institucional</span>
+  </div>
+</div>
+
+<script>
+// ============== HELPERS ==============
+const CJ = Chart.defaults;
+CJ.color = '#e2e3d5aa';
+CJ.font.family = 'Montserrat, Arial, sans-serif';
+CJ.font.size = 10;
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ============== CHART CONFIGS ==============
+const gridColor = '#ffffff10';
+const tickColor = '#e2e3d566';
+
+function barOptions(stacked=false, horizontal=false) {
+  return {
+    responsive: true, maintainAspectRatio: false,
+    indexAxis: horizontal ? 'y' : 'x',
+    plugins: { legend: { display: false }, tooltip: { mode: 'index' } },
+    scales: {
+      x: { stacked, grid: { color: gridColor }, ticks: { color: tickColor, font:{size:9} } },
+      y: { stacked, grid: { color: gridColor }, ticks: { color: tickColor, font:{size:9} } }
+    }
+  };
+}
+
+// ============== TAB 1 CHARTS ==============
+
+// Grade Donut
+new Chart(document.getElementById('gradeDonut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['A', 'B', 'C', 'D', 'F'],
+    datasets: [{ data: [11,15,13,13,12], backgroundColor: ['#00e676','#29c6ff','#ffcc44','#ff8800','#ff4444'], borderWidth: 0, hoverOffset: 4 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '65%',
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} IES` } } }
+  }
+});
+
+// Scatter Madurez vs Multas
+const scatterData = [
+  {x:87,y:68929},{x:83,y:3619},{x:81,y:32669},{x:81,y:57102},{x:77,y:9284},
+  {x:73,y:38196},{x:73,y:109997},{x:68,y:7499641},{x:59,y:8138645},{x:56,y:141057},
+  {x:56,y:111320},{x:53,y:9456195},{x:47,y:151861},{x:44,y:17290567},{x:43,y:109947},
+  {x:40,y:265818},{x:38,y:740254},{x:32,y:99565},{x:23,y:224665},{x:21,y:4452364},{x:19,y:353194}
+];
+new Chart(document.getElementById('maturityScatter'), {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'IES', data: scatterData,
+      backgroundColor: scatterData.map(d => d.y > 5000000 ? '#ff4444cc' : d.y > 1000000 ? '#ff8800cc' : '#29c6ff88'),
+      pointRadius: scatterData.map(d => d.y > 5000000 ? 8 : d.y > 1000000 ? 6 : 4),
+      pointHoverRadius: 8
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => `Madurez: ${ctx.raw.x}% | Multa: $${ctx.raw.y.toLocaleString()}` } } },
+    scales: {
+      x: { title: { display: true, text: 'Madurez Digital (%)', color:'#e2e3d566', font:{size:9} }, grid:{color:gridColor}, ticks:{color:tickColor} },
+      y: { type: 'logarithmic', title: { display: true, text: 'Multa Total ($)', color:'#e2e3d566', font:{size:9} }, grid:{color:gridColor}, ticks:{color:tickColor, callback: v => '$'+v.toLocaleString()} }
+    }
+  }
+});
+
+// Score Histogram
+const scores = [100,97,96,95,95,95,94,92,92,91,90,89,89,88,87,87,87,86,85,85,84,84,82,81,81,80,78,78,78,77,77,74,74,74,73,72,71,71,70,69,68,68,64,64,64,63,62,62,62,61,61,60,59,58,58,55,55,54,49,49,48,47,46,44];
+const bins = [[90,100],[80,89],[70,79],[60,69],[44,59]];
+const binLabels = ['A (90-100)','B (80-89)','C (70-79)','D (60-69)','F (<60)'];
+const binColors = ['#00e676','#29c6ff','#ffcc44','#ff8800','#ff4444'];
+const binCounts = bins.map(([lo,hi]) => scores.filter(s => s >= lo && s <= hi).length);
+new Chart(document.getElementById('scoreHist'), {
+  type: 'bar',
+  data: { labels: binLabels, datasets: [{ data: binCounts, backgroundColor: binColors, borderRadius: 4, borderWidth: 0 }] },
+  options: { ...barOptions(), plugins: { legend:{display:false}, tooltip:{callbacks:{label:ctx=>`${ctx.raw} IES`}} } }
+});
+
+// ============== TAB 2 — SIMULATOR ==============
+const scenarios = {
+  ransomware: {
+    title: '🔒 Escenario: Ransomware Masivo',
+    desc: 'Cifrado de sistemas críticos en múltiples IES. Basado en score <70, issues de parches sin resolver y credenciales comprometidas activas.',
+    costMult: 1.7, rtoMult: 1.2, repLevel: 'SEVERO', btnId: 'scen-ransomware'
+  },
+  filtracion: {
+    title: '💀 Escenario: Filtración Masiva de Datos',
+    desc: 'Exfiltración masiva de datos personales de estudiantes y docentes. Exposición pública + obligación de notificación bajo LOPDP Ecuador.',
+    costMult: 2.2, rtoMult: 0.9, repLevel: 'CATASTRÓFICO', btnId: 'scen-filtracion'
+  },
+  ddos: {
+    title: '⚡ Escenario: DDoS Coordinado',
+    desc: 'Ataque de denegación de servicio coordinado durante periodo de matrículas. Impacto en disponibilidad de plataformas académicas.',
+    costMult: 0.6, rtoMult: 0.4, repLevel: 'MODERADO', btnId: 'scen-ddos'
+  },
+  apt: {
+    title: '🕵️ Escenario: APT — Acceso Persistente',
+    desc: 'Actor avanzado con acceso persistente no detectado. Exfiltración silenciosa de propiedad intelectual e investigación.',
+    costMult: 1.4, rtoMult: 2.1, repLevel: 'SEVERO', btnId: 'scen-apt'
+  }
+};
+
+let currentScenario = 'ransomware';
+
+function setScenario(sc) {
+  currentScenario = sc;
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active','danger'));
+  const btn = document.getElementById(scenarios[sc].btnId);
+  btn.classList.add('active');
+  if (sc === 'filtracion') btn.classList.add('danger');
+  document.getElementById('sim-scenario-title').textContent = scenarios[sc].title;
+  document.getElementById('sim-scenario-desc').textContent = scenarios[sc].desc;
+  updateSim();
+}
+
+function updateSim() {
+  const ies = parseInt(document.getElementById('sl-ies').value);
+  const score = parseInt(document.getElementById('sl-score').value);
+  const issues = parseInt(document.getElementById('sl-issues').value);
+  const patch = parseInt(document.getElementById('sl-patch').value);
+  const records = parseInt(document.getElementById('sl-records').value);
+  const backup = parseInt(document.getElementById('sl-backup').value);
+
+  document.getElementById('sv-ies').textContent = ies;
+  document.getElementById('sv-score').textContent = score;
+  document.getElementById('sv-issues').textContent = issues + '%';
+  document.getElementById('sv-patch').textContent = patch + 'd';
+  document.getElementById('sv-records').textContent = records >= 1000 ? Math.round(records/1000)+'K' : records;
+  document.getElementById('sv-backup').textContent = backup + '%';
+
+  const sc = scenarios[currentScenario];
+  const riskFactor = (1 - score/100) * (1 + issues/100) * (1 + patch/365) * (1 - backup/200);
+  const baseFinancial = ies * 1500000 * riskFactor * sc.costMult;
+  const rto = Math.round(8 + (100-score)/100*60 * sc.rtoMult * (1 - backup/150));
+  const criticalIes = Math.round(ies * (1 - score/100) * 0.8);
+  const preventive = baseFinancial * 0.075;
+  const roi = baseFinancial / preventive;
+
+  document.getElementById('sim-financial').textContent = '$' + formatM(baseFinancial);
+  document.getElementById('sim-rto').textContent = rto > 30 ? Math.round(rto) + ' días' : rto + 'h';
+  document.getElementById('sim-rep').textContent = sc.repLevel;
+  document.getElementById('sim-critical-ies').textContent = criticalIes;
+  document.getElementById('sim-preventive').textContent = '$' + formatM(preventive);
+  document.getElementById('sim-roi').textContent = roi.toFixed(1) + 'x';
+}
+
+function formatM(v) {
+  if (v >= 1e9) return (v/1e9).toFixed(1)+'B';
+  if (v >= 1e6) return (v/1e6).toFixed(1)+'M';
+  if (v >= 1e3) return (v/1e3).toFixed(0)+'K';
+  return Math.round(v).toString();
+}
+
+updateSim();
+
+// Impact by Grade
+new Chart(document.getElementById('impactByGrade'), {
+  type: 'bar',
+  data: {
+    labels: ['Grade A','Grade B','Grade C','Grade D','Grade F'],
+    datasets: [
+      { label: 'Costo Remediación ($M)', data: [0.8,2.5,6.2,12.4,21.0], backgroundColor: '#ff4444cc', borderRadius: 4 },
+      { label: 'Costo Preventivo ($M)', data: [0.1,0.3,0.6,1.2,1.8], backgroundColor: '#00e676cc', borderRadius: 4 }
+    ]
+  },
+  options: { ...barOptions(), plugins: { legend:{display:true, labels:{color:'#e2e3d5aa',font:{size:9}}}, tooltip:{mode:'index'} } }
+});
+
+// RTO Chart
+new Chart(document.getElementById('rtoChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Grade A','Grade B','Grade C','Grade D','Grade F'],
+    datasets: [
+      { label: 'Ransomware (días)', data: [1,3,8,15,35], backgroundColor: '#ff4444cc', borderRadius: 3 },
+      { label: 'Filtración (días)', data: [3,7,14,30,60], backgroundColor: '#ff8800cc', borderRadius: 3 },
+      { label: 'DDoS (días)', data: [0.1,0.3,1,3,5], backgroundColor: '#ffcc44cc', borderRadius: 3 }
+    ]
+  },
+  options: { ...barOptions(), plugins: { legend:{display:true, labels:{color:'#e2e3d5aa',font:{size:9}}}, tooltip:{mode:'index'} } }
+});
+
+// ============== TAB 3 CHARTS ==============
+
+// Fines Chart
+new Chart(document.getElementById('finesChart'), {
+  type: 'bar',
+  data: {
+    labels: ['IES-UCACUE','IES-UDA','IES-UPS','IES-PUCE','IES-ESPAM','IES-USGP','IES-SUDAM.','IES-UTELVT','IES-UPEC','IES-ARMADA','IES-MCUENCA','IES-ESPE'],
+    datasets: [{ data: [17290567,9456196,8138645,7499641,4452364,740254,353194,265818,224666,151861,141058,109997],
+      backgroundColor: ['#ff4444','#ff4444','#ff4444','#ff6060','#ff8800','#ffaa44','#ffcc44','#ffdd66','#e2e3d5aa','#e2e3d5aa','#29c6ff88','#29c6ff'],
+      borderRadius: 3, borderWidth: 0 }]
+  },
+  options: { ...barOptions(false,true),
+    plugins: { legend:{display:false}, tooltip:{callbacks:{label:ctx=>'$'+ctx.raw.toLocaleString()}} },
+    scales: {
+      x: { grid:{color:gridColor}, ticks:{color:tickColor, callback: v=>'$'+formatM(v)} },
+      y: { grid:{color:gridColor}, ticks:{color:tickColor, font:{size:9}} }
+    }
+  }
+});
+
+// Infractions Chart
+new Chart(document.getElementById('infractionsChart'), {
+  type: 'bar',
+  data: {
+    labels: ['UCACUE','UDA','ESPAM','USGP','SUDAM.','UTELVT','UPEC','ARMADA','MCUENCA','PUCE','UPS','ESPE'],
+    datasets: [
+      { label: 'Leves', data: [15,18,20,17,21,18,22,19,18,11,12,13], backgroundColor: '#ffcc44cc', borderRadius: [3,0,0,3], borderWidth: 0 },
+      { label: 'Graves', data: [19,29,28,23,24,26,26,27,17,10,16,18], backgroundColor: '#ff4444cc', borderRadius: [0,3,3,0], borderWidth: 0 }
+    ]
+  },
+  options: { ...barOptions(true),
+    plugins: { legend:{display:true, labels:{color:'#e2e3d5aa',font:{size:9}}}, tooltip:{mode:'index'} }
+  }
+});
+
+// Correlation Chart (simplified line)
+new Chart(document.getElementById('matFinesCorr'), {
+  type: 'line',
+  data: {
+    labels: ['19%','21%','23%','32%','38%','40%','43%','44%','47%','53%','56%','59%','68%','73%','77%','81%','83%','87%'],
+    datasets: [{
+      data: [353194,4452364,224666,99565,740254,265818,109947,17290567,151861,9456195,141057,8138645,7499641,109997,9284,57102,3619,68929],
+      borderColor: '#29c6ff', backgroundColor: '#29c6ff22', borderWidth: 2,
+      pointBackgroundColor: d => d > 1000000 ? '#ff4444' : '#29c6ff',
+      fill: true, tension: 0.3, pointRadius: 4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend:{display:false} },
+    scales: {
+      x: { grid:{color:gridColor}, ticks:{color:tickColor, font:{size:8}} },
+      y: { type:'logarithmic', grid:{color:gridColor}, ticks:{color:tickColor, font:{size:8}, callback:v=>'$'+formatM(v)} }
+    }
+  }
+});
+
+// ============== TAB 4 CHARTS ==============
+
+new Chart(document.getElementById('remVsPrevChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Grade A\n(11 IES)','Grade B\n(15 IES)','Grade C\n(13 IES)','Grade D\n(13 IES)','Grade F\n(12 IES)'],
+    datasets: [
+      { label: 'Costo Remediación', data: [0.8,2.5,6.2,12.4,21.0], backgroundColor: '#ff444488', borderRadius: 4 },
+      { label: 'Inversión Preventiva', data: [0.06,0.19,0.47,0.93,1.58], backgroundColor: '#00e67688', borderRadius: 4 },
+      { label: 'Ahorro Neto', data: [0.74,2.31,5.73,11.47,19.42], backgroundColor: '#29c6ff66', borderRadius: 4 }
+    ]
+  },
+  options: { ...barOptions(),
+    plugins: { legend:{display:true, labels:{color:'#e2e3d5aa',font:{size:9}}}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: $${ctx.raw}M`}} },
+    scales: {
+      x: { grid:{color:gridColor}, ticks:{color:tickColor, font:{size:9}} },
+      y: { grid:{color:gridColor}, ticks:{color:tickColor, font:{size:9}, callback:v=>'$'+v+'M'} }
+    }
+  }
+});
+
+// Recovery Cost Donut
+new Chart(document.getElementById('recoveryCostDonut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Contención (8%)','Respuesta (22%)','Remediación (35%)','Legal/Multas (35%)'],
+    datasets: [{ data: [8,22,35,35], backgroundColor: ['#ff4444','#ff8800','#ffcc44','#ab47bc'], borderWidth: 0, hoverOffset: 4 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '60%',
+    plugins: { legend: { display: true, position:'right', labels:{color:'#e2e3d5aa',font:{size:9},boxWidth:10} } }
+  }
+});
+
+// Preventive Actions
+new Chart(document.getElementById('preventiveActions'), {
+  type: 'bar',
+  data: {
+    labels: ['Gestión Parches','MFA Credenciales','TLS/Certificados','SOC/SIEM','BCP/DR','Entrenamiento','CSP/HSTS'],
+    datasets: [{ data: [850,620,480,440,320,280,180],
+      backgroundColor: ['#ff4444cc','#ff6060cc','#ff8800cc','#ffaa44cc','#ffcc44cc','#29c6ffcc','#29c6ff88'],
+      borderRadius: 4, borderWidth: 0 }]
+  },
+  options: { ...barOptions(false,true),
+    plugins: { legend:{display:false}, tooltip:{callbacks:{label:ctx=>'$'+ctx.raw+'K'}} },
+    scales: {
+      x: { grid:{color:gridColor}, ticks:{color:tickColor, font:{size:9}, callback:v=>v+'K'} },
+      y: { grid:{color:gridColor}, ticks:{color:tickColor, font:{size:9}} }
+    }
+  }
+});
+
+// ============== TAB 5 CHARTS ==============
+
+new Chart(document.getElementById('topIssuesChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Vuln Servicio Med','Vuln Servicio Alt','Parche Alto','Vuln Servicio Crit','Parche Medio','Credenc. Comprom.','Cert Autofirmado','Sin política CSP','X-Content-Type','HSTS Incorrecto','Cert Sin Revoc.','Parche Crítico','SRI Inseguro'],
+    datasets: [{ data: [630,537,450,419,417,325,321,224,212,134,127,126,47],
+      backgroundColor: ctx => {
+        const v = ctx.raw;
+        if (v >= 500) return '#ff4444cc';
+        if (v >= 300) return '#ff8800cc';
+        if (v >= 200) return '#ffcc44cc';
+        return '#29c6ffcc';
+      },
+      borderRadius: 4, borderWidth: 0 }]
+  },
+  options: { ...barOptions(false,true),
+    plugins: { legend:{display:false} },
+    scales: {
+      x: { grid:{color:gridColor}, ticks:{color:tickColor} },
+      y: { grid:{color:gridColor}, ticks:{color:tickColor, font:{size:9}} }
+    }
+  }
+});
+
+new Chart(document.getElementById('severityChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Bajo (4,196)','Info (1,822)','Medio (471)','Alto (377)'],
+    datasets: [{ data: [4196,1822,471,377], backgroundColor: ['#29c6ff88','#e2e3d566','#ffcc44cc','#ff4444cc'], borderRadius: 4 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:9}}},y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:9}}}}
+  }
+});
+
+new Chart(document.getElementById('statusChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Activas (6,866)','Caducadas (6,012)','Resueltas (995)'],
+    datasets: [{ data: [6866,6012,995], backgroundColor: ['#ff4444cc','#ff8800cc','#00e676cc'], borderRadius: 4 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, indexAxis:'y',
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:9}}},y:{grid:{color:gridColor},ticks:{color:tickColor,font:{size:9}}}}
+  }
+});
+
+new Chart(document.getElementById('patchChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Parches Críticos','Parches Altos','Parches Medios'],
+    datasets: [{ data: [126,450,417], backgroundColor: ['#ff4444','#ff8800','#ffcc44'], borderWidth: 0 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, cutout:'60%',
+    plugins:{ legend:{display:true, position:'bottom', labels:{color:'#e2e3d5aa',font:{size:9},boxWidth:10}} }
+  }
+});
+
+// ============== TAB 6 CHARTS ==============
+
+new Chart(document.getElementById('rtoMatrix'), {
+  type: 'bar',
+  data: {
+    labels: ['A (90-100)','B (80-89)','C (70-79)','D (60-69)','F (<60)'],
+    datasets: [
+      { label: 'Ransomware', data: [8,24,72,120,240], backgroundColor: '#ff4444cc', borderRadius: 3 },
+      { label: 'Filtración', data: [24,48,120,240,480], backgroundColor: '#ff8800cc', borderRadius: 3 },
+      { label: 'DDoS', data: [2,6,12,24,48], backgroundColor: '#ffcc44cc', borderRadius: 3 },
+      { label: 'APT', data: [48,96,168,336,720], backgroundColor: '#ab47bccc', borderRadius: 3 }
+    ]
+  },
+  options: { ...barOptions(),
+    plugins:{ legend:{display:true, labels:{color:'#e2e3d5aa',font:{size:9}}}, tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.raw}h`}} },
+    scales:{
+      x:{grid:{color:gridColor},ticks:{color:tickColor}},
+      y:{grid:{color:gridColor},ticks:{color:tickColor,callback:v=>v+'h'}}
+    }
+  }
+});
+
+new Chart(document.getElementById('recoveryLine'), {
+  type: 'line',
+  data: {
+    labels: ['Día 0','Día 1','Día 3','Día 7','Día 14','Día 30','Día 60','Día 90'],
+    datasets: [
+      { label: 'Grade A', data: [100,60,80,95,100,100,100,100], borderColor: '#00e676', backgroundColor: '#00e67622', fill: true, tension: 0.4, borderWidth: 2 },
+      { label: 'Grade B/C', data: [100,20,40,65,80,90,95,100], borderColor: '#29c6ff', backgroundColor: '#29c6ff22', fill: true, tension: 0.4, borderWidth: 2 },
+      { label: 'Grade D', data: [100,5,15,30,50,65,80,90], borderColor: '#ff8800', backgroundColor: '#ff880022', fill: true, tension: 0.4, borderWidth: 2 },
+      { label: 'Grade F', data: [100,0,5,10,20,40,60,75], borderColor: '#ff4444', backgroundColor: '#ff444422', fill: true, tension: 0.4, borderWidth: 2 }
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:true, labels:{color:'#e2e3d5aa',font:{size:9}}}, tooltip:{mode:'index'} },
+    scales:{
+      x:{grid:{color:gridColor},ticks:{color:tickColor}},
+      y:{grid:{color:gridColor},min:0,max:100,ticks:{color:tickColor,callback:v=>v+'%'}}
+    }
+  }
+});
+
+new Chart(document.getElementById('repRiskChart'), {
+  type: 'radar',
+  data: {
+    labels: ['Exposición Datos','Duración Impacto','Alcance Público','Pérd. Confianza','Riesgo Regulatorio','Daño Matrícula'],
+    datasets: [
+      { label: 'Grade F', data: [95,90,85,90,88,80], borderColor: '#ff4444', backgroundColor: '#ff444422', borderWidth: 2, pointBackgroundColor: '#ff4444' },
+      { label: 'Grade A', data: [15,10,20,12,10,8], borderColor: '#00e676', backgroundColor: '#00e67622', borderWidth: 2, pointBackgroundColor: '#00e676' }
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:true, position:'bottom', labels:{color:'#e2e3d5aa',font:{size:9}}} },
+    scales:{ r:{ grid:{color:gridColor}, angleLines:{color:gridColor}, pointLabels:{color:'#e2e3d5aa',font:{size:8}},
+      ticks:{color:'#e2e3d566',backdropColor:'transparent',font:{size:7}}, min:0, max:100 } }
+  }
+});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
