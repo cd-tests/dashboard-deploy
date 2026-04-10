@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<div style="font-family:system-ui,sans-serif;padding:16px;max-width:1100px;margin:auto;line-height:1.3;">
+  <h2>Resumen visual de madurez 2026</h2>
+  <p class="ts">Basado en el informe de seguridad de la información y protección de datos. Los valores y niveles provienen del contexto disponible.</p>
+
+  <svg viewBox="0 0 1100 980" width="100%" role="img" aria-label="Dashboard de madurez 2026 con indicadores generales, dominios, protección de datos, controles de seguridad, benchmarking y riesgo económico.">
+    <style>
+      .title{font:700 20px system-ui,sans-serif;fill:var(--text-color,#111)}
+      .label{font:12px system-ui,sans-serif;fill:var(--text-color,#111)}
+      .small{font:11px system-ui,sans-serif;fill:var(--muted-text-color,#555)}
+      .value{font:700 18px system-ui,sans-serif;fill:var(--text-color,#111)}
+      .card{fill:var(--panel-bg,#fff);stroke:var(--border-color,#ddd);stroke-width:1;rx:12}
+      .grid{stroke:var(--border-color,#e5e7eb);stroke-width:1}
+      .axis{stroke:var(--text-color,#111);stroke-width:1}
+      .good{fill:#14b8a6}.mid{fill:#60a5fa}.warn{fill:#f59e0b}.bad{fill:#ef4444}.muted{fill:#9ca3af}
+    </style>
+
+    <!-- Top KPI cards -->
+    <rect class="card" x="20" y="20" width="200" height="90"/>
+    <text class="label" x="36" y="48">Calificación general</text>
+    <text class="value" x="36" y="82">63 · Nivel D</text>
+
+    <rect class="card" x="240" y="20" width="200" height="90"/>
+    <text class="label" x="256" y="48">Nivel de madurez</text>
+    <text class="value" x="256" y="82">54.93 · Nivel F</text>
+
+    <rect class="card" x="460" y="20" width="200" height="90"/>
+    <text class="label" x="476" y="48">Superficie pública</text>
+    <text class="value" x="476" y="82">73.29 · Nivel C</text>
+
+    <rect class="card" x="680" y="20" width="180" height="90"/>
+    <text class="label" x="696" y="48">Controles PDP</text>
+    <text class="value" x="696" y="82">61.66 · Nivel D</text>
+
+    <rect class="card" x="880" y="20" width="200" height="90"/>
+    <text class="label" x="896" y="48">Controles SI</text>
+    <text class="value" x="896" y="82">68.38 · Nivel D</text>
+
+    <!-- Domain chart -->
+    <rect class="card" x="20" y="130" width="520" height="340"/>
+    <text class="title" x="40" y="160">Dominios de gestión</text>
+    <text class="small" x="40" y="178">Escala 0–100. La mayor brecha está en evaluación del desempeño y mejora continua.</text>
+    <line class="axis" x1="180" y1="430" x2="500" y2="430"/>
+    <line class="grid" x1="180" y1="390" x2="500" y2="390"/>
+    <line class="grid" x1="180" y1="350" x2="500" y2="350"/>
+    <line class="grid" x1="180" y1="310" x2="500" y2="310"/>
+    <line class="grid" x1="180" y1="270" x2="500" y2="270"/>
+    <line class="grid" x1="180" y1="230" x2="500" y2="230"/>
+    <text class="small" x="175" y="434">0</text><text class="small" x="235" y="434">20</text><text class="small" x="295" y="434">40</text><text class="small" x="355" y="434">60</text><text class="small" x="415" y="434">80</text><text class="small" x="473" y="434">100</text>
+
+    <text class="label" x="40" y="210">Gobernanza y liderazgo</text>
+    <rect class="warn" x="180" y="196" width="191.2" height="16" rx="8"/>
+    <text class="small" x="378" y="209">59.76</text>
+
+    <text class="label" x="40" y="245">Gestión de riesgos</text>
+    <rect class="bad" x="180" y="231" width="147.2" height="16" rx="8"/>
+    <text class="small" x="334" y="244">46.01</text>
+
+    <text class="label" x="40" y="280">Marco normativo y documentación</text>
+    <rect class="mid" x="180" y="266" width="216.1" height="16" rx="8"/>
+    <text class="small" x="403" y="279">67.53</text>
+
+    <text class="label" x="40" y="315">Operación y controles</text>
+    <rect class="warn" x="180" y="301" width="187.9" height="16" rx="8"/>
+    <text class="small" x="374" y="314">58.73</text>
+
+    <text class="label" x="40" y="350">Talento humano y cultura</text>
+    <rect class="warn" x="180" y="336" width="185.1" height="16" rx="8"/>
+    <text class="small" x="371" y="349">57.83</text>
+
+    <text class="label" x="40" y="385">Incidentes, continuidad y resiliencia</text>
+    <rect class="bad" x="180" y="371" width="151.0" height="16" rx="8"/>
+    <text class="small" x="338" y="384">47.20</text>
+
+    <text class="label" x="40" y="420">Desempeño y mejora continua</text>
+    <rect class="bad" x="180" y="406" width="96.1" height="16" rx="8"/>
+    <text class="small" x="283" y="419">30.03</text>
+
+    <!-- PDP -->
+    <rect class="card" x="560" y="130" width="520" height="160"/>
+    <text class="title" x="580" y="160">Protección de datos personales</text>
+    <text class="small" x="580" y="178">Las brechas más fuertes están en derechos de titulares y obligaciones.</text>
+    <g transform="translate(580,200)">
+      <rect class="warn" x="0" y="0" width="173.5" height="18" rx="8"/><text class="label" x="0" y="-6">Infracciones leves</text><text class="small" x="181" y="13">57.82</text>
+      <rect class="mid" x="0" y="34" width="207.3" height="18" rx="8"/><text class="label" x="0" y="28">Infracciones graves</text><text class="small" x="214" y="47">69.11</text>
+      <rect class="mid" x="250" y="0" width="198.8" height="18" rx="8"/><text class="label" x="250" y="-6">Principios</text><text class="small" x="456" y="13">66.25</text>
+      <rect class="warn" x="250" y="34" width="170.9" height="18" rx="8"/><text class="label" x="250" y="28">Derechos</text><text class="small" x="428" y="47">56.96</text>
+      <rect class="warn" x="0" y="78" width="171.1" height="18" rx="8"/><text class="label" x="0" y="72">Obligaciones</text><text class="small" x="178" y="91">57.02</text>
+    </g>
+
+    <!-- SI controls -->
+    <rect class="card" x="560" y="310" width="520" height="160"/>
+    <text class="title" x="580" y="340">Controles de seguridad de la información</text>
+    <text class="small" x="580" y="358">Fortaleza relativa en controles físicos, tecnológicos y talento humano; debilidad en continuidad.</text>
+    <g transform="translate(580,380)">
+      <rect class="mid" x="0" y="0" width="188.7" height="18" rx="8"/><text class="label" x="0" y="-6">Organizacionales</text><text class="small" x="196" y="13">62.90</text>
+      <rect class="good" x="0" y="34" width="231.4" height="18" rx="8"/><text class="label" x="0" y="28">Físicos</text><text class="small" x="239" y="47">77.14</text>
+      <rect class="good" x="250" y="0" width="228.4" height="18" rx="8"/><text class="label" x="250" y="-6">Tecnológicos</text><text class="small" x="486" y="13">76.13</text>
+      <rect class="good" x="250" y="34" width="234.8" height="18" rx="8"/><text class="label" x="250" y="28">Talento humano</text><text class="small" x="492" y="47">78.27</text>
+      <rect class="bad" x="0" y="78" width="145.5" height="18" rx="8"/><text class="label" x="0" y="72">Continuidad y resiliencia</text><text class="small" x="153" y="91">48.49</text>
+    </g>
+
+    <!-- Benchmarking -->
+    <rect class="card" x="20" y="490" width="520" height="250"/>
+    <text class="title" x="40" y="520">Benchmarking visible</text>
+    <text class="small" x="40" y="538">Comparación de mejores y peores puntajes observados en el informe.</text>
+    <line class="axis" x1="150" y1="700" x2="500" y2="700"/>
+    <text class="label" x="40" y="575">ESPOL</text><rect class="good" x="150" y="562" width="310.7" height="14" rx="7"/><text class="small" x="468" y="574">88.78</text>
+    <text class="label" x="40" y="605">IKIAM</text><rect class="good" x="150" y="592" width="299.8" height="14" rx="7"/><text class="small" x="457" y="604">85.67</text>
+    <text class="label" x="40" y="635">UNL</text><rect class="good" x="150" y="622" width="296.4" height="14" rx="7"/><text class="small" x="454" y="634">84.69</text>
+    <text class="label" x="40" y="665">ITSCO</text><rect class="good" x="150" y="652" width="290.4" height="14" rx="7"/><text class="small" x="448" y="664">82.96</text>
+
+    <text class="label" x="40" y="725">SUCUMBIOS</text><rect class="bad" x="150" y="712" width="119.9" height="14" rx="7"/><text class="small" x="278" y="724">34.26</text>
+    <text class="label" x="40" y="755">ESPAM</text><rect class="bad" x="150" y="742" width="127.8" height="14" rx="7"/><text class="small" x="286" y="754">36.51</text>
+    <text class="label" x="300" y="725">UPEC</text><rect class="bad" x="355" y="712" width="140.8" height="14" rx="7"/><text class="small" x="503" y="724">40.22</text>
+    <text class="label" x="300" y="755">UTELVT</text><rect class="bad" x="355" y="742" width="143.2" height="14" rx="7"/><text class="small" x="506" y="754">40.92</text>
+
+    <!-- Risk card -->
+    <rect class="card" x="560" y="490" width="520" height="250"/>
+    <text class="title" x="580" y="520">Riesgo económico estimado PDP</text>
+    <text class="value" x="580" y="560">USD 2,324,278.20</text>
+    <text class="small" x="580" y="582">Composición estimada por incumplimientos</text>
+    <g transform="translate(580,610)">
+      <rect class="warn" x="0" y="0" width="133" height="28" rx="8"/>
+      <rect class="bad" x="133" y="0" width="333" height="28" rx="8"/>
+      <text class="label" x="10" y="18" fill="white">Leves: USD 663,426.83</text>
+      <text class="label" x="165" y="18" fill="white">Graves: USD 1,660,851.36</text>
+    </g>
+    <text class="small" x="580" y="670">Las infracciones graves concentran la mayor parte del riesgo financiero.</text>
+
+    <!-- Footer notes -->
+    <rect class="card" x="20" y="760" width="1060" height="180"/>
+    <text class="title" x="40" y="790">Lectura ejecutiva</text>
+    <text class="label" x="40" y="820">• Mejor desempeño relativo: controles físicos, tecnológicos, talento humano y superficie pública.</text>
+    <text class="label" x="40" y="846">• Principales brechas: desempeño y mejora continua, gestión de riesgos, continuidad y resiliencia.</text>
+    <text class="label" x="40" y="872">• El informe base tiene errores visibles de fórmulas y referencias; conviene usarlo con cautela para análisis operativo.</text>
+    <text class="label" x="40" y="898">• Esta visualización resume madurez en seguridad de la información y protección de datos, no toda la madurez digital institucional.</text>
+  </svg>
+</div>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
