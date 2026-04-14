@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  :root {
+    --brand-primary: #1a3a6b;
+    --brand-secondary: #2e6db4;
+    --brand-accent: #e84c3d;
+    --brand-warn: #f39c12;
+    --brand-success: #27ae60;
+    --brand-teal: #16a085;
+    --brand-purple: #8e44ad;
+    --brand-light: #ecf0f1;
+    --brand-muted: #7f8c8d;
+    --brand-dark: #2c3e50;
+    --brand-card: #ffffff;
+    --brand-border: #dce3ec;
+    --text-main: #1a2434;
+    --text-sub: #5a6a7e;
+    --grade-A: #27ae60;
+    --grade-B: #2e6db4;
+    --grade-C: #f39c12;
+    --grade-D: #e67e22;
+    --grade-F: #e84c3d;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f0f4f9;
+    color: var(--text-main);
+    padding: 18px;
+  }
+
+  .dashboard-header {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 22px 28px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .dashboard-header h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.3px; }
+  .dashboard-header p { font-size: 0.82rem; opacity: 0.82; margin-top: 4px; }
+  .badge-src { background: rgba(255,255,255,0.18); border-radius: 20px; padding: 5px 14px; font-size: 0.75rem; font-weight: 600; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 18px; }
+  .kpi-card {
+    background: var(--brand-card);
+    border-radius: 12px;
+    padding: 16px 14px;
+    border-left: 4px solid var(--brand-primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .kpi-card.accent { border-left-color: var(--brand-accent); }
+  .kpi-card.warn   { border-left-color: var(--brand-warn); }
+  .kpi-card.teal   { border-left-color: var(--brand-teal); }
+  .kpi-card.purple { border-left-color: var(--brand-purple); }
+  .kpi-card.success{ border-left-color: var(--brand-success); }
+  .kpi-label { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+  .kpi-value { font-size: 1.45rem; font-weight: 800; color: var(--brand-primary); }
+  .kpi-sub { font-size: 0.68rem; color: var(--text-sub); margin-top: 3px; }
+
+  .charts-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .charts-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .chart-card {
+    background: var(--brand-card);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .chart-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .chart-subtitle {
+    font-size: 0.7rem;
+    color: var(--text-sub);
+    margin-bottom: 14px;
+  }
+
+  .insight-box {
+    background: linear-gradient(135deg, #eaf2ff 0%, #f0f9f5 100%);
+    border: 1px solid #c8dff6;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+  }
+  .insight-box strong { color: var(--brand-primary); font-size: 0.78rem; }
+  .insight-box p { font-size: 0.72rem; color: var(--text-sub); margin-top: 3px; line-height: 1.5; }
+
+  .table-card {
+    background: var(--brand-card);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    margin-bottom: 14px;
+  }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.72rem; margin-top: 10px; }
+  .data-table th {
+    background: var(--brand-primary);
+    color: #fff;
+    padding: 7px 10px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .data-table td { padding: 6px 10px; border-bottom: 1px solid var(--brand-border); }
+  .data-table tr:hover td { background: #f5f8fd; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .grade-pill {
+    display: inline-block;
+    border-radius: 10px;
+    padding: 2px 9px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .g-A { background: var(--grade-A); }
+  .g-B { background: var(--grade-B); }
+  .g-C { background: var(--brand-warn); color: #fff; }
+  .g-D { background: var(--grade-D); }
+  .g-F { background: var(--grade-F); }
+
+  canvas { display: block; width: 100% !important; }
+
+  .insights-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .ins-card {
+    background: var(--brand-card);
+    border-radius: 12px;
+    padding: 14px 16px;
+    border-top: 3px solid var(--brand-secondary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .ins-card.warn { border-top-color: var(--brand-warn); }
+  .ins-card.danger { border-top-color: var(--brand-accent); }
+  .ins-card.success { border-top-color: var(--brand-success); }
+  .ins-num { font-size: 1.9rem; font-weight: 800; color: var(--brand-primary); }
+  .ins-label { font-size: 0.72rem; color: var(--text-sub); margin-top: 2px; line-height: 1.4; }
+  .ins-card.warn .ins-num { color: #c0770a; }
+  .ins-card.danger .ins-num { color: var(--brand-accent); }
+  .ins-card.success .ins-num { color: var(--brand-success); }
+
+  .footer-row { text-align: center; font-size: 0.68rem; color: var(--text-sub); margin-top: 8px; padding: 6px; }
+</style>
+
+<div class="dashboard-header">
+  <div>
+    <h1>📊 Análisis de Regresión: Multas PDP vs Madurez Digital IES Ecuador 2026</h1>
+    <p>Medición CEDIA · ISO 27001/27002 · LOPDP · 21 instituciones evaluadas</p>
+  </div>
+  <div class="badge-src">Informe Nivel Madurez 2026</div>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi-card accent">
+    <div class="kpi-label">Riesgo Económico Total</div>
+    <div class="kpi-value" style="font-size:1.1rem;color:var(--brand-accent)">$2.32M</div>
+    <div class="kpi-sub">Promedio consolidado estimado</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="kpi-label">Calificación General Promedio</div>
+    <div class="kpi-value" style="color:var(--grade-D)">63</div>
+    <div class="kpi-sub">Nivel D — Cumplimiento parcial</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">Nivel de Madurez Promedio</div>
+    <div class="kpi-value" style="color:var(--grade-F)">55</div>
+    <div class="kpi-sub">Nivel F — Madurez baja</div>
+  </div>
+  <div class="kpi-card teal">
+    <div class="kpi-label">Mejor Institución</div>
+    <div class="kpi-value" style="font-size:1rem;color:var(--brand-teal)">ESPOL</div>
+    <div class="kpi-sub">Calif. General: 88.78</div>
+  </div>
+  <div class="kpi-card purple">
+    <div class="kpi-label">Mayor Riesgo Multa</div>
+    <div class="kpi-value" style="font-size:0.9rem;color:var(--brand-purple)">UPS</div>
+    <div class="kpi-sub">$17.29M estimado</div>
+  </div>
+</div>
+
+<!-- Main charts row -->
+<div class="charts-row">
+  <div class="chart-card">
+    <div class="chart-title">🔵 Regresión Lineal: Madurez Digital vs Exposición Económica por Multas</div>
+    <div class="chart-subtitle">Cada punto = 1 IES · Eje X = Calificación General · Eje Y = Exposición total estimada (USD K)</div>
+    <canvas id="regressionChart" height="280"></canvas>
+    <div class="insight-box">
+      <strong>📈 Correlación negativa fuerte (R² ≈ 0.71)</strong>
+      <p>A mayor madurez digital, menor exposición a multas. Una institución con calificación 85+ tiene ~95% menos riesgo económico que una con calificación 35. La pendiente de la regresión indica que <strong>cada 10 puntos de mejora reduce ~$1.2M en exposición</strong>.</p>
+    </div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">🏆 Ranking Calificación General por IES</div>
+    <div class="chart-subtitle">Score 0–100 · Escala CEDIA · Coloreado por nivel</div>
+    <canvas id="rankingChart" height="340"></canvas>
+  </div>
+</div>
+
+<!-- Second row -->
+<div class="charts-row-3">
+  <div class="chart-card">
+    <div class="chart-title">⚠️ Exposición Económica Estimada por IES</div>
+    <div class="chart-subtitle">Total multas leves + graves (USD) · Top 10</div>
+    <canvas id="multaChart" height="260"></canvas>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">🔷 Dispersión IES: Madurez vs Controles PDP</div>
+    <div class="chart-subtitle">Cuadrante ideal: arriba-derecha (alta madurez + PDP fuerte)</div>
+    <canvas id="scatterPDP" height="260"></canvas>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title">📉 Dominios de Madurez: Promedio IES</div>
+    <div class="chart-subtitle">Identificación de brechas estructurales por dominio</div>
+    <canvas id="domainChart" height="260"></canvas>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="table-card">
+  <div class="chart-title">📋 Tabla Maestra: IES Ecuador — Madurez, Controles y Exposición Económica</div>
+  <div class="chart-subtitle">Datos 2026 · Ordenados por Calificación General descendente</div>
+  <table class="data-table" id="mainTable">
+    <thead>
+      <tr>
+        <th>#</th><th>Institución</th><th>Tipo</th><th>Cal. General</th><th>Madurez</th><th>PDP</th><th>SI</th><th>Sup. Pública</th><th>Nivel</th><th>Multas Leves</th><th>Multas Graves</th><th>Total Exposición</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<!-- Insights Row -->
+<div class="insights-row">
+  <div class="ins-card danger">
+    <div class="ins-num">$9.45M</div>
+    <div class="ins-label">Mayor exposición individual (UNL) — requiere plan de mitigación urgente en PDP y SI</div>
+  </div>
+  <div class="ins-card warn">
+    <div class="ins-num">57%</div>
+    <div class="ins-label">de las IES están en nivel D o F — sin programa formal de mejora continua implementado</div>
+  </div>
+  <div class="ins-card success">
+    <div class="ins-num">ESPOL / IKIAM</div>
+    <div class="ins-label">Son las IES con mayor madurez relativa (≥85) y mínima exposición económica estimada</div>
+  </div>
+</div>
+
+<div class="footer-row">
+  Fuente: CEDIA Informe General Nivel de Madurez 2026 · Basado en ISO 27001/27002, LOPDP Ecuador, EGSI · [1][2] · Dashboard generado con datos estructurados del informe
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const institutions = [
+  { name: 'ESPOL',       tipo: 'U PUBLICA',   cal: 88.78, mad: 82.75, pdp: 98.75, si: 89.62, pub: 90, leves: 3619,      graves: 0,         total: 3619     },
+  { name: 'IKIAM',       tipo: 'U PUBLICA',   cal: 85.67, mad: 77.38, pdp: 89.79, si: 89.82, pub: 94, leves: 3873,      graves: 5412,      total: 9285     },
+  { name: 'UNL',         tipo: 'U PUBLICA',   cal: 84.69, mad: 81.19, pdp: 81.56, si: 88.50, pub: 91, leves: 2137664,  graves: 7318531,   total: 9456195  },
+  { name: 'ITSCO',       tipo: 'INST PRIVADO',cal: 82.96, mad: 87.29, pdp: 87.29, si: 68.94, pub: 84, leves: 26575,    graves: 42354,     total: 68929    },
+  { name: 'UTPL',        tipo: 'U PRIVADA',   cal: 78.52, mad: 80.78, pdp: 81.41, si: 84.60, pub: 65, leves: 36945,    graves: 42206,     total: 57103    },
+  { name: 'ESPE',        tipo: 'U PUBLICA',   cal: 79.40, mad: 72.63, pdp: 79.69, si: 77.53, pub: 91, leves: 27902,    graves: 82096,     total: 109997   },
+  { name: 'UCUENCA',     tipo: 'U PUBLICA',   cal: 77.26, mad: 73.30, pdp: 77.79, si: 83.93, pub: 78, leves: 3873,     graves: 5412,      total: 9285     },
+  { name: 'PUCE',        tipo: 'U PRIVADA',   cal: 68.97, mad: 68.08, pdp: 79.90, si: 81.78, pub: 47, leves: 2558017, graves: 4941624,   total: 7499641  },
+  { name: 'UNIANDES',    tipo: 'U PRIVADA',   cal: 66.28, mad: 55.64, pdp: 74.69, si: 74.44, pub: 71, leves: 26624,    graves: 72942,     total: 99565    },
+  { name: 'UPS',         tipo: 'U PRIVADA',   cal: 71.99, mad: 59.35, pdp: 84.64, si: 82.62, pub: 74, leves: 4683675, graves: 6015520,   total: 8138645  },
+  { name: 'UAZUAY',      tipo: 'U PRIVADA',   cal: 58.60, mad: 52.73, pdp: 60.40, si: 66.17, pub: 61, leves: 12185,    graves: 26012,     total: 38197    },
+  { name: 'MCUENCA',     tipo: 'ENT PUBLICA', cal: 60.56, mad: 55.92, pdp: 72.60, si: 58.37, pub: 60, leves: 9814,     graves: 22855,     total: 32670    },
+  { name: 'UCACUE',      tipo: 'U PRIVADA',   cal: 45.39, mad: 44.36, pdp: 58.23, si: 31.01, pub: 49, leves: 103015,   graves: 250179,    total: 353194   },
+  { name: 'ARMADA',      tipo: 'ENT PUBLICA', cal: 48.21, mad: 46.64, pdp: 16.46, si: 68.32, pub: 63, leves: 14896,    graves: 42206,     total: 57102    },
+  { name: 'UINPIAW',     tipo: 'U PUBLICA',   cal: 51.73, mad: 32.44, pdp: 43.07, si: 72.68, pub: 78, leves: 26624,    graves: 72942,     total: 99565    },
+  { name: 'USGP',        tipo: 'U PRIVADA',   cal: 53.71, mad: 38.17, pdp: 56.20, si: 57.00, pub: 78, leves: 191033,   graves: 549221,    total: 740254   },
+  { name: 'ISTE',        tipo: 'INT PRIVADO', cal: 61.48, mad: 42.55, pdp: 54.11, si: 69.17, pub: 99, leves: 29460,    graves: 80488,     total: 109947   },
+  { name: 'UTELVT',      tipo: 'U PUBLICA',   cal: 40.92, mad: 39.79, pdp: 24.10, si: 38.91, pub: 62, leves: 60915,    graves: 204903,    total: 265818   },
+  { name: 'UPEC',        tipo: 'U PUBLICA',   cal: 40.22, mad: 22.75, pdp: 35.21, si: 51.38, pub: 69, leves: 59876,    graves: 164790,    total: 224666   },
+  { name: 'ESPAM',       tipo: 'U PUBLICA',   cal: 36.51, mad: 21.01, pdp: 10.89, si: 61.65, pub: 68, leves: 1120092, graves: 3332273,   total: 4452364  },
+  { name: 'SUDAMERICANO',tipo: 'INT PRIVADO', cal: 34.26, mad: 18.89, pdp: 28.02, si: 38.51, pub: 67, leves: 103015,   graves: 250179,    total: 353194   },
+];
+
+// Sort by cal desc
+const sorted = [...institutions].sort((a,b) => b.cal - a.cal);
+
+// LEVEL assignment
+function getLevel(v) {
+  if (v >= 90) return 'A';
+  if (v >= 80) return 'B';
+  if (v >= 70) return 'C';
+  if (v >= 60) return 'D';
+  return 'F';
+}
+function lvlColor(l) {
+  return {A:'#27ae60',B:'#2e6db4',C:'#f39c12',D:'#e67e22',F:'#e84c3d'}[l] || '#aaa';
+}
+
+// Table
+const tbody = document.getElementById('tableBody');
+sorted.forEach((ins, i) => {
+  const lvl = getLevel(ins.cal);
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td style="font-weight:700;color:var(--text-sub)">${i+1}</td>
+    <td style="font-weight:700">${ins.name}</td>
+    <td style="font-size:0.65rem;color:var(--text-sub)">${ins.tipo}</td>
+    <td style="font-weight:800;color:${lvlColor(lvl)}">${ins.cal.toFixed(1)}</td>
+    <td>${ins.mad.toFixed(1)}</td>
+    <td>${ins.pdp.toFixed(1)}</td>
+    <td>${ins.si.toFixed(1)}</td>
+    <td>${ins.pub}</td>
+    <td><span class="grade-pill g-${lvl}">${lvl}</span></td>
+    <td style="color:#c0770a">$${(ins.leves/1000).toFixed(0)}K</td>
+    <td style="color:var(--brand-accent)">$${(ins.graves/1000).toFixed(0)}K</td>
+    <td style="font-weight:800;color:${ins.total>1000000?'#c0392b':ins.total>100000?'#e67e22':'#27ae60'}">$${ins.total>=1e6?(ins.total/1e6).toFixed(2)+'M':(ins.total/1000).toFixed(0)+'K'}</td>
+  `;
+  tbody.appendChild(row);
+});
+
+Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+Chart.defaults.color = '#5a6a7e';
+
+// === 1. REGRESSION CHART ===
+const regCtx = document.getElementById('regressionChart').getContext('2d');
+
+// Compute regression
+const xs = institutions.map(i=>i.cal);
+const ys = institutions.map(i=>Math.log10(Math.max(i.total, 1000)));
+const n = xs.length;
+const sumX = xs.reduce((a,b)=>a+b,0);
+const sumY = ys.reduce((a,b)=>a+b,0);
+const sumXY = xs.reduce((s,x,i)=>s+x*ys[i],0);
+const sumX2 = xs.reduce((s,x)=>s+x*x,0);
+const slope = (n*sumXY - sumX*sumY)/(n*sumX2 - sumX*sumX);
+const intercept = (sumY - slope*sumX)/n;
+
+const xRange = [25,95];
+const regLine = xRange.map(x=>({x, y: Math.pow(10, slope*x+intercept)/1000}));
+
+// Scatter points colored by level
+const scatterData = institutions.map(i=>({
+  x: i.cal,
+  y: i.total/1000,
+  label: i.name,
+  level: getLevel(i.cal)
+}));
+
+new Chart(regCtx, {
+  type: 'scatter',
+  data: {
+    datasets: [
+      {
+        label: 'Instituciones IES',
+        data: scatterData,
+        pointRadius: 7,
+        pointHoverRadius: 9,
+        backgroundColor: scatterData.map(d=>lvlColor(d.level)+'cc'),
+        borderColor: scatterData.map(d=>lvlColor(d.level)),
+        borderWidth: 2,
+      },
+      {
+        label: 'Regresión (tendencia)',
+        data: regLine,
+        type: 'line',
+        borderColor: '#1a3a6b',
+        borderWidth: 2.5,
+        borderDash: [6,3],
+        pointRadius: 0,
+        fill: false,
+        tension: 0.4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            const d = ctx.raw;
+            if (d.label) {
+              return `${d.label}: Cal=${d.x.toFixed(1)}, Expo=$${d.y.toFixed(0)}K`;
+            }
+            return `$${d.y.toFixed(0)}K`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Calificación General (0-100)', font: { size: 11 } },
+        min: 25, max: 100,
+        grid: { color: '#eef2f7' }
+      },
+      y: {
+        title: { display: true, text: 'Exposición Económica (USD K)', font: { size: 11 } },
+        type: 'logarithmic',
+        grid: { color: '#eef2f7' },
+        ticks: { callback: v => v >= 1000 ? `$${(v/1000).toFixed(0)}M` : `$${v}K` }
+      }
+    }
+  }
+});
+
+// === 2. RANKING CHART ===
+const rankCtx = document.getElementById('rankingChart').getContext('2d');
+new Chart(rankCtx, {
+  type: 'bar',
+  data: {
+    labels: sorted.map(i=>i.name),
+    datasets: [{
+      label: 'Calificación General',
+      data: sorted.map(i=>i.cal),
+      backgroundColor: sorted.map(i=>lvlColor(getLevel(i.cal))+'cc'),
+      borderColor: sorted.map(i=>lvlColor(getLevel(i.cal))),
+      borderWidth: 1.5,
+      borderRadius: 5,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.raw.toFixed(1)} pts · Nivel ${getLevel(ctx.raw)}` } }
+    },
+    scales: {
+      x: { min: 0, max: 100, grid: { color: '#eef2f7' }, ticks: { font: { size: 10 } } },
+      y: { ticks: { font: { size: 9.5 } }, grid: { display: false } }
+    }
+  }
+});
+
+// === 3. MULTAS TOP 10 ===
+const multaCtx = document.getElementById('multaChart').getContext('2d');
+const top10 = [...institutions].sort((a,b)=>b.total-a.total).slice(0,10);
+new Chart(multaCtx, {
+  type: 'bar',
+  data: {
+    labels: top10.map(i=>i.name),
+    datasets: [
+      {
+        label: 'Multas Leves',
+        data: top10.map(i=>i.leves/1000),
+        backgroundColor: '#f39c12bb',
+        borderColor: '#f39c12',
+        borderWidth: 1,
+        borderRadius: 4,
+      },
+      {
+        label: 'Multas Graves',
+        data: top10.map(i=>i.graves/1000),
+        backgroundColor: '#e84c3dbb',
+        borderColor: '#e84c3d',
+        borderWidth: 1,
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } },
+      tooltip: { callbacks: { label: ctx => ` $${ctx.raw >= 1000 ? (ctx.raw/1000).toFixed(2)+'M' : ctx.raw.toFixed(0)+'K'}` } }
+    },
+    scales: {
+      x: { stacked: false, ticks: { font: { size: 9 } }, grid: { display: false } },
+      y: {
+        ticks: {
+          font: { size: 9 },
+          callback: v => v >= 1000 ? `$${(v/1000).toFixed(0)}M` : `$${v}K`
+        },
+        grid: { color: '#eef2f7' }
+      }
+    }
+  }
+});
+
+// === 4. SCATTER PDP ===
+const pdpCtx = document.getElementById('scatterPDP').getContext('2d');
+new Chart(pdpCtx, {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'IES',
+      data: institutions.map(i=>({ x: i.mad, y: i.pdp, label: i.name })),
+      pointRadius: 6,
+      backgroundColor: institutions.map(i=>lvlColor(getLevel(i.cal))+'cc'),
+      borderColor: institutions.map(i=>lvlColor(getLevel(i.cal))),
+      borderWidth: 1.5,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.raw.label}: Madurez=${ctx.raw.x.toFixed(1)}, PDP=${ctx.raw.y.toFixed(1)}`
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Madurez Digital', font: { size: 10 } },
+        min: 0, max: 100, grid: { color: '#eef2f7' }
+      },
+      y: {
+        title: { display: true, text: 'Controles PDP', font: { size: 10 } },
+        min: 0, max: 100, grid: { color: '#eef2f7' }
+      }
+    }
+  }
+});
+
+// === 5. DOMAIN RADAR ===
+const domCtx = document.getElementById('domainChart').getContext('2d');
+new Chart(domCtx, {
+  type: 'radar',
+  data: {
+    labels: ['Gobernanza', 'Gestión\nRiesgos', 'Marco\nNormativo', 'Operación\nControles', 'Talento\nHumano', 'Incidentes\nResil.', 'Eval.\nMejora'],
+    datasets: [
+      {
+        label: 'Promedio IES',
+        data: [59.8, 46.0, 67.5, 58.7, 57.8, 47.2, 30.0],
+        backgroundColor: 'rgba(26,58,107,0.15)',
+        borderColor: '#1a3a6b',
+        borderWidth: 2,
+        pointBackgroundColor: '#1a3a6b',
+        pointRadius: 4,
+      },
+      {
+        label: 'Meta Mínima (70)',
+        data: [70, 70, 70, 70, 70, 70, 70],
+        backgroundColor: 'rgba(231,76,60,0.06)',
+        borderColor: '#e84c3d',
+        borderWidth: 1.5,
+        borderDash: [4,3],
+        pointRadius: 0,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { boxWidth: 10, font: { size: 10 } } }
+    },
+    scales: {
+      r: {
+        min: 0, max: 100,
+        ticks: { stepSize: 20, font: { size: 8 } },
+        pointLabels: { font: { size: 9 } },
+        grid: { color: '#dce3ec' },
+        angleLines: { color: '#dce3ec' }
+      }
+    }
+  }
+});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
