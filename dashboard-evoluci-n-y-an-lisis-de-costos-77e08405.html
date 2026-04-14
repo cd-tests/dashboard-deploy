@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  :root {
+    --brand-primary: #1a3a6b;
+    --brand-secondary: #2e6db4;
+    --brand-accent: #e84c3d;
+    --brand-warn: #f39c12;
+    --brand-success: #27ae60;
+    --brand-teal: #16a085;
+    --brand-purple: #8e44ad;
+    --brand-light: #ecf0f1;
+    --brand-muted: #7f8c8d;
+    --brand-dark: #2c3e50;
+    --brand-card: #ffffff;
+    --brand-border: #dce3ec;
+    --text-main: #1a2434;
+    --text-sub: #5a6a7e;
+    --col-api1: #2e6db4;
+    --col-api2: #8e44ad;
+    --col-gem: #16a085;
+    --col-grok: #27ae60;
+    --col-danger: #e84c3d;
+    --col-warn: #f39c12;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f0f4f9;
+    color: var(--text-main);
+    padding: 16px;
+  }
+
+  .db-header {
+    background: linear-gradient(135deg, #1a3a6b 0%, #2e6db4 60%, #16a085 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 20px 28px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .db-header h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.2px; }
+  .db-header p { font-size: 0.78rem; opacity: 0.85; margin-top: 3px; }
+  .header-badge { background: rgba(255,255,255,0.18); border-radius: 20px; padding: 5px 14px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
+
+  /* KPI Row */
+  .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 14px; }
+  .kpi {
+    background: var(--brand-card);
+    border-radius: 11px;
+    padding: 14px 12px;
+    border-left: 4px solid var(--brand-primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .kpi.warn { border-left-color: var(--brand-warn); }
+  .kpi.success { border-left-color: var(--brand-success); }
+  .kpi.accent { border-left-color: var(--brand-accent); }
+  .kpi.teal { border-left-color: var(--brand-teal); }
+  .kpi.purple { border-left-color: var(--brand-purple); }
+  .kpi-label { font-size: 0.67rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .kpi-value { font-size: 1.4rem; font-weight: 800; color: var(--brand-primary); line-height: 1; }
+  .kpi-sub { font-size: 0.65rem; color: var(--text-sub); margin-top: 3px; }
+  .kpi.success .kpi-value { color: var(--brand-success); }
+  .kpi.accent .kpi-value { color: var(--brand-accent); }
+  .kpi.warn .kpi-value { color: #c0770a; }
+  .kpi.teal .kpi-value { color: var(--brand-teal); }
+  .kpi.purple .kpi-value { color: var(--brand-purple); }
+
+  /* Grid layouts */
+  .row-2 { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .row-full { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
+  .row-23 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+  .card {
+    background: var(--brand-card);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .card-title { font-size: 0.78rem; font-weight: 700; color: var(--brand-primary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
+  .card-sub { font-size: 0.67rem; color: var(--text-sub); margin-bottom: 12px; }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.67rem; color: var(--text-sub); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legend-line { width: 18px; height: 3px; border-radius: 2px; }
+
+  /* SVG Charts */
+  svg { display: block; }
+
+  /* Savings summary table */
+  .savings-table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+  .savings-table th { background: var(--brand-primary); color: #fff; padding: 6px 8px; text-align: left; font-weight: 600; }
+  .savings-table td { padding: 5px 8px; border-bottom: 1px solid var(--brand-border); }
+  .savings-table tr:hover td { background: #f5f8fd; }
+  .savings-table tr:last-child td { border-bottom: none; }
+
+  /* Progress bars */
+  .prog-row { margin-bottom: 9px; }
+  .prog-label { display: flex; justify-content: space-between; font-size: 0.68rem; margin-bottom: 3px; }
+  .prog-label span:first-child { color: var(--text-main); font-weight: 600; }
+  .prog-label span:last-child { color: var(--text-sub); }
+  .prog-bg { background: #e9eef5; border-radius: 6px; height: 10px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 6px; }
+
+  /* Decision matrix */
+  .matrix-row { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 0; border-bottom: 1px solid var(--brand-border); }
+  .matrix-row:first-child { background: var(--brand-primary); color: #fff; border-radius: 8px 8px 0 0; }
+  .matrix-cell { padding: 7px 8px; font-size: 0.67rem; }
+  .matrix-row:not(:first-child):hover { background: #f5f8fd; }
+  .matrix-row:last-child { border-bottom: none; border-radius: 0 0 8px 8px; }
+  .matrix-body { border: 1px solid var(--brand-border); border-radius: 8px; overflow: hidden; }
+
+  .badge-pill {
+    display: inline-block;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 0.63rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .bp-green { background: var(--brand-success); }
+  .bp-blue { background: var(--brand-secondary); }
+  .bp-warn { background: var(--brand-warn); }
+  .bp-red { background: var(--brand-accent); }
+
+  .insight-bar {
+    background: linear-gradient(135deg, #eaf2ff 0%, #f0f9f5 100%);
+    border: 1px solid #c8dff6;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 10px;
+  }
+  .insight-bar strong { color: var(--brand-primary); font-size: 0.75rem; }
+  .insight-bar p { font-size: 0.68rem; color: var(--text-sub); margin-top: 3px; line-height: 1.5; }
+
+  .footer { text-align: center; font-size: 0.64rem; color: var(--text-sub); padding: 8px; margin-top: 4px; }
+
+  /* Color dots legend */
+  .dot-api1 { background: var(--col-api1); }
+  .dot-api2 { background: var(--col-api2); }
+  .dot-gem { background: var(--col-gem); }
+  .dot-grok { background: var(--col-grok); }
+</style>
+
+<!-- HEADER -->
+<div class="db-header">
+  <div>
+    <h1>💡 Dashboard AIRA — Evolución y Análisis Estratégico de Costos</h1>
+    <p>Comparativo 4 APIs · Perfiles de usuario · Universidades: UCSG y ESPAM · Decisiones de migración 2026</p>
+  </div>
+  <div class="header-badge">CEDIA · Marzo 2026</div>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi accent">
+    <div class="kpi-label">Costo API Actual (Docente)</div>
+    <div class="kpi-value">$0.2194</div>
+    <div class="kpi-sub">Por consulta · Mayor costo</div>
+  </div>
+  <div class="kpi success">
+    <div class="kpi-label">Costo Grok-4.1 (Docente)</div>
+    <div class="kpi-value">$0.0283</div>
+    <div class="kpi-sub">87% ahorro vs API actual</div>
+  </div>
+  <div class="kpi warn">
+    <div class="kpi-label">Ahorro Potencial UCSG</div>
+    <div class="kpi-value">$876K</div>
+    <div class="kpi-sub">Semestral (API→Grok)</div>
+  </div>
+  <div class="kpi teal">
+    <div class="kpi-label">Ahorro Potencial ESPAM</div>
+    <div class="kpi-value">$386K</div>
+    <div class="kpi-sub">Total todos los módulos</div>
+  </div>
+  <div class="kpi purple">
+    <div class="kpi-label">Reducción Costo por Optimiz.</div>
+    <div class="kpi-value">-87%</div>
+    <div class="kpi-sub">API Actual → Grok-4.1</div>
+  </div>
+</div>
+
+<!-- ROW 1: Evolución de costos por perfil + Reducción % -->
+<div class="row-2">
+  <!-- Línea: evolución de costo por consulta por perfil y API -->
+  <div class="card">
+    <div class="card-title">📉 Evolución del Costo por Consulta — Por Perfil y Versión API</div>
+    <div class="card-sub">Comparativo de las 4 versiones de API para cada perfil de usuario</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot dot-api1"></div> API Actual</div>
+      <div class="legend-item"><div class="legend-dot dot-api2"></div> API Optimiz. -40%</div>
+      <div class="legend-item"><div class="legend-dot dot-gem"></div> Gemini Flash-Lite</div>
+      <div class="legend-item"><div class="legend-dot dot-grok"></div> Grok-4.1</div>
+    </div>
+    <svg viewBox="0 0 520 230" xmlns="http://www.w3.org/2000/svg">
+      <!-- Grid lines -->
+      <line x1="60" y1="20" x2="60" y2="195" stroke="#e0e7f0" stroke-width="1"/>
+      <line x1="60" y1="195" x2="510" y2="195" stroke="#e0e7f0" stroke-width="1"/>
+      <line x1="60" y1="155" x2="510" y2="155" stroke="#e9eef5" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="60" y1="115" x2="510" y2="115" stroke="#e9eef5" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="60" y1="75" x2="510" y2="75" stroke="#e9eef5" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="60" y1="35" x2="510" y2="35" stroke="#e9eef5" stroke-width="0.7" stroke-dasharray="3,3"/>
+
+      <!-- Y axis labels -->
+      <text x="55" y="198" text-anchor="end" font-size="9" fill="#7f8c8d">$0.00</text>
+      <text x="55" y="158" text-anchor="end" font-size="9" fill="#7f8c8d">$0.05</text>
+      <text x="55" y="118" text-anchor="end" font-size="9" fill="#7f8c8d">$0.10</text>
+      <text x="55" y="78" text-anchor="end" font-size="9" fill="#7f8c8d">$0.15</text>
+      <text x="55" y="38" text-anchor="end" font-size="9" fill="#7f8c8d">$0.20</text>
+
+      <!-- X axis labels: perfiles -->
+      <text x="145" y="212" text-anchor="middle" font-size="9" fill="#7f8c8d">Admin</text>
+      <text x="255" y="212" text-anchor="middle" font-size="9" fill="#7f8c8d">Estudiante</text>
+      <text x="365" y="212" text-anchor="middle" font-size="9" fill="#7f8c8d">Resources</text>
+      <text x="475" y="212" text-anchor="middle" font-size="9" fill="#7f8c8d">Docente</text>
+
+      <!-- Scale: 0.25 max => height 160px = 0.25 => 1 unit = 640px
+           y = 195 - value * 640 -->
+      <!-- API Actual: Admin=0.0914, Est=0.1048, Res=0.1260, Doc=0.2194 -->
+      <!-- API Opt: 0.0548, 0.0629, 0.0756, 0.1316 -->
+      <!-- Gemini: 0.0335, 0.0384, 0.0462, 0.0800 -->
+      <!-- Grok: 0.0121, 0.0139, 0.0168, 0.0283 -->
+
+      <!-- Group bars width=18, gap=4, group x at 115,225,335,445 -->
+      <!-- Admin group x=125 -->
+      <rect x="113" y="136" width="16" height="59" fill="#2e6db4cc" rx="2"/>
+      <rect x="131" y="160" width="16" height="35" fill="#8e44adcc" rx="2"/>
+      <rect x="149" y="174" width="16" height="21" fill="#16a085cc" rx="2"/>
+      <rect x="167" y="187" width="16" height="8" fill="#27ae60cc" rx="2"/>
+
+      <!-- Estudiante -->
+      <rect x="223" y="128" width="16" height="67" fill="#2e6db4cc" rx="2"/>
+      <rect x="241" y="155" width="16" height="40" fill="#8e44adcc" rx="2"/>
+      <rect x="259" y="170" width="16" height="25" fill="#16a085cc" rx="2"/>
+      <rect x="277" y="186" width="16" height="9" fill="#27ae60cc" rx="2"/>
+
+      <!-- Resources -->
+      <rect x="333" y="114" width="16" height="81" fill="#2e6db4cc" rx="2"/>
+      <rect x="351" y="147" width="16" height="48" fill="#8e44adcc" rx="2"/>
+      <rect x="369" y="166" width="16" height="29" fill="#16a085cc" rx="2"/>
+      <rect x="387" y="184" width="16" height="11" fill="#27ae60cc" rx="2"/>
+
+      <!-- Docente -->
+      <rect x="443" y="55" width="16" height="140" fill="#2e6db4cc" rx="2"/>
+      <rect x="461" y="111" width="16" height="84" fill="#8e44adcc" rx="2"/>
+      <rect x="479" y="144" width="16" height="51" fill="#16a085cc" rx="2"/>
+      <rect x="497" y="177" width="16" height="18" fill="#27ae60cc" rx="2"/>
+
+      <!-- Value labels Docente (most visible) -->
+      <text x="451" y="51" font-size="8" fill="#1a3a6b" font-weight="700">$0.22</text>
+      <text x="469" y="107" font-size="8" fill="#8e44ad" font-weight="700">$0.13</text>
+      <text x="487" y="140" font-size="8" fill="#16a085" font-weight="700">$0.08</text>
+      <text x="505" y="173" font-size="8" fill="#27ae60" font-weight="700">$0.03</text>
+    </svg>
+  </div>
+
+  <!-- Reducción porcentual por perfil -->
+  <div class="card">
+    <div class="card-title">🎯 % de Reducción vs API Actual — Por Perfil</div>
+    <div class="card-sub">Beneficio de migración API Actual → versiones optimizadas</div>
+
+    <!-- Admin -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:0.72rem;font-weight:700;color:var(--brand-primary);margin-bottom:6px;">👤 Administrador ($0.0914 base)</div>
+      <div class="prog-row">
+        <div class="prog-label"><span>API Optim. (-40%)</span><span style="color:#8e44ad">-40%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:40%;background:#8e44ad"></div></div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label"><span>Gemini Flash-Lite</span><span style="color:#16a085">-63%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:63%;background:#16a085"></div></div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label"><span>Grok-4.1 ⭐</span><span style="color:#27ae60;font-weight:800">-87%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:87%;background:linear-gradient(90deg,#27ae60,#16a085)"></div></div>
+      </div>
+    </div>
+
+    <!-- Docente -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:0.72rem;font-weight:700;color:var(--brand-primary);margin-bottom:6px;">🎓 Docente ($0.2194 base · mayor impacto)</div>
+      <div class="prog-row">
+        <div class="prog-label"><span>API Optim. (-40%)</span><span style="color:#8e44ad">-40%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:40%;background:#8e44ad"></div></div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label"><span>Gemini Flash-Lite</span><span style="color:#16a085">-64%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:64%;background:#16a085"></div></div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label"><span>Grok-4.1 ⭐</span><span style="color:#27ae60;font-weight:800">-87%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:87%;background:linear-gradient(90deg,#27ae60,#16a085)"></div></div>
+      </div>
+    </div>
+
+    <!-- Estudiante -->
+    <div>
+      <div style="font-size:0.72rem;font-weight:700;color:var(--brand-primary);margin-bottom:6px;">📚 Estudiante ($0.1048 base · mayor volumen)</div>
+      <div class="prog-row">
+        <div class="prog-label"><span>API Optim. (-40%)</span><span style="color:#8e44ad">-40%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:40%;background:#8e44ad"></div></div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label"><span>Gemini Flash-Lite</span><span style="color:#16a085">-63%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:63%;background:#16a085"></div></div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-label"><span>Grok-4.1 ⭐</span><span style="color:#27ae60;font-weight:800">-87%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:87%;background:linear-gradient(90deg,#27ae60,#16a085)"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROW 2: Costos totales por Universidad -->
+<div class="row-3">
+  <!-- UCSG Comparativo -->
+  <div class="card">
+    <div class="card-title">🏛️ UCSG — Costo Total por Módulo y API</div>
+    <div class="card-sub">Comparativo semestral API Actual vs Grok-4.1 (USD)</div>
+    <div class="legend" style="margin-bottom:8px">
+      <div class="legend-item"><div class="legend-dot dot-api1"></div> API Actual</div>
+      <div class="legend-item"><div class="legend-dot dot-grok"></div> Grok-4.1</div>
+    </div>
+    <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="80" y1="10" x2="80" y2="170" stroke="#e0e7f0" stroke-width="1"/>
+      <line x1="80" y1="170" x2="295" y2="170" stroke="#e0e7f0" stroke-width="1"/>
+
+      <!-- Y labels scaled: max ~1M => 160px, 1px=6250 -->
+      <text x="75" y="173" text-anchor="end" font-size="8" fill="#7f8c8d">$0</text>
+      <text x="75" y="133" text-anchor="end" font-size="8" fill="#7f8c8d">$250K</text>
+      <text x="75" y="93" text-anchor="end" font-size="8" fill="#7f8c8d">$500K</text>
+      <text x="75" y="53" text-anchor="end" font-size="8" fill="#7f8c8d">$750K</text>
+      <text x="75" y="13" text-anchor="end" font-size="8" fill="#7f8c8d">$1M</text>
+      <line x1="80" y1="130" x2="295" y2="130" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="80" y1="90" x2="295" y2="90" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="80" y1="50" x2="295" y2="50" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+
+      <!-- Grado: API=1,066,875 (160px) Grok=190,813 (160*190813/1066875=28.6) -->
+      <rect x="85" y="10" width="22" height="160" fill="#2e6db4cc" rx="2"/>
+      <rect x="109" y="142" width="22" height="28" fill="#27ae60cc" rx="2"/>
+      <text x="96" y="8" text-anchor="middle" font-size="7" fill="#1a3a6b" font-weight="700">$1.07M</text>
+      <text x="120" y="140" text-anchor="middle" font-size="7" fill="#27ae60" font-weight="700">$191K</text>
+      <text x="120" y="188" text-anchor="middle" font-size="8" fill="#5a6a7e">Grado</text>
+
+      <!-- Distancia: API=150,056 (22.5px), Grok=26,874 (4px) -->
+      <rect x="150" y="147" width="22" height="23" fill="#2e6db4cc" rx="2"/>
+      <rect x="174" y="166" width="22" height="4" fill="#27ae60cc" rx="2"/>
+      <text x="150" y="143" text-anchor="start" font-size="7" fill="#1a3a6b" font-weight="700">$150K</text>
+      <text x="185" y="163" text-anchor="middle" font-size="7" fill="#27ae60" font-weight="700">$27K</text>
+      <text x="173" y="188" text-anchor="middle" font-size="8" fill="#5a6a7e">Distancia</text>
+
+      <!-- Posgrado: API=250,083 (37.6px), Grok=44,328 (6.6px) -->
+      <rect x="210" y="133" width="22" height="37" fill="#2e6db4cc" rx="2"/>
+      <rect x="234" y="163" width="22" height="7" fill="#27ae60cc" rx="2"/>
+      <text x="221" y="130" text-anchor="middle" font-size="7" fill="#1a3a6b" font-weight="700">$250K</text>
+      <text x="245" y="160" text-anchor="middle" font-size="7" fill="#27ae60" font-weight="700">$44K</text>
+      <text x="233" y="188" text-anchor="middle" font-size="8" fill="#5a6a7e">Posgrado</text>
+    </svg>
+    <div class="insight-bar" style="margin-top:4px">
+      <strong>💰 Grado UCSG: ahorro de $876K semestral con Grok-4.1</strong>
+      <p>El módulo de Grado es el de mayor impacto económico por volumen de estudiantes (13,000) y docentes (800). Migrar solo este módulo representa el mayor ROI.</p>
+    </div>
+  </div>
+
+  <!-- ESPAM Comparativo -->
+  <div class="card">
+    <div class="card-title">🏫 ESPAM — Costo por Módulo y API</div>
+    <div class="card-sub">Todos los módulos: eVirtual, eNivelación, eCAAI, eIdiomas, ePosgrados</div>
+    <div class="legend" style="margin-bottom:8px">
+      <div class="legend-item"><div class="legend-dot dot-api1"></div> API Actual</div>
+      <div class="legend-item"><div class="legend-dot dot-grok"></div> Grok-4.1</div>
+    </div>
+    <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="10" x2="60" y2="170" stroke="#e0e7f0" stroke-width="1"/>
+      <line x1="60" y1="170" x2="295" y2="170" stroke="#e0e7f0" stroke-width="1"/>
+
+      <text x="56" y="173" text-anchor="end" font-size="8" fill="#7f8c8d">$0</text>
+      <text x="56" y="138" text-anchor="end" font-size="8" fill="#7f8c8d">$60K</text>
+      <text x="56" y="103" text-anchor="end" font-size="8" fill="#7f8c8d">$120K</text>
+      <text x="56" y="68" text-anchor="end" font-size="8" fill="#7f8c8d">$180K</text>
+      <text x="56" y="33" text-anchor="end" font-size="8" fill="#7f8c8d">$240K</text>
+      <line x1="60" y1="135" x2="295" y2="135" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="60" y1="100" x2="295" y2="100" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="60" y1="65" x2="295" y2="65" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+
+      <!-- Scale: 300K=160px, 1K=0.533px -->
+      <!-- eVirtual: API=298377(158.5), Grok=58267(30.9) -->
+      <rect x="63" y="12" width="15" height="158" fill="#2e6db4cc" rx="2"/>
+      <rect x="80" y="139" width="15" height="31" fill="#27ae60cc" rx="2"/>
+      <text x="71" y="9" text-anchor="middle" font-size="6.5" fill="#1a3a6b" font-weight="700">$298K</text>
+      <text x="88" y="137" text-anchor="middle" font-size="6.5" fill="#27ae60" font-weight="700">$58K</text>
+      <text x="80" y="187" text-anchor="middle" font-size="7.5" fill="#5a6a7e">eVirtual</text>
+
+      <!-- eNivelación: API=46536(24.7), Grok=8357(4.4) -->
+      <rect x="115" y="145" width="15" height="25" fill="#2e6db4cc" rx="2"/>
+      <rect x="132" y="166" width="15" height="4" fill="#27ae60cc" rx="2"/>
+      <text x="123" y="142" text-anchor="middle" font-size="6.5" fill="#1a3a6b" font-weight="700">$47K</text>
+      <text x="140" y="163" text-anchor="middle" font-size="6.5" fill="#27ae60" font-weight="700">$8K</text>
+      <text x="131" y="187" text-anchor="middle" font-size="7.5" fill="#5a6a7e">eNivel.</text>
+
+      <!-- eCAAI: API=48582(25.8), Grok=8749(4.6) -->
+      <rect x="163" y="144" width="15" height="26" fill="#2e6db4cc" rx="2"/>
+      <rect x="180" y="165" width="15" height="5" fill="#27ae60cc" rx="2"/>
+      <text x="171" y="141" text-anchor="middle" font-size="6.5" fill="#1a3a6b" font-weight="700">$49K</text>
+      <text x="188" y="163" text-anchor="middle" font-size="6.5" fill="#27ae60" font-weight="700">$9K</text>
+      <text x="179" y="187" text-anchor="middle" font-size="7.5" fill="#5a6a7e">eCAAI</text>
+
+      <!-- eIdiomas: API=41269(21.9), Grok=7452(3.95) -->
+      <rect x="211" y="148" width="15" height="22" fill="#2e6db4cc" rx="2"/>
+      <rect x="228" y="166" width="15" height="4" fill="#27ae60cc" rx="2"/>
+      <text x="219" y="145" text-anchor="middle" font-size="6.5" fill="#1a3a6b" font-weight="700">$41K</text>
+      <text x="236" y="163" text-anchor="middle" font-size="6.5" fill="#27ae60" font-weight="700">$7K</text>
+      <text x="227" y="187" text-anchor="middle" font-size="7.5" fill="#5a6a7e">eIdiomas</text>
+
+      <!-- ePosgrados: API=21722(11.5), Grok=3870(2.05) -->
+      <rect x="258" y="159" width="15" height="11" fill="#2e6db4cc" rx="2"/>
+      <rect x="275" y="168" width="15" height="2" fill="#27ae60cc" rx="2"/>
+      <text x="266" y="156" text-anchor="middle" font-size="6.5" fill="#1a3a6b" font-weight="700">$22K</text>
+      <text x="283" y="165" text-anchor="middle" font-size="6.5" fill="#27ae60" font-weight="700">$4K</text>
+      <text x="274" y="187" text-anchor="middle" font-size="7.5" fill="#5a6a7e">ePosgr.</text>
+    </svg>
+    <div class="insight-bar" style="margin-top:4px">
+      <strong>🔑 eVirtual concentra el 82% del gasto total de ESPAM</strong>
+      <p>Con Grok-4.1 el ahorro en eVirtual sería ~$240K. Los módulos especializados (eIdiomas, ePosgrados) tienen bajo impacto relativo.</p>
+    </div>
+  </div>
+
+  <!-- Costo mensual por usuario -->
+  <div class="card">
+    <div class="card-title">📅 Costo Mensual por Usuario (800 créditos/semestre)</div>
+    <div class="card-sub">Costo total en 5 meses por perfil y API seleccionada</div>
+
+    <!-- Waterfall / puntos de decisión -->
+    <svg viewBox="0 0 280 210" xmlns="http://www.w3.org/2000/svg">
+      <!-- Axes -->
+      <line x1="60" y1="10" x2="60" y2="175" stroke="#e0e7f0" stroke-width="1"/>
+      <line x1="60" y1="175" x2="275" y2="175" stroke="#e0e7f0" stroke-width="1"/>
+
+      <!-- Grid lines -->
+      <line x1="60" y1="135" x2="275" y2="135" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="60" y1="95" x2="275" y2="95" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="60" y1="55" x2="275" y2="55" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+      <line x1="60" y1="15" x2="275" y2="15" stroke="#eef2f7" stroke-width="0.7" stroke-dasharray="3,3"/>
+
+      <!-- Y labels: max $125 => 165px, 1px = 0.758 -->
+      <text x="56" y="178" text-anchor="end" font-size="8" fill="#7f8c8d">$0</text>
+      <text x="56" y="138" text-anchor="end" font-size="8" fill="#7f8c8d">$30</text>
+      <text x="56" y="98" text-anchor="end" font-size="8" fill="#7f8c8d">$60</text>
+      <text x="56" y="58" text-anchor="end" font-size="8" fill="#7f8c8d">$90</text>
+      <text x="56" y="18" text-anchor="end" font-size="8" fill="#7f8c8d">$125</text>
+
+      <!-- X: Admin, Estudiante, Docente | 4 dots each -->
+      <!-- Admin: Act=$51.6(41p), Opt40=$41.3(33p), Gem=$25.2(20p), Grok=$9.68(7.7p) -->
+      <!-- Line series -->
+      <!-- API Actual -->
+      <circle cx="95" cy="134" r="4" fill="#2e6db4"/>
+      <circle cx="168" cy="126" r="4" fill="#2e6db4"/>
+      <circle cx="241" cy="82" r="4" fill="#2e6db4"/>
+      <polyline points="95,134 168,126 241,82" fill="none" stroke="#2e6db4" stroke-width="2"/>
+
+      <!-- API Opt -->
+      <circle cx="95" cy="145" r="4" fill="#8e44ad"/>
+      <circle cx="168" cy="140" r="4" fill="#8e44ad"/>
+      <circle cx="241" cy="111" r="4" fill="#8e44ad"/>
+      <polyline points="95,145 168,140 241,111" fill="none" stroke="#8e44ad" stroke-width="2"/>
+
+      <!-- Gemini -->
+      <circle cx="95" cy="155" r="4" fill="#16a085"/>
+      <circle cx="168" cy="151" r="4" fill="#16a085"/>
+      <circle cx="241" cy="126" r="4" fill="#16a085"/>
+      <polyline points="95,155 168,151 241,126" fill="none" stroke="#16a085" stroke-width="2"/>
+
+      <!-- Grok -->
+      <circle cx="95" cy="167" r="5" fill="#27ae60"/>
+      <circle cx="168" cy="165" r="5" fill="#27ae60"/>
+      <circle cx="241" cy="158" r="5" fill="#27ae60"/>
+      <polyline points="95,167 168,165 241,158" fill="none" stroke="#27ae60" stroke-width="2.5"/>
+
+      <!-- Value labels -->
+      <text x="95" y="130" text-anchor="middle" font-size="7.5" fill="#2e6db4" font-weight="700">$51.6</text>
+      <text x="168" y="122" text-anchor="middle" font-size="7.5" fill="#2e6db4" font-weight="700">$61.4</text>
+      <text x="241" y="78" text-anchor="middle" font-size="7.5" fill="#2e6db4" font-weight="700">$112.8</text>
+
+      <text x="241" y="154" text-anchor="middle" font-size="7.5" fill="#27ae60" font-weight="700">$18</text>
+
+      <!-- X axis -->
+      <text x="95" y="190" text-anchor="middle" font-size="8.5" fill="#5a6a7e">Admin</text>
+      <text x="168" y="190" text-anchor="middle" font-size="8.5" fill="#5a6a7e">Estudiante</text>
+      <text x="241" y="190" text-anchor="middle" font-size="8.5" fill="#5a6a7e">Docente</text>
+
+      <!-- Title total 5m -->
+      <text x="165" y="207" text-anchor="middle" font-size="7" fill="#7f8c8d">Costo total 5 meses (800 créditos)</text>
+    </svg>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px">
+      <div style="background:#f8faff;border-radius:8px;padding:8px;border:1px solid #dce3ec">
+        <div style="font-size:0.65rem;color:var(--text-sub);margin-bottom:2px;">Docente · API Actual</div>
+        <div style="font-size:1.1rem;font-weight:800;color:var(--brand-accent)">$112.80<span style="font-size:0.6rem;font-weight:400;">/5m</span></div>
+      </div>
+      <div style="background:#f0faf5;border-radius:8px;padding:8px;border:1px solid #b8e0c8">
+        <div style="font-size:0.65rem;color:var(--text-sub);margin-bottom:2px;">Docente · Grok-4.1 ⭐</div>
+        <div style="font-size:1.1rem;font-weight:800;color:var(--brand-success)">$18.04<span style="font-size:0.6rem;font-weight:400;">/5m</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROW 3: Tabla de decisión + Ahorro acumulado -->
+<div class="row-23">
+  <!-- Tabla de decisión -->
+  <div class="card">
+    <div class="card-title">🧭 Matriz de Decisión Estratégica — ¿Qué API elegir?</div>
+    <div class="card-sub">Evaluación multidimensional para la migración de AIRA</div>
+
+    <div class="matrix-body" style="margin-bottom:10px">
+      <div class="matrix-row">
+        <div class="matrix-cell" style="font-size:0.67rem;font-weight:700">Criterio</div>
+        <div class="matrix-cell" style="font-size:0.67rem;font-weight:700">API Actual</div>
+        <div class="matrix-cell" style="font-size:0.67rem;font-weight:700">API Optim.</div>
+        <div class="matrix-cell" style="font-size:0.67rem;font-weight:700">Gemini FL</div>
+        <div class="matrix-cell" style="font-size:0.67rem;font-weight:700">Grok-4.1</div>
+      </div>
+      <div class="matrix-row">
+        <div class="matrix-cell">💰 Costo Docente/consulta</div>
+        <div class="matrix-cell"><span class="badge-pill bp-red">$0.22</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-warn">$0.13</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-blue">$0.08</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-green">$0.03</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="matrix-cell">📉 Reducción de costo</div>
+        <div class="matrix-cell"><span class="badge-pill bp-red">Base</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-warn">-40%</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-blue">-64%</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-green">-87%</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="matrix-cell">🏛️ Ahorro UCSG Grado/sem.</div>
+        <div class="matrix-cell"><span class="badge-pill bp-red">$0</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-warn">$430K</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-blue">$700K</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-green">$876K</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="matrix-cell">🏫 Ahorro ESPAM total</div>
+        <div class="matrix-cell"><span class="badge-pill bp-red">$0</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-warn">$155K</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-blue">$252K</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-green">$386K</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="matrix-cell">⚙️ Complejidad migración</div>
+        <div class="matrix-cell">Ninguna</div>
+        <div class="matrix-cell"><span class="badge-pill bp-green">Baja</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-warn">Media</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-blue">Media</span></div>
+      </div>
+      <div class="matrix-row">
+        <div class="matrix-cell">🎯 Recomendación</div>
+        <div class="matrix-cell"><span class="badge-pill bp-red">No continuar</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-warn">Transición</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-blue">Viable</span></div>
+        <div class="matrix-cell"><span class="badge-pill bp-green">⭐ Óptima</span></div>
+      </div>
+    </div>
+
+    <div class="insight-bar">
+      <strong>🚀 Recomendación ejecutiva: migrar a Grok-4.1</strong>
+      <p>Con una reducción del 87% en costos y un ahorro semestral estimado de <strong>$876K solo en UCSG Grado</strong>, Grok-4.1 representa la decisión de mayor impacto financiero. La API Optimizada (-40%) puede ser una etapa de transición mientras se valida la calidad del modelo Grok en el contexto educativo. La migración directa puede hacerse con complejidad media, sin requrir rediseño total de la arquitectura AIRA.</p>
+    </div>
+  </div>
+
+  <!-- Ahorro acumulado escenarios -->
+  <div class="card">
+    <div class="card-title">📊 Ahorro Acumulado — Escenarios de Migración</div>
+    <div class="card-sub">Proyección USD por ruta de transición</div>
+
+    <!-- Donut simplificado: ahorro total UCSG por módulo con Grok -->
+    <div style="text-align:center;margin-bottom:10px">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <!-- Donut chart: total UCSG ahorros por módulo con Grok -->
+        <!-- Total: 876062+123183+205755 = ~1,205,000 -->
+        <!-- Grado: 876K=73%, Distancia:123K=10%, Posgrado:205K=17% -->
+        <!-- Donut: cx=100,cy=70,r=55,stroke=20 -->
+        <!-- Grado 73%: 0 to 263deg -->
+        <circle cx="100" cy="70" r="50" fill="none" stroke="#e9eef5" stroke-width="22"/>
+        <!-- Grado -->
+        <circle cx="100" cy="70" r="50" fill="none" stroke="#27ae60" stroke-width="22"
+          stroke-dasharray="229 314" stroke-dashoffset="0" transform="rotate(-90 100 70)"/>
+        <!-- Distancia -->
+        <circle cx="100" cy="70" r="50" fill="none" stroke="#2e6db4" stroke-width="22"
+          stroke-dasharray="31 314" stroke-dashoffset="-229" transform="rotate(-90 100 70)"/>
+        <!-- Posgrado -->
+        <circle cx="100" cy="70" r="50" fill="none" stroke="#8e44ad" stroke-width="22"
+          stroke-dasharray="54 314" stroke-dashoffset="-260" transform="rotate(-90 100 70)"/>
+
+        <text x="100" y="64" text-anchor="middle" font-size="11" font-weight="800" fill="#1a3a6b">$1.2M</text>
+        <text x="100" y="78" text-anchor="middle" font-size="8" fill="#7f8c8d">Ahorro total</text>
+        <text x="100" y="90" text-anchor="middle" font-size="7.5" fill="#7f8c8d">UCSG · Grok-4.1</text>
+      </svg>
+    </div>
+
+    <div style="font-size:0.67rem;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;padding:5px 8px;background:#f5f8fd;border-radius:6px">
+        <div style="width:12px;height:12px;background:#27ae60;border-radius:3px;flex-shrink:0"></div>
+        <span style="flex:1;color:var(--text-main);font-weight:600;">Grado</span>
+        <span style="color:#27ae60;font-weight:800;">$876K (73%)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;padding:5px 8px;background:#f5f8fd;border-radius:6px">
+        <div style="width:12px;height:12px;background:#2e6db4;border-radius:3px;flex-shrink:0"></div>
+        <span style="flex:1;color:var(--text-main);font-weight:600;">Posgrado</span>
+        <span style="color:#2e6db4;font-weight:800;">$206K (17%)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:#f5f8fd;border-radius:6px">
+        <div style="width:12px;height:12px;background:#8e44ad;border-radius:3px;flex-shrink:0"></div>
+        <span style="flex:1;color:var(--text-main);font-weight:600;">Distancia</span>
+        <span style="color:#8e44ad;font-weight:800;">$123K (10%)</span>
+      </div>
+    </div>
+
+    <div style="background:#fff8e1;border:1px solid #f39c12;border-radius:8px;padding:9px 12px;margin-top:4px">
+      <div style="font-size:0.72rem;font-weight:700;color:#c0770a;margin-bottom:4px">⚡ Prioridad de migración</div>
+      <div style="font-size:0.67rem;color:var(--text-sub);line-height:1.6">
+        <b>1° Grado UCSG</b> → mayor ahorro, mayor volumen<br>
+        <b>2° eVirtual ESPAM</b> → 82% del gasto ESPAM<br>
+        <b>3° Posgrado UCSG</b> → alto costo por docente<br>
+        <b>4° Módulos menores</b> → baja prioridad
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROW 4: Tabla resumen completa -->
+<div class="card row-full">
+  <div class="card-title">📋 Tabla Comparativa Completa — Costos por Usuario y API (5 meses, 800 créditos)</div>
+  <div class="card-sub">Costo total y mensual por perfil · Todas las versiones de API · Diferencial de ahorro</div>
+  <table class="savings-table">
+    <thead>
+      <tr>
+        <th>Perfil</th>
+        <th>API Actual</th>
+        <th>API Optim. -40%</th>
+        <th>Gemini Flash-Lite</th>
+        <th>Grok-4.1 ⭐</th>
+        <th>Ahorro (Act→Grok)</th>
+        <th>Ahorro %</th>
+        <th>Recomendación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700">Administrador</td>
+        <td style="color:#c0392b;font-weight:700">$51.60</td>
+        <td style="color:#8e44ad">$41.28</td>
+        <td style="color:#16a085">$25.20</td>
+        <td style="color:#27ae60;font-weight:800">$9.68</td>
+        <td style="font-weight:700">$41.92</td>
+        <td><span class="badge-pill bp-green">-81%</span></td>
+        <td>Migrar a Grok-4.1</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Estudiante</td>
+        <td style="color:#c0392b;font-weight:700">$61.44</td>
+        <td style="color:#8e44ad">$48.96</td>
+        <td style="color:#16a085">$30.72</td>
+        <td style="color:#27ae60;font-weight:800">$11.12</td>
+        <td style="font-weight:700">$50.32</td>
+        <td><span class="badge-pill bp-green">-82%</span></td>
+        <td>Migrar a Grok-4.1 (mayor volumen)</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700">Resources</td>
+        <td style="color:#c0392b;font-weight:700">$75.60</td>
+        <td style="color:#8e44ad">$60.48</td>
+        <td style="color:#16a085">$36.96</td>
+        <td style="color:#27ae60;font-weight:800">$13.44</td>
+        <td style="font-weight:700">$62.16</td>
+        <td><span class="badge-pill bp-green">-82%</span></td>
+        <td>Migrar a Grok-4.1</td>
+      </tr>
+      <tr style="background:#fff8e1">
+        <td style="font-weight:800;color:var(--brand-primary)">Docente 🔴 Mayor impacto</td>
+        <td style="color:#c0392b;font-weight:800">$112.80</td>
+        <td style="color:#8e44ad;font-weight:700">$90.24</td>
+        <td style="color:#16a085;font-weight:700">$64.00</td>
+        <td style="color:#27ae60;font-weight:800">$18.04</td>
+        <td style="font-weight:800;color:#c0392b">$94.76</td>
+        <td><span class="badge-pill bp-green">-87%</span></td>
+        <td><span class="badge-pill bp-green">⭐ Urgente: Grok-4.1</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  Fuente: Tabla de Costos AIRA por Consulta — Marzo 2026 [3] · Cálculo basado en 800 créditos/semestre · Universo: UCSG y ESPAM
+</div>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
