@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 1080px; max-height: 1080px;
+    width: 100%; overflow: hidden;
+    font-family: 'Montserrat', 'Arial', sans-serif;
+    background: #020029;
+    color: #fff;
+  }
+
+  .dashboard {
+    display: flex; flex-direction: column;
+    height: 1080px; max-height: 1080px;
+    width: 100%; overflow: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    height: 64px; flex-shrink: 0;
+    background: linear-gradient(90deg, #020029 0%, #0c0c43 60%, #273dd5 100%);
+    border-bottom: 2px solid #29c6ff;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px;
+  }
+  .header-logo { height: 36px; }
+  .header-title {
+    font-size: 15px; font-weight: 700; letter-spacing: 1.5px;
+    color: #fff; text-transform: uppercase;
+  }
+  .header-badge {
+    background: #29c6ff22; border: 1px solid #29c6ff;
+    color: #29c6ff; font-size: 10px; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px; letter-spacing: 1px;
+  }
+
+  /* TABS NAV */
+  .tabs-nav {
+    height: 48px; flex-shrink: 0;
+    background: #0a0a35;
+    display: flex; align-items: flex-end;
+    padding: 0 20px; gap: 4px;
+    border-bottom: 1px solid #1a1a5a;
+  }
+  .tab-btn {
+    padding: 8px 20px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.8px; text-transform: uppercase;
+    background: transparent; color: #8888bb;
+    border: none; border-bottom: 3px solid transparent;
+    cursor: pointer; transition: all 0.2s; font-family: inherit;
+  }
+  .tab-btn:hover { color: #29c6ff; }
+  .tab-btn.active { color: #29c6ff; border-bottom-color: #29c6ff; background: #29c6ff11; }
+
+  /* CONTENT AREA */
+  .tab-content {
+    flex: 1; overflow-y: auto; overflow-x: hidden;
+    padding: 20px 24px;
+    height: 968px; max-height: 968px;
+  }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: #29c6ff;
+    margin-bottom: 14px; padding-left: 8px;
+    border-left: 3px solid #29c6ff;
+  }
+
+  /* FODA GRID */
+  .foda-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 14px;
+    height: 820px;
+  }
+
+  .foda-card {
+    border-radius: 12px; padding: 18px;
+    overflow-y: auto;
+    border: 1px solid;
+    position: relative;
+  }
+  .foda-card.fortalezas {
+    background: linear-gradient(135deg, #0d2e0d 0%, #0a1f0a 100%);
+    border-color: #2ecc71;
+  }
+  .foda-card.oportunidades {
+    background: linear-gradient(135deg, #0d1f35 0%, #0a1525 100%);
+    border-color: #29c6ff;
+  }
+  .foda-card.debilidades {
+    background: linear-gradient(135deg, #2e1f00 0%, #1f1400 100%);
+    border-color: #f39c12;
+  }
+  .foda-card.amenazas {
+    background: linear-gradient(135deg, #2e0d0d 0%, #1f0a0a 100%);
+    border-color: #e74c3c;
+  }
+
+  .foda-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .foda-icon { font-size: 22px; }
+  .foda-label {
+    font-size: 13px; font-weight: 800;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  .fortalezas .foda-label { color: #2ecc71; }
+  .oportunidades .foda-label { color: #29c6ff; }
+  .debilidades .foda-label { color: #f39c12; }
+  .amenazas .foda-label { color: #e74c3c; }
+
+  .foda-item {
+    display: flex; gap: 10px; margin-bottom: 12px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px; padding: 10px 12px;
+    cursor: pointer; transition: background 0.2s;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .foda-item:hover { background: rgba(255,255,255,0.09); }
+  .foda-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .fortalezas .foda-num { background: #2ecc71; color: #001a00; }
+  .oportunidades .foda-num { background: #29c6ff; color: #001a2e; }
+  .debilidades .foda-num { background: #f39c12; color: #1a0d00; }
+  .amenazas .foda-num { background: #e74c3c; color: #1a0000; }
+
+  .foda-text { font-size: 11.5px; line-height: 1.6; color: #d0d0e8; }
+  .foda-text strong { color: #fff; font-weight: 600; }
+  .foda-ref {
+    display: inline-block; margin-top: 4px;
+    font-size: 9px; font-weight: 600; letter-spacing: 0.8px;
+    padding: 2px 7px; border-radius: 10px;
+    background: rgba(255,255,255,0.08); color: #aaaacc;
+  }
+
+  /* DIMENSION TABS (inside Dimensiones) */
+  .dim-tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .dim-btn {
+    padding: 6px 16px; border-radius: 20px; font-size: 10px;
+    font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer; border: 1px solid; transition: all 0.2s;
+    font-family: inherit;
+    background: transparent;
+  }
+  .dim-btn.tecnica { border-color: #9b59b6; color: #9b59b6; }
+  .dim-btn.tecnica.sel { background: #9b59b6; color: #fff; }
+  .dim-btn.organizacional { border-color: #1abc9c; color: #1abc9c; }
+  .dim-btn.organizacional.sel { background: #1abc9c; color: #001a14; }
+  .dim-btn.normativa { border-color: #e67e22; color: #e67e22; }
+  .dim-btn.normativa.sel { background: #e67e22; color: #1a0800; }
+
+  .dim-panel { display: none; }
+  .dim-panel.active { display: block; }
+
+  .dim-foda-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 12px;
+  }
+  .dim-block {
+    border-radius: 10px; padding: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+  }
+  .dim-block-title {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 8px;
+    padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .db-F .dim-block-title { color: #2ecc71; }
+  .db-O .dim-block-title { color: #29c6ff; }
+  .db-D .dim-block-title { color: #f39c12; }
+  .db-A .dim-block-title { color: #e74c3c; }
+
+  .dim-block p { font-size: 11px; line-height: 1.6; color: #c0c0d8; }
+  .dim-block .ref { font-size: 9px; color: #7777aa; margin-top: 6px; font-style: italic; }
+
+  /* RADAR / CHART tab */
+  .chart-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .chart-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 16px;
+    height: 280px; max-height: 280px;
+    display: flex; flex-direction: column;
+  }
+  .chart-box canvas { flex: 1; }
+  .chart-title {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: #29c6ff;
+    margin-bottom: 10px;
+  }
+
+  /* PRIORIDADES TAB */
+  .priority-list { display: flex; flex-direction: column; gap: 10px; }
+  .priority-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px; padding: 14px 16px;
+    border-left: 4px solid;
+    transition: background 0.2s; cursor: default;
+  }
+  .priority-item:hover { background: rgba(255,255,255,0.08); }
+  .priority-item.alta { border-color: #e74c3c; }
+  .priority-item.media { border-color: #f39c12; }
+  .priority-item.baja { border-color: #2ecc71; }
+  .priority-badge {
+    font-size: 9px; font-weight: 800; letter-spacing: 1px;
+    padding: 3px 9px; border-radius: 10px; flex-shrink: 0; margin-top: 1px;
+  }
+  .alta .priority-badge { background: #e74c3c22; color: #e74c3c; border: 1px solid #e74c3c; }
+  .media .priority-badge { background: #f39c1222; color: #f39c12; border: 1px solid #f39c12; }
+  .baja .priority-badge { background: #2ecc7122; color: #2ecc71; border: 1px solid #2ecc71; }
+  .priority-content h4 { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .priority-content p { font-size: 11px; color: #b0b0cc; line-height: 1.5; }
+  .priority-meta { font-size: 9px; color: #7777aa; margin-top: 5px; }
+
+  /* FOOTER */
+  .footer {
+    height: 36px; flex-shrink: 0;
+    background: #0a0a35;
+    border-top: 1px solid #1a1a5a;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+    font-size: 9px; color: #555588; letter-spacing: 0.8px;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #29c6ff44; border-radius: 4px; }
+</style>
+
+<div class="dashboard">
+
+  <!-- HEADER -->
+  <div class="header">
+    <img class="header-logo"
+         src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png"
+         alt="CEDIA">
+    <div class="header-title">Análisis FODA — Implementación del SGSI</div>
+    <div class="header-badge">LOPDP · EGSI v3.0 · SPDP 2026</div>
+  </div>
+
+  <!-- TABS NAV -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('general')">Vista General</button>
+    <button class="tab-btn" onclick="switchTab('dimensiones')">Por Dimensión</button>
+    <button class="tab-btn" onclick="switchTab('analisis')">Análisis Visual</button>
+    <button class="tab-btn" onclick="switchTab('prioridades')">Plan de Acción</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="tab-content">
+
+    <!-- TAB 1: GENERAL FODA -->
+    <div class="tab-pane active" id="tab-general">
+      <div class="section-title">Matriz FODA Consolidada · 3 Elementos por Cuadrante</div>
+      <div class="foda-grid">
+
+        <!-- FORTALEZAS -->
+        <div class="foda-card fortalezas">
+          <div class="foda-header">
+            <span class="foda-icon">✅</span>
+            <span class="foda-label">Fortalezas</span>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">1</div>
+            <div class="foda-text">
+              <strong>SOC-CSIRT activo</strong> con monitoreo continuo, detección y respuesta a incidentes, cubriendo los requisitos de gestión de incidentes del EGSI v3.0.
+              <br><span class="foda-ref">EGSI v3.0, Art. 9</span>
+            </div>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">2</div>
+            <div class="foda-text">
+              <strong>Talento humano especializado</strong> que habilita la designación del OSI y la conformación del CSI con las áreas requeridas.
+              <br><span class="foda-ref">EGSI v3.0, Arts. 6 y 8</span>
+            </div>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">3</div>
+            <div class="foda-text">
+              <strong>Conocimiento regulatorio directo</strong> (LOPDP, Reglamento, EGSI v3.0) que permite diseñar el SGSI alineado desde el inicio, evitando rediseños correctivos.
+              <br><span class="foda-ref">LOPDP 2021; EGSI v3.0 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPORTUNIDADES -->
+        <div class="foda-card oportunidades">
+          <div class="foda-header">
+            <span class="foda-icon">🌟</span>
+            <span class="foda-label">Oportunidades</span>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">1</div>
+            <div class="foda-text">
+              <strong>Guía SPDP 2026</strong> promueve integrar gestión de riesgos de SI y PDP en un modelo unificado, evitando duplicación de esfuerzos y recursos.
+              <br><span class="foda-ref">Guía SPDP v2, Sección 2</span>
+            </div>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">2</div>
+            <div class="foda-text">
+              <strong>Liderazgo en el ecosistema académico</strong>: LOPDP + EGSI posicionan a CEDIA para acompañar a las IES afiliadas en sus propios procesos de cumplimiento.
+              <br><span class="foda-ref">LOPDP, Art. 38; EGSI v3.0, Art. 1</span>
+            </div>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">3</div>
+            <div class="foda-text">
+              <strong>Metarregulación de la SPDP</strong> abre la posibilidad de construir un esquema de autorregulación validable ante la Superintendencia, fortaleciendo la reputación institucional.
+              <br><span class="foda-ref">Guía SPDP v2, Metarregulación</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DEBILIDADES -->
+        <div class="foda-card debilidades">
+          <div class="foda-header">
+            <span class="foda-icon">⚠️</span>
+            <span class="foda-label">Debilidades</span>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">1</div>
+            <div class="foda-text">
+              <strong>Documentación formal incompleta</strong> de controles, políticas y procedimientos, requisito exigible y auditable por el EGSI para garantizar la transferibilidad del SGSI.
+              <br><span class="foda-ref">EGSI v3.0, Art. 9, numeral 13</span>
+            </div>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">2</div>
+            <div class="foda-text">
+              <strong>CSI sin evidencia de constitución formal</strong>, sin reuniones bimestrales documentadas ni informes semestrales a la máxima autoridad.
+              <br><span class="foda-ref">EGSI v3.0, Art. 7, numerales 10 y 11</span>
+            </div>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">3</div>
+            <div class="foda-text">
+              <strong>Ausencia del RAT documentado</strong> (Registro de Actividades del Tratamiento), limitando la trazabilidad ante requerimientos formales de la SPDP.
+              <br><span class="foda-ref">LOPDP; Guía SPDP v2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- AMENAZAS -->
+        <div class="foda-card amenazas">
+          <div class="foda-header">
+            <span class="foda-icon">🚨</span>
+            <span class="foda-label">Amenazas</span>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">1</div>
+            <div class="foda-text">
+              <strong>Evolución acelerada de amenazas técnicas</strong> que puede superar la capacidad de respuesta si los controles no se actualizan en ciclos formales de mejora continua.
+              <br><span class="foda-ref">EGSI v3.0, Disp. Cuarta; Guía SPDP, Sección 7</span>
+            </div>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">2</div>
+            <div class="foda-text">
+              <strong>Rotación de personal especializado</strong> sin procedimiento formal de entrega-recepción del conocimiento y documentación del SGSI.
+              <br><span class="foda-ref">EGSI v3.0, Art. 9, numeral 16</span>
+            </div>
+          </div>
+          <div class="foda-item">
+            <div class="foda-num">3</div>
+            <div class="foda-text">
+              <strong>Riesgo de incumplimiento de plazos EGSI</strong> (12 meses desde marzo 2024), con exposición a observaciones formales del MINTEL.
+              <br><span class="foda-ref">EGSI v3.0, Disp. Transitoria Segunda</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 2: POR DIMENSIÓN -->
+    <div class="tab-pane" id="tab-dimensiones">
+      <div class="section-title">FODA por Dimensión de Análisis</div>
+      <div class="dim-tabs">
+        <button class="dim-btn tecnica sel" onclick="switchDim('tecnica')">🔧 Técnica</button>
+        <button class="dim-btn organizacional" onclick="switchDim('organizacional')">🏛️ Organizacional</button>
+        <button class="dim-btn normativa" onclick="switchDim('normativa')">📋 Normativa</button>
+      </div>
+
+      <!-- TÉCNICA -->
+      <div class="dim-panel active" id="dim-tecnica">
+        <div class="dim-foda-row">
+          <div class="dim-block db-F">
+            <div class="dim-block-title">✅ Fortaleza</div>
+            <p>CEDIA opera un <strong>SOC-CSIRT activo</strong> con herramientas integradas (Security Scorecard, Nessus, GLPI) para monitoreo, detección, gestión de activos y centralización de hallazgos de seguridad. Esto cubre directamente los requisitos de gestión de incidentes del EGSI.</p>
+            <p class="ref">Sustento: EGSI v3.0, Art. 9, numerales 10 y 11; Art. 3</p>
+          </div>
+          <div class="dim-block db-O">
+            <div class="dim-block-title">🌟 Oportunidad</div>
+            <p>La <strong>Guía de la SPDP 2026</strong> promueve explícitamente la integración entre la gestión de riesgos de seguridad de la información y la gestión de riesgos para la protección de datos personales, lo que le permite a CEDIA construir un modelo unificado sin duplicar esfuerzos.</p>
+            <p class="ref">Sustento: Guía SPDP v2, Sección 2 — Integración</p>
+          </div>
+        </div>
+        <div class="dim-foda-row">
+          <div class="dim-block db-D">
+            <div class="dim-block-title">⚠️ Debilidad</div>
+            <p>La operación técnica puede estar concentrada en perfiles especializados sin suficiente <strong>documentación formal de controles, políticas y procedimientos</strong>, lo que impide que el SGSI sea auditable y transferible ante cambios de personal o revisiones externas.</p>
+            <p class="ref">Sustento: EGSI v3.0, Art. 9, numeral 13</p>
+          </div>
+          <div class="dim-block db-A">
+            <div class="dim-block-title">🚨 Amenaza</div>
+            <p>La <strong>evolución acelerada de amenazas técnicas</strong> (vulneraciones de confidencialidad, integridad y disponibilidad) puede superar la capacidad de respuesta si los controles técnicos no se actualizan dentro de los ciclos de mejora continua obligatorios.</p>
+            <p class="ref">Sustento: EGSI v3.0, Disp. Cuarta; Guía SPDP v2, Sección 7</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORGANIZACIONAL -->
+      <div class="dim-panel" id="dim-organizacional">
+        <div class="dim-foda-row">
+          <div class="dim-block db-F">
+            <div class="dim-block-title">✅ Fortaleza</div>
+            <p>CEDIA posee <strong>talento humano con formación especializada</strong> en seguridad de la información, lo que facilita la designación del OSI con los requisitos del EGSI (formación específica y mínimo 2 años de experiencia) y la conformación de un CSI funcional con todas las áreas requeridas.</p>
+            <p class="ref">Sustento: EGSI v3.0, Arts. 6 y 8</p>
+          </div>
+          <div class="dim-block db-O">
+            <div class="dim-block-title">🌟 Oportunidad</div>
+            <p>El marco normativo vigente (LOPDP + EGSI) ha generado presión de cumplimiento en todo el sector académico, lo que posiciona a CEDIA para <strong>liderar el acompañamiento a las IES afiliadas</strong> y estandarizar políticas y controles del SGSI como modelos replicables.</p>
+            <p class="ref">Sustento: LOPDP, Art. 38; EGSI v3.0, Art. 1</p>
+          </div>
+        </div>
+        <div class="dim-foda-row">
+          <div class="dim-block db-D">
+            <div class="dim-block-title">⚠️ Debilidad</div>
+            <p>Sin evidencia documentada de un <strong>Comité de Seguridad de la Información (CSI) formalmente constituido y activo</strong>, con reuniones bimestrales e informes semestrales a la máxima autoridad, tal como exige el EGSI.</p>
+            <p class="ref">Sustento: EGSI v3.0, Art. 7, numerales 10 y 11</p>
+          </div>
+          <div class="dim-block db-A">
+            <div class="dim-block-title">🚨 Amenaza</div>
+            <p>La <strong>rotación de personal especializado</strong> puede generar vacíos críticos en el conocimiento institucional del SGSI. El EGSI exige procedimiento formal de entrega-recepción de documentación y conocimiento al finalizar las funciones del OSI.</p>
+            <p class="ref">Sustento: EGSI v3.0, Art. 9, numeral 16</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- NORMATIVA -->
+      <div class="dim-panel" id="dim-normativa">
+        <div class="dim-foda-row">
+          <div class="dim-block db-F">
+            <div class="dim-block-title">✅ Fortaleza</div>
+            <p>CEDIA tiene <strong>conocimiento directo del ecosistema regulatorio ecuatoriano vigente</strong> (LOPDP, Reglamento, EGSI v3.0), lo que le permite diseñar su SGSI alineado desde el inicio a los requerimientos legales, evitando rediseños correctivos costosos.</p>
+            <p class="ref">Sustento: LOPDP 2021; Reglamento LOPDP 2023; EGSI v3.0 2024</p>
+          </div>
+          <div class="dim-block db-O">
+            <div class="dim-block-title">🌟 Oportunidad</div>
+            <p>El modelo de <strong>metarregulación de la SPDP</strong> abre la posibilidad de construir un esquema de autorregulación sólido y validable ante la Superintendencia, fortaleciendo la reputación institucional y reduciendo el riesgo sancionatorio.</p>
+            <p class="ref">Sustento: Guía SPDP v2, definición de metarregulación</p>
+          </div>
+        </div>
+        <div class="dim-foda-row">
+          <div class="dim-block db-D">
+            <div class="dim-block-title">⚠️ Debilidad</div>
+            <p>La <strong>ausencia de un Registro de Actividades del Tratamiento (RAT)</strong> formalmente documentado limita la trazabilidad normativa ante posibles requerimientos de la SPDP, autoridad con capacidad sancionatoria sobre responsables del tratamiento.</p>
+            <p class="ref">Sustento: LOPDP; Guía SPDP v2, siglas RAT</p>
+          </div>
+          <div class="dim-block db-A">
+            <div class="dim-block-title">🚨 Amenaza</div>
+            <p>El incumplimiento del <strong>plazo de 12 meses</strong> para implementar el EGSI desde su publicación en marzo 2024 expone a CEDIA a observaciones formales del MINTEL, que realiza monitoreo, evaluación y control del cumplimiento.</p>
+            <p class="ref">Sustento: EGSI v3.0, Disp. Transitoria Segunda; Disp. General Segunda</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ANÁLISIS VISUAL -->
+    <div class="tab-pane" id="tab-analisis">
+      <div class="section-title">Análisis Visual — Distribución e Impacto por Cuadrante</div>
+      <div class="chart-grid">
+
+        <div class="chart-box">
+          <div class="chart-title">Nivel de Madurez por Dimensión (FODA)</div>
+          <canvas id="radarChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title">Distribución de Impacto por Cuadrante</div>
+          <canvas id="donutChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title">Prioridad de Brechas — Debilidades vs Amenazas</div>
+          <canvas id="barChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title">Fortalezas vs Oportunidades por Dimensión</div>
+          <canvas id="hbarChart"></canvas>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 4: PLAN DE ACCIÓN -->
+    <div class="tab-pane" id="tab-prioridades">
+      <div class="section-title">Plan de Acción Priorizado — Cierre de Brechas SGSI</div>
+      <div class="priority-list">
+
+        <div class="priority-item alta">
+          <div class="priority-badge">ALTA</div>
+          <div class="priority-content">
+            <h4>1. Formalizar el Comité de Seguridad de la Información (CSI)</h4>
+            <p>Constituir formalmente el CSI con las áreas requeridas, establecer calendario bimestrual de reuniones e instaurar informes semestrales a la máxima autoridad. Es un requisito exigible e inmediato.</p>
+            <div class="priority-meta">📋 Sustento: EGSI v3.0, Art. 7 · Plazo sugerido: 30 días</div>
+          </div>
+        </div>
+
+        <div class="priority-item alta">
+          <div class="priority-badge">ALTA</div>
+          <div class="priority-content">
+            <h4>2. Elaborar y publicar el Registro de Actividades del Tratamiento (RAT)</h4>
+            <p>Documentar formalmente todos los tratamientos de datos personales que realiza CEDIA como responsable y como encargado, incluyendo finalidad, base de licitud, categorías de datos y medidas de seguridad aplicadas.</p>
+            <div class="priority-meta">📋 Sustento: LOPDP; Guía SPDP v2 · Plazo sugerido: 45 días</div>
+          </div>
+        </div>
+
+        <div class="priority-item alta">
+          <div class="priority-badge">ALTA</div>
+          <div class="priority-content">
+            <h4>3. Completar la documentación formal del SGSI</h4>
+            <p>Consolidar políticas, controles y procedimientos documentados que sustenten la implementación del EGSI, garantizando auditabilidad y transferibilidad del sistema ante cambios de personal o revisiones del MINTEL.</p>
+            <div class="priority-meta">📋 Sustento: EGSI v3.0, Art. 9 num. 13 · Plazo sugerido: 60 días</div>
+          </div>
+        </div>
+
+        <div class="priority-item media">
+          <div class="priority-badge">MEDIA</div>
+          <div class="priority-content">
+            <h4>4. Establecer procedimiento formal de entrega-recepción del OSI</h4>
+            <p>Diseñar e institucionalizar el protocolo de transferencia de conocimiento, documentación y accesos del Oficial de Seguridad de la Información ante cualquier cambio de función, con verificación de Talento Humano.</p>
+            <div class="priority-meta">📋 Sustento: EGSI v3.0, Art. 9 num. 16 · Plazo sugerido: 90 días</div>
+          </div>
+        </div>
+
+        <div class="priority-item media">
+          <div class="priority-badge">MEDIA</div>
+          <div class="priority-content">
+            <h4>5. Integrar la gestión de riesgos SI y PDP en un modelo unificado</h4>
+            <p>Aprovechar la guía de la SPDP 2026 para unificar los marcos de gestión de riesgos de seguridad de la información y protección de datos, evitando duplicación y fortaleciendo la cultura de conformidad.</p>
+            <div class="priority-meta">📋 Sustento: Guía SPDP v2, Sección 2 · Plazo sugerido: 120 días</div>
+          </div>
+        </div>
+
+        <div class="priority-item baja">
+          <div class="priority-badge">ESTRATÉGICA</div>
+          <div class="priority-content">
+            <h4>6. Posicionar a CEDIA como referente de autorregulación ante la SPDP</h4>
+            <p>Construir y validar un modelo de autorregulación en PDP-SGSI que pueda replicarse en las IES afiliadas, aprovechando el esquema de metarregulación de la Superintendencia para fortalecer la posición institucional.</p>
+            <div class="priority-meta">📋 Sustento: Guía SPDP v2, Metarregulación · Plazo sugerido: 180 días</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /tab-content -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>CEDIA — Seguridad de la Información · Análisis FODA SGSI</span>
+    <span>Sustentado en: LOPDP 2021 · Reglamento LOPDP 2023 · EGSI v3.0 2024 · Guía SPDP v2 2026</span>
+  </div>
+
+</div><!-- /dashboard -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  // TAB NAVIGATION
+  function switchTab(id) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // DIMENSION NAVIGATION
+  function switchDim(id) {
+    document.querySelectorAll('.dim-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.dim-btn').forEach(b => b.classList.remove('sel'));
+    document.getElementById('dim-' + id).classList.add('active');
+    event.target.classList.add('sel');
+  }
+
+  // CHART: RADAR
+  const radarCtx = document.getElementById('radarChart').getContext('2d');
+  new Chart(radarCtx, {
+    type: 'radar',
+    data: {
+      labels: ['Técnica', 'Organizacional', 'Normativa'],
+      datasets: [
+        {
+          label: 'Fortalezas',
+          data: [85, 75, 80],
+          backgroundColor: 'rgba(46,204,113,0.15)',
+          borderColor: '#2ecc71',
+          pointBackgroundColor: '#2ecc71',
+          pointRadius: 4
+        },
+        {
+          label: 'Debilidades',
+          data: [55, 40, 45],
+          backgroundColor: 'rgba(243,156,18,0.15)',
+          borderColor: '#f39c12',
+          pointBackgroundColor: '#f39c12',
+          pointRadius: 4
+        }
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { labels: { color: '#aaa', font: { size: 10 } } } },
+      scales: {
+        r: {
+          min: 0, max: 100,
+          ticks: { color: '#666', font: { size: 9 }, stepSize: 20 },
+          grid: { color: '#1a1a4a' },
+          pointLabels: { color: '#29c6ff', font: { size: 11, weight: '600' } },
+          angleLines: { color: '#1a1a4a' }
+        }
+      }
+    }
+  });
+
+  // CHART: DONUT
+  const donutCtx = document.getElementById('donutChart').getContext('2d');
+  new Chart(donutCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Fortalezas', 'Oportunidades', 'Debilidades', 'Amenazas'],
+      datasets: [{
+        data: [30, 25, 25, 20],
+        backgroundColor: ['#2ecc71', '#29c6ff', '#f39c12', '#e74c3c'],
+        borderColor: '#020029',
+        borderWidth: 3
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#aaa', font: { size: 10 }, padding: 10 }
+        }
+      }
+    }
+  });
+
+  // CHART: BAR - Debilidades vs Amenazas
+  const barCtx = document.getElementById('barChart').getContext('2d');
+  new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Documentación\nSGSI', 'CSI\nFormal', 'RAT\nDocumentado', 'Amenazas\nTécnicas', 'Rotación\nPersonal', 'Plazos\nEGSI'],
+      datasets: [
+        {
+          label: 'Debilidades',
+          data: [75, 80, 70, 0, 0, 0],
+          backgroundColor: '#f39c1299',
+          borderColor: '#f39c12',
+          borderWidth: 1
+        },
+        {
+          label: 'Amenazas',
+          data: [0, 0, 0, 85, 70, 90],
+          backgroundColor: '#e74c3c99',
+          borderColor: '#e74c3c',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { labels: { color: '#aaa', font: { size: 10 } } } },
+      scales: {
+        x: { ticks: { color: '#888', font: { size: 9 } }, grid: { color: '#1a1a4a' } },
+        y: {
+          min: 0, max: 100,
+          ticks: { color: '#888', font: { size: 9 } },
+          grid: { color: '#1a1a4a' }
+        }
+      }
+    }
+  });
+
+  // CHART: HORIZONTAL BAR - Fortalezas vs Oportunidades
+  const hbarCtx = document.getElementById('hbarChart').getContext('2d');
+  new Chart(hbarCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Técnica', 'Organizacional', 'Normativa'],
+      datasets: [
+        {
+          label: 'Fortalezas',
+          data: [85, 75, 80],
+          backgroundColor: '#2ecc7199',
+          borderColor: '#2ecc71',
+          borderWidth: 1
+        },
+        {
+          label: 'Oportunidades',
+          data: [80, 75, 70],
+          backgroundColor: '#29c6ff99',
+          borderColor: '#29c6ff',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      maintainAspectRatio: false,
+      plugins: { legend: { labels: { color: '#aaa', font: { size: 10 } } } },
+      scales: {
+        x: {
+          min: 0, max: 100,
+          ticks: { color: '#888', font: { size: 9 } },
+          grid: { color: '#1a1a4a' }
+        },
+        y: { ticks: { color: '#aaa', font: { size: 11 } }, grid: { color: '#1a1a4a' } }
+      }
+    }
+  });
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
