@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:1080px;max-height:1080px;width:100%;overflow:hidden;font-family:'Montserrat','Arial',sans-serif;background:#020029;color:#e2e3d5;}
+.wrapper{display:flex;flex-direction:column;height:1080px;max-height:1080px;overflow:hidden;}
+
+/* HEADER */
+.hdr{height:58px;min-height:58px;flex-shrink:0;background:linear-gradient(90deg,#020029 0%,#0a0a40 55%,#0c1a7a 100%);display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:2px solid #29c6ff;position:relative;}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,#29c6ff,#273dd5,#29c6ff);opacity:.7;}
+.hdr-logo img{height:32px;}
+.hdr-center{text-align:center;}
+.hdr-title{font-size:13px;font-weight:800;color:#fff;letter-spacing:.8px;text-transform:uppercase;}
+.hdr-sub{font-size:10px;color:#29c6ff;font-weight:500;margin-top:2px;letter-spacing:.4px;}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.badge-periodo{font-size:10px;color:#020029;font-weight:700;background:#29c6ff;border-radius:20px;padding:3px 12px;}
+.badge-anon{font-size:10px;color:#29c6ff;font-weight:600;border:1px solid rgba(41,198,255,.4);border-radius:20px;padding:2px 10px;}
+
+/* NAV TABS */
+.tabs-nav{height:44px;min-height:44px;flex-shrink:0;background:#080830;display:flex;align-items:flex-end;padding:0 20px;gap:2px;border-bottom:1px solid rgba(41,198,255,.15);}
+.tab-btn{padding:9px 16px;font-size:10.5px;font-weight:700;color:#5a6a9a;background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;letter-spacing:.3px;font-family:'Montserrat','Arial',sans-serif;transition:all .18s;white-space:nowrap;}
+.tab-btn.active{color:#29c6ff;border-bottom-color:#29c6ff;}
+.tab-btn:hover:not(.active){color:#b0c0e0;}
+
+/* CONTENT */
+.content-area{flex:1;height:978px;max-height:978px;overflow:hidden;}
+.tab-panel{display:none;height:978px;max-height:978px;overflow-y:auto;overflow-x:hidden;padding:16px 22px 10px;}
+.tab-panel.active{display:block;}
+
+/* KPI ROW */
+.kpi-row{display:grid;gap:10px;margin-bottom:14px;}
+.kpi-6{grid-template-columns:repeat(6,1fr);}
+.kpi-5{grid-template-columns:repeat(5,1fr);}
+.kpi-4{grid-template-columns:repeat(4,1fr);}
+.kpi-3{grid-template-columns:repeat(3,1fr);}
+.kpi{background:linear-gradient(135deg,#0c0c43,#0f1560);border:1px solid rgba(41,198,255,.22);border-radius:10px;padding:12px 10px;text-align:center;}
+.kpi .val{font-size:22px;font-weight:900;color:#29c6ff;line-height:1.1;}
+.kpi .lbl{font-size:9px;color:#7a8ab8;font-weight:700;margin-top:4px;letter-spacing:.5px;text-transform:uppercase;}
+.kpi .sub{font-size:10px;color:#9aaad0;margin-top:3px;font-weight:400;}
+.kpi.warn .val{color:#fbbf24;}
+.kpi.danger .val{color:#f87171;}
+.kpi.ok .val{color:#4ade80;}
+
+/* SECTION TITLE */
+.sec{font-size:10px;font-weight:800;color:#29c6ff;letter-spacing:1.2px;text-transform:uppercase;margin:12px 0 8px;padding-bottom:5px;border-bottom:1px solid rgba(41,198,255,.18);}
+
+/* 2-col grid */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+.g32{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-bottom:12px;}
+
+/* CHART BOX */
+.cbox{background:linear-gradient(135deg,#08082e,#0d0d42);border:1px solid rgba(41,198,255,.14);border-radius:10px;padding:13px;height:280px;max-height:280px;}
+.cbox.h220{height:220px;max-height:220px;}
+.cbox.h300{height:300px;max-height:300px;}
+.cbox canvas{height:225px!important;max-height:225px!important;}
+.cbox.h220 canvas{height:168px!important;max-height:168px!important;}
+.cbox.h300 canvas{height:245px!important;max-height:245px!important;}
+.ct{font-size:9.5px;font-weight:700;color:#6a7aaa;text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
+
+/* INSIGHT CARDS */
+.ibox{background:linear-gradient(135deg,#060620,#0b0b3a);border:1px solid rgba(41,198,255,.18);border-radius:10px;padding:13px;margin-bottom:12px;}
+.irow{display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;font-size:11px;color:#b5c5e5;line-height:1.55;}
+.irow:last-child{margin-bottom:0;}
+.iico{font-size:14px;flex-shrink:0;margin-top:1px;}
+
+/* SCORE EVOLUTION */
+.evo-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:11px;}
+.evo-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.evo-bar{flex:1;background:rgba(255,255,255,.07);border-radius:4px;height:8px;overflow:hidden;}
+.evo-fill{height:100%;border-radius:4px;}
+
+/* TABLE */
+.tbl-w{overflow-x:auto;border-radius:8px;}
+table{width:100%;border-collapse:collapse;font-size:10.5px;}
+th{background:#0c0c43;color:#29c6ff;font-weight:700;padding:7px 10px;text-align:left;font-size:9.5px;letter-spacing:.5px;border-bottom:2px solid rgba(41,198,255,.25);}
+td{padding:6px 10px;border-bottom:1px solid rgba(41,198,255,.07);color:#b5c5e5;}
+tr:nth-child(even) td{background:rgba(41,198,255,.025);}
+tr:hover td{background:rgba(41,198,255,.06);}
+
+/* BADGES */
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:.3px;}
+.b-critical{background:#4d0000;color:#fca5a5;}
+.b-high{background:#4d1f00;color:#fb923c;}
+.b-medium{background:#3d2e00;color:#fbbf24;}
+.b-low{background:#1a2f0a;color:#86efac;}
+.b-info{background:#1a2040;color:#93c5fd;}
+.b-A{background:#0d5c28;color:#4ade80;}
+.b-B{background:#184d00;color:#a3e635;}
+
+/* PROGRESS */
+.prog{background:rgba(255,255,255,.07);border-radius:4px;height:7px;overflow:hidden;display:inline-block;}
+.pf{height:100%;border-radius:4px;}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.stat-card{background:linear-gradient(135deg,#0a0a35,#0e0e48);border:1px solid rgba(41,198,255,.15);border-radius:9px;padding:12px 14px;}
+.stat-card .sv{font-size:20px;font-weight:800;color:#29c6ff;}
+.stat-card .sl{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#6a7aaa;margin-top:3px;font-weight:700;}
+.stat-card .sd{font-size:10px;color:#8898c8;margin-top:4px;}
+
+/* APURA */
+.apura-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
+.ap-card{background:linear-gradient(135deg,#1e0a0a,#3a0f0f);border:1px solid rgba(248,113,113,.2);border-radius:9px;padding:12px;}
+.ap-card .av{font-size:24px;font-weight:900;color:#f87171;}
+.ap-card .al{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#fca5a5;margin-top:3px;font-weight:700;}
+
+/* MADUREZ CARDS */
+.mad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.mad-card{background:linear-gradient(135deg,#0a0a35,#0e0e48);border:1px solid rgba(41,198,255,.15);border-radius:9px;padding:13px;text-align:center;}
+.mad-card .mv{font-size:28px;font-weight:900;line-height:1.1;}
+.mad-card .ml{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:#6a7aaa;margin-top:4px;font-weight:700;}
+.mad-card .md{font-size:10px;color:#8898c8;margin-top:4px;}
+
+/* FOOTER */
+.footer{height:30px;min-height:30px;flex-shrink:0;background:#010018;border-top:1px solid rgba(41,198,255,.12);display:flex;align-items:center;justify-content:center;gap:20px;font-size:9.5px;color:#3a4a68;}
+.footer span{color:#29c6ff;font-weight:600;}
+</style>
+
+<div class="wrapper">
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-logo"><img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA"/></div>
+    <div class="hdr-center">
+      <div class="hdr-title">🛡️ Panorama de Seguridad Institucional — CEDIA SOC-CSIRT</div>
+      <div class="hdr-sub">Informe Operativo GLPI · Madurez Digital · Riesgo Financiero · Inteligencia de Amenazas</div>
+    </div>
+    <div class="hdr-right">
+      <span class="badge-periodo">Q1 · Ene–Mar 2026</span>
+      <span class="badge-anon">🔒 Datos Anonimizados</span>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="showTab('resumen')">📊 Resumen Ejecutivo</button>
+    <button class="tab-btn" onclick="showTab('glpi')">🗂️ Operativo GLPI</button>
+    <button class="tab-btn" onclick="showTab('scorecard')">🔐 Security Scorecard</button>
+    <button class="tab-btn" onclick="showTab('amenazas')">⚠️ Amenazas & Tops</button>
+    <button class="tab-btn" onclick="showTab('apura')">🔑 Credenciales & APURA</button>
+    <button class="tab-btn" onclick="showTab('madurez')">🎯 Madurez Digital</button>
+    <button class="tab-btn" onclick="showTab('insights')">💡 Insights & Prioridades</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-area">
+
+    <!-- ═══════════════════════ TAB 1: RESUMEN ═══════════════════════ -->
+    <div id="tab-resumen" class="tab-panel active">
+      <div class="kpi-row kpi-6">
+        <div class="kpi"><div class="val">498</div><div class="lbl">Tickets Totales</div><div class="sub">28 incidentes · 470 solicitudes</div></div>
+        <div class="kpi ok"><div class="val">87</div><div class="lbl">Score Seg. Scorecard</div><div class="sub">Grado B — Mar 2026</div></div>
+        <div class="kpi warn"><div class="val">781</div><div class="lbl">Issues Activos (SS)</div><div class="sub">22,568 activos afectados</div></div>
+        <div class="kpi danger"><div class="val">268</div><div class="lbl">Credenciales Comprometidas</div><div class="sub">Pico 99 el 26-Mar</div></div>
+        <div class="kpi"><div class="val">55%</div><div class="lbl">Madurez Ecosistema</div><div class="sub">21 IES evaluadas</div></div>
+        <div class="kpi danger"><div class="val">$2.35M</div><div class="lbl">Multa Promedio IES</div><div class="sub">Volatilidad 194%</div></div>
+      </div>
+
+      <div class="sec">Distribución de Actividad Operativa — GLPI Q1 2026</div>
+      <div class="g2">
+        <div class="cbox">
+          <div class="ct">Categorías Padre de Tickets</div>
+          <canvas id="cPadre"></canvas>
+        </div>
+        <div class="cbox">
+          <div class="ct">Evolución Score Security Scorecard — Ene a Mar 2026</div>
+          <canvas id="cScore"></canvas>
+        </div>
+      </div>
+
+      <div class="sec">Estado Operativo de Tickets e Incidentes</div>
+      <div class="kpi-row kpi-5">
+        <div class="kpi ok"><div class="val">27</div><div class="lbl">Incidentes Cerrados</div><div class="sub">96.4% resolución</div></div>
+        <div class="kpi warn"><div class="val">1</div><div class="lbl">Incidente Abierto</div><div class="sub">En seguimiento</div></div>
+        <div class="kpi ok"><div class="val">430</div><div class="lbl">Solicitudes Cerradas</div><div class="sub">91.5% resolución</div></div>
+        <div class="kpi warn"><div class="val">40</div><div class="lbl">Solicitudes Abiertas</div><div class="sub">Pendientes de gestión</div></div>
+        <div class="kpi"><div class="val">169</div><div class="lbl">Eventos CSIRT</div><div class="sub">8 fuentes distintas</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ TAB 2: GLPI ═══════════════════════ -->
+    <div id="tab-glpi" class="tab-panel">
+      <div class="sec">Distribución de Eventos CSIRT por Fuente de Origen</div>
+      <div class="g2">
+        <div class="cbox">
+          <div class="ct">Eventos CSIRT por Origen (169 eventos)</div>
+          <canvas id="cEventos"></canvas>
+        </div>
+        <div class="cbox">
+          <div class="ct">Top 15 Categorías de Tickets</div>
+          <canvas id="cCategorias"></canvas>
+        </div>
+      </div>
+
+      <div class="sec">Detalle Completo de Categorías por Volumen</div>
+      <div class="tbl-w">
+        <table>
+          <thead><tr><th>#</th><th>Categoría</th><th>Tickets</th><th>% del Total</th><th>Indicador</th></tr></thead>
+          <tbody id="tbGlpi"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ TAB 3: SCORECARD ═══════════════════════ -->
+    <div id="tab-scorecard" class="tab-panel">
+      <div class="kpi-row kpi-4">
+        <div class="kpi ok"><div class="val">87</div><div class="lbl">Score Actual (26-Mar)</div><div class="sub">Grado B — Estable</div></div>
+        <div class="kpi"><div class="val">85.0</div><div class="lbl">Promedio Trimestral</div><div class="sub">Grado B sostenido</div></div>
+        <div class="kpi ok"><div class="val">89</div><div class="lbl">Score Máximo Q1</div><div class="sub">19-Feb 2026</div></div>
+        <div class="kpi warn"><div class="val">82</div><div class="lbl">Score Mínimo Q1</div><div class="sub">19-Mar 2026</div></div>
+      </div>
+
+      <div class="sec">Evolución Semanal del Score — Enero a Marzo 2026</div>
+      <div class="cbox h300" style="margin-bottom:14px;">
+        <div class="ct">Score Security Scorecard — 12 mediciones (ene–mar 2026)</div>
+        <canvas id="cScoreLarge"></canvas>
+      </div>
+
+      <div class="g2">
+        <div class="cbox h220">
+          <div class="ct">Issues por Severidad (781 totales)</div>
+          <canvas id="cSeveridad"></canvas>
+        </div>
+        <div class="cbox h220">
+          <div class="ct">Estado de Issues (Activos / Resueltos)</div>
+          <canvas id="cEstado"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ TAB 4: AMENAZAS ═══════════════════════ -->
+    <div id="tab-amenazas" class="tab-panel">
+      <div class="sec">Top 12 Issues Más Frecuentes — Security Scorecard</div>
+      <div class="g2" style="margin-bottom:12px;">
+        <div class="cbox h300">
+          <div class="ct">Top 12 Issues por Frecuencia</div>
+          <canvas id="cTopIssues"></canvas>
+        </div>
+        <div class="cbox h300">
+          <div class="ct">IES con Más Notificaciones (anonimizadas)</div>
+          <canvas id="cTopIes"></canvas>
+        </div>
+      </div>
+
+      <div class="sec">Detalle de Issues Críticos y de Alta Severidad</div>
+      <div class="tbl-w">
+        <table>
+          <thead><tr><th>#</th><th>Tipo de Issue</th><th>Cantidad</th><th>Severidad Estimada</th><th>Impacto</th><th>Barra</th></tr></thead>
+          <tbody id="tbIssues"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ TAB 5: APURA ═══════════════════════ -->
+    <div id="tab-apura" class="tab-panel">
+      <div class="sec">Inteligencia de Amenazas — Credenciales Comprometidas (APURA)</div>
+      <div class="kpi-row kpi-3" style="margin-bottom:14px;">
+        <div class="kpi danger"><div class="val">268</div><div class="lbl">Credenciales Comprometidas Total</div><div class="sub">Período Q1 2026</div></div>
+        <div class="kpi danger"><div class="val">99</div><div class="lbl">Pico Máximo</div><div class="sub">26 de marzo 2026</div></div>
+        <div class="kpi warn"><div class="val">6</div><div class="lbl">Registros SaaS / Shodan</div><div class="sub">Superficies públicas expuestas</div></div>
+      </div>
+
+      <div class="g2" style="margin-bottom:14px;">
+        <div class="cbox h300">
+          <div class="ct">Serie Temporal — Credenciales Comprometidas Mar 2026</div>
+          <canvas id="cApura"></canvas>
+        </div>
+        <div class="cbox h300">
+          <div class="ct">Distribución Acumulada por Fecha de Detección</div>
+          <canvas id="cApuraAcum"></canvas>
+        </div>
+      </div>
+
+      <div class="sec">Análisis de Riesgo — Credenciales Comprometidas</div>
+      <div class="ibox">
+        <div class="irow"><span class="iico">🚨</span><span><strong>268 credenciales comprometidas</strong> detectadas en el trimestre representan el vector de amenaza más directo contra la confidencialidad de CEDIA. El pico de 99 registros el 26-Mar indica un evento de filtración masiva que requiere respuesta inmediata y rotación de credenciales afectadas.</span></div>
+        <div class="irow"><span class="iico">⚠️</span><span><strong>Concentración en marzo:</strong> La totalidad de registros detectados se concentra en las últimas 3 semanas de marzo (04-Mar al 26-Mar), sugiriendo una campaña activa de exposición o un incidente de fuga de datos en proceso.</span></div>
+        <div class="irow"><span class="iico">🔍</span><span><strong>6 servicios SaaS / Shodan identificados:</strong> Superficies públicas expuestas encontradas en Shodan implican que activos internos podrían estar visibles para actores externos sin controles de acceso adecuados.</span></div>
+        <div class="irow"><span class="iico">🛡️</span><span><strong>Acción recomendada:</strong> Activar revisión de cuentas comprometidas, forzar restablecimiento de contraseñas, habilitar MFA en todos los servicios expuestos e iniciar investigación forense sobre el pico del 26-Mar.</span></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ TAB 6: MADUREZ ═══════════════════════ -->
+    <div id="tab-madurez" class="tab-panel">
+      <div class="sec">Madurez Digital del Ecosistema IES — 21 Instituciones Evaluadas (Anonimizadas)</div>
+      <div class="mad-grid">
+        <div class="mad-card"><div class="mv" style="color:#fbbf24">55%</div><div class="ml">Madurez Promedio</div><div class="md">Mediana: 56% · Desv: ±21.6</div></div>
+        <div class="mad-card"><div class="mv" style="color:#4ade80">6</div><div class="ml">IES Líderes ≥ 73%</div><div class="md">Por encima del P75</div></div>
+        <div class="mad-card"><div class="mv" style="color:#f87171">5</div><div class="ml">IES Zona Crítica &lt; 40%</div><div class="md">Por debajo del P25</div></div>
+      </div>
+
+      <div class="g2" style="margin-bottom:12px;">
+        <div class="cbox h300">
+          <div class="ct">Nivel de Madurez por IES (Descendente)</div>
+          <canvas id="cMadurez"></canvas>
+        </div>
+        <div class="cbox h300">
+          <div class="ct">Madurez vs Exposición a Multas (Correlación -0.13)</div>
+          <canvas id="cCorrelacion"></canvas>
+        </div>
+      </div>
+
+      <div class="sec">Distribución por Cuartil y Tipo de Institución</div>
+      <div class="g2">
+        <div class="cbox h220">
+          <div class="ct">Categorización por Cuartil de Madurez</div>
+          <canvas id="cCuartil"></canvas>
+        </div>
+        <div class="cbox h220">
+          <div class="ct">Madurez Promedio por Tipo de Institución</div>
+          <canvas id="cTipo"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════ TAB 7: INSIGHTS ═══════════════════════ -->
+    <div id="tab-insights" class="tab-panel">
+      <div class="sec">🔴 Alertas Críticas — Requieren Acción Inmediata</div>
+      <div class="ibox">
+        <div class="irow"><span class="iico">🚨</span><span><strong>268 credenciales comprometidas detectadas:</strong> Vector activo de mayor riesgo en el período. El pico del 26-Mar (99 en un solo día) indica una filtración masiva no contenida. La falta de rotación inmediata expone acceso no autorizado a sistemas internos de CEDIA y sus IES afiliadas.</span></div>
+        <div class="irow"><span class="iico">🚨</span><span><strong>781 issues activos sin resolver en Security Scorecard:</strong> 22,568 activos afectados con issues abiertos. Más del 100% de los issues permanecen activos sin evidencia de remediación documentada en el período analizado.</span></div>
+        <div class="irow"><span class="iico">🚨</span><span><strong>44 issues críticos de vulnerabilidad de servicio (service_vuln_host_v3_critical):</strong> Junto con 55 de severidad alta, representan exposición directa a exploits en servicios activos de la red CEDIA.</span></div>
+      </div>
+
+      <div class="sec">🟡 Tendencias y Correlaciones del Trimestre</div>
+      <div class="ibox">
+        <div class="irow"><span class="iico">📈</span><span><strong>Score Security Scorecard: tendencia de mejora neta (+2 puntos):</strong> El score pasó de 85 (ene) a 87 (mar) con un pico de 89 en febrero. Sin embargo, la variación semanal (-7 puntos entre 19-feb y 19-mar) indica inestabilidad en los controles, no una mejora consolidada.</span></div>
+        <div class="irow"><span class="iico">📊</span><span><strong>Correlación madurez–multas débilmente inversa (-0.13):</strong> La baja correlación indica que el nivel de madurez por sí solo no predice el riesgo financiero. Instituciones con madurez moderada (53–68%) concentran las mayores exposiciones, lo que sugiere que el tamaño institucional y el perfil de datos son factores amplificadores.</span></div>
+        <div class="irow"><span class="iico">🔧</span><span><strong>FortiSIEM generó 171 eventos — fuente dominante:</strong> Concentración de eventos en FortiSIEM (33.8% del total de categorías) indica capacidad de detección activa, pero también volumen de ruido que podría estar desviando la atención del equipo SOC de amenazas específicas.</span></div>
+        <div class="irow"><span class="iico">🔐</span><span><strong>115 issues de parches pendientes (high + critical):</strong> La cadencia de parches es deficiente: 43 issues "patching_cadence_v3_high" y 32 "patching_cadence_v3_critical" indican que múltiples sistemas no reciben actualizaciones en los tiempos requeridos.</span></div>
+      </div>
+
+      <div class="sec">🟢 Prioridades de Intervención — Corto y Mediano Plazo</div>
+      <div class="ibox">
+        <div class="irow"><span class="iico">🎯</span><span><strong>[P1 — Inmediata]</strong> Contener y remediar las 268 credenciales comprometidas: activar rotación masiva, forzar MFA, revocar sesiones activas sospechosas e iniciar investigación forense del evento del 26-Mar.</span></div>
+        <div class="irow"><span class="iico">🎯</span><span><strong>[P1 — Inmediata]</strong> Remediar los 44 issues críticos de servicio y los 75 issues críticos+high de patching: priorizar activos con mayor exposición pública identificados en los 22,568 activos afectados.</span></div>
+        <div class="irow"><span class="iico">🎯</span><span><strong>[P2 — 30 días]</strong> Migrar los 54 certificados TLS autofirmados a PKI corporativa o de confianza pública: eliminar el riesgo de intercepción en servicios académicos y administrativos expuestos.</span></div>
+        <div class="irow"><span class="iico">🎯</span><span><strong>[P2 — 60 días]</strong> Implementar programa de fortalecimiento para las 5 IES en zona crítica de madurez (< 40%): gobernanza, controles básicos y gestión de vulnerabilidades como pilares iniciales.</span></div>
+        <div class="irow"><span class="iico">🎯</span><span><strong>[P3 — 90 días]</strong> Consolidar la mejora del score Security Scorecard de B a A mediante plan de remediación priorizado y revisión mensual de la evolución semanal de indicadores.</span></div>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+
+  <div class="footer">
+    <span>CEDIA SOC-CSIRT</span> · Período analizado: <span>2026-01-01 ~ 2026-03-31</span> · Fuentes: GLPI · Security Scorecard · APURA · Madurez Digital · <span>Datos anonimizados</span> · Generado: <span>2026-04-08</span>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+Chart.defaults.color='#6a7aaa';
+Chart.defaults.font.family="'Montserrat','Arial',sans-serif";
+Chart.defaults.font.size=10;
+
+function showTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+const CYAN='rgba(41,198,255,.85)',CYAN2='rgba(41,198,255,.2)';
+const RED='rgba(248,113,113,.85)',ORG='rgba(249,115,22,.85)',YEL='rgba(251,191,36,.85)',GRN='rgba(74,222,128,.85)',PUR='rgba(196,132,252,.85)';
+const gridColor='rgba(255,255,255,.05)';
+
+// ─── RESUMEN ───
+// Categorías padre
+new Chart(document.getElementById('cPadre'),{type:'doughnut',data:{
+  labels:['01-EVENTO (367)','GRC (47)','02-GESTIONES (36)','03-INCIDENTE (28)','PDP (20)'],
+  datasets:[{data:[367,47,36,28,20],backgroundColor:[CYAN,'rgba(163,230,53,.85)',YEL,RED,PUR],borderWidth:2,borderColor:'#020029'}]
+},options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{padding:9,boxWidth:11}}}}});
+
+// Score timeline (resumen)
+const scoreDates=['05-Ene','12-Ene','19-Ene','26-Ene','05-Feb','12-Feb','19-Feb','26-Feb','05-Mar','12-Mar','19-Mar','26-Mar'];
+const scoreVals=[85,83,83,83,86,86,89,85,83,86,82,87];
+new Chart(document.getElementById('cScore'),{type:'line',data:{
+  labels:scoreDates,
+  datasets:[{label:'Score',data:scoreVals,borderColor:'#29c6ff',backgroundColor:'rgba(41,198,255,.1)',fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#29c6ff',borderWidth:2}]
+},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:78,max:93,grid:{color:gridColor},ticks:{callback:v=>v}},x:{grid:{color:gridColor},ticks:{font:{size:9}}}}}});
+
+// ─── GLPI ───
+const eventosOrigen=['Security Scorecard [SS]','Servicios CSIRT','FortiMail [FM]','APURA [AP]','Escaneo Prog.','Escaneo OD','Open Source','Shodan'];
+const eventosVals=[103,33,18,8,3,2,1,1];
+new Chart(document.getElementById('cEventos'),{type:'bar',data:{
+  labels:eventosOrigen,
+  datasets:[{label:'Eventos',data:eventosVals,backgroundColor:[CYAN,'rgba(163,230,53,.8)',YEL,RED,'rgba(196,132,252,.8)','rgba(56,189,248,.8)','rgba(148,163,184,.7)','rgba(248,113,113,.5)'],borderRadius:5}]
+},options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor}},y:{grid:{display:false},ticks:{font:{size:9}}}}}});
+
+const catLabels=['FortiSIEM [FS]','Security Scorecard','Servicios CSIRT','Gestión SGSI','Gestión Interna','PDI','Servicios SOC','FortiMail [FM]','Filtración datos','Gestión SGPI','APURA [AP]','Gestión EGSI','FortiClient [FC]','SPAM','Boletines'];
+const catVals=[171,103,33,28,22,19,18,18,16,9,8,8,6,6,5];
+new Chart(document.getElementById('cCategorias'),{type:'bar',data:{
+  labels:catLabels,
+  datasets:[{label:'Tickets',data:catVals,backgroundColor:catVals.map((_,i)=>i<3?CYAN:i<6?'rgba(163,230,53,.75)':i<9?YEL:i<12?ORG:'rgba(196,132,252,.75)'),borderRadius:4}]
+},options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor}},y:{grid:{display:false},ticks:{font:{size:8}}}}}});
+
+// GLPI Table
+const glpiCats=[
+  ['FortiSIEM [FS]',171],['Security Scorecard [SS]',103],['Servicios CSIRT',33],['Gestión SGSI',28],['Gestión Interna',22],['PDI',19],['Servicios SOC',18],['FortiMail [FM]',18],['Filtración de datos',16],['Gestión SGPI',9],['APURA [AP]',8],['Gestión de EGSI',8],['FortiClient [FC]',6],['SPAM',6],['Boletines',5],['Informes',5],['Phishing',4],['Reuniones',4],['Escaneo Programado',3],['FortiEDR [FE]',3],['Escaneo OD',2],['Gestión SGCN',2],['Criptominado',1],['Open Source [OP]',1],['EDPDP',1],['Intento acceso/credenciales',1],['Shodan [SH]',1]
+];
+const totalGlpi=glpiCats.reduce((s,r)=>s+r[1],0);
+const tbG=document.getElementById('tbGlpi');
+glpiCats.forEach(([cat,val],i)=>{
+  const pct=(val/totalGlpi*100).toFixed(1);
+  const col=val>100?'#f87171':val>30?'#fbbf24':val>10?'#29c6ff':'#6a7aaa';
+  tbG.innerHTML+=`<tr><td style="color:#6a7aaa">${i+1}</td><td style="color:#c5d5f5">${cat}</td><td style="color:#29c6ff;font-weight:700">${val}</td><td style="color:${col}">${pct}%</td><td><div class="prog" style="width:100px"><div class="pf" style="width:${(val/171*100).toFixed(0)}%;background:${col}"></div></div></td></tr>`;
+});
+
+// ─── SCORECARD ───
+new Chart(document.getElementById('cScoreLarge'),{type:'line',data:{
+  labels:scoreDates,
+  datasets:[
+    {label:'Score Semanal',data:scoreVals,borderColor:'#29c6ff',backgroundColor:'rgba(41,198,255,.08)',fill:true,tension:.4,pointRadius:5,pointBackgroundColor:scoreVals.map(v=>v>=87?'#4ade80':v>=85?'#29c6ff':'#fbbf24'),borderWidth:2.5},
+    {label:'Umbral Grado A (90)',data:scoreVals.map(()=>90),borderColor:'rgba(74,222,128,.4)',borderDash:[5,4],borderWidth:1,pointRadius:0},
+    {label:'Promedio (85)',data:scoreVals.map(()=>85),borderColor:'rgba(251,191,36,.4)',borderDash:[3,4],borderWidth:1,pointRadius:0}
+  ]
+},options:{maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{padding:12,boxWidth:12}}},scales:{y:{min:78,max:93,grid:{color:gridColor}},x:{grid:{color:gridColor}}}}});
+
+new Chart(document.getElementById('cSeveridad'),{type:'doughnut',data:{
+  labels:['Baja (454)','Info (208)','Media (88)','Alta (31)'],
+  datasets:[{data:[454,208,88,31],backgroundColor:['rgba(134,239,172,.85)','rgba(148,163,184,.7)',YEL,RED],borderWidth:2,borderColor:'#020029'}]
+},options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{padding:8,boxWidth:10}}}}});
+
+new Chart(document.getElementById('cEstado'),{type:'doughnut',data:{
+  labels:['Activos (781)','Cerrados/depart. (541)','Resueltos (237)'],
+  datasets:[{data:[781,541,237],backgroundColor:[RED,'rgba(148,163,184,.5)',GRN],borderWidth:2,borderColor:'#020029'}]
+},options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{padding:8,boxWidth:10}}}}});
+
+// ─── AMENAZAS ───
+const issueLabels=['tlscert_no_revocation','svc_vuln_medium','svc_vuln_high','tlscert_self_signed','svc_vuln_critical','patching_high','patching_medium','patching_critical','hsts_incorrect','godaddy_infra','svc_vuln_low','tls_weak_protocol'];
+const issueVals=[61,56,55,54,44,43,40,32,23,22,13,9];
+const issueSev=['medium','medium','high','medium','critical','high','medium','critical','low','info','low','high'];
+const sevColors={critical:RED,high:ORG,medium:YEL,low:GRN,info:'rgba(148,163,184,.7)'};
+
+new Chart(document.getElementById('cTopIssues'),{type:'bar',data:{
+  labels:issueLabels,
+  datasets:[{label:'Cantidad',data:issueVals,backgroundColor:issueSev.map(s=>sevColors[s]),borderRadius:5}]
+},options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor}},y:{grid:{display:false},ticks:{font:{size:8.5}}}}}});
+
+const iesNot=[119,56,54,45,43,39,25,23,22,14,13,11,11,9,8];
+new Chart(document.getElementById('cTopIes'),{type:'bar',data:{
+  labels:iesNot.map((_,i)=>'IES #'+(i+1)),
+  datasets:[{label:'Notificaciones',data:iesNot,backgroundColor:iesNot.map(v=>v>50?RED:v>30?ORG:v>15?YEL:CYAN2.replace('.2','.7')),borderRadius:5}]
+},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:gridColor}},x:{grid:{display:false}}}}});
+
+// Issues table
+const tbI=document.getElementById('tbIssues');
+const issuesFull=[
+  ['tlscert_no_revocation',61,'medium','Riesgo de revocación no verificable'],
+  ['service_vuln_host_v3_medium',56,'medium','Vulnerabilidades activas en hosts'],
+  ['service_vuln_host_v3_high',55,'high','Exposición de servicios explotables'],
+  ['tlscert_self_signed',54,'medium','Cadena de confianza TLS comprometida'],
+  ['service_vuln_host_v3_critical',44,'critical','Servicios con CVEs críticos activos'],
+  ['patching_cadence_v3_high',43,'high','Parches de seguridad atrasados'],
+  ['patching_cadence_v3_medium',40,'medium','Cadencia de parches insuficiente'],
+  ['patching_cadence_v3_critical',32,'critical','Sistemas sin actualizaciones críticas'],
+  ['hsts_incorrect_v2',23,'low','Headers de seguridad HTTP faltantes'],
+  ['uses_go_daddy_infrastructure',22,'info','Dependencia de infraestructura externa'],
+  ['service_vuln_host_v3_low',13,'low','Vulnerabilidades menores en hosts'],
+  ['tls_weak_protocol',9,'high','Protocolos TLS obsoletos activos'],
+];
+issuesFull.forEach(([name,val,sev,imp],i)=>{
+  tbI.innerHTML+=`<tr><td style="color:#6a7aaa">${i+1}</td><td style="color:#c5d5f5;font-size:10px">${name}</td><td style="color:#29c6ff;font-weight:700">${val}</td><td><span class="badge b-${sev}">${sev.toUpperCase()}</span></td><td style="color:#9aaad0;font-size:10px">${imp}</td><td><div class="prog" style="width:80px"><div class="pf" style="width:${(val/61*100).toFixed(0)}%;background:${sevColors[sev]}"></div></div></td></tr>`;
+});
+
+// ─── APURA ───
+const apuraFechas=['04-Mar','15-Mar','17-Mar','20-Mar','23-Mar','26-Mar'];
+const apuraVals=[41,4,47,40,37,99];
+const apuraAcum=apuraVals.reduce((acc,v,i)=>{acc.push((acc[i-1]||0)+v);return acc;},[]);
+
+new Chart(document.getElementById('cApura'),{type:'bar',data:{
+  labels:apuraFechas,
+  datasets:[{label:'Credenciales comprometidas',data:apuraVals,backgroundColor:apuraVals.map(v=>v>=90?RED:v>=40?ORG:YEL),borderRadius:6}]
+},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:gridColor},beginAtZero:true},x:{grid:{display:false}}}}});
+
+new Chart(document.getElementById('cApuraAcum'),{type:'line',data:{
+  labels:apuraFechas,
+  datasets:[{label:'Acumulado',data:apuraAcum,borderColor:'#f87171',backgroundColor:'rgba(248,113,113,.1)',fill:true,tension:.4,pointRadius:5,pointBackgroundColor:'#f87171',borderWidth:2}]
+},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{grid:{color:gridColor},beginAtZero:true},x:{grid:{color:gridColor}}}}});
+
+// ─── MADUREZ ───
+const madData=[
+  {id:'IES_01',m:87,multa:68929},{id:'IES_07',m:83,multa:3619},{id:'IES_18',m:81,multa:32669},
+  {id:'IES_10',m:81,multa:57102},{id:'IES_15',m:77,multa:9284},{id:'IES_16',m:73,multa:38196},
+  {id:'IES_02',m:73,multa:109997},{id:'IES_21',m:68,multa:7499640},{id:'IES_14',m:59,multa:8138645},
+  {id:'IES_19',m:56,multa:141057},{id:'IES_09',m:56,multa:111320},{id:'IES_17',m:53,multa:9456195},
+  {id:'IES_11',m:47,multa:151861},{id:'IES_13',m:44,multa:17290566},{id:'IES_04',m:43,multa:109947},
+  {id:'IES_20',m:40,multa:265817},{id:'IES_03',m:38,multa:740253},{id:'IES_08',m:32,multa:99565},
+  {id:'IES_06',m:23,multa:224665},{id:'IES_05',m:21,multa:4452364},{id:'IES_12',m:19,multa:353194}
+];
+function madColor(m){return m>=73?'rgba(74,222,128,.85)':m>=40?'rgba(251,191,36,.85)':m>=25?'rgba(249,115,22,.8)':'rgba(248,113,113,.85)';}
+
+new Chart(document.getElementById('cMadurez'),{type:'bar',data:{
+  labels:madData.map(d=>d.id),
+  datasets:[{label:'Madurez %',data:madData.map(d=>d.m),backgroundColor:madData.map(d=>madColor(d.m)),borderRadius:4}]
+},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,grid:{color:gridColor},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{font:{size:8}}}}}});
+
+new Chart(document.getElementById('cCorrelacion'),{type:'scatter',data:{
+  datasets:[{label:'IES',data:madData.map(d=>({x:d.m,y:Math.min(d.multa/1e6,18)})),backgroundColor:madData.map(d=>madColor(d.m)),pointRadius:6,pointHoverRadius:8}]
+},options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`Madurez:${c.raw.x}% | Multa:$${(c.raw.y).toFixed(2)}M`}}},scales:{x:{title:{display:true,text:'Madurez %',color:'#6a7aaa'},grid:{color:gridColor},min:0,max:100},y:{title:{display:true,text:'Multa ($M)',color:'#6a7aaa'},grid:{color:gridColor},min:0,max:20}}}});
+
+new Chart(document.getElementById('cCuartil'),{type:'doughnut',data:{
+  labels:['Líderes ≥P75 (6 IES)','En Desarrollo (10 IES)','Zona Crítica <P25 (5 IES)'],
+  datasets:[{data:[6,10,5],backgroundColor:[GRN,YEL,RED],borderWidth:2,borderColor:'#020029'}]
+},options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{padding:8,boxWidth:11}}}}});
+
+const tipoAvg={
+  'INST PRIVADO':[87],'U PUBLICA':[83,81,77,73,73,56,47,40,32,23,21],'U PRIVADA':[81,68,59,56,53,44,38],
+  'ENT PUBLICA':[56,47],'INT PRIVADO':[43,19]
+};
+const tipoN=Object.keys(tipoAvg);
+const tipoVals=tipoN.map(t=>{const a=tipoAvg[t];return(a.reduce((s,v)=>s+v,0)/a.length).toFixed(1);});
+new Chart(document.getElementById('cTipo'),{type:'bar',data:{
+  labels:tipoN,
+  datasets:[{label:'Madurez Promedio',data:tipoVals,backgroundColor:[CYAN,GRN,YEL,PUR,RED],borderRadius:6}]
+},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,grid:{color:gridColor},ticks:{callback:v=>v+'%'}},x:{grid:{display:false},ticks:{font:{size:9}}}}}});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
