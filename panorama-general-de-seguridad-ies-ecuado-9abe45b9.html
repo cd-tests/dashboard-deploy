@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<div class="dashboard-container" style="height: 1080px; display: flex; flex-direction: column; font-family: 'Gotham', sans-serif; background-color: #f4f7f6; overflow: hidden;">
+    <!-- Header -->
+    
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA Logo" style="height: 35px;">
+            <div style="height: 24px; width: 2px; background-color: #29c6ff;"></div>
+            <h1 style="margin: 0; font-size: 18px; font-weight: 500;">Panorama General de Seguridad IES | 2025-12 ~ 2026-03</h1>
+        </div>
+        <div style="font-size: 12px; opacity: 0.8; text-align: right;">
+            <div>Ecosistema de Educación Superior - Ecuador</div>
+            <div>Datos Anonimizados | Reporte Ejecutivo</div>
+        </div>
+    
+
+    <!-- Navigation Tabs -->
+    <nav style="height: 44px; background-color: white; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; padding: 0 24px; gap: 8px; flex-shrink: 0;">
+        <button onclick="showTab('resumen')" class="tab-btn active" id="btn-resumen">Resumen Ejecutivo</button>
+        <button onclick="showTab('madurez')" class="tab-btn" id="btn-madurez">Madurez & Multas</button>
+        <button onclick="showTab('operativo')" class="tab-btn" id="btn-operativo">Estado Operativo</button>
+        <button onclick="showTab('vulnerabilidades')" class="tab-btn" id="btn-vulnerabilidades">Vulnerabilidades</button>
+        <button onclick="showTab('mapa')" class="tab-btn" id="btn-mapa">Mapa de Riesgo</button>
+    </nav>
+
+    <!-- Content Area -->
+    <div id="tab-content" style="flex-grow: 1; overflow-y: auto; padding: 20px; position: relative;">
+        
+        <!-- TAB: Resumen Ejecutivo -->
+        <div id="resumen" class="tab-pane active">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px;">
+                <div class="kpi-card">
+                    <div class="kpi-label">Media Madurez Digital</div>
+                    <div class="kpi-value">55%</div>
+                    <div class="kpi-trend neutral">Ecosistema en Desarrollo</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Riesgo Financiero Medio</div>
+                    <div class="kpi-value">$2.35M</div>
+                    <div class="kpi-trend down">Impacto Proyectado</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Vulnerabilidades Activas</div>
+                    <div class="kpi-value">9,575</div>
+                    <div class="kpi-trend down">Pendientes de cierre</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Instituciones Nivel A</div>
+                    <div class="kpi-value">11 / 64</div>
+                    <div class="kpi-trend up">Security Scorecard</div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                <div class="content-block">
+                    <h3 class="block-title">Top 10 Instituciones (Ranking Combinado)</h3>
+                    <div style="height: 300px;">
+                        <canvas id="chartRanking"></canvas>
+                    </div>
+                </div>
+                <div class="content-block">
+                    <h3 class="block-title">Distribución de Niveles (Nessus)</h3>
+                    <div style="height: 300px;">
+                        <canvas id="chartNessusDist"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block" style="margin-top: 20px;">
+                <h3 class="block-title">Insights de Gestión</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <ul class="insight-list">
+                        <li><strong>Concentración de Riesgo:</strong> El 46.6% de las IES se encuentran en niveles D o F según escaneos operativos de Nessus.</li>
+                        <li><strong>Brecha de Madurez:</strong> Existe una diferencia de 68 puntos porcentuales entre la institución líder (87%) y la más rezagada (19%).</li>
+                    </ul>
+                    <ul class="insight-list">
+                        <li><strong>Impacto Financiero:</strong> Las multas proyectadas muestran alta volatilidad (CV 194%), concentrándose el mayor riesgo en 6 instituciones específicas.</li>
+                        <li><strong>Gestión de Hallazgos:</strong> 100% de las issues detectadas permanecen activas, evidenciando un cuello de botella en remediación.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Madurez & Multas -->
+        <div id="madurez" class="tab-pane">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                <div class="content-block">
+                    <h3 class="block-title">Madurez vs Multas (Correlación: -0.13)</h3>
+                    <div style="height: 350px;">
+                        <canvas id="chartCorrelation"></canvas>
+                    </div>
+                    <p style="font-size: 11px; color: #666; margin-top: 10px;">Correlación inversa débil: Menor madurez tiende a elevar el riesgo de infracciones graves.</p>
+                </div>
+                <div class="content-block">
+                    <h3 class="block-title">Top Riesgo Financiero (Multas Totales $)</h3>
+                    <div style="height: 350px;">
+                        <canvas id="chartFines"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="content-block">
+                <h3 class="block-title">Tabla de Madurez y Clasificación</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Institución</th>
+                                <th>Madurez Digital</th>
+                                <th>Tipo de Entidad</th>
+                                <th>Riesgo Multas</th>
+                                <th>Estado vs Media</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableMaturity">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Operativo -->
+        <div id="operativo" class="tab-pane">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                <div class="content-block">
+                    <h3 class="block-title">Security Scorecard: Distribución de Calificaciones</h3>
+                    <div style="height: 300px;">
+                        <canvas id="chartSSDist"></canvas>
+                    </div>
+                </div>
+                <div class="content-block">
+                    <h3 class="block-title">Comparativa de Rankings (Top 10)</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>IES</th>
+                                    <th>Score Combinado</th>
+                                    <th>SS Score</th>
+                                    <th>Nessus Score</th>
+                                    <th>Grado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableOperativo">
+                                <!-- Injected by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Vulnerabilidades -->
+        <div id="vulnerabilidades" class="tab-pane">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                <div class="content-block">
+                    <h3 class="block-title">Distribución por Severidad</h3>
+                    <div style="height: 300px;">
+                        <canvas id="chartSeverity"></canvas>
+                    </div>
+                </div>
+                <div class="content-block">
+                    <h3 class="block-title">Top 10 Issues Recurrentes</h3>
+                    <div style="height: 300px;">
+                        <canvas id="chartTopIssues"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="content-block">
+                <h3 class="block-title">Prioridades de Remediación</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                    <div class="priority-box critical">
+                        <h4>Críticas/Altas</h4>
+                        <p>499 hallazgos detectados. Foco en 'service_vuln_host_v3_high'.</p>
+                    </div>
+                    <div class="priority-box medium">
+                        <h4>Gestión de Credenciales</h4>
+                        <p>584 casos de credenciales comprometidas encontrados.</p>
+                    </div>
+                    <div class="priority-box info">
+                        <h4>Ciclo de Parcheo</h4>
+                        <p>Retrasos significativos en cadencia de actualización detectados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Mapa -->
+        <div id="mapa" class="tab-pane">
+            <div class="content-block" style="height: 800px; display: flex; flex-direction: column;">
+                <h3 class="block-title">Concentración Geográfica de Riesgo (Heatmap)</h3>
+                <div id="map-container" style="flex-grow: 1; background-color: #eee; border-radius: 8px;"></div>
+                <div style="margin-top: 15px; font-size: 13px; color: #555;">
+                    <p>Nota: Las ubicaciones son referenciales por ciudad sede institucional para análisis de densidad regional. La intensidad del calor representa la agregación de multas y vulnerabilidades críticas por zona.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer style="height: 36px; background-color: #f1f5f9; border-top: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #64748b; flex-shrink: 0;">
+        Corporación Ecuatoriana para el Desarrollo de la Investigación y la Academia - CEDIA &copy; 2026
+    </footer>
+</div>
+
+<style>
+    .tab-btn {
+        padding: 8px 16px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 14px;
+        color: #64748b;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s;
+        font-family: 'Gotham', sans-serif;
+    }
+    .tab-btn.active {
+        color: #020029;
+        border-bottom: 2px solid #29c6ff;
+        font-weight: 600;
+    }
+    .tab-pane {
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active {
+        display: block;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .kpi-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+    }
+    .kpi-label { font-size: 12px; color: #64748b; margin-bottom: 8px; }
+    .kpi-value { font-size: 24px; font-weight: 700; color: #020029; }
+    .kpi-trend { font-size: 11px; margin-top: 5px; font-weight: 500; }
+    .kpi-trend.up { color: #10b981; }
+    .kpi-trend.down { color: #ef4444; }
+    .kpi-trend.neutral { color: #f59e0b; }
+    .content-block {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+    }
+    .block-title { font-size: 16px; font-weight: 600; color: #020029; margin-top: 0; margin-bottom: 20px; border-left: 4px solid #29c6ff; padding-left: 12px; }
+    .insight-list { margin: 0; padding-left: 20px; }
+    .insight-list li { font-size: 13px; color: #334155; margin-bottom: 8px; line-height: 1.5; }
+    .table-wrapper { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 12px; background: #f8fafc; color: #475569; font-weight: 600; border-bottom: 1px solid #e2e8f0; }
+    td { padding: 12px; border-bottom: 1px solid #f1f5f9; color: #1e293b; }
+    .priority-box { padding: 15px; border-radius: 8px; }
+    .priority-box h4 { margin: 0 0 10px 0; font-size: 14px; }
+    .priority-box p { margin: 0; font-size: 12px; line-height: 1.4; }
+    .priority-box.critical { background-color: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+    .priority-box.medium { background-color: #fffbeb; border: 1px solid #fef3c7; color: #92400e; }
+    .priority-box.info { background-color: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; }
+</style>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    function showTab(tabId) {
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById('btn-' + tabId).classList.add('active');
+        if(tabId === 'mapa') initMap();
+    }
+
+    const COLORS = ['#020029', '#29c6ff', '#273dd5', '#0c0c43', '#10b981', '#f59e0b', '#ef4444'];
+
+    const rankingData = [
+        { name: 'IES-A', combined: 97.25, ss: 95.0, nessus: 99.5 },
+        { name: 'IES-B', combined: 97.0, ss: 97.0, nessus: 96.0 },
+        { name: 'IES-C', combined: 95.0, ss: 95.0, nessus: 95.0 },
+        { name: 'IES-D', combined: 94.0, ss: 93.0, nessus: 95.0 },
+        { name: 'IES-E', combined: 93.75, ss: 94.0, nessus: 93.5 },
+        { name: 'IES-F', combined: 91.0, ss: 89.0, nessus: 93.0 },
+        { name: 'IES-G', combined: 90.0, ss: 90.0, nessus: 90.0 },
+        { name: 'IES-H', combined: 89.5, ss: 84.0, nessus: 95.0 },
+        { name: 'IES-I', combined: 89.25, ss: 92.0, nessus: 86.5 },
+        { name: 'IES-J', combined: 88.5, ss: 80.0, nessus: 97.0 }
+    ];
+
+    const maturityData = [
+        { id: 'IES_01', maturity: 87, type: 'INST PRIVADO', fines: 68929, status: 'Bajo media' },
+        { id: 'IES_07', maturity: 83, type: 'U PUBLICA', fines: 3619, status: 'Bajo media' },
+        { id: 'IES_18', maturity: 81, type: 'U PUBLICA', fines: 32669, status: 'Bajo media' },
+        { id: 'IES_10', maturity: 81, type: 'U PRIVADA', fines: 57102, status: 'Bajo media' },
+        { id: 'IES_13', maturity: 44, type: 'U PRIVADA', fines: 17290566, status: '7.4x media' },
+        { id: 'IES_17', maturity: 53, type: 'U PRIVADA', fines: 9456195, status: '4.0x media' },
+        { id: 'IES_14', maturity: 59, type: 'U PRIVADA', fines: 8138645, status: '3.5x media' },
+        { id: 'IES_21', maturity: 68, type: 'U PRIVADA', fines: 7499640, status: '3.2x media' },
+        { id: 'IES_05', maturity: 21, type: 'U PUBLICA', fines: 4452364, status: '1.9x media' }
+    ];
+
+    window.onload = function() {
+        // Chart: Top 10 Ranking
+        new Chart(document.getElementById('chartRanking'), {
+            type: 'bar',
+            data: {
+                labels: rankingData.map(d => d.name),
+                datasets: [{
+                    label: 'Score Combinado',
+                    data: rankingData.map(d => d.combined),
+                    backgroundColor: COLORS[1],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                scales: { x: { max: 100 } }
+            }
+        });
+
+        // Chart: Nessus Distribution
+        new Chart(document.getElementById('chartNessusDist'), {
+            type: 'doughnut',
+            data: {
+                labels: ['A (11)', 'B (6)', 'C (14)', 'D (10)', 'F (17)'],
+                datasets: [{
+                    data: [11, 6, 14, 10, 17],
+                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#f97316', '#ef4444']
+                }]
+            },
+            options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // Chart: Correlation
+        new Chart(document.getElementById('chartCorrelation'), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Instituciones',
+                    data: maturityData.map(d => ({ x: d.maturity, y: d.fines })),
+                    backgroundColor: COLORS[2]
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Madurez Digital (%)' } },
+                    y: { title: { display: true, text: 'Multas Proyectadas ($)' }, type: 'logarithmic' }
+                }
+            }
+        });
+
+        // Chart: Fines
+        new Chart(document.getElementById('chartFines'), {
+            type: 'bar',
+            data: {
+                labels: maturityData.slice(4).map(d => d.id),
+                datasets: [{
+                    label: 'Multas Totales ($)',
+                    data: maturityData.slice(4).map(d => d.fines),
+                    backgroundColor: '#ef4444'
+                }]
+            },
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+
+        // Chart: SS Distribution
+        new Chart(document.getElementById('chartSSDist'), {
+            type: 'bar',
+            data: {
+                labels: ['A', 'B', 'C', 'D', 'F'],
+                datasets: [{
+                    label: 'IES por Grado',
+                    data: [11, 15, 13, 13, 12],
+                    backgroundColor: COLORS[1]
+                }]
+            },
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+
+        // Chart: Severity
+        new Chart(document.getElementById('chartSeverity'), {
+            type: 'pie',
+            data: {
+                labels: ['High (499)', 'Medium (622)', 'Low (5714)', 'Info (2740)'],
+                datasets: [{
+                    data: [499, 622, 5714, 2740],
+                    backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6', '#94a3b8']
+                }]
+            },
+            options: { maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+        });
+
+        // Chart: Top Issues
+        new Chart(document.getElementById('chartTopIssues'), {
+            type: 'bar',
+            data: {
+                labels: ['Vuln v3 Med', 'Vuln v3 High', 'Cred Compromised', 'Vuln v3 Crit', 'Patch Cadence H', 'Patch Cadence M'],
+                datasets: [{
+                    label: 'Frecuencia',
+                    data: [979, 840, 584, 579, 546, 522],
+                    backgroundColor: COLORS[0]
+                }]
+            },
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, indexAxis: 'y' }
+        });
+
+        // Populate Tables
+        const maturityBody = document.getElementById('tableMaturity');
+        maturityData.forEach(d => {
+            const row = `<tr>
+                <td>${d.id}</td>
+                <td><div style="width:100%; height:8px; background:#e2e8f0; border-radius:4px; overflow:hidden;"><div style="width:${d.maturity}%; height:100%; background:${d.maturity>70?'#10b981':'#f59e0b'};"></div></div> ${d.maturity}%</td>
+                <td>${d.type}</td>
+                <td>$${d.fines.toLocaleString()}</td>
+                <td style="color:${d.status.includes('media') && !d.status.includes('Bajo')?'#ef4444':'#10b981'}">${d.status}</td>
+            </tr>`;
+            maturityBody.innerHTML += row;
+        });
+
+        const operativoBody = document.getElementById('tableOperativo');
+        rankingData.forEach(d => {
+            const row = `<tr>
+                <td>${d.name}</td>
+                <td style="font-weight:600;">${d.combined}</td>
+                <td>${d.ss}</td>
+                <td>${d.nessus}</td>
+                <td><span style="padding:2px 8px; border-radius:4px; background:#f0fdf4; color:#166534; font-size:11px;">Nivel A</span></td>
+            </tr>`;
+            operativoBody.innerHTML += row;
+        });
+    }
+
+    let mapInitialized = false;
+    function initMap() {
+        if(mapInitialized) return;
+        const map = L.map('map-container').setView([-1.5, -78.5], 7);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Referencias de ciudades para anonimizar geográficamente
+        const points = [
+            [-0.2299, -78.5249, 0.8], // Quito
+            [-2.1960, -79.8860, 0.9], // Guayaquil
+            [-2.8950, -78.9960, 0.6], // Cuenca
+            [-1.2490, -78.6170, 0.5], // Ambato
+            [-1.0576, -80.4515, 0.4], // Portoviejo
+            [-0.9342, -78.6152, 0.4], // Latacunga
+            [0.9592, -79.6520, 0.3]   // Esmeraldas
+        ];
+
+        // Añadir puntos de calor
+        const heat = L.heatLayer(points, {
+            radius: 40,
+            blur: 25,
+            maxZoom: 10,
+            gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
+        }).addTo(map);
+
+        mapInitialized = true;
+    }
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
