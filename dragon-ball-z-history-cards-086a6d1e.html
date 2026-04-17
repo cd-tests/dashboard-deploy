@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
+
+  :root {
+    --dbz-orange: #FF6B00;
+    --dbz-yellow: #FFD600;
+    --dbz-blue: #1565C0;
+    --dbz-dark: #0D0D0D;
+    --dbz-red: #C62828;
+    --dbz-gold: #FFC107;
+    --dbz-light: #FFF8E1;
+    --dbz-purple: #6A1B9A;
+    --card-bg: #1a1a2e;
+    --card-border: #FFD600;
+    --text-light: #FFFFFF;
+    --text-muted: #B0BEC5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #0D0D0D 0%, #1a1a2e 50%, #16213e 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .page-title {
+    font-family: 'Bangers', cursive;
+    font-size: 3rem;
+    text-align: center;
+    color: var(--dbz-yellow);
+    text-shadow: 3px 3px 0px var(--dbz-orange), 6px 6px 0px #000;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+    animation: titlePulse 2s ease-in-out infinite;
+  }
+
+  .page-subtitle {
+    text-align: center;
+    color: var(--dbz-orange);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+
+  @keyframes titlePulse {
+    0%, 100% { text-shadow: 3px 3px 0px var(--dbz-orange), 6px 6px 0px #000; }
+    50% { text-shadow: 3px 3px 0px var(--dbz-red), 6px 6px 0px #000, 0 0 30px var(--dbz-yellow); }
+  }
+
+  /* ========== STORY SECTION ========== */
+  .story-section {
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    border: 3px solid var(--dbz-orange);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(255,107,0,0.3);
+  }
+
+  .story-header {
+    background: linear-gradient(90deg, var(--dbz-orange), var(--dbz-yellow));
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .story-icon { font-size: 2rem; }
+
+  .story-header-text h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 1.8rem;
+    color: #000;
+    letter-spacing: 2px;
+  }
+
+  .story-header-text p {
+    font-size: 0.8rem;
+    color: #333;
+    font-weight: 700;
+  }
+
+  .story-body {
+    padding: 28px;
+    color: var(--text-light);
+    line-height: 1.9;
+    font-size: 1rem;
+  }
+
+  .story-body p { margin-bottom: 14px; }
+
+  .story-body .highlight {
+    color: var(--dbz-yellow);
+    font-weight: 800;
+  }
+
+  .story-body .power-word {
+    color: var(--dbz-orange);
+    font-weight: 800;
+    font-size: 1.05rem;
+  }
+
+  .story-divider {
+    text-align: center;
+    margin: 16px 0;
+    color: var(--dbz-gold);
+    font-size: 1.4rem;
+    letter-spacing: 8px;
+  }
+
+  /* ========== CARDS GRID ========== */
+  .section-label {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--dbz-yellow);
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0 var(--dbz-orange);
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+
+  .hcard {
+    background: linear-gradient(145deg, #1a1a2e, #0f0f23);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+
+  .hcard:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 48px rgba(255,214,0,0.3);
+  }
+
+  .hcard.orange  { border-color: var(--dbz-orange); }
+  .hcard.blue    { border-color: #42A5F5; }
+  .hcard.red     { border-color: var(--dbz-red); }
+  .hcard.gold    { border-color: var(--dbz-gold); }
+  .hcard.purple  { border-color: #AB47BC; }
+  .hcard.green   { border-color: #66BB6A; }
+
+  .hcard-banner {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hcard.orange  .hcard-banner { background: linear-gradient(135deg, #FF6B00, #FF8C00, #FFD600); }
+  .hcard.blue    .hcard-banner { background: linear-gradient(135deg, #1565C0, #1976D2, #42A5F5); }
+  .hcard.red     .hcard-banner { background: linear-gradient(135deg, #B71C1C, #C62828, #EF5350); }
+  .hcard.gold    .hcard-banner { background: linear-gradient(135deg, #E65100, #F57C00, #FFC107); }
+  .hcard.purple  .hcard-banner { background: linear-gradient(135deg, #4A148C, #6A1B9A, #AB47BC); }
+  .hcard.green   .hcard-banner { background: linear-gradient(135deg, #1B5E20, #2E7D32, #66BB6A); }
+
+  .hcard-emoji { font-size: 2.8rem; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5)); }
+
+  .hcard-badge {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .hcard-body { padding: 18px 18px 20px; }
+
+  .hcard-tag {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .hcard.orange  .hcard-tag { color: var(--dbz-orange); }
+  .hcard.blue    .hcard-tag { color: #42A5F5; }
+  .hcard.red     .hcard-tag { color: #EF5350; }
+  .hcard.gold    .hcard-tag { color: var(--dbz-gold); }
+  .hcard.purple  .hcard-tag { color: #AB47BC; }
+  .hcard.green   .hcard-tag { color: #66BB6A; }
+
+  .hcard-title {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .hcard-text {
+    font-size: 0.88rem;
+    color: #CFD8DC;
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .hcard-vocab {
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+  }
+
+  .vocab-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--dbz-gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .vocab-word {
+    display: inline-block;
+    background: rgba(255,214,0,0.15);
+    color: var(--dbz-yellow);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 12px;
+    margin: 2px 3px 2px 0;
+    border: 1px solid rgba(255,214,0,0.3);
+  }
+
+  .hcard-question {
+    background: rgba(255,107,0,0.1);
+    border-left: 3px solid var(--dbz-orange);
+    border-radius: 0 8px 8px 0;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    color: #FFE0B2;
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  .hcard.blue   .hcard-question { background: rgba(66,165,245,0.1); border-color: #42A5F5; color: #BBDEFB; }
+  .hcard.red    .hcard-question { background: rgba(198,40,40,0.1);  border-color: #EF5350; color: #FFCDD2; }
+  .hcard.gold   .hcard-question { background: rgba(255,193,7,0.1);  border-color: var(--dbz-gold); color: #FFF9C4; }
+  .hcard.purple .hcard-question { background: rgba(171,71,188,0.1); border-color: #AB47BC; color: #E1BEE7; }
+  .hcard.green  .hcard-question { background: rgba(102,187,106,0.1);border-color: #66BB6A; color: #C8E6C9; }
+
+  .power-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .power-bar-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #90A4AE;
+    width: 70px;
+    flex-shrink: 0;
+  }
+
+  .power-bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .power-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+
+  .hcard.orange .power-bar-fill { background: linear-gradient(90deg, #FF6B00, #FFD600); }
+  .hcard.blue   .power-bar-fill { background: linear-gradient(90deg, #1565C0, #42A5F5); }
+  .hcard.red    .power-bar-fill { background: linear-gradient(90deg, #B71C1C, #EF5350); }
+  .hcard.gold   .power-bar-fill { background: linear-gradient(90deg, #E65100, #FFC107); }
+  .hcard.purple .power-bar-fill { background: linear-gradient(90deg, #4A148C, #AB47BC); }
+  .hcard.green  .power-bar-fill { background: linear-gradient(90deg, #1B5E20, #66BB6A); }
+
+  .power-bar-val {
+    font-size: 0.72rem;
+    font-weight: 800;
+    width: 30px;
+    text-align: right;
+  }
+
+  .hcard.orange .power-bar-val { color: var(--dbz-orange); }
+  .hcard.blue   .power-bar-val { color: #42A5F5; }
+  .hcard.red    .power-bar-val { color: #EF5350; }
+  .hcard.gold   .power-bar-val { color: var(--dbz-gold); }
+  .hcard.purple .power-bar-val { color: #AB47BC; }
+  .hcard.green  .power-bar-val { color: #66BB6A; }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #546E7A;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding-bottom: 20px;
+  }
+
+  .footer span { color: var(--dbz-orange); }
+</style>
+
+<!-- TITLE -->
+<div class="page-title">⚡ DRAGON BALL Z ⚡</div>
+<div class="page-subtitle">📖 Cuento de Lectura + History Cards</div>
+
+<!-- ========== STORY ========== -->
+<div class="story-section">
+  <div class="story-header">
+    <div class="story-icon">📜</div>
+    <div class="story-header-text">
+      <h2>EL DÍA QUE GOKU SUPERÓ SUS LÍMITES</h2>
+      <p>Cuento para mejorar la lectura · Nivel Saiyan 🟡</p>
+    </div>
+  </div>
+  <div class="story-body">
+    <p>
+      Era un día tranquilo en la <span class="highlight">Tierra</span>. El sol brillaba sobre los campos verdes y los pájaros cantaban alegres.
+      Pero esa paz no duraría mucho tiempo. A lo lejos, una <span class="power-word">nave espacial</span> cruzó el cielo a gran velocidad.
+    </p>
+    <p>
+      <span class="highlight">Goku</span>, el guerrero más poderoso del planeta, estaba entrenando con su hijo <span class="highlight">Gohan</span>
+      cuando sintió una energía <span class="power-word">malvada</span> acercarse. Era una energía que nunca antes había sentido.
+      Su corazón latió más rápido. <em>"¡Alguien muy peligroso viene hacia aquí!"</em>, dijo con voz seria.
+    </p>
+    <div class="story-divider">— ✦ ✦ ✦ —</div>
+    <p>
+      De la nave descendió <span class="highlight">Vegeta</span>, el príncipe de los Saiyans. Era orgulloso, fuerte y muy arrogante.
+      <em>"¡Yo soy el más poderoso del universo!"</em>, gritó mientras aterrizaba con un golpe que hizo temblar la tierra.
+      Los árboles se doblaron y las piedras salieron volando en todas direcciones.
+    </p>
+    <p>
+      <span class="highlight">Goku</span> respiró profundo. No tenía <span class="power-word">miedo</span>, pero sabía que esta batalla sería diferente a todas las anteriores.
+      Se preparó, cerró los ojos y comenzó a concentrar su <span class="power-word">energía</span> interna, su famoso <span class="highlight">Ki</span>.
+      Una luz dorada empezó a brillar a su alrededor.
+    </p>
+    <div class="story-divider">— ✦ ✦ ✦ —</div>
+    <p>
+      La pelea comenzó con velocidad increíble. Los golpes resonaban como <span class="power-word">truenos</span>.
+      <span class="highlight">Vegeta</span> era muy hábil y poderoso, pero <span class="highlight">Goku</span> nunca se rendía.
+      Cada vez que caía al suelo, se levantaba con más <span class="highlight">determinación</span>.
+    </p>
+    <p>
+      <em>"¡No puedo perder!"</em>, pensó Goku mientras recordaba a su familia y a sus amigos.
+      Fue entonces cuando ocurrió algo <span class="power-word">asombroso</span>: su cabello se volvió dorado, sus ojos se tornaron verdes
+      y una energía poderosa explotó desde su cuerpo. ¡Se había convertido en <span class="highlight">Super Saiyan</span>!
+    </p>
+    <div class="story-divider">— ✦ ✦ ✦ —</div>
+    <p>
+      <span class="highlight">Vegeta</span> observó sorprendido. Nunca antes había visto algo igual.
+      La batalla terminó con un empate, pero ambos guerreros se <span class="highlight">respetaron</span>.
+      Con el tiempo, <span class="highlight">Vegeta</span> comprendió que la verdadera fuerza no viene del orgullo,
+      sino del <span class="power-word">corazón</span> y de luchar por quienes amas.
+    </p>
+    <p style="font-style:italic; color:#FFD600; font-weight:700; text-align:center;">
+      🌟 "El poder más grande no está en los músculos, está en nunca rendirse." — Goku 🌟
+    </p>
+  </div>
+</div>
+
+<!-- ========== CARDS ========== -->
+<div class="section-label">⚔️ HISTORY CARDS ⚔️</div>
+<div class="cards-grid">
+
+  <!-- CARD 1: Goku -->
+  <div class="hcard orange">
+    <div class="hcard-banner">
+      <span class="hcard-emoji">🐉</span>
+      <span class="hcard-badge">Protagonista</span>
+    </div>
+    <div class="hcard-body">
+      <div class="hcard-tag">🟠 Guerrero Z · Saiyan</div>
+      <div class="hcard-title">Son Goku</div>
+      <div class="hcard-text">
+        Goku nació en el planeta Vegeta como Kakarotto. Fue enviado a la Tierra de bebé. Creció con el abuelo Gohan, quien le enseñó bondad y valentía. Su mayor deseo es siempre superar sus propios límites.
+      </div>
+      <div class="hcard-vocab">
+        <div class="vocab-label">📚 Vocabulario del cuento</div>
+        <span class="vocab-word">determinación</span>
+        <span class="vocab-word">energía Ki</span>
+        <span class="vocab-word">transformación</span>
+        <span class="vocab-word">Super Saiyan</span>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Fuerza</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:95%"></div></div>
+        <div class="power-bar-val">95%</div>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Bondad</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+        <div class="power-bar-val">100%</div>
+      </div>
+      <div class="hcard-question">❓ ¿Por qué Goku nunca se rinde aunque lo derriben?</div>
+    </div>
+  </div>
+
+  <!-- CARD 2: Vegeta -->
+  <div class="hcard blue">
+    <div class="hcard-banner">
+      <span class="hcard-emoji">👑</span>
+      <span class="hcard-badge">Rival / Aliado</span>
+    </div>
+    <div class="hcard-body">
+      <div class="hcard-tag">🔵 Príncipe Saiyan</div>
+      <div class="hcard-title">Príncipe Vegeta</div>
+      <div class="hcard-text">
+        Vegeta es el orgulloso príncipe de los Saiyans. Al principio era un villano, pero poco a poco aprendió el valor de la familia y la amistad. Su rivalidad con Goku lo hizo crecer como guerrero y como persona.
+      </div>
+      <div class="hcard-vocab">
+        <div class="vocab-label">📚 Vocabulario del cuento</div>
+        <span class="vocab-word">arrogante</span>
+        <span class="vocab-word">orgulloso</span>
+        <span class="vocab-word">rival</span>
+        <span class="vocab-word">respeto</span>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Fuerza</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:90%"></div></div>
+        <div class="power-bar-val">90%</div>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Orgullo</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+        <div class="power-bar-val">100%</div>
+      </div>
+      <div class="hcard-question">❓ ¿Qué aprendió Vegeta al final del cuento?</div>
+    </div>
+  </div>
+
+  <!-- CARD 3: Gohan -->
+  <div class="hcard green">
+    <div class="hcard-banner">
+      <span class="hcard-emoji">📚</span>
+      <span class="hcard-badge">Hijo del héroe</span>
+    </div>
+    <div class="hcard-body">
+      <div class="hcard-tag">🟢 Medio Saiyan · Estudiante</div>
+      <div class="hcard-title">Son Gohan</div>
+      <div class="hcard-text">
+        Gohan es el hijo mayor de Goku. Es mitad humano y mitad Saiyan. Le encanta estudiar, pero cuando sus seres queridos están en peligro, despierta un poder increíble. Es la prueba de que inteligencia y fuerza van juntas.
+      </div>
+      <div class="hcard-vocab">
+        <div class="vocab-label">📚 Vocabulario del cuento</div>
+        <span class="vocab-word">potencial</span>
+        <span class="vocab-word">entrenamiento</span>
+        <span class="vocab-word">proteger</span>
+        <span class="vocab-word">valiente</span>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Potencial</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:98%"></div></div>
+        <div class="power-bar-val">98%</div>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Sabiduría</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:85%"></div></div>
+        <div class="power-bar-val">85%</div>
+      </div>
+      <div class="hcard-question">❓ ¿Qué hace despertar el poder de Gohan?</div>
+    </div>
+  </div>
+
+  <!-- CARD 4: La Transformación -->
+  <div class="hcard gold">
+    <div class="hcard-banner">
+      <span class="hcard-emoji">⚡</span>
+      <span class="hcard-badge">Evento Clave</span>
+    </div>
+    <div class="hcard-body">
+      <div class="hcard-tag">⭐ Momento Histórico</div>
+      <div class="hcard-title">Super Saiyan</div>
+      <div class="hcard-text">
+        La transformación Super Saiyan es legendaria. El cabello se vuelve dorado y los ojos verdes. Ocurre cuando un Saiyan siente una emoción muy intensa. Goku fue el primero en lograrlo en generaciones. Es símbolo de superar los propios límites.
+      </div>
+      <div class="hcard-vocab">
+        <div class="vocab-label">📚 Vocabulario del cuento</div>
+        <span class="vocab-word">transformación</span>
+        <span class="vocab-word">emoción</span>
+        <span class="vocab-word">legendario</span>
+        <span class="vocab-word">asombroso</span>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Rareza</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+        <div class="power-bar-val">100%</div>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Poder x50</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+        <div class="power-bar-val">∞</div>
+      </div>
+      <div class="hcard-question">❓ ¿Qué le pasó a Goku cuando pensó en su familia?</div>
+    </div>
+  </div>
+
+  <!-- CARD 5: Bola de Dragón -->
+  <div class="hcard red">
+    <div class="hcard-banner">
+      <span class="hcard-emoji">🔮</span>
+      <span class="hcard-badge">Objeto Mágico</span>
+    </div>
+    <div class="hcard-body">
+      <div class="hcard-tag">🔴 Las 7 Esferas del Dragón</div>
+      <div class="hcard-title">Bolas de Dragón</div>
+      <div class="hcard-text">
+        Hay 7 Bolas de Dragón esparcidas por la Tierra. Cada una tiene estrellas: de 1 a 7. Cuando las reúnes todas, aparece el dragón eterno Shenlong, quien concede cualquier deseo. Muchas batallas ocurren por su gran poder.
+      </div>
+      <div class="hcard-vocab">
+        <div class="vocab-label">📚 Vocabulario del cuento</div>
+        <span class="vocab-word">esfera</span>
+        <span class="vocab-word">deseo</span>
+        <span class="vocab-word">eterno</span>
+        <span class="vocab-word">esparcidas</span>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Magia</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+        <div class="power-bar-val">100%</div>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Rareza</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:95%"></div></div>
+        <div class="power-bar-val">95%</div>
+      </div>
+      <div class="hcard-question">❓ ¿Cuántas esferas se necesitan para invocar al dragón?</div>
+    </div>
+  </div>
+
+  <!-- CARD 6: Moraleja -->
+  <div class="hcard purple">
+    <div class="hcard-banner">
+      <span class="hcard-emoji">🌟</span>
+      <span class="hcard-badge">Lección</span>
+    </div>
+    <div class="hcard-body">
+      <div class="hcard-tag">💜 Moraleja del cuento</div>
+      <div class="hcard-title">Lección de Vida</div>
+      <div class="hcard-text">
+        Dragon Ball Z nos enseña que el verdadero poder viene de adentro. No importa cuántas veces caigas: lo que importa es que te levantes. La amistad, el amor y la perseverancia son más fuertes que cualquier técnica de combate.
+      </div>
+      <div class="hcard-vocab">
+        <div class="vocab-label">📚 Vocabulario del cuento</div>
+        <span class="vocab-word">perseverancia</span>
+        <span class="vocab-word">amistad</span>
+        <span class="vocab-word">corazón</span>
+        <span class="vocab-word">superar</span>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Inspiración</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+        <div class="power-bar-val">100%</div>
+      </div>
+      <div class="power-bar-row">
+        <div class="power-bar-label">Valores</div>
+        <div class="power-bar-track"><div class="power-bar-fill" style="width:100%"></div></div>
+        <div class="power-bar-val">100%</div>
+      </div>
+      <div class="hcard-question">❓ ¿Cuál es el mensaje más importante del cuento?</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">⚡ Dragon Ball Z History Cards · <span>Mejora tu lectura con aventuras épicas</span> ⚡</div>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
