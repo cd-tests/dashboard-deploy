@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3248;
+    --text: #e8eaf6;
+    --muted: #8b91b5;
+    --primary: #5c6ef0;
+    --secondary: #7ee8c8;
+    --amber: #f5c842;
+    --coral: #f05c6e;
+    --green: #4cde8e;
+    --purple: #a56ef5;
+    --leve: #f5c842;
+    --grave: #f05c6e;
+    --total: #5c6ef0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #1a1d27 0%, #22263a 100%);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+  }
+
+  .header-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--primary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .header p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .kpi.kpi-total::before { background: var(--primary); }
+  .kpi.kpi-leve::before { background: var(--leve); }
+  .kpi.kpi-grave::before { background: var(--grave); }
+  .kpi.kpi-risk::before { background: var(--purple); }
+
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .kpi-total .kpi-value { color: var(--primary); }
+  .kpi-leve .kpi-value { color: var(--leve); }
+  .kpi-grave .kpi-value { color: var(--grave); }
+  .kpi-risk .kpi-value { color: var(--purple); }
+
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title span.dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* Bar Chart */
+  .bar-chart { display: flex; flex-direction: column; gap: 8px; }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .bar-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: right;
+  }
+
+  .bar-track {
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s;
+    position: relative;
+  }
+
+  .bar-value {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* Donut */
+  .donut-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-label { color: var(--muted); flex: 1; }
+  .legend-val { color: var(--text); font-weight: 700; font-size: 11px; }
+
+  /* Scatter / ranking */
+  .ranking-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .rank-item {
+    display: grid;
+    grid-template-columns: 20px 70px 1fr 90px;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: var(--surface2);
+  }
+
+  .rank-num {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .rank-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .rank-bar-track {
+    background: #2e3248;
+    border-radius: 3px;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .rank-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  .rank-val {
+    font-size: 11px;
+    text-align: right;
+    font-weight: 700;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-A { background: #1a3a2a; color: var(--green); }
+  .badge-B { background: #1e2f4a; color: var(--secondary); }
+  .badge-C { background: #2a2a1a; color: var(--amber); }
+  .badge-D { background: #2a1e1e; color: #e08050; }
+  .badge-F { background: #3a1a1a; color: var(--coral); }
+
+  /* Comparative bars */
+  .comp-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+
+  .comp-label {
+    font-size: 10px;
+    color: var(--muted);
+    width: 70px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .comp-bar {
+    flex: 1;
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 14px;
+    overflow: hidden;
+  }
+
+  .comp-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .comp-val {
+    font-size: 10px;
+    color: var(--text);
+    width: 60px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .risk-meter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .risk-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 80px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .risk-label { font-size: 11px; color: var(--text); font-weight: 600; }
+  .risk-val { font-size: 11px; color: var(--muted); text-align: right; }
+
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  svg text { font-family: 'Segoe UI', system-ui, sans-serif; }
+</style>
+
+
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-badge">CEDIA · Seguridad de la Información 2026</div>
+  <h1>Dashboard de Proyección de Multas PDP<br>Instituciones de Educación Superior (IES)</h1>
+  <p>Ley Orgánica de Protección de Datos Personales (LOPDP) · 21 instituciones evaluadas</p>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi kpi-total">
+    <div class="kpi-label">Exposición Total</div>
+    <div class="kpi-value">$53.8M</div>
+    <div class="kpi-sub">Suma multas leves + graves (IES)</div>
+  </div>
+  <div class="kpi kpi-grave">
+    <div class="kpi-label">Mayor Exposición Individual</div>
+    <div class="kpi-value">$17.3M</div>
+    <div class="kpi-sub">UPS · Calificación 72</div>
+  </div>
+  <div class="kpi kpi-leve">
+    <div class="kpi-label">Promedio Multa por IES</div>
+    <div class="kpi-value">$2.4M</div>
+    <div class="kpi-sub">Varianza alta entre instituciones</div>
+  </div>
+  <div class="kpi kpi-risk">
+    <div class="kpi-label">IES en Zona de Riesgo Alto</div>
+    <div class="kpi-value">14 / 21</div>
+    <div class="kpi-sub">Nivel F o D en Madurez PDP</div>
+  </div>
+</div>
+
+<!-- MAIN GRID: TOP CHART + DONUT -->
+<div class="grid-3">
+  <!-- BAR CHART: Multas por IES -->
+  <div class="card">
+    <div class="card-title">
+      <span class="dot" style="background:var(--coral)"></span>
+      Proyección de Multas por Institución (USD)
+    </div>
+    <div class="bar-chart" id="barChart"></div>
+  </div>
+
+  <!-- DONUT + breakdown -->
+  <div class="card">
+    <div class="card-title">
+      <span class="dot" style="background:var(--primary)"></span>
+      Composición del Riesgo
+    </div>
+    <div class="donut-container">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <!-- Donut background -->
+        <circle cx="80" cy="80" r="60" fill="none" stroke="#22263a" stroke-width="22"/>
+        <!-- Graves segment: ~67.6% of total -->
+        <circle cx="80" cy="80" r="60" fill="none" stroke="#f05c6e" stroke-width="22"
+          stroke-dasharray="254.8 122.5"
+          stroke-dashoffset="0"
+          transform="rotate(-90 80 80)"/>
+        <!-- Leves segment: ~32.4% -->
+        <circle cx="80" cy="80" r="60" fill="none" stroke="#f5c842" stroke-width="22"
+          stroke-dasharray="122.3 255.0"
+          stroke-dashoffset="-254.8"
+          transform="rotate(-90 80 80)"/>
+        <text x="80" y="76" text-anchor="middle" fill="#e8eaf6" font-size="14" font-weight="800">$53.8M</text>
+        <text x="80" y="94" text-anchor="middle" fill="#8b91b5" font-size="9">EXPOSICIÓN</text>
+      </svg>
+      <div class="donut-legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--coral)"></div>
+          <span class="legend-label">Infracciones Graves</span>
+          <span class="legend-val">$36.4M (67.6%)</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--leve)"></div>
+          <span class="legend-label">Infracciones Leves</span>
+          <span class="legend-val">$17.4M (32.4%)</span>
+        </div>
+      </div>
+      <div style="width:100%;margin-top:8px;">
+        <div class="section-label">Multas Promedio Unitarias</div>
+        <div class="legend-item" style="margin-bottom:5px;">
+          <div class="legend-dot" style="background:var(--leve)"></div>
+          <span class="legend-label">Leve (unitaria)</span>
+          <span class="legend-val">$44,654</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:var(--coral)"></div>
+          <span class="legend-label">Grave (unitaria)</span>
+          <span class="legend-val">$95,035</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECOND ROW: Ranking calificación + Infracciones -->
+<div class="grid-2">
+
+  <!-- Ranking de calificación general -->
+  <div class="card">
+    <div class="card-title">
+      <span class="dot" style="background:var(--primary)"></span>
+      Calificación General vs. Exposición de Multa
+    </div>
+    <div class="ranking-list" id="rankingList"></div>
+  </div>
+
+  <!-- Infracciones por IES -->
+  <div class="card">
+    <div class="card-title">
+      <span class="dot" style="background:var(--amber)"></span>
+      Número de Infracciones Detectadas por IES
+    </div>
+    <div id="infracChart"></div>
+  </div>
+</div>
+
+<!-- THIRD ROW: Brechas de madurez -->
+<div class="card" style="margin-bottom:16px;">
+  <div class="card-title">
+    <span class="dot" style="background:var(--purple)"></span>
+    Perfil de Brechas por Dominio de Madurez · Promedio General de IES
+  </div>
+  <div id="domainChart"></div>
+</div>
+
+<div class="footer">
+  Fuente: CEDIA – Evaluación de Nivel de Madurez en Seguridad de la Información y Protección de Datos Personales 2026 [1] · Basado en LOPDP, ISO/IEC 27001:2022 y EGSI
+</div>
+
+<script>
+const institutions = [
+  { name: 'UPS',     calGen: 72, total: 17290566, leves: 4683674,  graves: 12606891, nLeves: 12, nGraves: 16 },
+  { name: 'IKIAM',   calGen: 86, total: 8138645,  leves: 2123124,  graves: 6015520,  nLeves: 5,  nGraves: 3 },
+  { name: 'UNL',     calGen: 85, total: 9456195,  leves: 2137664,  graves: 7318531,  nLeves: 13, nGraves: 13 },
+  { name: 'PUCE',    calGen: 69, total: 7499640,  leves: 2558016,  graves: 4941623,  nLeves: 11, nGraves: 10 },
+  { name: 'ESPAM',   calGen: 37, total: 4452364,  leves: 1120091,  graves: 3332272,  nLeves: 20, nGraves: 28 },
+  { name: 'USGP',    calGen: 54, total: 740253,   leves: 191033,   graves: 549220,   nLeves: 17, nGraves: 23 },
+  { name: 'UCACUE',  calGen: 45, total: 353194,   leves: 103015,   graves: 250179,   nLeves: 15, nGraves: 19 },
+  { name: 'SUDAMER', calGen: 34, total: 151861,   leves: 35240,    graves: 116620,   nLeves: 21, nGraves: 24 },
+  { name: 'ARMADA',  calGen: 48, total: 57102,    leves: 14896,    graves: 42206,    nLeves: 19, nGraves: 27 },
+  { name: 'UPEC',    calGen: 40, total: 224665,   leves: 59876,    graves: 164789,   nLeves: 22, nGraves: 26 },
+  { name: 'ESPE',    calGen: 79, total: 109997,   leves: 27901,    graves: 82095,    nLeves: 13, nGraves: 18 },
+  { name: 'ISTE',    calGen: 61, total: 109947,   leves: 29459,    graves: 80487,    nLeves: 14, nGraves: 18 },
+  { name: 'UNIANDES',calGen: 66, total: 111320,   leves: 36944,    graves: 74375,    nLeves: 19, nGraves: 18 },
+  { name: 'ITSCO',   calGen: 83, total: 68929,    leves: 26575,    graves: 42354,    nLeves: 12, nGraves: 9 },
+  { name: 'UTPL',    calGen: 79, total: 57102,    leves: 14896,    graves: 42206,    nLeves: 9,  nGraves: 12 },
+  { name: 'UCUENCA', calGen: 77, total: 9284,     leves: 3873,     graves: 5411,     nLeves: 12, nGraves: 11 },
+  { name: 'UAZUAY',  calGen: 59, total: 38196,    leves: 12185,    graves: 26011,    nLeves: 18, nGraves: 29 },
+  { name: 'MCUENCA', calGen: 61, total: 32669,    leves: 9814,     graves: 22855,    nLeves: 18, nGraves: 13 },
+  { name: 'UTELVT',  calGen: 41, total: 141057,   leves: 44088,    graves: 96968,    nLeves: 18, nGraves: 26 },
+  { name: 'UINPIAW', calGen: 52, total: 99565,    leves: 26623,    graves: 72941,    nLeves: 17, nGraves: 20 },
+  { name: 'ESPOL',   calGen: 89, total: 3619,     leves: 3619,     graves: 0,        nLeves: 7,  nGraves: 0 },
+];
+
+// Sort by total multa
+const sorted = [...institutions].sort((a, b) => b.total - a.total);
+const maxTotal = sorted[0].total;
+
+// Bar chart
+const barChart = document.getElementById('barChart');
+const colors = ['#f05c6e','#f07060','#f08060','#f09060','#f5a030','#f5b030','#f5c842','#a0c860','#6ede8a','#4cde8e'];
+
+sorted.forEach((inst, i) => {
+  const pct = (inst.total / maxTotal * 100).toFixed(1);
+  const colorIdx = Math.min(i, colors.length - 1);
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+
+  const label = document.createElement('div');
+  label.className = 'bar-label';
+  label.textContent = inst.name;
+
+  const track = document.createElement('div');
+  track.className = 'bar-track';
+
+  const fill = document.createElement('div');
+  fill.className = 'bar-fill';
+  fill.style.width = pct + '%';
+  fill.style.background = `linear-gradient(90deg, ${colors[colorIdx]}, ${colors[Math.min(colorIdx+1, colors.length-1)]})`;
+
+  track.appendChild(fill);
+
+  const val = document.createElement('div');
+  val.className = 'bar-value';
+  val.textContent = inst.total >= 1000000
+    ? '$' + (inst.total/1000000).toFixed(1) + 'M'
+    : '$' + (inst.total/1000).toFixed(0) + 'K';
+
+  row.appendChild(label);
+  row.appendChild(track);
+  row.appendChild(val);
+  barChart.appendChild(row);
+});
+
+// Ranking list
+const rankingList = document.getElementById('rankingList');
+const sortedByCal = [...institutions].sort((a, b) => b.calGen - a.calGen);
+const maxMulRank = Math.max(...institutions.map(i => i.total));
+
+sortedByCal.forEach((inst, i) => {
+  const badge = inst.calGen >= 90 ? 'A' : inst.calGen >= 80 ? 'B' : inst.calGen >= 70 ? 'C' : inst.calGen >= 60 ? 'D' : 'F';
+  const pct = (inst.total / maxMulRank * 100).toFixed(1);
+  const row = document.createElement('div');
+  row.className = 'rank-item';
+
+  const gradientCol = inst.total > 5000000 ? '#f05c6e' : inst.total > 1000000 ? '#f5c842' : '#5c6ef0';
+
+  row.innerHTML = `
+    <div class="rank-num">${i+1}</div>
+    <div class="rank-name">${inst.name} <span class="badge badge-${badge}">${badge}</span></div>
+    <div class="rank-bar-track">
+      <div class="rank-bar-fill" style="width:${pct}%;background:${gradientCol}"></div>
+    </div>
+    <div class="rank-val" style="color:${gradientCol}">
+      ${inst.total >= 1000000 ? '$'+(inst.total/1000000).toFixed(1)+'M' : '$'+(inst.total/1000).toFixed(0)+'K'}
+    </div>
+  `;
+  rankingList.appendChild(row);
+});
+
+// Infractions chart
+const infracChart = document.getElementById('infracChart');
+const sortedByInfrac = [...institutions].sort((a,b) => (b.nLeves + b.nGraves) - (a.nLeves + a.nGraves));
+const maxInfrac = Math.max(...sortedByInfrac.map(i => i.nLeves + i.nGraves));
+
+sortedByInfrac.forEach(inst => {
+  const totalInfrac = inst.nLeves + inst.nGraves;
+  const pctL = (inst.nLeves / maxInfrac * 100).toFixed(1);
+  const pctG = (inst.nGraves / maxInfrac * 100).toFixed(1);
+
+  const row = document.createElement('div');
+  row.className = 'comp-row';
+  row.innerHTML = `
+    <div class="comp-label">${inst.name}</div>
+    <div class="comp-bar" style="display:flex;gap:1px;">
+      <div class="comp-fill" style="width:${pctL}%;background:#f5c842;border-radius:3px 0 0 3px;"></div>
+      <div class="comp-fill" style="width:${pctG}%;background:#f05c6e;border-radius:0 3px 3px 0;"></div>
+    </div>
+    <div class="comp-val">L:${inst.nLeves} G:${inst.nGraves}</div>
+  `;
+  infracChart.appendChild(row);
+});
+
+// Legend for infrac
+const legRow = document.createElement('div');
+legRow.style.cssText = 'display:flex;gap:16px;margin-top:10px;font-size:10px;color:#8b91b5;';
+legRow.innerHTML = `
+  <span><span style="display:inline-block;width:10px;height:10px;background:#f5c842;border-radius:2px;margin-right:4px;"></span>Leves</span>
+  <span><span style="display:inline-block;width:10px;height:10px;background:#f05c6e;border-radius:2px;margin-right:4px;"></span>Graves</span>
+`;
+infracChart.appendChild(legRow);
+
+// Domain chart
+const domains = [
+  { name: 'Gobernanza y Liderazgo', val: 59.76, level: 'F' },
+  { name: 'Gestión de Riesgos', val: 46.01, level: 'F' },
+  { name: 'Marco Normativo / Docs', val: 67.53, level: 'D' },
+  { name: 'Operación y Controles SI', val: 58.73, level: 'F' },
+  { name: 'Talento Humano y Cultura', val: 57.83, level: 'F' },
+  { name: 'Incidentes / Resiliencia', val: 47.20, level: 'F' },
+  { name: 'Evaluación y Mejora Continua', val: 30.03, level: 'F' },
+  { name: 'Controles PDP (LOPDP)', val: 61.66, level: 'D' },
+  { name: 'Controles SI (ISO 27002)', val: 68.38, level: 'D' },
+];
+
+const domainChart = document.getElementById('domainChart');
+domainChart.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;';
+
+const domainColorMap = { 'A': '#4cde8e', 'B': '#7ee8c8', 'C': '#f5c842', 'D': '#e08050', 'F': '#f05c6e' };
+
+domains.forEach(d => {
+  const bar = document.createElement('div');
+  bar.style.cssText = 'display:flex;align-items:center;gap:8px;';
+  const color = domainColorMap[d.level] || '#f05c6e';
+  bar.innerHTML = `
+    <div style="font-size:10px;color:#8b91b5;width:170px;flex-shrink:0;">${d.name}</div>
+    <div style="flex:1;background:#22263a;border-radius:4px;height:16px;overflow:hidden;">
+      <div style="width:${d.val}%;background:${color};height:100%;border-radius:4px;display:flex;align-items:center;">
+        <span style="font-size:9px;color:#0f1117;font-weight:800;padding-left:5px;">${d.val.toFixed(0)}</span>
+      </div>
+    </div>
+    <div style="font-size:10px;font-weight:800;color:${color};width:12px;">${d.level}</div>
+  `;
+  domainChart.appendChild(bar);
+});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
