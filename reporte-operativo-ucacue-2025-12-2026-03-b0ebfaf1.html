@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body, html {
+    font-family: 'Montserrat', 'Arial', sans-serif;
+    background: #f0f2f8;
+    height: 720px; max-height: 720px;
+    overflow: hidden;
+    color: #020029;
+  }
+
+  .dashboard {
+    display: flex; flex-direction: column;
+    height: 720px; max-height: 720px;
+    overflow: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: #020029;
+    height: 56px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .header img { height: 32px; }
+  .header-right { color: #29c6ff; font-size: 11px; font-weight: 600; text-align: right; line-height: 1.4; }
+
+  /* NAV TABS */
+  .nav {
+    background: #0c0c43;
+    height: 44px; flex-shrink: 0;
+    display: flex; align-items: center; gap: 4px;
+    padding: 0 16px;
+  }
+  .tab-btn {
+    background: transparent; border: none;
+    color: rgba(255,255,255,0.6); font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600; cursor: pointer;
+    padding: 6px 14px; border-radius: 6px 6px 0 0;
+    transition: all .2s;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .tab-btn.active { background: #29c6ff; color: #020029; }
+  .tab-btn:hover:not(.active) { background: rgba(41,198,255,.15); color: #fff; }
+
+  /* CONTENT */
+  .tab-content {
+    display: none; flex: 1;
+    height: 620px; max-height: 620px;
+    overflow-y: auto; overflow-x: hidden;
+    padding: 16px 20px;
+  }
+  .tab-content.active { display: block; }
+
+  /* KPI GRID */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 14px; }
+  .kpi-card {
+    background: #fff; border-radius: 10px;
+    padding: 14px 12px; border-top: 3px solid #29c6ff;
+    box-shadow: 0 2px 8px rgba(2,0,41,.07);
+  }
+  .kpi-card.danger { border-top-color: #e53e3e; }
+  .kpi-card.warning { border-top-color: #f6ad55; }
+  .kpi-card.ok { border-top-color: #48bb78; }
+  .kpi-label { font-size: 9px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 4px; }
+  .kpi-value { font-size: 22px; font-weight: 800; color: #020029; }
+  .kpi-sub { font-size: 10px; color: #888; margin-top: 2px; }
+
+  /* SECTION TITLE */
+  .sec-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    color: #0c0c43; letter-spacing: .8px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sec-title::before { content:''; display:block; width:3px; height:14px; background:#29c6ff; border-radius:2px; }
+
+  /* CHARTS ROW */
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .chart-box {
+    background: #fff; border-radius: 10px; padding: 14px;
+    box-shadow: 0 2px 8px rgba(2,0,41,.07);
+    height: 220px; max-height: 220px;
+  }
+  .chart-box-wide {
+    background: #fff; border-radius: 10px; padding: 14px;
+    box-shadow: 0 2px 8px rgba(2,0,41,.07);
+    height: 220px; max-height: 220px;
+  }
+  .chart-title { font-size: 10px; font-weight: 700; color: #0c0c43; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .5px; }
+
+  /* SEVERITY BARS */
+  .sev-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .sev-label { font-size: 10px; font-weight: 600; width: 70px; color: #333; }
+  .sev-bar-wrap { flex: 1; background: #e2e3d5; border-radius: 4px; height: 14px; overflow: hidden; }
+  .sev-bar { height: 100%; border-radius: 4px; transition: width .4s; }
+  .sev-val { font-size: 10px; font-weight: 700; width: 30px; text-align: right; }
+
+  /* TABLES */
+  .mini-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+  .mini-table th { background: #0c0c43; color: #fff; padding: 6px 8px; text-align: left; font-weight: 600; }
+  .mini-table td { padding: 5px 8px; border-bottom: 1px solid #eee; }
+  .mini-table tr:nth-child(even) td { background: #f8f9ff; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
+  }
+  .badge-f { background: #fee2e2; color: #c53030; }
+  .badge-a { background: #c6f6d5; color: #276749; }
+  .badge-open { background: #fef3c7; color: #92400e; }
+  .badge-closed { background: #e2e8f0; color: #2d3748; }
+
+  /* INSIGHT BOX */
+  .insight-box {
+    background: linear-gradient(135deg, #020029 0%, #0c0c43 100%);
+    border-radius: 10px; padding: 14px 16px; color: #fff;
+    margin-bottom: 14px;
+  }
+  .insight-box h4 { font-size: 10px; font-weight: 700; color: #29c6ff; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 8px; }
+  .insight-item { font-size: 10px; line-height: 1.6; margin-bottom: 4px; padding-left: 12px; position: relative; }
+  .insight-item::before { content:'▸'; position:absolute; left:0; color:#29c6ff; }
+
+  /* TIMELINE */
+  .timeline-bar { display: flex; align-items: flex-end; gap: 6px; height: 130px; padding: 8px 0 0; }
+  .t-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .t-bar { width: 100%; border-radius: 4px 4px 0 0; background: #29c6ff; transition: height .4s; }
+  .t-label { font-size: 9px; color: #666; font-weight: 600; }
+
+  /* SCORE METER */
+  .score-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 160px; }
+  .score-ring { width: 110px; height: 110px; position: relative; }
+  .score-ring svg { transform: rotate(-90deg); }
+  .score-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+  .score-num { font-size: 22px; font-weight: 800; color: #e53e3e; }
+  .score-grade { font-size: 14px; font-weight: 700; color: #e53e3e; }
+  .score-note { font-size: 9px; color: #888; margin-top: 4px; }
+
+  /* PROGRESS DOUBLE */
+  .progress-group { margin-bottom: 8px; }
+  .prog-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .prog-label { font-size: 10px; font-weight: 600; width: 120px; color: #333; }
+  .prog-bar-wrap { flex: 1; background: #e2e3d5; border-radius: 4px; height: 12px; }
+  .prog-bar { height: 100%; border-radius: 4px; }
+  .prog-val { font-size: 10px; font-weight: 700; width: 32px; text-align: right; }
+</style>
+
+<div class="dashboard">
+  <!-- HEADER -->
+  <div class="header">
+    <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA">
+    <div class="header-right">
+      REPORTE OPERATIVO SOC-CSIRT<br>
+      UCACUE · DIC 2025 – MAR 2026
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <button class="tab-btn active" onclick="showTab('panorama')">Panorama General</button>
+    <button class="tab-btn" onclick="showTab('scorecard')">Superficie de Ataque</button>
+    <button class="tab-btn" onclick="showTab('infra')">Infraestructura</button>
+    <button class="tab-btn" onclick="showTab('incidentes')">Incidentes</button>
+    <button class="tab-btn" onclick="showTab('credenciales')">Credenciales</button>
+  </div>
+
+  <!-- TAB: PANORAMA -->
+  <div class="tab-content active" id="tab-panorama">
+    <div class="kpi-grid">
+      <div class="kpi-card danger">
+        <div class="kpi-label">Score Global</div>
+        <div class="kpi-value">49</div>
+        <div class="kpi-sub">Grado F — Crítico</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">Issues Activas</div>
+        <div class="kpi-value">372</div>
+        <div class="kpi-sub">29 tipos únicos</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">Vulnerabilidades</div>
+        <div class="kpi-value">485</div>
+        <div class="kpi-sub">Infra Nessus — Grado F</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">Credenciales Expuestas</div>
+        <div class="kpi-value">418</div>
+        <div class="kpi-sub">Pico: 116 el 04-mar-2026</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Tickets</div>
+        <div class="kpi-value">98</div>
+        <div class="kpi-sub">20 incidentes · 78 solicitudes</div>
+      </div>
+      <div class="kpi-card ok">
+        <div class="kpi-label">Tickets Cerrados</div>
+        <div class="kpi-value">93</div>
+        <div class="kpi-sub">Cierre: 94.9%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Eventos CSIRT</div>
+        <div class="kpi-value">76</div>
+        <div class="kpi-sub">Período dic 25 – mar 26</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Activos Afectados</div>
+        <div class="kpi-value">3.239</div>
+        <div class="kpi-sub">Surface attack / ScoreCard</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <h4>⚡ Hallazgos Ejecutivos</h4>
+      <div class="insight-item">Score de 49 (Grado F) en Security Scorecard: la institución se ubica en el nivel de mayor criticidad posible, con 372 issues activas sin resolver.</div>
+      <div class="insight-item">Las vulnerabilidades de infraestructura también califican en Grado F: 84 críticas + 134 altas representan el 45% de los 485 hallazgos de Nessus.</div>
+      <div class="insight-item">418 credenciales expuestas detectadas, con un pico alarmante de 116 el 4 de marzo 2026, sugiriendo un evento de filtración significativo.</div>
+      <div class="insight-item">Pese al bajo nivel de seguridad, la gestión de incidentes muestra respuesta operativa: 94.9% de tickets cerrados en el período.</div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Estado de Issues SS</div>
+        <canvas id="issuesChart" width="100%" height="160"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Vulnerabilidades Nessus por Severidad</div>
+        <div style="padding-top:10px">
+          <div class="sev-row"><span class="sev-label">Críticas</span><div class="sev-bar-wrap"><div class="sev-bar" style="width:17.3%;background:#c53030"></div></div><span class="sev-val" style="color:#c53030">84</span></div>
+          <div class="sev-row"><span class="sev-label">Altas</span><div class="sev-bar-wrap"><div class="sev-bar" style="width:27.6%;background:#e53e3e"></div></div><span class="sev-val" style="color:#e53e3e">134</span></div>
+          <div class="sev-row"><span class="sev-label">Medias</span><div class="sev-bar-wrap"><div class="sev-bar" style="width:49.5%;background:#f6ad55"></div></div><span class="sev-val" style="color:#e8850a">240</span></div>
+          <div class="sev-row"><span class="sev-label">Bajas</span><div class="sev-bar-wrap"><div class="sev-bar" style="width:5.6%;background:#48bb78"></div></div><span class="sev-val" style="color:#48bb78">27</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: SCORECARD -->
+  <div class="tab-content" id="tab-scorecard">
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
+      <div class="kpi-card danger">
+        <div class="kpi-label">Score Actual</div>
+        <div class="kpi-value">49.0</div>
+        <div class="kpi-sub">Grado F · 26-mar-2026</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">Issues Activas</div>
+        <div class="kpi-value">372</div>
+        <div class="kpi-sub">De 684 notificadas totales</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Activos Expuestos</div>
+        <div class="kpi-value">3.239</div>
+        <div class="kpi-sub">4 IES notificadas</div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Top Issues por Frecuencia</div>
+        <canvas id="topIssuesChart" height="160"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Severidad Issues SS</div>
+        <div style="padding-top:12px">
+          <div class="sev-row"><span class="sev-label">Altas</span><div class="sev-bar-wrap"><div class="sev-bar" style="width:16.6%;background:#e53e3e"></div></div><span class="sev-val" style="color:#e53e3e">36</span></div>
+          <div class="sev-row"><span class="sev-label">Medias</span><div class="sev-bar-wrap"><div class="sev-bar" style="width:8.3%;background:#f6ad55"></div></div><span class="sev-val" style="color:#e8850a">18</span></div>
+          <div class="sev-row"><span class="sev-label">Bajas</span><div class="sev-bar-wrap"><div class="sev-bar" style="width:76.2%;background:#48bb78"></div></div><span class="sev-val" style="color:#48bb78">165</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box-wide" style="height:auto;padding:14px;margin-top:0">
+      <div class="chart-title">Estado Global de Issues</div>
+      <table class="mini-table">
+        <tr><th>Estado</th><th>Cantidad</th><th>%</th><th>Implicación</th></tr>
+        <tr><td><span class="badge badge-f">Active</span></td><td><b>372</b></td><td>54.4%</td><td>Requieren atención inmediata</td></tr>
+        <tr><td><span class="badge" style="background:#dbeafe;color:#1e40af">Departed</span></td><td>307</td><td>44.9%</td><td>Activos ya no activos/visibles</td></tr>
+        <tr><td><span class="badge badge-a">Resolved</span></td><td>5</td><td>0.7%</td><td>Solo 5 issues resueltas</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: INFRAESTRUCTURA -->
+  <div class="tab-content" id="tab-infra">
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">
+      <div class="kpi-card danger">
+        <div class="kpi-label">Grado Nessus</div>
+        <div class="kpi-value">F</div>
+        <div class="kpi-sub">Nivel crítico</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">Críticas</div>
+        <div class="kpi-value">84</div>
+        <div class="kpi-sub">17.3% del total</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">Altas</div>
+        <div class="kpi-value">134</div>
+        <div class="kpi-sub">27.6% del total</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Hosts Escaneados</div>
+        <div class="kpi-value">199</div>
+        <div class="kpi-sub">Cobertura verificada</div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Distribución Vulnerabilidades</div>
+        <canvas id="vulnPieChart" height="160"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Prioridad de Remediación</div>
+        <div style="padding:10px 0">
+          <div style="background:#fff0f0;border-left:4px solid #c53030;padding:8px 10px;border-radius:4px;margin-bottom:8px">
+            <div style="font-size:10px;font-weight:700;color:#c53030">INMEDIATO — 84 críticas</div>
+            <div style="font-size:9px;color:#666;margin-top:3px">Exposición de activos con explotabilidad alta. Riesgo de compromiso inmediato.</div>
+          </div>
+          <div style="background:#fff8f0;border-left:4px solid #e53e3e;padding:8px 10px;border-radius:4px;margin-bottom:8px">
+            <div style="font-size:10px;font-weight:700;color:#e53e3e">URGENTE — 134 altas</div>
+            <div style="font-size:9px;color:#666;margin-top:3px">Vulnerabilidades altas que pueden escalar. Priorización en 30 días.</div>
+          </div>
+          <div style="background:#fffbf0;border-left:4px solid #f6ad55;padding:8px 10px;border-radius:4px">
+            <div style="font-size:10px;font-weight:700;color:#e8850a">PLANIFICADO — 240 medias</div>
+            <div style="font-size:9px;color:#666;margin-top:3px">Requieren plan de remediación. Monitoreo continuo recomendado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <h4>📊 Análisis de Infraestructura</h4>
+      <div class="insight-item">El 45% de las vulnerabilidades son de severidad Alta o Crítica (218 de 485), configurando un perfil de riesgo de infraestructura elevado.</div>
+      <div class="insight-item">Con solo 27 vulnerabilidades bajas (5.6%), prácticamente toda la superficie escaneada presenta riesgos activos a remediar.</div>
+      <div class="insight-item">El grado F de Nessus coincide con el grado F de Security Scorecard, confirmando un estado de seguridad crítico y multidimensional.</div>
+    </div>
+  </div>
+
+  <!-- TAB: INCIDENTES -->
+  <div class="tab-content" id="tab-incidentes">
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Tickets</div>
+        <div class="kpi-value">98</div>
+        <div class="kpi-sub">Dic 2025 – Mar 2026</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">Abiertos</div>
+        <div class="kpi-value">5</div>
+        <div class="kpi-sub">1 incidente · 4 solicitudes</div>
+      </div>
+      <div class="kpi-card ok">
+        <div class="kpi-label">Cerrados</div>
+        <div class="kpi-value">93</div>
+        <div class="kpi-sub">Eficiencia: 94.9%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Eventos CSIRT</div>
+        <div class="kpi-value">76</div>
+        <div class="kpi-sub">Alertas gestionadas</div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-title">Incidentes vs Solicitudes</div>
+        <canvas id="ticketsChart" height="160"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title">Top Categorías CSIRT</div>
+        <canvas id="categChart" height="160"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-box-wide" style="height:auto;margin-top:14px">
+      <div class="chart-title">Detalle de Gestión de Tickets</div>
+      <table class="mini-table">
+        <tr><th>Tipo</th><th>Total</th><th>Abiertos</th><th>Cerrados</th><th>% Cierre</th></tr>
+        <tr><td>Incidentes</td><td>20</td><td><span class="badge badge-open">1</span></td><td>19</td><td><b>95%</b></td></tr>
+        <tr><td>Solicitudes</td><td>78</td><td><span class="badge badge-open">4</span></td><td>74</td><td><b>94.9%</b></td></tr>
+        <tr><td><b>Total</b></td><td><b>98</b></td><td><b>5</b></td><td><b>93</b></td><td><b>94.9%</b></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: CREDENCIALES -->
+  <div class="tab-content" id="tab-credenciales">
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
+      <div class="kpi-card danger">
+        <div class="kpi-label">Total Credenciales</div>
+        <div class="kpi-value">418</div>
+        <div class="kpi-sub">Detectadas en el período</div>
+      </div>
+      <div class="kpi-card danger">
+        <div class="kpi-label">Pico Mensual</div>
+        <div class="kpi-value">116</div>
+        <div class="kpi-sub">4 mar 2026 · Evento crítico</div>
+      </div>
+      <div class="kpi-card warning">
+        <div class="kpi-label">SaaS / Shodan</div>
+        <div class="kpi-value">7</div>
+        <div class="kpi-sub">Credenciales en plataformas</div>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <h4>🔐 Análisis de Exposición de Credenciales</h4>
+      <div class="insight-item">Se detectaron 418 credenciales expuestas durante el período, con un evento de pico de 116 el 4 de marzo de 2026, lo que podría indicar una filtración masiva puntual o campaña dirigida.</div>
+      <div class="insight-item">La presencia de 7 credenciales en plataformas SaaS y Shodan implica un riesgo adicional de acceso no autorizado a sistemas en la nube o expuestos a Internet.</div>
+      <div class="insight-item">Se recomienda rotación inmediata de credenciales comprometidas, revisión de accesos privilegiados y activación de autenticación multifactor donde no esté habilitada.</div>
+      <div class="insight-item">El pico del 4 de marzo debe correlacionarse con los eventos CSIRT registrados en GLPI para identificar posibles incidentes asociados en esa fecha.</div>
+    </div>
+
+    <div class="chart-box-wide" style="height:auto">
+      <div class="chart-title">Distribución por Fuente</div>
+      <table class="mini-table">
+        <tr><th>Fuente</th><th>Credenciales</th><th>Riesgo</th><th>Acción Sugerida</th></tr>
+        <tr><td>APURA (Dark/Deep Web)</td><td><b>411</b></td><td><span class="badge badge-f">Alto</span></td><td>Notificación y rotación urgente</td></tr>
+        <tr><td>SaaS / Shodan</td><td><b>7</b></td><td><span class="badge" style="background:#fef3c7;color:#92400e">Medio</span></td><td>Revisión de accesos externos</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Issues State Chart
+new Chart(document.getElementById('issuesChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Activas', 'Departed', 'Resueltas'],
+    datasets: [{
+      data: [372, 307, 5],
+      backgroundColor: ['#e53e3e', '#718096', '#48bb78'],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 9 }, boxWidth: 10 } } }
+  }
+});
+
+// Top Issues
+new Chart(document.getElementById('topIssuesChart'), {
+  type: 'bar',
+  data: {
+    labels: ['service_cloud_provider', 'vuln_host_medium', 'vuln_host_high'],
+    datasets: [{
+      label: 'Issues',
+      data: [67, 38, 35],
+      backgroundColor: ['#e53e3e', '#f6ad55', '#fc8181'],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 8 } } },
+      y: { ticks: { font: { size: 9 } } }
+    }
+  }
+});
+
+// Vuln Pie
+new Chart(document.getElementById('vulnPieChart'), {
+  type: 'pie',
+  data: {
+    labels: ['Críticas (84)', 'Altas (134)', 'Medias (240)', 'Bajas (27)'],
+    datasets: [{
+      data: [84, 134, 240, 27],
+      backgroundColor: ['#c53030', '#e53e3e', '#f6ad55', '#48bb78'],
+      borderWidth: 2, borderColor: '#fff'
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 9 }, boxWidth: 10 } } }
+  }
+});
+
+// Tickets Chart
+new Chart(document.getElementById('ticketsChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Incidentes', 'Solicitudes'],
+    datasets: [
+      { label: 'Abiertos', data: [1, 4], backgroundColor: '#f6ad55', borderRadius: 4 },
+      { label: 'Cerrados', data: [19, 74], backgroundColor: '#29c6ff', borderRadius: 4 }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 9 }, boxWidth: 10 } } },
+    scales: {
+      x: { stacked: true, ticks: { font: { size: 9 } } },
+      y: { stacked: true, ticks: { font: { size: 9 } } }
+    }
+  }
+});
+
+// Categorías
+new Chart(document.getElementById('categChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Security Scorecard', 'Filtración datos', 'Servicios CSIRT', 'Desfiguración Web'],
+    datasets: [{
+      data: [69, 19, 6, 1],
+      backgroundColor: ['#020029', '#e53e3e', '#29c6ff', '#f6ad55'],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 9 } } },
+      y: { ticks: { font: { size: 9 } } }
+    }
+  }
+});
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
