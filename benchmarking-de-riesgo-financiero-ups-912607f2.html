@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<div class="dashboard-container" style="height: 1080px; max-height: 1080px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Gotham', 'Montserrat', Arial, sans-serif; background: #f4f7f6;">
+  <!-- Header -->
+  
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA" style="height: 32px;">
+      <h1 style="font-size: 18px; margin: 0; font-weight: 500;">Benchmarking de Riesgo Financiero: UPS</h1>
+    </div>
+    <div style="font-size: 12px; opacity: 0.8;">Corte: Abril 2026</div>
+  
+
+  <!-- Navigation Tabs -->
+  <nav style="height: 44px; background: white; border-bottom: 1px solid #e2e3d5; display: flex; align-items: center; padding: 0 24px; gap: 24px; flex-shrink: 0;">
+    <button onclick="showTab('resumen')" class="tab-btn active" style="border: none; background: none; font-weight: 600; color: #020029; cursor: pointer; border-bottom: 2px solid #29c6ff; height: 100%;">Resumen Ejecutivo</button>
+    <button onclick="showTab('benchmarking')" class="tab-btn" style="border: none; background: none; font-weight: 500; color: #666; cursor: pointer; height: 100%;">Benchmarking Global</button>
+    <button onclick="showTab('mapa')" class="tab-btn" style="border: none; background: none; font-weight: 500; color: #666; cursor: pointer; height: 100%;">Distribución Geográfica</button>
+  </nav>
+
+  <!-- Content Area -->
+  <div id="content" style="flex-grow: 1; overflow-y: auto; padding: 24px;">
+    
+    <!-- Tab: Resumen -->
+    <div id="tab-resumen" class="tab-content">
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px;">
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #29c6ff;">
+          <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Nivel de Madurez</div>
+          <div style="font-size: 28px; font-weight: 700; color: #020029;">59%</div>
+          <div style="font-size: 11px; color: #2ecc71;">↑ 4% sobre media</div>
+        </div>
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #e74c3c;">
+          <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Impacto Proyectado</div>
+          <div style="font-size: 24px; font-weight: 700; color: #e74c3c;">$8.14M</div>
+          <div style="font-size: 11px; color: #e74c3c;">3.5x por encima de la media</div>
+        </div>
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #f1c40f;">
+          <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Infracciones Graves</div>
+          <div style="font-size: 28px; font-weight: 700; color: #020029;">16</div>
+          <div style="font-size: 11px; color: #666;">Media IES: 17</div>
+        </div>
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #34495e;">
+          <div style="font-size: 12px; color: #666; margin-bottom: 4px;">Estado</div>
+          <div style="font-size: 18px; font-weight: 700; color: #020029;">EN DESARROLLO</div>
+          <div style="font-size: 11px; color: #666;">Cuartil 2</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 350px; margin-bottom: 24px;">
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 14px; margin-top: 0; margin-bottom: 16px; color: #020029;">Desglose de Riesgo por Infracción</h3>
+          <canvas id="chartInfracciones" style="height: 280px;"></canvas>
+        </div>
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 14px; margin-top: 0; margin-bottom: 16px; color: #020029;">Madurez por Dimensión (UPS vs Promedio)</h3>
+          <canvas id="chartRadar" style="height: 280px;"></canvas>
+        </div>
+      </div>
+      
+      <div style="background: #eef2f3; padding: 20px; border-radius: 8px; border: 1px solid #d1d9dd;">
+        <h3 style="font-size: 14px; margin-top: 0; color: #020029;">💡 Hallazgos Estratégicos para UPS</h3>
+        <ul style="font-size: 13px; color: #34495e; line-height: 1.6;">
+          <li><strong>Exposición Financiera:</strong> UPS se sitúa en el Top 3 de mayor riesgo financiero acumulado, principalmente por la valoración de activos y el volumen de datos personales tratados.</li>
+          <li><strong>Brecha Crítica:</strong> La dimensión de <em>"Talento Humano y Cultura"</em> presenta el mayor rezago (22% vs 58% media), siendo el principal detonante de vulnerabilidades operativas.</li>
+          <li><strong>Fortaleza:</strong> Cumplimiento destacado en controles de <em>LOPDP</em> (85%) y <em>Seguridad Física</em> (83%), superando ampliamente el promedio del ecosistema.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tab: Benchmarking -->
+    <div id="tab-benchmarking" class="tab-content" style="display: none;">
+      <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 24px;">
+        <h3 style="font-size: 14px; margin-top: 0; color: #020029;">Ranking de Multas Proyectadas (Top 10 IES)</h3>
+        <canvas id="chartMultasRanking" style="height: 300px;"></canvas>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+          <h3 style="font-size: 14px; margin-top: 0; color: #020029;">Comparativa: Madurez vs Multas</h3>
+          <canvas id="chartScatter" style="height: 280px;"></canvas>
+        </div>
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+           <h3 style="font-size: 14px; margin-top: 0; color: #020029;">Distribución de Categorías</h3>
+           <canvas id="chartPie" style="height: 280px;"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Mapa -->
+    <div id="tab-mapa" class="tab-content" style="display: none;">
+      <div style="display: grid; grid-template-columns: 350px 1fr; gap: 20px; height: 750px;">
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow-y: auto;">
+          <h3 style="font-size: 14px; margin-top: 0; color: #020029;">Análisis Territorial</h3>
+          <p style="font-size: 12px; color: #666;">Distribución del riesgo financiero por sede referencial.</p>
+          <div id="map-legend" style="margin-top: 20px;">
+            <div style="font-size: 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><span style="display:inline-block; width:12px; height:12px; background:red; border-radius:50%;"></span> Riesgo Crítico (>$5M)</div>
+            <div style="font-size: 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><span style="display:inline-block; width:12px; height:12px; background:orange; border-radius:50%;"></span> Riesgo Medio ($1M - $5M)</div>
+            <div style="font-size: 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><span style="display:inline-block; width:12px; height:12px; background:green; border-radius:50%;"></span> Riesgo Controlado (<$1M)</div>
+          </div>
+          <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+            <h4 style="font-size: 13px; color: #020029;">UPS - Sede Cuenca</h4>
+            <table style="width: 100%; font-size: 12px; border-collapse: collapse;">
+              <tr><td style="padding: 4px 0; color: #666;">Multas Totales:</td><td style="text-align: right; font-weight: 600;">$8.14M</td></tr>
+              <tr><td style="padding: 4px 0; color: #666;">Madurez:</td><td style="text-align: right; font-weight: 600;">59%</td></tr>
+              <tr><td style="padding: 4px 0; color: #666;">Estado:</td><td style="text-align: right; color: orange; font-weight: 600;">En Desarrollo</td></tr>
+            </table>
+          </div>
+        </div>
+        <div id="map-container" style="background: #eee; border-radius: 8px; position: relative; overflow: hidden;">
+           <div id="map" style="height: 100%; width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer style="height: 40px; background: #e2e3d5; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #020029; flex-shrink: 0; border-top: 1px solid #d1d1c1;">
+    Corporación Ecuatoriana para el Desarrollo de la Investigación y la Academia - Agente DALIA
+  </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.style.fontWeight = '500';
+      b.style.color = '#666';
+      b.style.borderBottom = 'none';
+    });
+    
+    document.getElementById('tab-' + tabId).style.display = 'block';
+    const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.innerText.toLowerCase().includes(tabId));
+    if(activeBtn) {
+      activeBtn.classList.add('active');
+      activeBtn.style.fontWeight = '600';
+      activeBtn.style.color = '#020029';
+      activeBtn.style.borderBottom = '2px solid #29c6ff';
+    }
+    
+    if(tabId === 'mapa') {
+      setTimeout(initMap, 200);
+    }
+  }
+
+  // Charts
+  const ctxInf = document.getElementById('chartInfracciones').getContext('2d');
+  new Chart(ctxInf, {
+    type: 'bar',
+    data: {
+      labels: ['Infracciones Leves', 'Infracciones Graves'],
+      datasets: [
+        { label: 'Frecuencia (Cant.)', data: [12, 16], backgroundColor: '#29c6ff' },
+        { label: 'Costo Est. ($100k)', data: [1.76, 3.75], backgroundColor: '#020029' }
+      ]
+    },
+    options: { maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+  });
+
+  const ctxRadar = document.getElementById('chartRadar').getContext('2d');
+  new Chart(ctxRadar, {
+    type: 'radar',
+    data: {
+      labels: ['Gobernanza', 'Riesgos', 'Operación', 'Talento', 'Incidentes', 'LOPDP'],
+      datasets: [
+        { label: 'UPS', data: [61, 69, 65, 22, 62, 85], borderColor: '#29c6ff', backgroundColor: 'rgba(41, 198, 255, 0.2)' },
+        { label: 'Media Ecosistema', data: [60, 46, 59, 58, 47, 62], borderColor: '#ccc', backgroundColor: 'rgba(200, 200, 200, 0.2)' }
+      ]
+    },
+    options: { maintainAspectRatio: false }
+  });
+
+  const ctxRank = document.getElementById('chartMultasRanking').getContext('2d');
+  new Chart(ctxRank, {
+    type: 'bar',
+    data: {
+      labels: ['UCACUE', 'UDA', 'UPS', 'PUCE', 'ESPAM', 'USGP', 'SUDAMERICANO', 'UTELVT', 'UPEC', 'ARMADA'],
+      datasets: [{
+        label: 'Multas Totales (Millones $)',
+        data: [17.29, 9.45, 8.14, 7.5, 4.45, 0.74, 0.35, 0.26, 0.22, 0.15],
+        backgroundColor: (ctx) => ctx.index === 2 ? '#e74c3c' : '#0c0c43'
+      }]
+    },
+    options: { maintainAspectRatio: false, indexAxis: 'y' }
+  });
+
+  const ctxPie = document.getElementById('chartPie').getContext('2d');
+  new Chart(ctxPie, {
+    type: 'doughnut',
+    data: {
+      labels: ['Líderes', 'En Desarrollo', 'Zona Crítica'],
+      datasets: [{
+        data: [6, 10, 5],
+        backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c']
+      }]
+    },
+    options: { maintainAspectRatio: false }
+  });
+
+  const ctxScat = document.getElementById('chartScatter').getContext('2d');
+  new Chart(ctxScat, {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'IES Ecosistema',
+        data: [
+          {x: 87, y: 0.06}, {x: 83, y: 0.003}, {x: 81, y: 0.03}, {x: 81, y: 0.05}, 
+          {x: 77, y: 0.009}, {x: 73, y: 0.03}, {x: 73, y: 0.1}, {x: 68, y: 7.4},
+          {x: 59, y: 8.14}, {x: 56, y: 0.14}, {x: 56, y: 0.11}, {x: 53, y: 9.45},
+          {x: 47, y: 0.15}, {x: 44, y: 17.29}, {x: 43, y: 0.1}, {x: 40, y: 0.26},
+          {x: 38, y: 0.74}, {x: 32, y: 0.09}, {x: 23, y: 0.22}, {x: 21, y: 4.45},
+          {x: 19, y: 0.35}
+        ],
+        backgroundColor: '#0c0c43'
+      }, {
+        label: 'UPS',
+        data: [{x: 59, y: 8.14}],
+        backgroundColor: '#e74c3c',
+        pointRadius: 8
+      }]
+    },
+    options: { 
+      maintainAspectRatio: false,
+      scales: {
+        x: { title: { display: true, text: 'Madurez (%)' } },
+        y: { title: { display: true, text: 'Multas (M$)' } }
+      }
+    }
+  });
+
+  // Map
+  let map;
+  function initMap() {
+    if (map) return;
+    map = L.map('map').setView([-1.5, -78.5], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    const locations = [
+      { name: "UPS (Cuenca)", lat: -2.8950, lng: -78.9960, value: 8.14, color: 'orange' },
+      { name: "UCACUE (Azogues)", lat: -2.7397, lng: -78.8486, value: 17.29, color: 'red' },
+      { name: "UDA (Cuenca)", lat: -2.8950, lng: -78.9960, value: 9.45, color: 'red' },
+      { name: "PUCE (Quito)", lat: -0.2299, lng: -78.5250, value: 7.5, color: 'red' },
+      { name: "ESPAM (Calceta)", lat: -0.8458, lng: -80.1639, value: 4.45, color: 'orange' },
+      { name: "ESPOL (Guayaquil)", lat: -2.1960, lng: -79.8860, value: 0.003, color: 'green' },
+      { name: "ESPE (Sangolquí)", lat: -0.3341, lng: -78.4522, value: 0.1, color: 'green' }
+    ];
+
+    locations.forEach(loc => {
+      L.circleMarker([loc.lat, loc.lng], {
+        radius: Math.max(5, Math.log2(loc.value + 1) * 5),
+        fillColor: loc.color === 'red' ? '#e74c3c' : (loc.color === 'orange' ? '#f39c12' : '#2ecc71'),
+        color: '#fff',
+        weight: 1,
+        fillOpacity: 0.7
+      }).addTo(map).bindPopup(`<b>${loc.name}</b><br>Impacto: $${loc.value}M`);
+    });
+  }
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
