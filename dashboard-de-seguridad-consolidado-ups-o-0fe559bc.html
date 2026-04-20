@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  --color-text-primary: #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+
+  --color-text-info: #29C6FF;
+  --color-text-success: #1D9E75;
+  --color-text-warning: #C58A00;
+  --color-text-danger: #C24141;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary: #E2E3D5;
+
+  --color-border-tertiary: rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary: rgba(2,0,41,0.32);
+
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --ramp-purple-fill: #EEF0FF;
+  --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th: #18288F;
+  --ramp-purple-ts: #273DD5;
+
+  --ramp-teal-fill: #E7FAFF;
+  --ramp-teal-stroke: #29C6FF;
+  --ramp-teal-th: #0C7FA6;
+  --ramp-teal-ts: #169FCC;
+
+  --ramp-coral-fill: #FFF1ED;
+  --ramp-coral-stroke: #D86A43;
+  --ramp-coral-th: #9F4323;
+  --ramp-coral-ts: #B85732;
+
+  --ramp-pink-fill: #FDF0F7;
+  --ramp-pink-stroke: #C85A93;
+  --ramp-pink-th: #8F3265;
+  --ramp-pink-ts: #A94478;
+
+  --ramp-gray-fill: #F3F5F7;
+  --ramp-gray-stroke: #7B8794;
+  --ramp-gray-th: #475569;
+  --ramp-gray-ts: #64748B;
+
+  --ramp-blue-fill: #EAF0FF;
+  --ramp-blue-stroke: #0C0C43;
+  --ramp-blue-th: #020029;
+  --ramp-blue-ts: #1B256B;
+
+  --ramp-green-fill: #EAF8F2;
+  --ramp-green-stroke: #1D9E75;
+  --ramp-green-th: #116B4F;
+  --ramp-green-ts: #17815F;
+
+  --ramp-amber-fill: #FFF7E8;
+  --ramp-amber-stroke: #C58A00;
+  --ramp-amber-th: #8A6100;
+  --ramp-amber-ts: #A87400;
+
+  --ramp-red-fill: #FDEEEE;
+  --ramp-red-stroke: #C24141;
+  --ramp-red-th: #8F2D2D;
+  --ramp-red-ts: #A73737;
+}
+
+:root[data-theme="dark"] {
+  --color-text-primary: #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary: #94A3B8;
+
+  --color-text-info: #63D8FF;
+  --color-text-success: #52C69A;
+  --color-text-warning: #E9B949;
+  --color-text-danger: #F07C7C;
+
+  --color-bg-primary: #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary: #111A52;
+
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary: rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F;
+  --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th: #D9E0FF;
+  --ramp-purple-ts: #AEBBFF;
+
+  --ramp-teal-fill: #0A4D63;
+  --ramp-teal-stroke: #63D8FF;
+  --ramp-teal-th: #D7F7FF;
+  --ramp-teal-ts: #9BE8FF;
+
+  --ramp-coral-fill: #6D331F;
+  --ramp-coral-stroke: #F29A7A;
+  --ramp-coral-th: #FFE0D4;
+  --ramp-coral-ts: #FFC2AE;
+
+  --ramp-pink-fill: #6E2A4D;
+  --ramp-pink-stroke: #F09CC7;
+  --ramp-pink-th: #FFE1EF;
+  --ramp-pink-ts: #F7BDD9;
+
+  --ramp-gray-fill: #334155;
+  --ramp-gray-stroke: #A8B3C2;
+  --ramp-gray-th: #F1F5F9;
+  --ramp-gray-ts: #D5DCE5;
+
+  --ramp-blue-fill: #111A52;
+  --ramp-blue-stroke: #7EA2FF;
+  --ramp-blue-th: #EEF2FF;
+  --ramp-blue-ts: #C6D4FF;
+
+  --ramp-green-fill: #0F4F3D;
+  --ramp-green-stroke: #52C69A;
+  --ramp-green-th: #DCFCEF;
+  --ramp-green-ts: #B7F1DA;
+
+  --ramp-amber-fill: #5F4500;
+  --ramp-amber-stroke: #E9B949;
+  --ramp-amber-th: #FFF1C7;
+  --ramp-amber-ts: #FFD978;
+
+  --ramp-red-fill: #6B2424;
+  --ramp-red-stroke: #F07C7C;
+  --ramp-red-th: #FFE1E1;
+  --ramp-red-ts: #FFC1C1;
+}
+
+
+.t  { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple>rect,.c-purple>circle,.c-purple>ellipse{fill:var(--ramp-purple-fill);stroke:var(--ramp-purple-stroke);stroke-width:.5}
+.c-purple>.th{fill:var(--ramp-purple-th)!important} .c-purple>.ts{fill:var(--ramp-purple-ts)!important}
+.c-teal>rect,.c-teal>circle,.c-teal>ellipse{fill:var(--ramp-teal-fill);stroke:var(--ramp-teal-stroke);stroke-width:.5}
+.c-teal>.th{fill:var(--ramp-teal-th)!important} .c-teal>.ts{fill:var(--ramp-teal-ts)!important}
+.c-coral>rect,.c-coral>circle,.c-coral>ellipse{fill:var(--ramp-coral-fill);stroke:var(--ramp-coral-stroke);stroke-width:.5}
+.c-coral>.th{fill:var(--ramp-coral-th)!important} .c-coral>.ts{fill:var(--ramp-coral-ts)!important}
+.c-pink>rect,.c-pink>circle,.c-pink>ellipse{fill:var(--ramp-pink-fill);stroke:var(--ramp-pink-stroke);stroke-width:.5}
+.c-pink>.th{fill:var(--ramp-pink-th)!important} .c-pink>.ts{fill:var(--ramp-pink-ts)!important}
+.c-gray>rect,.c-gray>circle,.c-gray>ellipse{fill:var(--ramp-gray-fill);stroke:var(--ramp-gray-stroke);stroke-width:.5}
+.c-gray>.th{fill:var(--ramp-gray-th)!important} .c-gray>.ts{fill:var(--ramp-gray-ts)!important}
+.c-blue>rect,.c-blue>circle,.c-blue>ellipse{fill:var(--ramp-blue-fill);stroke:var(--ramp-blue-stroke);stroke-width:.5}
+.c-blue>.th{fill:var(--ramp-blue-th)!important} .c-blue>.ts{fill:var(--ramp-blue-ts)!important}
+.c-green>rect,.c-green>circle,.c-green>ellipse{fill:var(--ramp-green-fill);stroke:var(--ramp-green-stroke);stroke-width:.5}
+.c-green>.th{fill:var(--ramp-green-th)!important} .c-green>.ts{fill:var(--ramp-green-ts)!important}
+.c-amber>rect,.c-amber>circle,.c-amber>ellipse{fill:var(--ramp-amber-fill);stroke:var(--ramp-amber-stroke);stroke-width:.5}
+.c-amber>.th{fill:var(--ramp-amber-th)!important} .c-amber>.ts{fill:var(--ramp-amber-ts)!important}
+.c-red>rect,.c-red>circle,.c-red>ellipse{fill:var(--ramp-red-fill);stroke:var(--ramp-red-stroke);stroke-width:.5}
+.c-red>.th{fill:var(--ramp-red-th)!important} .c-red>.ts{fill:var(--ramp-red-ts)!important}
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+button:hover { background: var(--color-bg-tertiary); }
+button.active { background: var(--color-text-info); color: #020029; border-color: var(--color-text-info); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--color-text-info);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+</style>
+
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (window.Chart && Chart.instances) {
+      var s = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid) scale.grid.color = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() {
+      applyTheme(detectTheme(p));
+    }).observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) {
+      applyTheme(mq.matches);
+      mq.addEventListener('change', function(e) { applyTheme(e.matches); });
+    }
+  }
+})();
+</script>
+
+</head>
+<body>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --primary: #020029;
+            --secondary: #29c6ff;
+            --accent: #0c0c43;
+            --bg: #e2e3d5;
+            --white: #ffffff;
+            --text: #020029;
+        }
+
+        /* REGLA DE ALTURA EXTENDIDA */
+        html, body {
+            height: 1080px;
+            max-height: 1080px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Gotham', 'Montserrat', Arial, sans-serif;
+            background-color: var(--bg);
+        }
+
+        #dashboard-container {
+            height: 1080px;
+            max-height: 1080px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            flex-shrink: 0;
+        }
+
+        .logo { height: 40px; }
+
+        nav {
+            height: 50px;
+            background: var(--white);
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            padding: 0 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+            background: #f0faff;
+        }
+
+        #content-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 24px;
+            height: 970px; /* calc equivalent */
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            height: 320px; /* Altura fija para celdas */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .kpi-value { font-size: 32px; font-weight: bold; color: var(--primary); }
+        .kpi-label { font-size: 14px; color: #666; margin-top: 4px; }
+
+        canvas {
+            height: 250px !important;
+            width: 100% !important;
+        }
+
+        #map {
+            height: 600px;
+            width: 100%;
+            border-radius: 12px;
+            z-index: 1;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th { background: #f8f9fa; color: var(--primary); }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .high { background: #ffebee; color: #c62828; }
+        .med { background: #fff3e0; color: #ef6c00; }
+        .low { background: #e8f5e9; color: #2e7d32; }
+
+    </style>
+
+
+
+<div id="dashboard-container">
+    
+        <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" class="logo" alt="CEDIA">
+        <div style="text-align: right;">
+            <div style="font-weight: bold; font-size: 18px;">Dashboard de Seguridad Institucional: UPS</div>
+            <div style="font-size: 12px; opacity: 0.8;">Análisis Consolidado | Corte 2026-03</div>
+        </div>
+    
+
+    <nav>
+        <button class="tab-btn active" onclick="switchTab('tab-kpi')">Panorama General</button>
+        <button class="tab-btn" onclick="switchTab('tab-madurez')">Madurez SOC</button>
+        <button class="tab-btn" onclick="switchTab('tab-operativo')">Operación y Riesgos</button>
+        <button class="tab-btn" onclick="switchTab('tab-mapa')">Ubicación y Calor</button>
+    </nav>
+
+    <div id="content-area">
+        <!-- TAB 1: PANORAMA -->
+        <div id="tab-kpi" class="tab-content active">
+            <div class="kpi-row">
+                <div class="kpi-card">
+                    <div class="kpi-value">59.0</div>
+                    <div class="kpi-label">Madurez SOC</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">87.0</div>
+                    <div class="kpi-label">Grado Seguridad (B)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">72%</div>
+                    <div class="kpi-label">Calificación Gral.</div>
+                </div>
+                <div class="kpi-card" style="border-top-color: #f44336;">
+                    <div class="kpi-value">$8.1M</div>
+                    <div class="kpi-label">Riesgo LOPDP (Sim)</div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h3 style="margin-top:0">Tickets y Gestión</h3>
+                    <canvas id="chartTickets"></canvas>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">Vulnerabilidades</h3>
+                    <canvas id="chartVulns"></canvas>
+                </div>
+            </div>
+
+            <div class="card" style="height: auto;">
+                <h3 style="margin-top:0">Insights de Gestión</h3>
+                <p>• La UPS presenta una <b>resiliencia operativa superior</b> al promedio del ecosistema (59.0 vs 55.0).</p>
+                <p>• Los controles de <b>Protección de Datos (85%)</b> son ejemplares, pero requieren vigilancia ante la alta exposición de credenciales (1029).</p>
+                <p>• Se identifica un <b>riesgo crítico</b> en la dimensión de Cultura (22%), sugiriendo la necesidad de un plan de concientización inmediato.</p>
+            </div>
+        </div>
+
+        <!-- TAB 2: MADUREZ -->
+        <div id="tab-madurez" class="tab-content">
+            <div class="grid">
+                <div class="card" style="height: 500px; grid-column: span 2;">
+                    <h3 style="margin-top:0">Radar de Madurez: UPS vs Promedio Nacional</h3>
+                    <canvas id="chartRadar"></canvas>
+                </div>
+            </div>
+            <div class="card" style="height: auto; margin-top: 24px;">
+                <h3 style="margin-top:0">Desglose de Dimensiones</h3>
+                <table>
+                    <tr><th>Dimensión</th><th>Valor UPS</th><th>Promedio</th><th>Estado</th></tr>
+                    <tr><td>Gobernanza</td><td>61.0</td><td>60.0</td><td><span class="status-badge low">Óptimo</span></td></tr>
+                    <tr><td>Riesgos</td><td>69.0</td><td>46.0</td><td><span class="status-badge low">Sobresaliente</span></td></tr>
+                    <tr><td>Normativa</td><td>72.0</td><td>68.0</td><td><span class="status-badge low">Óptimo</span></td></tr>
+                    <tr><td>Operación</td><td>65.0</td><td>59.0</td><td><span class="status-badge low">Óptimo</span></td></tr>
+                    <tr><td>Cultura</td><td>22.0</td><td>58.0</td><td><span class="status-badge high">Crítico</span></td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 3: OPERATIVO -->
+        <div id="tab-operativo" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3 style="margin-top:0">Evolución Security Scorecard</h3>
+                    <canvas id="chartHistory"></canvas>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">Distribución de Fugas (Apura)</h3>
+                    <canvas id="chartApura"></canvas>
+                </div>
+            </div>
+            <div class="card" style="height: auto;">
+                <h3>Principales Amenazas Detectadas</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Issue Type</th><th>Cantidad</th><th>Severidad</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>compromised_credentials_found</td><td>20</td><td><span class="status-badge med">Medium</span></td></tr>
+                            <tr><td>service_vuln_host_v3_high</td><td>14</td><td><span class="status-badge high">High</span></td></tr>
+                            <tr><td>service_vuln_host_v3_critical</td><td>9</td><td><span class="status-badge high">Critical</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: MAPA -->
+        <div id="tab-mapa" class="tab-content">
+            <div class="card" style="height: 700px;">
+                <h3 style="margin-top:0">Mapa de Presencia y Calor de Seguridad (UPS)</h3>
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+
+<script>
+    // Navegación de Pestañas
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+        
+        // Fix para mapas y gráficos al cambiar de pestaña
+        if(tabId === 'tab-mapa') {
+            setTimeout(() => { map.invalidateSize(); }, 200);
+        }
+    }
+
+    // --- GRÁFICOS ---
+    const commonOptions = { maintainAspectRatio: false, responsive: true };
+
+    // Tickets
+    new Chart(document.getElementById('chartTickets'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Eventos CSIRT', 'Incidentes', 'Solicitudes'],
+            datasets: [{
+                data: [42, 19, 43],
+                backgroundColor: ['#020029', '#29c6ff', '#0c0c43']
+            }]
+        },
+        options: commonOptions
+    });
+
+    // Vulns
+    new Chart(document.getElementById('chartVulns'), {
+        type: 'bar',
+        data: {
+            labels: ['Bajas', 'Medias', 'Altas', 'Críticas'],
+            datasets: [{
+                label: 'Cant. Vulnerabilidades',
+                data: [18, 17, 3, 2],
+                backgroundColor: ['#4caf50', '#ffc107', '#ff9800', '#f44336']
+            }]
+        },
+        options: commonOptions
+    });
+
+    // Radar Madurez
+    new Chart(document.getElementById('chartRadar'), {
+        type: 'radar',
+        data: {
+            labels: ["Gobernanza", "Riesgos", "Normativa", "Operación", "Cultura", "Incidentes", "Mejora"],
+            datasets: [
+                {
+                    label: 'UPS',
+                    data: [61, 69, 72, 65, 22, 62, 42],
+                    borderColor: '#29c6ff',
+                    backgroundColor: 'rgba(41, 198, 255, 0.2)',
+                    fill: true
+                },
+                {
+                    label: 'Promedio IES',
+                    data: [60, 46, 68, 59, 58, 47, 30],
+                    borderColor: '#020029',
+                    backgroundColor: 'rgba(2, 0, 41, 0.1)',
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            ...commonOptions,
+            scales: { r: { beginAtZero: true, max: 100 } }
+        }
+    });
+
+    // Histórico SS
+    new Chart(document.getElementById('chartHistory'), {
+        type: 'line',
+        data: {
+            labels: ['Dic', 'Ene', 'Feb', 'Mar'],
+            datasets: [{
+                label: 'Score Seguridad',
+                data: [70, 75, 74, 87],
+                borderColor: '#29c6ff',
+                tension: 0.4
+            }]
+        },
+        options: commonOptions
+    });
+
+    // Fugas Apura
+    new Chart(document.getElementById('chartApura'), {
+        type: 'line',
+        data: {
+            labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+            datasets: [{
+                label: 'Credenciales Expuestas',
+                data: [122, 162, 239, 302],
+                backgroundColor: 'rgba(12, 12, 67, 0.5)',
+                fill: true
+            }]
+        },
+        options: commonOptions
+    });
+
+    // --- MAPA ---
+    var map = L.map('map').setView([-1.5, -78.5], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Coordenadas UPS (Cuenca HQ, Quito, Guayaquil)
+    var points = [
+        [-2.8950, -78.9960, 0.8], // Cuenca
+        [-0.2299, -78.5250, 0.6], // Quito
+        [-2.1960, -79.8860, 0.5]  // Guayaquil
+    ];
+
+    var heat = L.heatLayer(points, {
+        radius: 45,
+        blur: 25,
+        maxZoom: 1,
+        gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
+    }).addTo(map);
+
+    L.marker([-2.8950, -78.9960]).addTo(map).bindPopup('UPS Sede Matriz (Cuenca)');
+    L.marker([-0.2299, -78.5250]).addTo(map).bindPopup('UPS Sede Quito');
+    L.marker([-2.1960, -79.8860]).addTo(map).bindPopup('UPS Sede Guayaquil');
+
+</script>
+
+<script>
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.plugins.legend.labels.color = textColor;
+    Chart.defaults.plugins.legend.maxHeight = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) { leg.labels.boxWidth = leg.labels.boxWidth || 12; }
+      }
+      chart.update();
+    });
+  }
+
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+
+    var ySpan = maxY - minY;
+    if (ySpan < 1) return;
+
+    var bandSize = 30;
+    var bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+
+    if (bestBand.length < 3 || (bestBand.length === items.length && ySpan > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it) { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i + 1].items.forEach(function(it) { if (it.rect.left < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+
+</body>
+</html>
