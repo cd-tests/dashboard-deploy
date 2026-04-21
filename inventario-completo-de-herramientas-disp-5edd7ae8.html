@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  /* Brand */
+  --cedia-primary:  #020029;
+  --cedia-accent:   #29c6ff;
+  --cedia-blue-1:   #0c0c43;
+  --cedia-blue-2:   #16207a;
+  --cedia-blue-3:   #1f2bb0;
+  --cedia-blue-4:   #273dd5;
+  --cedia-surface:  #e2e3d5;
+
+  /* Semantic text */
+  --color-text-primary:   #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary:  #64748B;
+  --color-text-info:      #29C6FF;
+  --color-text-success:   #1D9E75;
+  --color-text-warning:   #C58A00;
+  --color-text-danger:    #C24141;
+
+  /* Semantic backgrounds */
+  --color-bg-primary:   #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary:  #E2E3D5;
+
+  /* Semantic borders */
+  --color-border-tertiary:  rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary:   rgba(2,0,41,0.32);
+
+  /* Typography */
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  /* Radii */
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Color ramps (fill / stroke / heading / secondary text) */
+  --ramp-purple-fill: #EEF0FF; --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th:   #18288F; --ramp-purple-ts:     #273DD5;
+
+  --ramp-teal-fill:   #E7FAFF; --ramp-teal-stroke:   #29C6FF;
+  --ramp-teal-th:     #0C7FA6; --ramp-teal-ts:       #169FCC;
+
+  --ramp-coral-fill:  #FFF1ED; --ramp-coral-stroke:  #D86A43;
+  --ramp-coral-th:    #9F4323; --ramp-coral-ts:      #B85732;
+
+  --ramp-pink-fill:   #FDF0F7; --ramp-pink-stroke:   #C85A93;
+  --ramp-pink-th:     #8F3265; --ramp-pink-ts:       #A94478;
+
+  --ramp-gray-fill:   #F3F5F7; --ramp-gray-stroke:   #7B8794;
+  --ramp-gray-th:     #475569; --ramp-gray-ts:       #64748B;
+
+  --ramp-blue-fill:   #EAF0FF; --ramp-blue-stroke:   #0C0C43;
+  --ramp-blue-th:     #020029; --ramp-blue-ts:       #1B256B;
+
+  --ramp-green-fill:  #EAF8F2; --ramp-green-stroke:  #1D9E75;
+  --ramp-green-th:    #116B4F; --ramp-green-ts:      #17815F;
+
+  --ramp-amber-fill:  #FFF7E8; --ramp-amber-stroke:  #C58A00;
+  --ramp-amber-th:    #8A6100; --ramp-amber-ts:      #A87400;
+
+  --ramp-red-fill:    #FDEEEE; --ramp-red-stroke:    #C24141;
+  --ramp-red-th:      #8F2D2D; --ramp-red-ts:        #A73737;
+}
+
+:root[data-theme="dark"] {
+  --cedia-primary:  #F5F7FA;
+  --cedia-accent:   #63D8FF;
+  --cedia-blue-1:   #111A52;
+  --cedia-blue-2:   #1B256B;
+  --cedia-blue-3:   #273DD5;
+  --cedia-blue-4:   #7F92FF;
+  --cedia-surface:  #334155;
+
+  --color-text-primary:   #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary:  #94A3B8;
+  --color-text-info:      #63D8FF;
+  --color-text-success:   #52C69A;
+  --color-text-warning:   #E9B949;
+  --color-text-danger:    #F07C7C;
+
+  --color-bg-primary:   #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary:  #111A52;
+
+  --color-border-tertiary:  rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary:   rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F; --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th:   #D9E0FF; --ramp-purple-ts:     #AEBBFF;
+
+  --ramp-teal-fill:   #0A4D63; --ramp-teal-stroke:   #63D8FF;
+  --ramp-teal-th:     #D7F7FF; --ramp-teal-ts:       #9BE8FF;
+
+  --ramp-coral-fill:  #6D331F; --ramp-coral-stroke:  #F29A7A;
+  --ramp-coral-th:    #FFE0D4; --ramp-coral-ts:      #FFC2AE;
+
+  --ramp-pink-fill:   #6E2A4D; --ramp-pink-stroke:   #F09CC7;
+  --ramp-pink-th:     #FFE1EF; --ramp-pink-ts:       #F7BDD9;
+
+  --ramp-gray-fill:   #334155; --ramp-gray-stroke:   #A8B3C2;
+  --ramp-gray-th:     #F1F5F9; --ramp-gray-ts:       #D5DCE5;
+
+  --ramp-blue-fill:   #111A52; --ramp-blue-stroke:   #7EA2FF;
+  --ramp-blue-th:     #EEF2FF; --ramp-blue-ts:       #C6D4FF;
+
+  --ramp-green-fill:  #0F4F3D; --ramp-green-stroke:  #52C69A;
+  --ramp-green-th:    #DCFCEF; --ramp-green-ts:      #B7F1DA;
+
+  --ramp-amber-fill:  #5F4500; --ramp-amber-stroke:  #E9B949;
+  --ramp-amber-th:    #FFF1C7; --ramp-amber-ts:      #FFD978;
+
+  --ramp-red-fill:    #6B2424; --ramp-red-stroke:    #F07C7C;
+  --ramp-red-th:      #FFE1E1; --ramp-red-ts:        #FFC1C1;
+}
+
+
+.t   { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts  { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th  { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple > rect, .c-purple > circle, .c-purple > ellipse { fill: var(--ramp-purple-fill); stroke: var(--ramp-purple-stroke); stroke-width: .5; }
+.c-purple > .th { fill: var(--ramp-purple-th) !important; } .c-purple > .ts { fill: var(--ramp-purple-ts) !important; }
+.c-teal   > rect, .c-teal   > circle, .c-teal   > ellipse { fill: var(--ramp-teal-fill);   stroke: var(--ramp-teal-stroke);   stroke-width: .5; }
+.c-teal   > .th { fill: var(--ramp-teal-th)   !important; } .c-teal   > .ts { fill: var(--ramp-teal-ts)   !important; }
+.c-coral  > rect, .c-coral  > circle, .c-coral  > ellipse { fill: var(--ramp-coral-fill);  stroke: var(--ramp-coral-stroke);  stroke-width: .5; }
+.c-coral  > .th { fill: var(--ramp-coral-th)  !important; } .c-coral  > .ts { fill: var(--ramp-coral-ts)  !important; }
+.c-pink   > rect, .c-pink   > circle, .c-pink   > ellipse { fill: var(--ramp-pink-fill);   stroke: var(--ramp-pink-stroke);   stroke-width: .5; }
+.c-pink   > .th { fill: var(--ramp-pink-th)   !important; } .c-pink   > .ts { fill: var(--ramp-pink-ts)   !important; }
+.c-gray   > rect, .c-gray   > circle, .c-gray   > ellipse { fill: var(--ramp-gray-fill);   stroke: var(--ramp-gray-stroke);   stroke-width: .5; }
+.c-gray   > .th { fill: var(--ramp-gray-th)   !important; } .c-gray   > .ts { fill: var(--ramp-gray-ts)   !important; }
+.c-blue   > rect, .c-blue   > circle, .c-blue   > ellipse { fill: var(--ramp-blue-fill);   stroke: var(--ramp-blue-stroke);   stroke-width: .5; }
+.c-blue   > .th { fill: var(--ramp-blue-th)   !important; } .c-blue   > .ts { fill: var(--ramp-blue-ts)   !important; }
+.c-green  > rect, .c-green  > circle, .c-green  > ellipse { fill: var(--ramp-green-fill);  stroke: var(--ramp-green-stroke);  stroke-width: .5; }
+.c-green  > .th { fill: var(--ramp-green-th)  !important; } .c-green  > .ts { fill: var(--ramp-green-ts)  !important; }
+.c-amber  > rect, .c-amber  > circle, .c-amber  > ellipse { fill: var(--ramp-amber-fill);  stroke: var(--ramp-amber-stroke);  stroke-width: .5; }
+.c-amber  > .th { fill: var(--ramp-amber-th)  !important; } .c-amber  > .ts { fill: var(--ramp-amber-ts)  !important; }
+.c-red    > rect, .c-red    > circle, .c-red    > ellipse { fill: var(--ramp-red-fill);    stroke: var(--ramp-red-stroke);    stroke-width: .5; }
+.c-red    > .th { fill: var(--ramp-red-th)    !important; } .c-red    > .ts { fill: var(--ramp-red-ts)    !important; }
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 600; color: var(--cedia-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--cedia-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--cedia-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.15s;
+}
+button:hover  { background: var(--color-bg-tertiary); }
+button.active { background: var(--cedia-accent); color: var(--cedia-primary); border-color: var(--cedia-accent); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--cedia-accent);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+/* KPI card — reusable component */
+.kpi-card {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+.kpi-value { font-size: 28px; font-weight: 700; color: var(--cedia-primary); }
+.kpi-label { font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; }
+.kpi-accent { color: var(--cedia-accent); }
+
+</style>
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    /* Hot-update Chart.js if already initialised */
+    if (window.Chart && Chart.instances) {
+      var s  = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color       = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid)  scale.grid.color  = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() { applyTheme(detectTheme(p)); })
+      .observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) { applyTheme(mq.matches); mq.addEventListener('change', function(e) { applyTheme(e.matches); }); }
+  }
+})();
+</script>
+</head>
+<body>
+<style>
+  :root {
+    --brand-primary: #020029;
+    --brand-accent: #29c6ff;
+    --brand-blue-1: #0c0c43;
+    --brand-blue-2: #16207a;
+    --brand-blue-3: #1f2bb0;
+    --brand-blue-4: #273dd5;
+    --brand-surface: #e2e3d5;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-info: #38bdf8;
+    --color-purple: #a855f7;
+    --color-coral: #f87171;
+    --color-teal: #2dd4bf;
+    --font-sans: "Gotham","Montserrat","Arial",sans-serif;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-sans);
+    background: #f0f2f8;
+    color: var(--brand-primary);
+  }
+
+  .header {
+    background: var(--brand-primary);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .header img { height: 38px; }
+  .header-text h1 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .header-text p {
+    color: var(--brand-accent);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  .summary-bar {
+    background: var(--brand-blue-1);
+    display: flex;
+    gap: 0;
+    padding: 0 32px;
+  }
+  .summary-pill {
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .summary-pill span.dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .main { padding: 24px 32px; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--brand-blue-2);
+    margin-bottom: 14px;
+    margin-top: 24px;
+    border-left: 4px solid var(--brand-accent);
+    padding-left: 10px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .tool-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid #e4e6f0;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 4px 0 0 4px;
+  }
+  .tool-card.cat-system::before { background: var(--brand-accent); }
+  .tool-card.cat-files::before { background: var(--color-success); }
+  .tool-card.cat-knowledge::before { background: var(--color-purple); }
+  .tool-card.cat-notes::before { background: var(--color-warning); }
+  .tool-card.cat-channels::before { background: var(--color-teal); }
+  .tool-card.cat-calendar::before { background: var(--color-coral); }
+  .tool-card.cat-automation::before { background: var(--brand-blue-4); }
+  .tool-card.cat-skills::before { background: #e11d48; }
+  .tool-card.cat-chat::before { background: #0ea5e9; }
+  .tool-card.cat-viz::before { background: #f97316; }
+
+  .tool-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .tool-info { flex: 1; }
+  .tool-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--brand-primary);
+    margin-bottom: 3px;
+  }
+  .tool-fn {
+    font-size: 10px;
+    font-family: monospace;
+    background: #f0f2fa;
+    color: var(--brand-blue-3);
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .tool-desc {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.5;
+  }
+  .badge {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+  }
+  .badge-active { background: #dcfce7; color: #15803d; }
+  .badge-ok { background: #dbeafe; color: #1d4ed8; }
+  .badge-data { background: #f3e8ff; color: #7e22ce; }
+  .badge-exec { background: #fff7ed; color: #c2410c; }
+
+  .kb-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid #e4e6f0;
+    padding: 14px 16px;
+    border-left: 4px solid var(--color-purple);
+    margin-bottom: 10px;
+  }
+  .kb-name { font-size: 13px; font-weight: 700; color: var(--brand-primary); }
+  .kb-meta { font-size: 11px; color: #888; margin-top: 2px; }
+  .kb-desc { font-size: 11px; color: #555; margin-top: 6px; line-height: 1.5; }
+  .kb-pill {
+    background: #f3e8ff; color: #7e22ce;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px;
+    display: inline-block; margin-top: 6px;
+  }
+
+  .skills-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid #e4e6f0;
+    padding: 14px 16px;
+    border-left: 4px solid #e11d48;
+    margin-bottom: 10px;
+  }
+  .skill-name { font-size: 13px; font-weight: 700; color: var(--brand-primary); }
+  .skill-id { font-size: 10px; font-family: monospace; background: #fff1f2; color: #be123c; padding: 2px 6px; border-radius: 4px; display: inline-block; margin: 3px 0; }
+  .skill-desc { font-size: 11px; color: #555; margin-top: 4px; line-height: 1.5; }
+
+  .footer {
+    background: var(--brand-primary);
+    color: rgba(255,255,255,0.4);
+    font-size: 10px;
+    text-align: center;
+    padding: 12px;
+    margin-top: 24px;
+  }
+</style>
+
+<!-- HEADER -->
+<div class="header">
+  <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA">
+  <div class="header-text">
+    <h1>Inventario de Herramientas Disponibles</h1>
+    <p>Capacidades activas del asistente · Estado: ✅ Operacional</p>
+  </div>
+</div>
+
+<!-- SUMMARY BAR -->
+<div class="summary-bar">
+  <div class="summary-pill"><span class="dot" style="background:#29c6ff"></span> Sistema & Cómputo</div>
+  <div class="summary-pill"><span class="dot" style="background:#22c55e"></span> Archivos</div>
+  <div class="summary-pill"><span class="dot" style="background:#a855f7"></span> Bases de Conocimiento</div>
+  <div class="summary-pill"><span class="dot" style="background:#f59e0b"></span> Notas</div>
+  <div class="summary-pill"><span class="dot" style="background:#2dd4bf"></span> Canales</div>
+  <div class="summary-pill"><span class="dot" style="background:#f87171"></span> Calendario</div>
+  <div class="summary-pill"><span class="dot" style="background:#273dd5"></span> Automatizaciones</div>
+  <div class="summary-pill"><span class="dot" style="background:#e11d48"></span> Skills</div>
+</div>
+
+<div class="main">
+
+  <!-- SISTEMA -->
+  <div class="section-title">⚙️ Sistema & Cómputo</div>
+  <div class="grid">
+    <div class="tool-card cat-system">
+      <div class="tool-icon">🏥</div>
+      <div class="tool-info">
+        <div class="tool-name">Health Check</div>
+        <div class="tool-fn">health_check()</div>
+        <div class="tool-desc">Verifica el estado del servicio. No requiere autenticación.</div>
+        <span class="badge badge-active">Activo ✓</span>
+      </div>
+    </div>
+    <div class="tool-card cat-system">
+      <div class="tool-icon">🖥️</div>
+      <div class="tool-info">
+        <div class="tool-name">Ejecutar Comando</div>
+        <div class="tool-fn">run_command()</div>
+        <div class="tool-desc">Ejecuta comandos shell en Linux (bash). Soporta pipes, redirecciones y encadenamiento.</div>
+        <span class="badge badge-exec">Shell · Python 3.12</span>
+      </div>
+    </div>
+    <div class="tool-card cat-system">
+      <div class="tool-icon">📋</div>
+      <div class="tool-info">
+        <div class="tool-name">Listar Procesos</div>
+        <div class="tool-fn">list_processes()</div>
+        <div class="tool-desc">Lista todos los procesos en background (corriendo, terminados, cancelados).</div>
+        <span class="badge badge-ok">Monitoreo</span>
+      </div>
+    </div>
+    <div class="tool-card cat-system">
+      <div class="tool-icon">📡</div>
+      <div class="tool-info">
+        <div class="tool-name">Estado de Proceso</div>
+        <div class="tool-fn">get_process_status()</div>
+        <div class="tool-desc">Obtiene nueva salida de un proceso en background con su estado y código de salida.</div>
+        <span class="badge badge-ok">Monitoreo</span>
+      </div>
+    </div>
+    <div class="tool-card cat-system">
+      <div class="tool-icon">⌨️</div>
+      <div class="tool-info">
+        <div class="tool-name">Enviar Input a Proceso</div>
+        <div class="tool-fn">send_process_input()</div>
+        <div class="tool-desc">Escribe texto al stdin de un proceso en ejecución.</div>
+        <span class="badge badge-ok">Interactivo</span>
+      </div>
+    </div>
+    <div class="tool-card cat-system">
+      <div class="tool-icon">🔴</div>
+      <div class="tool-info">
+        <div class="tool-name">Matar Proceso</div>
+        <div class="tool-fn">kill_process()</div>
+        <div class="tool-desc">Termina un proceso con SIGTERM (graceful) o SIGKILL (forzado).</div>
+        <span class="badge badge-exec">Control</span>
+      </div>
+    </div>
+    <div class="tool-card cat-system">
+      <div class="tool-icon">⏱️</div>
+      <div class="tool-info">
+        <div class="tool-name">Timestamp Actual</div>
+        <div class="tool-fn">get_current_timestamp()</div>
+        <div class="tool-desc">Retorna el timestamp Unix actual en segundos.</div>
+        <span class="badge badge-ok">Tiempo</span>
+      </div>
+    </div>
+    <div class="tool-card cat-system">
+      <div class="tool-icon">📅</div>
+      <div class="tool-info">
+        <div class="tool-name">Calcular Timestamp</div>
+        <div class="tool-fn">calculate_timestamp()</div>
+        <div class="tool-desc">Timestamp ajustado por días, semanas, meses o años hacia atrás.</div>
+        <span class="badge badge-ok">Tiempo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHIVOS -->
+  <div class="section-title">📁 Gestión de Archivos</div>
+  <div class="grid">
+    <div class="tool-card cat-files">
+      <div class="tool-icon">📂</div>
+      <div class="tool-info">
+        <div class="tool-name">Listar Archivos</div>
+        <div class="tool-fn">list_files()</div>
+        <div class="tool-desc">Lista archivos y directorios en una ruta dada con metadata.</div>
+        <span class="badge badge-active">✓ Usado</span>
+      </div>
+    </div>
+    <div class="tool-card cat-files">
+      <div class="tool-icon">📖</div>
+      <div class="tool-info">
+        <div class="tool-name">Leer Archivo</div>
+        <div class="tool-fn">read_file()</div>
+        <div class="tool-desc">Lee contenido de archivos de texto o binarios. Soporta rango de líneas.</div>
+        <span class="badge badge-ok">Lectura</span>
+      </div>
+    </div>
+    <div class="tool-card cat-files">
+      <div class="tool-icon">👁️</div>
+      <div class="tool-info">
+        <div class="tool-name">Mostrar Archivo</div>
+        <div class="tool-fn">display_file()</div>
+        <div class="tool-desc">Abre un archivo en el visor del usuario para visualización.</div>
+        <span class="badge badge-ok">Visual</span>
+      </div>
+    </div>
+    <div class="tool-card cat-files">
+      <div class="tool-icon">✍️</div>
+      <div class="tool-info">
+        <div class="tool-name">Escribir Archivo</div>
+        <div class="tool-fn">write_file()</div>
+        <div class="tool-desc">Escribe contenido de texto en un archivo. Crea directorios padre automáticamente.</div>
+        <span class="badge badge-exec">Escritura</span>
+      </div>
+    </div>
+    <div class="tool-card cat-files">
+      <div class="tool-icon">✂️</div>
+      <div class="tool-info">
+        <div class="tool-name">Reemplazar Contenido</div>
+        <div class="tool-fn">replace_file_content()</div>
+        <div class="tool-desc">Busca y reemplaza cadenas exactas en un archivo con múltiples operaciones.</div>
+        <span class="badge badge-exec">Edición</span>
+      </div>
+    </div>
+    <div class="tool-card cat-files">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-info">
+        <div class="tool-name">Búsqueda de Texto</div>
+        <div class="tool-fn">grep_search()</div>
+        <div class="tool-desc">Busca patrones de texto en archivos. Soporta regex y búsqueda por línea.</div>
+        <span class="badge badge-ok">Búsqueda</span>
+      </div>
+    </div>
+    <div class="tool-card cat-files">
+      <div class="tool-icon">🌐</div>
+      <div class="tool-info">
+        <div class="tool-name">Búsqueda Glob</div>
+        <div class="tool-fn">glob_search()</div>
+        <div class="tool-desc">Busca archivos y carpetas por nombre con patrones glob. Filtra por tipo y tamaño.</div>
+        <span class="badge badge-ok">Búsqueda</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VISUALIZACIÓN -->
+  <div class="section-title">📊 Visualización</div>
+  <div class="grid">
+    <div class="tool-card cat-viz">
+      <div class="tool-icon">🎨</div>
+      <div class="tool-info">
+        <div class="tool-name">Render Visualization</div>
+        <div class="tool-fn">render_visualization()</div>
+        <div class="tool-desc">Renderiza HTML/SVG interactivos inline en el chat y los publica en GitHub Pages como páginas permanentes. Soporta Chart.js, D3, Leaflet.</div>
+        <span class="badge badge-active">✓ En uso ahora</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BASES DE CONOCIMIENTO -->
+  <div class="section-title">🧠 Bases de Conocimiento (Knowledge Bases)</div>
+  <div class="grid">
+    <div class="tool-card cat-knowledge">
+      <div class="tool-icon">📚</div>
+      <div class="tool-info">
+        <div class="tool-name">Listar KBs</div>
+        <div class="tool-fn">list_knowledge_bases()</div>
+        <div class="tool-desc">Lista todas las bases de conocimiento accesibles con paginación.</div>
+        <span class="badge badge-active">✓ Usado</span>
+      </div>
+    </div>
+    <div class="tool-card cat-knowledge">
+      <div class="tool-icon">🔎</div>
+      <div class="tool-info">
+        <div class="tool-name">Buscar KBs</div>
+        <div class="tool-fn">search_knowledge_bases()</div>
+        <div class="tool-desc">Busca bases de conocimiento por nombre y descripción.</div>
+        <span class="badge badge-data">Semántico</span>
+      </div>
+    </div>
+    <div class="tool-card cat-knowledge">
+      <div class="tool-icon">🧩</div>
+      <div class="tool-info">
+        <div class="tool-name">Query KBs</div>
+        <div class="tool-fn">query_knowledge_bases()</div>
+        <div class="tool-desc">Busca KBs por similitud semántica con lenguaje natural.</div>
+        <span class="badge badge-data">IA · Vector</span>
+      </div>
+    </div>
+    <div class="tool-card cat-knowledge">
+      <div class="tool-icon">🗂️</div>
+      <div class="tool-info">
+        <div class="tool-name">Buscar Archivos en KBs</div>
+        <div class="tool-fn">search_knowledge_files()</div>
+        <div class="tool-desc">Busca archivos por nombre dentro de una o todas las KBs.</div>
+        <span class="badge badge-data">Búsqueda</span>
+      </div>
+    </div>
+    <div class="tool-card cat-knowledge">
+      <div class="tool-icon">🤖</div>
+      <div class="tool-info">
+        <div class="tool-name">Query Archivos KBs</div>
+        <div class="tool-fn">query_knowledge_files()</div>
+        <div class="tool-desc">Búsqueda semántica/vectorial en archivos de KBs. Alta precisión.</div>
+        <span class="badge badge-data">IA · Vector</span>
+      </div>
+    </div>
+    <div class="tool-card cat-knowledge">
+      <div class="tool-icon">👁️</div>
+      <div class="tool-info">
+        <div class="tool-name">Ver Archivo KB</div>
+        <div class="tool-fn">view_knowledge_file()</div>
+        <div class="tool-desc">Obtiene el contenido completo de un archivo en una KB con paginación.</div>
+        <span class="badge badge-data">Lectura</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BASES DE CONOCIMIENTO DETECTADAS -->
+  <div class="section-title">🗄️ Bases de Conocimiento Encontradas (4 activas)</div>
+  <div class="kb-card">
+    <div class="kb-name">🧪 ETAPA PRUEBA</div>
+    <div class="kb-meta">1 archivo · ID: 923d8a7c-bee4...</div>
+    <div class="kb-desc">Entorno de pruebas de ETAPA.</div>
+    <span class="kb-pill">1 archivo</span>
+  </div>
+  <div class="kb-card">
+    <div class="kb-name">📖 Educación en Lengua y Literatura</div>
+    <div class="kb-meta">4 archivos · ID: f4537cc0-eb92...</div>
+    <div class="kb-desc">Fundamentos pedagógicos, curriculares y normativos del Ecuador. Lengua y Literatura 5to de básica.</div>
+    <span class="kb-pill">4 archivos</span>
+  </div>
+  <div class="kb-card">
+    <div class="kb-name">⚖️ Políticas, Normativas y Leyes del PDP</div>
+    <div class="kb-meta">4 archivos · ID: f879a411-0608...</div>
+    <div class="kb-desc">Políticas internas de CEDIA, leyes regulatorias del país, ISO 27001 y Ley de Protección de Datos Personales.</div>
+    <span class="kb-pill">4 archivos</span>
+  </div>
+  <div class="kb-card">
+    <div class="kb-name">🔒 Seguridad</div>
+    <div class="kb-meta">6 archivos · ID: 38cc6f09-654d...</div>
+    <div class="kb-desc">Normativas y regulaciones del Estado Ecuatoriano + políticas internas de CEDIA sobre seguridad de la información.</div>
+    <span class="kb-pill">6 archivos</span>
+  </div>
+
+  <!-- NOTAS -->
+  <div class="section-title">📝 Gestión de Notas</div>
+  <div class="grid">
+    <div class="tool-card cat-notes">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-info">
+        <div class="tool-name">Buscar Notas</div>
+        <div class="tool-fn">search_notes()</div>
+        <div class="tool-desc">Busca notas del usuario por título y contenido.</div>
+        <span class="badge badge-ok">Búsqueda</span>
+      </div>
+    </div>
+    <div class="tool-card cat-notes">
+      <div class="tool-icon">👁️</div>
+      <div class="tool-info">
+        <div class="tool-name">Ver Nota</div>
+        <div class="tool-fn">view_note()</div>
+        <div class="tool-desc">Obtiene el contenido completo de una nota por su ID.</div>
+        <span class="badge badge-ok">Lectura</span>
+      </div>
+    </div>
+    <div class="tool-card cat-notes">
+      <div class="tool-icon">✏️</div>
+      <div class="tool-info">
+        <div class="tool-name">Crear Nota</div>
+        <div class="tool-fn">write_note()</div>
+        <div class="tool-desc">Crea una nueva nota con título y contenido Markdown.</div>
+        <span class="badge badge-exec">Escritura</span>
+      </div>
+    </div>
+    <div class="tool-card cat-notes">
+      <div class="tool-icon">🔄</div>
+      <div class="tool-info">
+        <div class="tool-name">Actualizar Nota</div>
+        <div class="tool-fn">replace_note_content()</div>
+        <div class="tool-desc">Modifica el contenido o título de una nota existente.</div>
+        <span class="badge badge-exec">Edición</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANALES -->
+  <div class="section-title">💬 Canales & Mensajes</div>
+  <div class="grid">
+    <div class="tool-card cat-channels">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-info">
+        <div class="tool-name">Buscar Canales</div>
+        <div class="tool-fn">search_channels()</div>
+        <div class="tool-desc">Busca canales por nombre y descripción a los que el usuario tiene acceso.</div>
+        <span class="badge badge-ok">Búsqueda</span>
+      </div>
+    </div>
+    <div class="tool-card cat-channels">
+      <div class="tool-icon">💬</div>
+      <div class="tool-info">
+        <div class="tool-name">Buscar Mensajes</div>
+        <div class="tool-fn">search_channel_messages()</div>
+        <div class="tool-desc">Busca mensajes en canales incluyendo respuestas a hilos.</div>
+        <span class="badge badge-ok">Búsqueda</span>
+      </div>
+    </div>
+    <div class="tool-card cat-channels">
+      <div class="tool-icon">🧵</div>
+      <div class="tool-info">
+        <div class="tool-name">Ver Hilo</div>
+        <div class="tool-fn">view_channel_thread()</div>
+        <div class="tool-desc">Obtiene todos los mensajes de un hilo incluyendo el mensaje padre y respuestas.</div>
+        <span class="badge badge-ok">Lectura</span>
+      </div>
+    </div>
+    <div class="tool-card cat-channels">
+      <div class="tool-icon">📨</div>
+      <div class="tool-info">
+        <div class="tool-name">Ver Mensaje</div>
+        <div class="tool-fn">view_channel_message()</div>
+        <div class="tool-desc">Obtiene el contenido completo de un mensaje de canal con sus respuestas.</div>
+        <span class="badge badge-ok">Lectura</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHATS -->
+  <div class="section-title">💭 Historial de Chats</div>
+  <div class="grid">
+    <div class="tool-card cat-chat">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-info">
+        <div class="tool-name">Buscar Chats</div>
+        <div class="tool-fn">search_chats()</div>
+        <div class="tool-desc">Busca conversaciones anteriores por título y contenido de mensajes.</div>
+        <span class="badge badge-ok">Búsqueda</span>
+      </div>
+    </div>
+    <div class="tool-card cat-chat">
+      <div class="tool-icon">📜</div>
+      <div class="tool-info">
+        <div class="tool-name">Ver Chat</div>
+        <div class="tool-fn">view_chat()</div>
+        <div class="tool-desc">Obtiene el historial completo de una conversación por su ID.</div>
+        <span class="badge badge-ok">Lectura</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALENDARIO -->
+  <div class="section-title">📅 Calendario</div>
+  <div class="grid">
+    <div class="tool-card cat-calendar">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-info">
+        <div class="tool-name">Buscar Eventos</div>
+        <div class="tool-fn">search_calendar_events()</div>
+        <div class="tool-desc">Busca eventos por texto y/o rango de fechas en todos los calendarios.</div>
+        <span class="badge badge-ok">Búsqueda</span>
+      </div>
+    </div>
+    <div class="tool-card cat-calendar">
+      <div class="tool-icon">➕</div>
+      <div class="tool-info">
+        <div class="tool-name">Crear Evento</div>
+        <div class="tool-fn">create_calendar_event()</div>
+        <div class="tool-desc">Crea nuevos eventos con título, hora, descripción y ubicación.</div>
+        <span class="badge badge-exec">Creación</span>
+      </div>
+    </div>
+    <div class="tool-card cat-calendar">
+      <div class="tool-icon">✏️</div>
+      <div class="tool-info">
+        <div class="tool-name">Actualizar Evento</div>
+        <div class="tool-fn">update_calendar_event()</div>
+        <div class="tool-desc">Modifica campos de un evento existente. Solo los campos provistos cambian.</div>
+        <span class="badge badge-exec">Edición</span>
+      </div>
+    </div>
+    <div class="tool-card cat-calendar">
+      <div class="tool-icon">🗑️</div>
+      <div class="tool-info">
+        <div class="tool-name">Eliminar Evento</div>
+        <div class="tool-fn">delete_calendar_event()</div>
+        <div class="tool-desc">Elimina un evento del calendario de forma permanente.</div>
+        <span class="badge badge-exec">Eliminación</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTOMATIZACIONES -->
+  <div class="section-title">🤖 Automatizaciones (Scheduler)</div>
+  <div class="grid">
+    <div class="tool-card cat-automation">
+      <div class="tool-icon">⚡</div>
+      <div class="tool-info">
+        <div class="tool-name">Crear Automatización</div>
+        <div class="tool-fn">create_automation()</div>
+        <div class="tool-desc">Crea tareas automáticas con RRULE (iCalendar). Soporte para diario, semanal, mensual, por hora, etc.</div>
+        <span class="badge badge-exec">Scheduler</span>
+      </div>
+    </div>
+    <div class="tool-card cat-automation">
+      <div class="tool-icon">🔄</div>
+      <div class="tool-info">
+        <div class="tool-name">Actualizar Automatización</div>
+        <div class="tool-fn">update_automation()</div>
+        <div class="tool-desc">Modifica nombre, prompt, horario o modelo de una automatización existente.</div>
+        <span class="badge badge-exec">Edición</span>
+      </div>
+    </div>
+    <div class="tool-card cat-automation">
+      <div class="tool-icon">📋</div>
+      <div class="tool-info">
+        <div class="tool-name">Listar Automatizaciones</div>
+        <div class="tool-fn">list_automations()</div>
+        <div class="tool-desc">Lista automatizaciones activas o pausadas con paginación.</div>
+        <span class="badge badge-active">✓ Usado (0 activas)</span>
+      </div>
+    </div>
+    <div class="tool-card cat-automation">
+      <div class="tool-icon">⏸️</div>
+      <div class="tool-info">
+        <div class="tool-name">Pausar/Reanudar</div>
+        <div class="tool-fn">toggle_automation()</div>
+        <div class="tool-desc">Pausa una automatización activa o reanuda una pausada.</div>
+        <span class="badge badge-ok">Control</span>
+      </div>
+    </div>
+    <div class="tool-card cat-automation">
+      <div class="tool-icon">🗑️</div>
+      <div class="tool-info">
+        <div class="tool-name">Eliminar Automatización</div>
+        <div class="tool-fn">delete_automation()</div>
+        <div class="tool-desc">Elimina una automatización y su historial de ejecuciones.</div>
+        <span class="badge badge-exec">Eliminación</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAREAS -->
+  <div class="section-title">✅ Gestión de Tareas</div>
+  <div class="grid">
+    <div class="tool-card cat-system">
+      <div class="tool-icon">📝</div>
+      <div class="tool-info">
+        <div class="tool-name">Crear Tareas</div>
+        <div class="tool-fn">create_tasks()</div>
+        <div class="tool-desc">Crea un checklist de tareas para rastrear progreso en trabajos multi-paso.</div>
+        <span class="badge badge-ok">Productividad</span>
+      </div>
+    </div>
+    <div class="tool-card cat-system">
+      <div class="tool-icon">✅</div>
+      <div class="tool-info">
+        <div class="tool-name">Actualizar Tarea</div>
+        <div class="tool-fn">update_task()</div>
+        <div class="tool-desc">Marca tareas como completadas, en progreso, pendientes o canceladas.</div>
+        <span class="badge badge-ok">Productividad</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section-title">🚀 Skills Especializados (IA)</div>
+  <div class="skills-card">
+    <div class="skill-name">🛡️ Geant Maturity Analyzer</div>
+    <div class="skill-id">geant-maturity-analyzer</div>
+    <div class="skill-desc">Analiza e interpreta evaluaciones de madurez digital y ciberseguridad basadas en GEANT, GEANT_SBS y SAMM. Ideal para interpretar resultados, dimensiones, dominios, prácticas, brechas, fortalezas y prioridades de mejora.</div>
+  </div>
+  <div class="skills-card">
+    <div class="skill-name">📊 CEDIA Dashboard Generator</div>
+    <div class="skill-id">cedia-dashboard-generator</div>
+    <div class="skill-desc">Genera dashboards institucionales, ejecutivos e interactivos con marca CEDIA. Para análisis de score_security, GEANT_SBS, GEANT, SAMM, cumplimiento, riesgos y métricas de toma de decisiones.</div>
+  </div>
+  <div class="skills-card">
+    <div class="skill-name">🛠️ Ver Skill</div>
+    <div class="skill-id">view_skill()</div>
+    <div class="skill-desc">Carga las instrucciones completas de cualquier skill disponible para ejecutarlo con precisión.</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  CEDIA · Asistente Institucional · Todas las herramientas verificadas y operacionales · Sistema Linux 6.8.0 · Python 3.12
+</div>
+<script>
+/* ── Height reporting ─────────────────────────────────────────────────── */
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb   = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load',   reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+/* ── Chart.js global defaults ────────────────────────────────────────── */
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s         = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color       = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.font.family = '"Gotham","Montserrat","Arial",sans-serif';
+    Chart.defaults.plugins.legend.labels.color   = textColor;
+    Chart.defaults.plugins.legend.maxHeight      = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font    = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) leg.labels.boxWidth = leg.labels.boxWidth || 12;
+      }
+      chart.update();
+    });
+  }
+
+  /* ── SVG axis label stagger (prevents overlap on dense charts) ─────── */
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+    if (maxY - minY < 1) return;
+
+    var bandSize = 30, bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+    if (bestBand.length < 3 || (bestBand.length === items.length && maxY - minY > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it)     { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i+1].items.forEach(function(it)   { if (it.rect.left  < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+/* ── Chat bridge ─────────────────────────────────────────────────────── */
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+</body>
+</html>
