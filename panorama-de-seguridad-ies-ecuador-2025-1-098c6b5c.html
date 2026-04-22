@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  /* Brand */
+  --cedia-primary:  #020029;
+  --cedia-accent:   #29c6ff;
+  --cedia-blue-1:   #0c0c43;
+  --cedia-blue-2:   #16207a;
+  --cedia-blue-3:   #1f2bb0;
+  --cedia-blue-4:   #273dd5;
+  --cedia-surface:  #e2e3d5;
+
+  /* Semantic text */
+  --color-text-primary:   #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary:  #64748B;
+  --color-text-info:      #29C6FF;
+  --color-text-success:   #1D9E75;
+  --color-text-warning:   #C58A00;
+  --color-text-danger:    #C24141;
+
+  /* Semantic backgrounds */
+  --color-bg-primary:   #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary:  #E2E3D5;
+
+  /* Semantic borders */
+  --color-border-tertiary:  rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary:   rgba(2,0,41,0.32);
+
+  /* Typography */
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  /* Radii */
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Color ramps (fill / stroke / heading / secondary text) */
+  --ramp-purple-fill: #EEF0FF; --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th:   #18288F; --ramp-purple-ts:     #273DD5;
+
+  --ramp-teal-fill:   #E7FAFF; --ramp-teal-stroke:   #29C6FF;
+  --ramp-teal-th:     #0C7FA6; --ramp-teal-ts:       #169FCC;
+
+  --ramp-coral-fill:  #FFF1ED; --ramp-coral-stroke:  #D86A43;
+  --ramp-coral-th:    #9F4323; --ramp-coral-ts:      #B85732;
+
+  --ramp-pink-fill:   #FDF0F7; --ramp-pink-stroke:   #C85A93;
+  --ramp-pink-th:     #8F3265; --ramp-pink-ts:       #A94478;
+
+  --ramp-gray-fill:   #F3F5F7; --ramp-gray-stroke:   #7B8794;
+  --ramp-gray-th:     #475569; --ramp-gray-ts:       #64748B;
+
+  --ramp-blue-fill:   #EAF0FF; --ramp-blue-stroke:   #0C0C43;
+  --ramp-blue-th:     #020029; --ramp-blue-ts:       #1B256B;
+
+  --ramp-green-fill:  #EAF8F2; --ramp-green-stroke:  #1D9E75;
+  --ramp-green-th:    #116B4F; --ramp-green-ts:      #17815F;
+
+  --ramp-amber-fill:  #FFF7E8; --ramp-amber-stroke:  #C58A00;
+  --ramp-amber-th:    #8A6100; --ramp-amber-ts:      #A87400;
+
+  --ramp-red-fill:    #FDEEEE; --ramp-red-stroke:    #C24141;
+  --ramp-red-th:      #8F2D2D; --ramp-red-ts:        #A73737;
+}
+
+:root[data-theme="dark"] {
+  --cedia-primary:  #F5F7FA;
+  --cedia-accent:   #63D8FF;
+  --cedia-blue-1:   #111A52;
+  --cedia-blue-2:   #1B256B;
+  --cedia-blue-3:   #273DD5;
+  --cedia-blue-4:   #7F92FF;
+  --cedia-surface:  #334155;
+
+  --color-text-primary:   #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary:  #94A3B8;
+  --color-text-info:      #63D8FF;
+  --color-text-success:   #52C69A;
+  --color-text-warning:   #E9B949;
+  --color-text-danger:    #F07C7C;
+
+  --color-bg-primary:   #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary:  #111A52;
+
+  --color-border-tertiary:  rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary:   rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F; --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th:   #D9E0FF; --ramp-purple-ts:     #AEBBFF;
+
+  --ramp-teal-fill:   #0A4D63; --ramp-teal-stroke:   #63D8FF;
+  --ramp-teal-th:     #D7F7FF; --ramp-teal-ts:       #9BE8FF;
+
+  --ramp-coral-fill:  #6D331F; --ramp-coral-stroke:  #F29A7A;
+  --ramp-coral-th:    #FFE0D4; --ramp-coral-ts:      #FFC2AE;
+
+  --ramp-pink-fill:   #6E2A4D; --ramp-pink-stroke:   #F09CC7;
+  --ramp-pink-th:     #FFE1EF; --ramp-pink-ts:       #F7BDD9;
+
+  --ramp-gray-fill:   #334155; --ramp-gray-stroke:   #A8B3C2;
+  --ramp-gray-th:     #F1F5F9; --ramp-gray-ts:       #D5DCE5;
+
+  --ramp-blue-fill:   #111A52; --ramp-blue-stroke:   #7EA2FF;
+  --ramp-blue-th:     #EEF2FF; --ramp-blue-ts:       #C6D4FF;
+
+  --ramp-green-fill:  #0F4F3D; --ramp-green-stroke:  #52C69A;
+  --ramp-green-th:    #DCFCEF; --ramp-green-ts:      #B7F1DA;
+
+  --ramp-amber-fill:  #5F4500; --ramp-amber-stroke:  #E9B949;
+  --ramp-amber-th:    #FFF1C7; --ramp-amber-ts:      #FFD978;
+
+  --ramp-red-fill:    #6B2424; --ramp-red-stroke:    #F07C7C;
+  --ramp-red-th:      #FFE1E1; --ramp-red-ts:        #FFC1C1;
+}
+
+
+.t   { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts  { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th  { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple > rect, .c-purple > circle, .c-purple > ellipse { fill: var(--ramp-purple-fill); stroke: var(--ramp-purple-stroke); stroke-width: .5; }
+.c-purple > .th { fill: var(--ramp-purple-th) !important; } .c-purple > .ts { fill: var(--ramp-purple-ts) !important; }
+.c-teal   > rect, .c-teal   > circle, .c-teal   > ellipse { fill: var(--ramp-teal-fill);   stroke: var(--ramp-teal-stroke);   stroke-width: .5; }
+.c-teal   > .th { fill: var(--ramp-teal-th)   !important; } .c-teal   > .ts { fill: var(--ramp-teal-ts)   !important; }
+.c-coral  > rect, .c-coral  > circle, .c-coral  > ellipse { fill: var(--ramp-coral-fill);  stroke: var(--ramp-coral-stroke);  stroke-width: .5; }
+.c-coral  > .th { fill: var(--ramp-coral-th)  !important; } .c-coral  > .ts { fill: var(--ramp-coral-ts)  !important; }
+.c-pink   > rect, .c-pink   > circle, .c-pink   > ellipse { fill: var(--ramp-pink-fill);   stroke: var(--ramp-pink-stroke);   stroke-width: .5; }
+.c-pink   > .th { fill: var(--ramp-pink-th)   !important; } .c-pink   > .ts { fill: var(--ramp-pink-ts)   !important; }
+.c-gray   > rect, .c-gray   > circle, .c-gray   > ellipse { fill: var(--ramp-gray-fill);   stroke: var(--ramp-gray-stroke);   stroke-width: .5; }
+.c-gray   > .th { fill: var(--ramp-gray-th)   !important; } .c-gray   > .ts { fill: var(--ramp-gray-ts)   !important; }
+.c-blue   > rect, .c-blue   > circle, .c-blue   > ellipse { fill: var(--ramp-blue-fill);   stroke: var(--ramp-blue-stroke);   stroke-width: .5; }
+.c-blue   > .th { fill: var(--ramp-blue-th)   !important; } .c-blue   > .ts { fill: var(--ramp-blue-ts)   !important; }
+.c-green  > rect, .c-green  > circle, .c-green  > ellipse { fill: var(--ramp-green-fill);  stroke: var(--ramp-green-stroke);  stroke-width: .5; }
+.c-green  > .th { fill: var(--ramp-green-th)  !important; } .c-green  > .ts { fill: var(--ramp-green-ts)  !important; }
+.c-amber  > rect, .c-amber  > circle, .c-amber  > ellipse { fill: var(--ramp-amber-fill);  stroke: var(--ramp-amber-stroke);  stroke-width: .5; }
+.c-amber  > .th { fill: var(--ramp-amber-th)  !important; } .c-amber  > .ts { fill: var(--ramp-amber-ts)  !important; }
+.c-red    > rect, .c-red    > circle, .c-red    > ellipse { fill: var(--ramp-red-fill);    stroke: var(--ramp-red-stroke);    stroke-width: .5; }
+.c-red    > .th { fill: var(--ramp-red-th)    !important; } .c-red    > .ts { fill: var(--ramp-red-ts)    !important; }
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 600; color: var(--cedia-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--cedia-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--cedia-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.15s;
+}
+button:hover  { background: var(--color-bg-tertiary); }
+button.active { background: var(--cedia-accent); color: var(--cedia-primary); border-color: var(--cedia-accent); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--cedia-accent);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+/* KPI card — reusable component */
+.kpi-card {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+.kpi-value { font-size: 28px; font-weight: 700; color: var(--cedia-primary); }
+.kpi-label { font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; }
+.kpi-accent { color: var(--cedia-accent); }
+
+</style>
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    /* Hot-update Chart.js if already initialised */
+    if (window.Chart && Chart.instances) {
+      var s  = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color       = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid)  scale.grid.color  = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() { applyTheme(detectTheme(p)); })
+      .observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) { applyTheme(mq.matches); mq.addEventListener('change', function(e) { applyTheme(e.matches); }); }
+  }
+})();
+</script>
+</head>
+<body>
+<style>
+  :root {
+    --cedia-primary: #020029;
+    --cedia-accent: #29c6ff;
+    --cedia-surface: #e2e3d5;
+    --ramp-coral: #ff6b6b;
+    --ramp-amber: #ffd93d;
+    --ramp-teal: #6bcb77;
+    --ramp-purple: #9d65c9;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: "Gotham", "Montserrat", "Arial", sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e2e3d5 100%);
+    height: 1080px;
+    max-height: 1080px;
+    overflow: hidden;
+  }
+  
+  .dashboard-container {
+    height: 1080px;
+    max-height: 1080px;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fa;
+  }
+  
+  .header {
+    height: 56px;
+    background: linear-gradient(135deg, #020029 0%, #0c0c43 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    box-shadow: 0 2px 8px rgba(2, 0, 41, 0.3);
+    flex-shrink: 0;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .header-title {
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+  .header-period {
+    color: #29c6ff;
+    font-size: 14px;
+    font-weight: 500;
+    background: rgba(41, 198, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+  
+  .header-logo {
+    height: 36px;
+    width: auto;
+  }
+  
+  .tabs-nav {
+    height: 44px;
+    background: white;
+    display: flex;
+    gap: 4px;
+    padding: 0 16px;
+    border-bottom: 2px solid #e2e3d5;
+    flex-shrink: 0;
+    overflow-x: auto;
+  }
+  
+  .tab-btn {
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .tab-btn:hover {
+    color: #29c6ff;
+    background: rgba(41, 198, 255, 0.05);
+  }
+  
+  .tab-btn.active {
+    color: #020029;
+    border-bottom-color: #29c6ff;
+    font-weight: 600;
+  }
+  
+  .tab-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    background: #f8f9fa;
+  }
+  
+  .tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .tab-panel.active {
+    display: block;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .kpi-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-left: 4px solid #29c6ff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  
+  .kpi-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  
+  .kpi-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #020029;
+    line-height: 1;
+  }
+  
+  .kpi-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin-top: 8px;
+  }
+  
+  .kpi-card.warning {
+    border-left-color: #ffd93d;
+  }
+  
+  .kpi-card.danger {
+    border-left-color: #ff6b6b;
+  }
+  
+  .kpi-card.success {
+    border-left-color: #6bcb77;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #020029;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .section-title::before {
+    content: "";
+    width: 4px;
+    height: 20px;
+    background: #29c6ff;
+    border-radius: 2px;
+  }
+  
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .chart-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  
+  .chart-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+  }
+  
+  .chart-container {
+    height: 280px;
+    max-height: 280px;
+    position: relative;
+  }
+  
+  .insights-box {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e2e3d5 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 4px solid #29c6ff;
+  }
+  
+  .insights-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #020029;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .insights-list {
+    list-style: none;
+  }
+  
+  .insights-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(41, 198, 255, 0.2);
+    color: #444;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .insights-list li:last-child {
+    border-bottom: none;
+  }
+  
+  .insights-list li::before {
+    content: "▸";
+    color: #29c6ff;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  
+  .ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  
+  .ranking-table th {
+    background: #020029;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+  }
+  
+  .ranking-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e3d5;
+    color: #333;
+  }
+  
+  .ranking-table tbody tr:hover {
+    background: rgba(41, 198, 255, 0.05);
+  }
+  
+  .grade-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    min-width: 40px;
+  }
+  
+  .grade-A { background: #6bcb77; color: white; }
+  .grade-B { background: #4dabf7; color: white; }
+  .grade-C { background: #ffd93d; color: #333; }
+  .grade-D { background: #ff922b; color: white; }
+  .grade-F { background: #ff6b6b; color: white; }
+  
+  .full-width {
+    grid-column: 1 / -1;
+  }
+  
+  .map-container {
+    height: 500px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: relative;
+  }
+  
+  #ecuador-map {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .filter-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .filter-btn {
+    padding: 8px 16px;
+    border: 2px solid #e2e3d5;
+    background: white;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .filter-btn:hover {
+    border-color: #29c6ff;
+    color: #29c6ff;
+  }
+  
+  .filter-btn.active {
+    background: #29c6ff;
+    border-color: #29c6ff;
+    color: white;
+  }
+  
+  .table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .stat-highlight {
+    display: inline-block;
+    padding: 4px 8px;
+    background: rgba(41, 198, 255, 0.1);
+    border-radius: 6px;
+    font-weight: 600;
+    color: #020029;
+  }
+  
+  .trend-up {
+    color: #6bcb77;
+    font-weight: 600;
+  }
+  
+  .trend-down {
+    color: #ff6b6b;
+    font-weight: 600;
+  }
+  
+  .trend-neutral {
+    color: #ffd93d;
+    font-weight: 600;
+  }
+  
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  
+  .warning-banner {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border: 1px solid #ffc107;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .warning-banner strong {
+    color: #856404;
+  }
+  
+  .success-banner {
+    background: linear-gradient(135deg, #d4edda 0%, #b8e994 100%);
+    border: 1px solid #28a745;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  
+  .correlation-box {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-top: 16px;
+  }
+  
+  .correlation-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: #020029;
+  }
+  
+  .correlation-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+  }
+</style>
+
+<!-- Dashboard Structure -->
+<div class="dashboard-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-title">Panorama de Seguridad - Ecosistema IES Ecuador</div>
+      <div class="header-period">Período: Dic 2025 - Mar 2026</div>
+    </div>
+    <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023-c1-1024x373.png" alt="CEDIA" class="header-logo">
+  </div>
+  
+  <!-- Tabs Navigation -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('overview')">Panorama General</button>
+    <button class="tab-btn" onclick="switchTab('ranking')">Ranking y Distribución</button>
+    <button class="tab-btn" onclick="switchTab('vulnerabilities')">Vulnerabilidades</button>
+    <button class="tab-btn" onclick="switchTab('maturity')">Madurez Digital</button>
+    <button class="tab-btn" onclick="switchTab('financial')">Impacto Financiero</button>
+    <button class="tab-btn" onclick="switchTab('map')">Mapa Geográfico</button>
+  </div>
+  
+  <!-- Tab Content -->
+  <div class="tab-content">
+    
+    <!-- Tab 1: Panorama General -->
+    <div id="tab-overview" class="tab-panel active">
+      <div class="kpi-grid">
+        <div class="kpi-card success">
+          <div class="kpi-label">Total IES Analizadas</div>
+          <div class="kpi-value">71</div>
+          <div class="kpi-subtitle">Ecosistema consolidado GLPI</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Promedio Score Combinado</div>
+          <div class="kpi-value">68.2%</div>
+          <div class="kpi-subtitle">Security Scorecard + Nessus</div>
+        </div>
+        <div class="kpi-card warning">
+          <div class="kpi-label">IES Nivel Crítico (F)</div>
+          <div class="kpi-value">17</div>
+          <div class="kpi-subtitle">24% del ecosistema</div>
+        </div>
+        <div class="kpi-card success">
+          <div class="kpi-label">IES Nivel Óptimo (A)</div>
+          <div class="kpi-value">7</div>
+          <div class="kpi-subtitle">10% del ecosistema</div>
+        </div>
+        <div class="kpi-card danger">
+          <div class="kpi-label">Issues Activos</div>
+          <div class="kpi-value">9,575</div>
+          <div class="kpi-subtitle">100% sin resolver</div>
+        </div>
+        <div class="kpi-card danger">
+          <div class="kpi-label">Madurez Promedio</div>
+          <div class="kpi-value">55%</div>
+          <div class="kpi-subtitle">Nivel: En Desarrollo</div>
+        </div>
+      </div>
+      
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Distribución por Nivel de Seguridad</div>
+          <div class="chart-container">
+            <canvas id="distributionChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <div class="chart-title">Top 5 Vulnerabilidades Más Frecuentes</div>
+          <div class="chart-container">
+            <canvas id="topVulnsChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="insights-box">
+        <div class="insights-title">Hallazgos Clave del Período</div>
+        <ul class="insights-list">
+          <li><strong>Brecha significativa:</strong> Solo 7 IES (10%) alcanzan nivel A, mientras 17 (24%) están en nivel crítico F, evidenciando una polarización del ecosistema.</li>
+          <li><strong>Rezago en remediación:</strong> El 100% de las issues permanecen activas, indicando falta de capacidad de respuesta institucional.</li>
+          <li><strong>Vulnerabilidades recurrentes:</strong> Las issues de severidad crítica y alta representan el 5.2% del total, pero concentran el mayor riesgo operativo.</li>
+          <li><strong>Correlación débil:</strong> La correlación entre madurez y multas es -0.13, sugiriendo que mayor madurez no garantiza menor exposición financiera por sí sola.</li>
+          <li><strong>Impacto financiero:</strong> El promedio de multas proyectadas es $2.35M USD, con 6 IES en el cuartil superior de riesgo financiero.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Tab 2: Ranking y Distribución -->
+    <div id="tab-ranking" class="tab-panel">
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Distribución por Calificación (Nessus)</div>
+          <div class="chart-container">
+            <canvas id="nessusDistChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <div class="chart-title">Distribución por Calificación (Security Scorecard)</div>
+          <div class="chart-container">
+            <canvas id="scorecardDistChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section-title">Top 10 IES con Mejor Posicionamiento de Seguridad</div>
+      <div class="table-container" style="margin-bottom: 24px;">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>Pos.</th>
+              <th>Institución</th>
+              <th>Score Combinado</th>
+              <th>Calificación</th>
+              <th>Score Scorecard</th>
+              <th>Score Nessus</th>
+            </tr>
+          </thead>
+          <tbody id="top10Table"></tbody>
+        </table>
+      </div>
+      
+      <div class="section-title">Bottom 10 IES con Mayor Riesgo</div>
+      <div class="table-container">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>Pos.</th>
+              <th>Institución</th>
+              <th>Score Combinado</th>
+              <th>Calificación</th>
+              <th>Score Scorecard</th>
+              <th>Score Nessus</th>
+            </tr>
+          </thead>
+          <tbody id="bottom10Table"></tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Tab 3: Vulnerabilidades -->
+    <div id="tab-vulnerabilities" class="tab-panel">
+      <div class="warning-banner">
+        <span style="font-size: 24px;">⚠️</span>
+        <div>
+          <strong>Alerta Crítica:</strong> El 100% de las issues detectadas permanecen activas. Se requiere acción inmediata de remediación.
+        </div>
+      </div>
+      
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Total Issues Detectadas</div>
+          <div class="kpi-value">9,575</div>
+          <div class="kpi-subtitle">Período Dic-Mar</div>
+        </div>
+        <div class="kpi-card danger">
+          <div class="kpi-label">Issues Críticas + Altas</div>
+          <div class="kpi-value">499</div>
+          <div class="kpi-subtitle">5.2% del total</div>
+        </div>
+        <div class="kpi-card warning">
+          <div class="kpi-label">Issues Activas</div>
+          <div class="kpi-value">9,575</div>
+          <div class="kpi-subtitle">Sin resolver</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Issues Resueltas</div>
+          <div class="kpi-value">1,339</div>
+          <div class="kpi-subtitle">12% de efectividad</div>
+        </div>
+      </div>
+      
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Distribución por Severidad</div>
+          <div class="chart-container">
+            <canvas id="severityChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <div class="chart-title">Top 10 Tipos de Vulnerabilidades</div>
+          <div class="chart-container">
+            <canvas id="issuesTypeChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="insights-box">
+        <div class="insights-title">Análisis de Vulnerabilidades</div>
+        <ul class="insights-list">
+          <li><strong>Vulnerabilidades de servicio:</strong> Las issues tipo "service_vuln_host" (medium, high, critical) dominan con 2,398 casos, evidenciando exposición de servicios expuestos.</li>
+          <li><strong>Credenciales comprometidas:</strong> 584 casos de credenciales comprometidas detectadas, representing riesgo de acceso no autorizado.</li>
+          <li><strong>Cadencia de parches:</strong> 1,267 issues relacionadas con parcheo deficiente, indicando procesos de actualización inadecuados.</li>
+          <li><strong>Certificados TLS:</strong> 569 issues de certificados autofirmados o sin revocación, debilitando la superficie de seguridad.</li>
+          <li><strong>Priorización requerida:</strong> Las 499 issues críticas y altas deben abordarse de forma inmediata como parte de un plan de remediación estructurado.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Tab 4: Madurez Digital -->
+    <div id="tab-maturity" class="tab-panel">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Madurez Promedio</div>
+          <div class="kpi-value">55%</div>
+          <div class="kpi-subtitle">Nivel: En Desarrollo</div>
+        </div>
+        <div class="kpi-card success">
+          <div class="kpi-label">IES Líderes (≥P75)</div>
+          <div class="kpi-value">6</div>
+          <div class="kpi-subtitle">29% del ecosistema</div>
+        </div>
+        <div class="kpi-card warning">
+          <div class="kpi-label">En Desarrollo</div>
+          <div class="kpi-value">10</div>
+          <div class="kpi-subtitle">48% del ecosistema</div>
+        </div>
+        <div class="kpi-card danger">
+          <div class="kpi-label">Zona Crítica (<P25)</div>
+          <div class="kpi-value">5</div>
+          <div class="kpi-subtitle">24% del ecosistema</div>
+        </div>
+      </div>
+      
+      <div class="charts-grid">
+        <div class="chart-card full-width">
+          <div class="chart-title">Nivel de Madurez por IES (Anonimizado)</div>
+          <div class="chart-container" style="height: 320px; max-height: 320px;">
+            <canvas id="maturityChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section-title">Desglose de Madurez por Categoría</div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Distribución por Tipo de Institución</div>
+          <div class="chart-container">
+            <canvas id="institutionTypeChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <div class="chart-title">Relación Madurez vs Multas</div>
+          <div class="chart-container">
+            <canvas id="maturityFinesChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="insights-box">
+        <div class="insights-title">Insights de Madurez Digital</div>
+        <ul class="insights-list">
+          <li><strong>Líderes identificados:</strong> 6 IES superan el percentil 75 con niveles de madurez ≥73%, representando benchmark de referencia.</li>
+          <li><strong>Brecha crítica:</strong> 5 IES están en zona crítica con madurez ≤40%, requiriendo intervención prioritaria.</li>
+          <li><strong>Correlación débil:</strong> El coeficiente de correlación de Pearson es -0.13, indicando que la madurez por sí sola no explica la exposición a multas.</li>
+          <li><strong>Volatilidad alta:</strong> El coeficiente de variación de multas es 194%, evidenciando disparidad significativa en impacto financiero entre IES.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Tab 5: Impacto Financiero -->
+    <div id="tab-financial" class="tab-panel">
+      <div class="kpi-grid">
+        <div class="kpi-card danger">
+          <div class="kpi-label">Impacto Total Multas Proyectadas</div>
+          <div class="kpi-value">$49.4M</div>
+          <div class="kpi-subtitle">Todas las IES evaluadas</div>
+        </div>
+        <div class="kpi-card danger">
+          <div class="kpi-label">Promedio Multas por IES</div>
+          <div class="kpi-value">$2.35M</div>
+          <div class="kpi-subtitle">Mediana: $141,058</div>
+        </div>
+        <div class="kpi-card warning">
+          <div class="kpi-label">IES Alto Riesgo Financiero</div>
+          <div class="kpi-value">6</div>
+          <div class="kpi-subtitle">>P75 en impacto</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Coef. Variación</div>
+          <div class="kpi-value">194%</div>
+          <div class="kpi-subtitle">Alta volatilidad</div>
+        </div>
+      </div>
+      
+      <div class="charts-grid">
+        <div class="chart-card full-width">
+          <div class="chart-title">Top 10 IES con Mayor Impacto Financiero Proyectado</div>
+          <div class="chart-container" style="height: 320px; max-height: 320px;">
+            <canvas id="finesChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Distribución de Infracciones por Severidad</div>
+          <div class="chart-container">
+            <canvas id="infrChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <div class="chart-title">Costo Promedio por Tipo de Infracción</div>
+          <div class="chart-container">
+            <canvas id="costChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <div class="correlation-box">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div class="correlation-value">-0.13</div>
+            <div class="correlation-label">Coeficiente de Correlación de Pearson (Madurez vs Multas)</div>
+          </div>
+          <div style="text-align: right; max-width: 60%;">
+            <p style="color: #666; font-size: 14px; line-height: 1.6;">
+              <strong>Interpretación:</strong> Correlación inversa débil. La relación entre madurez digital y exposición a multas es baja, 
+              sugiriendo que otros factores (volumen de datos procesados, criticidad de servicios, infraestructura expuesta) 
+              influyen significativamente en el impacto financiero más allá del nivel de madurez.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="insights-box" style="margin-top: 20px;">
+        <div class="insights-title">Prioridades de Gestión de Riesgo Financiero</div>
+        <ul class="insights-list">
+          <li><strong>Intervención urgente:</strong> IES_13, IES_17, IES_14, IES_21, IES_05 y IES_03 concentran el mayor impacto financiero y requieren plan de mitigación inmediato.</li>
+          <li><strong>Desproporción:</strong> IES_13 proyecta $17.3M en multas (7.4x el promedio), representando un caso extremo de exposición.</li>
+          <li><strong>Estrategia dual:</strong> Reducir infracciones graves y fortalecer controles de protección de datos simultáneamente.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Tab 6: Mapa Geográfico -->
+    <div id="tab-map" class="tab-panel">
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterMap('all')">Todas las IES</button>
+        <button class="filter-btn" onclick="filterMap('A')">Nivel A (Óptimo)</button>
+        <button class="filter-btn" onclick="filterMap('B')">Nivel B (Bueno)</button>
+        <button class="filter-btn" onclick="filterMap('C')">Nivel C (Regular)</button>
+        <button class="filter-btn" onclick="filterMap('D')">Nivel D (Deficiente)</button>
+        <button class="filter-btn" onclick="filterMap('F')">Nivel F (Crítico)</button>
+      </div>
+      
+      <div class="map-container">
+        <div id="ecuador-map"></div>
+      </div>
+      
+      <div class="insights-box" style="margin-top: 20px;">
+        <div class="insights-title">Lectura Geográfica del Riesgo</div>
+        <ul class="insights-list">
+          <li><strong>Concentración Sierra:</strong> Quito y Cumbayá presentan mayor densidad de IES con niveles A y B, evidenciando mejor posicionamiento en la zona centro-norte.</li>
+          <li><strong>Riesgo Costa:</strong> Guayaquil muestra dispersión con presencia significativa de IES en niveles C y D, requiriendo fortalecimiento regional.</li>
+          <li><strong>Región Austro:</strong> Cuenca concentra IES con desempeño mixto, combinando líderes y entidades en zona crítica.</li>
+          <li><strong>Huecos geográficos:</strong> Instituciones en zonas periféricas (Amazonía, frontera norte) presentan mayor rezago relativo en indicadores de seguridad.</li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.heat/0.2.0/leaflet-heat.js"></script>
+
+<script>
+// Data
+const rankingData = [
+  {id: "IES_01", score: 97.25, grade: "A", ss: 95.0, nessus: 99.5},
+  {id: "IES_02", score: 97.0, grade: "A", ss: 97.0, nessus: null},
+  {id: "IES_03", score: 95.0, grade: "A", ss: 95.0, nessus: null},
+  {id: "IES_04", score: 94.0, grade: "A", ss: null, nessus: 94.0},
+  {id: "IES_05", score: 93.75, grade: "A", ss: 94.0, nessus: 93.5},
+  {id: "IES_06", score: 91.0, grade: "A", ss: 89.0, nessus: 93.0},
+  {id: "IES_07", score: 90.0, grade: "A", ss: 90.0, nessus: null},
+  {id: "IES_08", score: 89.5, grade: "B", ss: 84.0, nessus: 95.0},
+  {id: "IES_09", score: 89.25, grade: "B", ss: 92.0, nessus: 86.5},
+  {id: "IES_10", score: 88.5, grade: "B", ss: 80.0, nessus: 97.0}
+];
+
+const bottomData = [
+  {id: "IES_62", score: 55.0, grade: "F", ss: 55.0, nessus: null},
+  {id: "IES_63", score: 54.0, grade: "F", ss: 54.0, nessus: null},
+  {id: "IES_64", score: 52.75, grade: "F", ss: 62.0, nessus: 43.5},
+  {id: "IES_65", score: 50.75, grade: "F", ss: 49.0, nessus: 52.5},
+  {id: "IES_66", score: 48.0, grade: "F", ss: 48.0, nessus: null},
+  {id: "IES_67", score: 47.0, grade: "F", ss: 47.0, nessus: null},
+  {id: "IES_68", score: 46.0, grade: "F", ss: 46.0, nessus: null},
+  {id: "IES_69", score: 45.5, grade: "F", ss: 60.0, nessus: 31.0},
+  {id: "IES_70", score: 22.0, grade: "F", ss: null, nessus: 22.0},
+  {id: "IES_71", score: 0.0, grade: "F", ss: null, nessus: 0.0}
+];
+
+const maturityData = [
+  {id: "IES_01", maturity: 87, type: "Inst. Privado", fines: 68929},
+  {id: "IES_07", maturity: 83, type: "U. Pública", fines: 3619},
+  {id: "IES_18", maturity: 81, type: "U. Pública", fines: 32670},
+  {id: "IES_10", maturity: 81, type: "U. Privada", fines: 57103},
+  {id: "IES_15", maturity: 77, type: "U. Pública", fines: 9285},
+  {id: "IES_16", maturity: 73, type: "U. Pública", fines: 38197},
+  {id: "IES_02", maturity: 73, type: "U. Pública", fines: 109997},
+  {id: "IES_21", maturity: 68, type: "U. Privada", fines: 7499641},
+  {id: "IES_14", maturity: 59, type: "U. Privada", fines: 8138645},
+  {id: "IES_19", maturity: 56, type: "Ent. Pública", fines: 141058},
+  {id: "IES_09", maturity: 56, type: "U. Privada", fines: 111320},
+  {id: "IES_17", maturity: 53, type: "U. Privada", fines: 9456196},
+  {id: "IES_11", maturity: 47, type: "Ent. Pública", fines: 151861},
+  {id: "IES_13", maturity: 44, type: "U. Privada", fines: 17290567},
+  {id: "IES_04", maturity: 43, type: "Inst. Privado", fines: 109947},
+  {id: "IES_20", maturity: 40, type: "U. Pública", fines: 265818},
+  {id: "IES_03", maturity: 38, type: "U. Privada", fines: 740254},
+  {id: "IES_08", maturity: 32, type: "U. Pública", fines: 99565},
+  {id: "IES_06", maturity: 23, type: "U. Pública", fines: 224666},
+  {id: "IES_05", maturity: 21, type: "U. Pública", fines: 4452364},
+  {id: "IES_12", maturity: 19, type: "Inst. Privado", fines: 353194}
+];
+
+const vulnerabilities = [
+  {type: "service_vuln_medium", count: 979},
+  {type: "service_vuln_high", count: 840},
+  {type: "compromised_credentials", count: 584},
+  {type: "service_vuln_critical", count: 579},
+  {type: "patching_cadence_high", count: 546},
+  {type: "patching_cadence_medium", count: 522},
+  {type: "tlscert_self_signed", count: 321},
+  {type: "tlscert_no_revocation", count: 248},
+  {type: "csp_no_policy", count: 224},
+  {type: "x_content_type_incorrect", count: 212}
+];
+
+const iesLocations = [
+  {name: "IES_A", lat: -0.2299, lng: -78.5250, grade: "A", city: "Quito"},
+  {name: "IES_B", lat: -0.1972, lng: -78.4369, grade: "A", city: "Cumbayá"},
+  {name: "IES_C", lat: -2.1960, lng: -79.8860, grade: "B", city: "Guayaquil"},
+  {name: "IES_D", lat: -2.8950, lng: -78.9960, grade: "A", city: "Cuenca"},
+  {name: "IES_E", lat: -0.3341, lng: -78.4522, grade: "A", city: "Sangolquí"},
+  {name: "IES_F", lat: -1.6743, lng: -78.6484, grade: "B", city: "Riobamba"},
+  {name: "IES_G", lat: -1.2490, lng: -78.6170, grade: "C", city: "Ambato"},
+  {name: "IES_H", lat: -2.7397, lng: -78.8486, grade: "D", city: "Azogues"},
+  {name: "IES_I", lat: -0.8458, lng: -80.1639, grade: "C", city: "Calceta"},
+  {name: "IES_J", lat: -0.9892, lng: -77.8153, grade: "B", city: "Tena"},
+  {name: "IES_K", lat: -1.4916, lng: -78.0034, grade: "F", city: "Puyo"},
+  {name: "IES_L", lat: -1.5926, lng: -79.0010, grade: "C", city: "Guaranda"},
+  {name: "IES_M", lat: 0.2346, lng: -78.2625, grade: "B", city: "Otavalo"},
+  {name: "IES_N", lat: 0.8124, lng: -77.7171, grade: "D", city: "Tulcán"},
+  {name: "IES_O", lat: -1.0576, lng: -80.4515, grade: "D", city: "Portoviejo"},
+  {name: "IES_P", lat: -1.8038, lng: -79.5351, grade: "F", city: "Babahoyo"},
+  {name: "IES_Q", lat: -0.9342, lng: -78.6152, grade: "F", city: "Latacunga"},
+  {name: "IES_R", lat: 0.9592, lng: -79.6520, grade: "D", city: "Esmeraldas"},
+  {name: "IES_S", lat: -1.0286, lng: -79.4635, grade: "C", city: "Quevedo"},
+  {name: "IES_T", lat: -3.2590, lng: -79.9590, grade: "F", city: "Machala"},
+  {name: "IES_U", lat: 0.3488, lng: -78.1246, grade: "C", city: "Ibarra"},
+  {name: "IES_V", lat: -3.9930, lng: -79.2040, grade: "D", city: "Loja"}
+];
+
+// Tab Switching
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+  
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+  
+  if (tabId === 'map' && !window.mapInitialized) {
+    initMap();
+    window.mapInitialized = true;
+  }
+}
+
+// Charts
+function initCharts() {
+  // Distribution Chart
+  new Chart(document.getElementById('distributionChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['A (Óptimo)', 'B (Bueno)', 'C (Regular)', 'D (Deficiente)', 'F (Crítico)'],
+      datasets: [{
+        data: [7, 15, 18, 14, 17],
+        backgroundColor: ['#6bcb77', '#4dabf7', '#ffd93d', '#ff922b', '#ff6b6b'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 15, usePointStyle: true } }
+      }
+    }
+  });
+  
+  // Top Vulnerabilities Chart
+  new Chart(document.getElementById('topVulnsChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Service Vuln Med', 'Service Vuln High', 'Creds Comprom.', 'Service Vuln Crit', 'Patching High'],
+      datasets: [{
+        data: [979, 840, 584, 579, 546],
+        backgroundColor: ['#ffd93d', '#ff922b', '#ff6b6b', '#ff6b6b', '#ff922b'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+  
+  // Nessus Distribution
+  new Chart(document.getElementById('nessusDistChart'), {
+    type: 'bar',
+    data: {
+      labels: ['A', 'B', 'C', 'D', 'F'],
+      datasets: [{
+        label: 'Cantidad de IES',
+        data: [11, 6, 14, 10, 17],
+        backgroundColor: ['#6bcb77', '#4dabf7', '#ffd93d', '#ff922b', '#ff6b6b'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+  
+  // Scorecard Distribution
+  new Chart(document.getElementById('scorecardDistChart'), {
+    type: 'bar',
+    data: {
+      labels: ['A', 'B', 'C', 'D', 'F'],
+      datasets: [{
+        label: 'Cantidad de IES',
+        data: [11, 15, 13, 13, 12],
+        backgroundColor: ['#6bcb77', '#4dabf7', '#ffd93d', '#ff922b', '#ff6b6b'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+  
+  // Severity Chart
+  new Chart(document.getElementById('severityChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Low', 'Info', 'Medium', 'High', 'Critical'],
+      datasets: [{
+        data: [5714, 2740, 622, 499, 0],
+        backgroundColor: ['#4dabf7', '#adb5bd', '#ffd93d', '#ff922b', '#ff6b6b'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', labels: { padding: 15, usePointStyle: true } }
+      }
+    }
+  });
+  
+  // Issues Type Chart
+  new Chart(document.getElementById('issuesTypeChart'), {
+    type: 'bar',
+    data: {
+      labels: vulnerabilities.slice(0, 10).map(v => v.type.substring(0, 15) + '...'),
+      datasets: [{
+        data: vulnerabilities.slice(0, 10).map(v => v.count),
+        backgroundColor: '#29c6ff',
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { maxRotation: 45, font: { size: 10 } } },
+        y: { grid: { color: 'rgba(0,0,0,0.05)' } }
+      }
+    }
+  });
+  
+  // Maturity Chart
+  new Chart(document.getElementById('maturityChart'), {
+    type: 'bar',
+    data: {
+      labels: maturityData.map(m => m.id),
+      datasets: [{
+        label: 'Nivel de Madurez (%)',
+        data: maturityData.map(m => m.maturity),
+        backgroundColor: maturityData.map(m => 
+          m.maturity >= 73 ? '#6bcb77' : 
+          m.maturity >= 40 ? '#ffd93d' : '#ff6b6b'
+        ),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { 
+        legend: { display: false },
+        annotation: {
+          annotations: {
+            line1: { type: 'line', yMin: 73, yMax: 73, borderColor: '#6bcb77', borderWidth: 2, borderDash: [5, 5] },
+            line2: { type: 'line', yMin: 40, yMax: 40, borderColor: '#ff6b6b', borderWidth: 2, borderDash: [5, 5] }
+          }
+        }
+      },
+      scales: {
+        y: { beginAtZero: true, max: 100, grid: { color: 'rgba(0,0,0,0.05)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+  
+  // Institution Type Chart
+  const typeCounts = {};
+  maturityData.forEach(m => {
+    typeCounts[m.type] = (typeCounts[m.type] || 0) + 1;
+  });
+  new Chart(document.getElementById('institutionTypeChart'), {
+    type: 'pie',
+    data: {
+      labels: Object.keys(typeCounts),
+      datasets: [{
+        data: Object.values(typeCounts),
+        backgroundColor: ['#020029', '#29c6ff', '#6bcb77', '#ffd93d'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { padding: 15, usePointStyle: true } } }
+    }
+  });
+  
+  // Maturity vs Fines Chart
+  new Chart(document.getElementById('maturityFinesChart'), {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'IES',
+        data: maturityData.map(m => ({ x: m.maturity, y: m.fines / 1000000 })),
+        backgroundColor: '#29c6ff',
+        pointRadius: 8,
+        pointHoverRadius: 10
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { title: { display: true, text: 'Madurez (%)' }, min: 0, max: 100 },
+        y: { title: { display: true, text: 'Multas (Millones USD)' }, min: 0 }
+      }
+    }
+  });
+  
+  // Fines Chart
+  const topFines = maturityData.sort((a, b) => b.fines - a.fines).slice(0, 10);
+  new Chart(document.getElementById('finesChart'), {
+    type: 'bar',
+    data: {
+      labels: topFines.map(f => f.id),
+      datasets: [{
+        label: 'Multas Proyectadas (Millones USD)',
+        data: topFines.map(f => (f.fines / 1000000).toFixed(2)),
+        backgroundColor: topFines.map((f, i) => i < 3 ? '#ff6b6b' : i < 6 ? '#ff922b' : '#ffd93d'),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(0,0,0,0.05)' } },
+        y: { grid: { display: false } }
+      }
+    }
+  });
+  
+  // Infringements Chart
+  new Chart(document.getElementById('infrChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Leves', 'Graves'],
+      datasets: [{
+        data: [350, 320],
+        backgroundColor: ['#ffd93d', '#ff6b6b'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+  
+  // Cost Chart
+  new Chart(document.getElementById('costChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Costo Promedio Leves', 'Costo Promedio Graves'],
+      datasets: [{
+        data: [15000, 85000],
+        backgroundColor: ['#ffd93d', '#ff6b6b'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => '$' + v.toLocaleString() } }
+      }
+    }
+  });
+  
+  // Populate tables
+  const top10Table = document.getElementById('top10Table');
+  rankingData.forEach((item, i) => {
+    top10Table.innerHTML += `
+      <tr>
+        <td><strong>${i + 1}</strong></td>
+        <td>${item.id}</td>
+        <td><span class="stat-highlight">${item.score.toFixed(2)}%</span></td>
+        <td><span class="grade-badge grade-${item.grade}">${item.grade}</span></td>
+        <td>${item.ss ? item.ss.toFixed(1) + '%' : 'N/A'}</td>
+        <td>${item.nessus ? item.nessus.toFixed(1) + '%' : 'N/A'}</td>
+      </tr>
+    `;
+  });
+  
+  const bottom10Table = document.getElementById('bottom10Table');
+  bottomData.forEach((item, i) => {
+    bottom10Table.innerHTML += `
+      <tr>
+        <td><strong>${62 + i}</strong></td>
+        <td>${item.id}</td>
+        <td><span class="stat-highlight" style="background: rgba(255,107,107,0.1);">${item.score.toFixed(2)}%</span></td>
+        <td><span class="grade-badge grade-${item.grade}">${item.grade}</span></td>
+        <td>${item.ss ? item.ss.toFixed(1) + '%' : 'N/A'}</td>
+        <td>${item.nessus ? item.nessus.toFixed(1) + '%' : 'N/A'}</td>
+      </tr>
+    `;
+  });
+}
+
+// Map initialization
+function initMap() {
+  const map = L.map('ecuador-map', {
+    center: [-1.5, -78.5],
+    zoom: 6,
+    zoomControl: true,
+    attributionControl: false
+  });
+  
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19
+  }).addTo(map);
+  
+  // Add markers with heatmap effect
+  const heatData = [];
+  iesLocations.forEach(loc => {
+    const intensity = loc.grade === 'A' ? 0.2 : loc.grade === 'B' ? 0.4 : loc.grade === 'C' ? 0.6 : loc.grade === 'D' ? 0.8 : 1.0;
+    heatData.push([loc.lat, loc.lng, intensity]);
+    
+    // Circle markers
+    const color = loc.grade === 'A' ? '#6bcb77' : loc.grade === 'B' ? '#4dabf7' : loc.grade === 'C' ? '#ffd93d' : loc.grade === 'D' ? '#ff922b' : '#ff6b6b';
+    
+    L.circleMarker([loc.lat, loc.lng], {
+      radius: 12,
+      fillColor: color,
+      color: '#fff',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.8
+    })
+    .bindPopup(`<strong>${loc.name}</strong><br>Ciudad: ${loc.city}<br>Nivel: ${loc.grade}`)
+    .addTo(map);
+  });
+  
+  // Add heat layer
+  L.heatLayer(heatData, {
+    radius: 35,
+    blur: 25,
+    maxZoom: 10,
+    gradient: {
+      0.0: '#6bcb77',
+      0.3: '#ffd93d',
+      0.6: '#ff922b',
+      1.0: '#ff6b6b'
+    }
+  }).addTo(map);
+  
+  window.ecuadorMap = map;
+}
+
+function filterMap(grade) {
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  if (window.ecuadorMap) {
+    window.ecuadorMap.eachLayer(layer => {
+      if (layer instanceof L.CircleMarker) {
+        const show = grade === 'all' || layer.getPopup().getContent().includes('Nivel: ' + grade);
+        layer.setStyle({ opacity: show ? 1 : 0.1, fillOpacity: show ? 0.8 : 0.1 });
+      }
+    });
+  }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', initCharts);
+</script>
+<script>
+/* ── Height reporting ─────────────────────────────────────────────────── */
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb   = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load',   reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+/* ── Chart.js global defaults ────────────────────────────────────────── */
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s         = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color       = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.font.family = '"Gotham","Montserrat","Arial",sans-serif';
+    Chart.defaults.plugins.legend.labels.color   = textColor;
+    Chart.defaults.plugins.legend.maxHeight      = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font    = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) leg.labels.boxWidth = leg.labels.boxWidth || 12;
+      }
+      chart.update();
+    });
+  }
+
+  /* ── SVG axis label stagger (prevents overlap on dense charts) ─────── */
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+    if (maxY - minY < 1) return;
+
+    var bandSize = 30, bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+    if (bestBand.length < 3 || (bestBand.length === items.length && maxY - minY > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it)     { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i+1].items.forEach(function(it)   { if (it.rect.left  < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+/* ── Chat bridge ─────────────────────────────────────────────────────── */
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+</body>
+</html>
