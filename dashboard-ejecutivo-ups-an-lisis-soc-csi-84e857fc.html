@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  /* Brand */
+  --cedia-primary:  #020029;
+  --cedia-accent:   #29c6ff;
+  --cedia-blue-1:   #0c0c43;
+  --cedia-blue-2:   #16207a;
+  --cedia-blue-3:   #1f2bb0;
+  --cedia-blue-4:   #273dd5;
+  --cedia-surface:  #e2e3d5;
+
+  /* Semantic text */
+  --color-text-primary:   #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary:  #64748B;
+  --color-text-info:      #29C6FF;
+  --color-text-success:   #1D9E75;
+  --color-text-warning:   #C58A00;
+  --color-text-danger:    #C24141;
+
+  /* Semantic backgrounds */
+  --color-bg-primary:   #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary:  #E2E3D5;
+
+  /* Semantic borders */
+  --color-border-tertiary:  rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary:   rgba(2,0,41,0.32);
+
+  /* Typography */
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  /* Radii */
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Color ramps (fill / stroke / heading / secondary text) */
+  --ramp-purple-fill: #EEF0FF; --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th:   #18288F; --ramp-purple-ts:     #273DD5;
+
+  --ramp-teal-fill:   #E7FAFF; --ramp-teal-stroke:   #29C6FF;
+  --ramp-teal-th:     #0C7FA6; --ramp-teal-ts:       #169FCC;
+
+  --ramp-coral-fill:  #FFF1ED; --ramp-coral-stroke:  #D86A43;
+  --ramp-coral-th:    #9F4323; --ramp-coral-ts:      #B85732;
+
+  --ramp-pink-fill:   #FDF0F7; --ramp-pink-stroke:   #C85A93;
+  --ramp-pink-th:     #8F3265; --ramp-pink-ts:       #A94478;
+
+  --ramp-gray-fill:   #F3F5F7; --ramp-gray-stroke:   #7B8794;
+  --ramp-gray-th:     #475569; --ramp-gray-ts:       #64748B;
+
+  --ramp-blue-fill:   #EAF0FF; --ramp-blue-stroke:   #0C0C43;
+  --ramp-blue-th:     #020029; --ramp-blue-ts:       #1B256B;
+
+  --ramp-green-fill:  #EAF8F2; --ramp-green-stroke:  #1D9E75;
+  --ramp-green-th:    #116B4F; --ramp-green-ts:      #17815F;
+
+  --ramp-amber-fill:  #FFF7E8; --ramp-amber-stroke:  #C58A00;
+  --ramp-amber-th:    #8A6100; --ramp-amber-ts:      #A87400;
+
+  --ramp-red-fill:    #FDEEEE; --ramp-red-stroke:    #C24141;
+  --ramp-red-th:      #8F2D2D; --ramp-red-ts:        #A73737;
+}
+
+:root[data-theme="dark"] {
+  --cedia-primary:  #F5F7FA;
+  --cedia-accent:   #63D8FF;
+  --cedia-blue-1:   #111A52;
+  --cedia-blue-2:   #1B256B;
+  --cedia-blue-3:   #273DD5;
+  --cedia-blue-4:   #7F92FF;
+  --cedia-surface:  #334155;
+
+  --color-text-primary:   #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary:  #94A3B8;
+  --color-text-info:      #63D8FF;
+  --color-text-success:   #52C69A;
+  --color-text-warning:   #E9B949;
+  --color-text-danger:    #F07C7C;
+
+  --color-bg-primary:   #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary:  #111A52;
+
+  --color-border-tertiary:  rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary:   rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F; --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th:   #D9E0FF; --ramp-purple-ts:     #AEBBFF;
+
+  --ramp-teal-fill:   #0A4D63; --ramp-teal-stroke:   #63D8FF;
+  --ramp-teal-th:     #D7F7FF; --ramp-teal-ts:       #9BE8FF;
+
+  --ramp-coral-fill:  #6D331F; --ramp-coral-stroke:  #F29A7A;
+  --ramp-coral-th:    #FFE0D4; --ramp-coral-ts:      #FFC2AE;
+
+  --ramp-pink-fill:   #6E2A4D; --ramp-pink-stroke:   #F09CC7;
+  --ramp-pink-th:     #FFE1EF; --ramp-pink-ts:       #F7BDD9;
+
+  --ramp-gray-fill:   #334155; --ramp-gray-stroke:   #A8B3C2;
+  --ramp-gray-th:     #F1F5F9; --ramp-gray-ts:       #D5DCE5;
+
+  --ramp-blue-fill:   #111A52; --ramp-blue-stroke:   #7EA2FF;
+  --ramp-blue-th:     #EEF2FF; --ramp-blue-ts:       #C6D4FF;
+
+  --ramp-green-fill:  #0F4F3D; --ramp-green-stroke:  #52C69A;
+  --ramp-green-th:    #DCFCEF; --ramp-green-ts:      #B7F1DA;
+
+  --ramp-amber-fill:  #5F4500; --ramp-amber-stroke:  #E9B949;
+  --ramp-amber-th:    #FFF1C7; --ramp-amber-ts:      #FFD978;
+
+  --ramp-red-fill:    #6B2424; --ramp-red-stroke:    #F07C7C;
+  --ramp-red-th:      #FFE1E1; --ramp-red-ts:        #FFC1C1;
+}
+
+
+.t   { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts  { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th  { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple > rect, .c-purple > circle, .c-purple > ellipse { fill: var(--ramp-purple-fill); stroke: var(--ramp-purple-stroke); stroke-width: .5; }
+.c-purple > .th { fill: var(--ramp-purple-th) !important; } .c-purple > .ts { fill: var(--ramp-purple-ts) !important; }
+.c-teal   > rect, .c-teal   > circle, .c-teal   > ellipse { fill: var(--ramp-teal-fill);   stroke: var(--ramp-teal-stroke);   stroke-width: .5; }
+.c-teal   > .th { fill: var(--ramp-teal-th)   !important; } .c-teal   > .ts { fill: var(--ramp-teal-ts)   !important; }
+.c-coral  > rect, .c-coral  > circle, .c-coral  > ellipse { fill: var(--ramp-coral-fill);  stroke: var(--ramp-coral-stroke);  stroke-width: .5; }
+.c-coral  > .th { fill: var(--ramp-coral-th)  !important; } .c-coral  > .ts { fill: var(--ramp-coral-ts)  !important; }
+.c-pink   > rect, .c-pink   > circle, .c-pink   > ellipse { fill: var(--ramp-pink-fill);   stroke: var(--ramp-pink-stroke);   stroke-width: .5; }
+.c-pink   > .th { fill: var(--ramp-pink-th)   !important; } .c-pink   > .ts { fill: var(--ramp-pink-ts)   !important; }
+.c-gray   > rect, .c-gray   > circle, .c-gray   > ellipse { fill: var(--ramp-gray-fill);   stroke: var(--ramp-gray-stroke);   stroke-width: .5; }
+.c-gray   > .th { fill: var(--ramp-gray-th)   !important; } .c-gray   > .ts { fill: var(--ramp-gray-ts)   !important; }
+.c-blue   > rect, .c-blue   > circle, .c-blue   > ellipse { fill: var(--ramp-blue-fill);   stroke: var(--ramp-blue-stroke);   stroke-width: .5; }
+.c-blue   > .th { fill: var(--ramp-blue-th)   !important; } .c-blue   > .ts { fill: var(--ramp-blue-ts)   !important; }
+.c-green  > rect, .c-green  > circle, .c-green  > ellipse { fill: var(--ramp-green-fill);  stroke: var(--ramp-green-stroke);  stroke-width: .5; }
+.c-green  > .th { fill: var(--ramp-green-th)  !important; } .c-green  > .ts { fill: var(--ramp-green-ts)  !important; }
+.c-amber  > rect, .c-amber  > circle, .c-amber  > ellipse { fill: var(--ramp-amber-fill);  stroke: var(--ramp-amber-stroke);  stroke-width: .5; }
+.c-amber  > .th { fill: var(--ramp-amber-th)  !important; } .c-amber  > .ts { fill: var(--ramp-amber-ts)  !important; }
+.c-red    > rect, .c-red    > circle, .c-red    > ellipse { fill: var(--ramp-red-fill);    stroke: var(--ramp-red-stroke);    stroke-width: .5; }
+.c-red    > .th { fill: var(--ramp-red-th)    !important; } .c-red    > .ts { fill: var(--ramp-red-ts)    !important; }
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 600; color: var(--cedia-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--cedia-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--cedia-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.15s;
+}
+button:hover  { background: var(--color-bg-tertiary); }
+button.active { background: var(--cedia-accent); color: var(--cedia-primary); border-color: var(--cedia-accent); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--cedia-accent);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+/* KPI card — reusable component */
+.kpi-card {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+.kpi-value { font-size: 28px; font-weight: 700; color: var(--cedia-primary); }
+.kpi-label { font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; }
+.kpi-accent { color: var(--cedia-accent); }
+
+</style>
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    /* Hot-update Chart.js if already initialised */
+    if (window.Chart && Chart.instances) {
+      var s  = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color       = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid)  scale.grid.color  = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() { applyTheme(detectTheme(p)); })
+      .observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) { applyTheme(mq.matches); mq.addEventListener('change', function(e) { applyTheme(e.matches); }); }
+  }
+})();
+</script>
+</head>
+<body>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:1080px;max-height:1080px;width:100%;overflow:hidden;font-family:var(--font-sans);background:var(--color-bg-primary);color:var(--color-text-primary)}
+  .header{height:56px;background:#020029;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0}
+  .header img{height:32px}
+  .header-title{color:#fff;font-size:14px;font-weight:600;letter-spacing:.5px;opacity:.9}
+  .header-badge{background:#29c6ff22;border:1px solid #29c6ff55;color:#29c6ff;font-size:11px;padding:3px 10px;border-radius:20px}
+  .tabs{height:44px;background:#0c0c43;display:flex;align-items:center;padding:0 16px;gap:4px;flex-shrink:0;border-bottom:1px solid #1f2bb033}
+  .tab-btn{padding:6px 16px;border:none;background:transparent;color:#ffffffaa;font-size:12px;font-weight:500;cursor:pointer;border-radius:6px;transition:all .2s;font-family:var(--font-sans)}
+  .tab-btn.active{background:#29c6ff22;color:#29c6ff;border:1px solid #29c6ff44}
+  .tab-btn:hover:not(.active){background:#ffffff11;color:#fff}
+  .tab-content{height:960px;max-height:960px;overflow-y:auto;overflow-x:hidden;padding:20px 24px;display:none}
+  .tab-content.active{display:block}
+
+  /* KPI row */
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+  .kpi{background:var(--color-bg-secondary);border:1px solid var(--color-border-primary);border-radius:10px;padding:14px 16px;text-align:center}
+  .kpi-val{font-size:26px;font-weight:700;color:#29c6ff;line-height:1}
+  .kpi-val.warn{color:#f59e0b}
+  .kpi-val.danger{color:#ef4444}
+  .kpi-val.ok{color:#22c55e}
+  .kpi-lbl{font-size:10px;color:var(--color-text-secondary);margin-top:5px;text-transform:uppercase;letter-spacing:.4px}
+  .kpi-sub{font-size:11px;color:var(--color-text-tertiary);margin-top:3px}
+
+  /* section header */
+  .sec-title{font-size:12px;font-weight:600;color:#29c6ff;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #29c6ff33}
+
+  /* grid 2 cols */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+  .card{background:var(--color-bg-secondary);border:1px solid var(--color-border-primary);border-radius:10px;padding:16px}
+
+  /* chart containers */
+  .chart-wrap{position:relative;height:220px}
+
+  /* tabla */
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{background:#0c0c43;color:#29c6ff;padding:7px 10px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+  td{padding:7px 10px;border-bottom:1px solid var(--color-border-secondary);color:var(--color-text-primary)}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:var(--color-bg-tertiary)}
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+  .b-high{background:#ef444422;color:#ef4444;border:1px solid #ef444444}
+  .b-med{background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b44}
+  .b-low{background:#22c55e22;color:#22c55e;border:1px solid #22c55e44}
+  .b-info{background:#3b82f622;color:#3b82f6;border:1px solid #3b82f644}
+  .b-crit{background:#dc262622;color:#dc2626;border:1px solid #dc262644}
+
+  /* score trend */
+  .grade-A{color:#22c55e;font-weight:700}
+  .grade-B{color:#84cc16;font-weight:700}
+  .grade-C{color:#f59e0b;font-weight:700}
+  .grade-D{color:#f97316;font-weight:700}
+  .grade-F{color:#ef4444;font-weight:700}
+
+  /* insight box */
+  .insight{background:#020029;border-left:3px solid #29c6ff;border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+  .insight strong{color:#29c6ff}
+  .insight-warn{border-left-color:#f59e0b}
+  .insight-warn strong{color:#f59e0b}
+  .insight-danger{border-left-color:#ef4444}
+  .insight-danger strong{color:#ef4444}
+  .insight-ok{border-left-color:#22c55e}
+  .insight-ok strong{color:#22c55e}
+
+  /* progress bar */
+  .prog-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px}
+  .prog-label{width:180px;color:var(--color-text-secondary);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .prog-bar{flex:1;height:8px;background:var(--color-bg-tertiary);border-radius:4px;overflow:hidden}
+  .prog-fill{height:100%;border-radius:4px;transition:width .4s}
+  .prog-val{width:30px;text-align:right;font-size:11px;color:var(--color-text-tertiary)}
+
+  /* timeline row */
+  .timeline{display:flex;gap:6px;flex-wrap:wrap}
+  .tl-item{background:var(--color-bg-tertiary);border:1px solid var(--color-border-secondary);border-radius:8px;padding:8px 10px;text-align:center;min-width:72px}
+  .tl-date{font-size:10px;color:var(--color-text-tertiary)}
+  .tl-score{font-size:18px;font-weight:700;margin:2px 0}
+  .tl-grade{font-size:10px}
+
+  /* scrollbar */
+  .tab-content::-webkit-scrollbar{width:5px}
+  .tab-content::-webkit-scrollbar-thumb{background:#29c6ff44;border-radius:3px}
+  .tab-content::-webkit-scrollbar-track{background:transparent}
+
+  .section-sep{margin-bottom:20px}
+  .stat-mini{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--color-border-secondary);font-size:12px}
+  .stat-mini:last-child{border-bottom:none}
+  .stat-mini-label{color:var(--color-text-secondary)}
+  .stat-mini-val{font-weight:600;color:var(--color-text-primary)}
+  .tag-pill{display:inline-block;background:#29c6ff11;border:1px solid #29c6ff33;color:#29c6ff;font-size:10px;padding:2px 8px;border-radius:10px;margin:2px}
+
+  /* Apura sparkline */
+  .spark-row{display:flex;align-items:flex-end;gap:6px;height:60px;margin:8px 0}
+  .spark-bar{background:linear-gradient(180deg,#29c6ff 0%,#0c0c43 100%);border-radius:3px 3px 0 0;min-width:28px;display:flex;align-items:flex-start;justify-content:center}
+  .spark-lbl{font-size:9px;color:var(--color-text-tertiary);margin-top:2px}
+  .spark-container{display:flex;flex-direction:column;align-items:center;gap:2px}
+  .spark-date{font-size:9px;color:var(--color-text-tertiary);text-align:center;width:38px}
+</style>
+
+<!-- HEADER -->
+<div class="header">
+  <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA">
+  <div class="header-title">DASHBOARD EJECUTIVO · UNIVERSIDAD POLITÉCNICA SALESIANA</div>
+  <div class="header-badge">DIC 2025 – MAR 2026</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('overview')">📊 Panorama General</button>
+  <button class="tab-btn" onclick="showTab('scorecard')">🔐 Security Scorecard</button>
+  <button class="tab-btn" onclick="showTab('nessus')">🔍 Nessus</button>
+  <button class="tab-btn" onclick="showTab('apura')">🚨 APURA / Credenciales</button>
+  <button class="tab-btn" onclick="showTab('tickets')">🎫 Tickets & Eventos</button>
+  <button class="tab-btn" onclick="showTab('insights')">💡 Insights Ejecutivos</button>
+</div>
+
+<!-- ===== TAB 1: PANORAMA GENERAL ===== -->
+<div class="tab-content active" id="tab-overview">
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-val warn">C → B</div>
+      <div class="kpi-lbl">Calificación Actual</div>
+      <div class="kpi-sub">Score: 87 pts (Mar 2026)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val danger">62</div>
+      <div class="kpi-lbl">Total Tickets</div>
+      <div class="kpi-sub">19 incidentes · 43 solicitudes</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val warn">144</div>
+      <div class="kpi-lbl">Issues Activas (SS)</div>
+      <div class="kpi-sub">11 tipos distintos</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val danger">1 029</div>
+      <div class="kpi-lbl">Credenciales Expuestas</div>
+      <div class="kpi-sub">Pico: 302 el 26-Mar</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val ok">40</div>
+      <div class="kpi-lbl">Vulnerabilidades Nessus</div>
+      <div class="kpi-sub">59 hosts · 2 escaneos</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="sec-title">Evolución del Score (Dic 2025 – Mar 2026)</div>
+      <div class="chart-wrap"><canvas id="chartScore"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sec-title">Distribución de Issues por Severidad</div>
+      <div class="chart-wrap"><canvas id="chartSev"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="sec-title">Categorías de Eventos CSIRT</div>
+      <div class="chart-wrap"><canvas id="chartCat"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sec-title">Resumen Operativo Global</div>
+      <div class="stat-mini"><span class="stat-mini-label">Eventos CSIRT total</span><span class="stat-mini-val">42</span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Incidentes (03-INCIDENTE)</span><span class="stat-mini-val">19 (0 abiertos)</span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Solicitudes abiertas</span><span class="stat-mini-val"><span class="badge b-med">1 pendiente</span></span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Activos afectados (SS)</span><span class="stat-mini-val">2 530</span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Issues activas</span><span class="stat-mini-val"><span class="badge b-high">144 activas</span></span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Issues resueltas</span><span class="stat-mini-val"><span class="badge b-low">19</span></span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Issues departed</span><span class="stat-mini-val">256</span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Credenciales comprometidas</span><span class="stat-mini-val"><span class="badge b-crit">1 029</span></span></div>
+      <div class="stat-mini"><span class="stat-mini-label">SaaS / Shodan detectados</span><span class="stat-mini-val">7</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: SECURITY SCORECARD ===== -->
+<div class="tab-content" id="tab-scorecard">
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi">
+      <div class="kpi-val ok grade-B">B / 87</div>
+      <div class="kpi-lbl">Score Más Reciente</div>
+      <div class="kpi-sub">Semana 26-Mar-2026</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val danger">70</div>
+      <div class="kpi-lbl">Score Mínimo</div>
+      <div class="kpi-sub">Dic 2025 (grado C)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val ok">88</div>
+      <div class="kpi-lbl">Score Máximo</div>
+      <div class="kpi-sub">19-Mar-2026 (grado B)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val warn">75.6</div>
+      <div class="kpi-lbl">Score Promedio</div>
+      <div class="kpi-sub">Período completo</div>
+    </div>
+  </div>
+
+  <div class="card section-sep">
+    <div class="sec-title">Línea de Tiempo — Score Semanal</div>
+    <div class="timeline" id="tlScores"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="sec-title">Top Issues (Security Scorecard)</div>
+      <div style="max-height:360px;overflow-y:auto">
+        <table>
+          <thead><tr><th>#</th><th>Tipo de Issue</th><th>Cantidad</th><th>Severidad</th></tr></thead>
+          <tbody id="tbIssues"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-title">Issues por Estado</div>
+      <div class="chart-wrap"><canvas id="chartEstado"></canvas></div>
+      <div style="margin-top:12px">
+        <div class="stat-mini"><span class="stat-mini-label">Activas (riesgo vigente)</span><span class="stat-mini-val"><span class="badge b-high">144</span></span></div>
+        <div class="stat-mini"><span class="stat-mini-label">Resueltas</span><span class="stat-mini-val"><span class="badge b-low">19</span></span></div>
+        <div class="stat-mini"><span class="stat-mini-label">Departed (históricas)</span><span class="stat-mini-val">256</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 3: NESSUS ===== -->
+<div class="tab-content" id="tab-nessus">
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi">
+      <div class="kpi-val warn">40</div>
+      <div class="kpi-lbl">Total Vulnerabilidades</div>
+      <div class="kpi-sub">Escaneo Nessus</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">59</div>
+      <div class="kpi-lbl">Hosts Escaneados</div>
+      <div class="kpi-sub">Superficie activa</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val ok">2</div>
+      <div class="kpi-lbl">Tipos de Escaneo</div>
+      <div class="kpi-sub">BNS · WAT</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">2025</div>
+      <div class="kpi-lbl">Año del Escaneo</div>
+      <div class="kpi-sub">Referencia temporal</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="sec-title">Distribución de Vulnerabilidades Nessus</div>
+      <div class="chart-wrap"><canvas id="chartNessus"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sec-title">Scores por Tipo de Escaneo</div>
+      <div style="margin-top:24px">
+        <div class="insight insight-ok">
+          <strong>Escaneo BNS (Base Network Scan)</strong><br>
+          Score obtenido: <strong>78</strong> — superficie de red interna con nivel de exposición moderado-bajo.
+        </div>
+        <div class="insight insight-warn">
+          <strong>Escaneo WAT (Web Application Test)</strong><br>
+          Score obtenido: <strong>83</strong> — aplicaciones web con riesgo controlado; requiere monitoreo de servicios con vulnerabilidades altas activas.
+        </div>
+        <div class="stat-mini" style="margin-top:12px"><span class="stat-mini-label">Critical / High</span><span class="stat-mini-val"><span class="badge b-crit">2</span></span></div>
+        <div class="stat-mini"><span class="stat-mini-label">Medium</span><span class="stat-mini-val"><span class="badge b-med">3</span></span></div>
+        <div class="stat-mini"><span class="stat-mini-label">Low / Info</span><span class="stat-mini-val"><span class="badge b-low">35</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title">Detalle de Vulnerabilidades por Nivel</div>
+    <div style="margin-top:4px">
+      <div class="prog-row"><span class="prog-label">Critical + High</span><div class="prog-bar"><div class="prog-fill" style="width:5%;background:#ef4444"></div></div><span class="prog-val">2</span></div>
+      <div class="prog-row"><span class="prog-label">Medium</span><div class="prog-bar"><div class="prog-fill" style="width:7.5%;background:#f59e0b"></div></div><span class="prog-val">3</span></div>
+      <div class="prog-row"><span class="prog-label">Low</span><div class="prog-bar"><div class="prog-fill" style="width:42.5%;background:#3b82f6"></div></div><span class="prog-val">17</span></div>
+      <div class="prog-row"><span class="prog-label">Info</span><div class="prog-bar"><div class="prog-fill" style="width:45%;background:#6b7280"></div></div><span class="prog-val">18</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 4: APURA / CREDENCIALES ===== -->
+<div class="tab-content" id="tab-apura">
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi">
+      <div class="kpi-val danger">1 029</div>
+      <div class="kpi-lbl">Credenciales Comprometidas</div>
+      <div class="kpi-sub">Período Dic 2025 – Mar 2026</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val warn">302</div>
+      <div class="kpi-lbl">Pico Máximo</div>
+      <div class="kpi-sub">26 de Marzo 2026</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">7</div>
+      <div class="kpi-lbl">SaaS / Shodan Detectados</div>
+      <div class="kpi-sub">Servicios expuestos APURA</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="sec-title">Evolución de Credenciales Comprometidas (Mar 2026)</div>
+      <div class="chart-wrap"><canvas id="chartApura"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sec-title">Análisis de Exposición de Credenciales</div>
+      <div class="insight insight-danger" style="margin-top:8px">
+        <strong>Riesgo crítico de identidad:</strong> Se detectaron 1 029 credenciales comprometidas asociadas a dominios de la UPS. Esta cifra representa un vector de ataque activo de alto impacto que puede facilitar accesos no autorizados a sistemas institucionales.
+      </div>
+      <div class="insight insight-warn">
+        <strong>Tendencia creciente:</strong> El pico más alto se registró el 26 de marzo (302 credenciales). La tendencia es ascendente en el corto plazo y requiere acción inmediata de respuesta a incidentes.
+      </div>
+      <div class="insight insight-ok">
+        <strong>Monitoreo activo:</strong> El sistema APURA está detectando y reportando activamente la exposición, lo que permite respuesta oportuna si se activan los protocolos de gestión de credenciales.
+      </div>
+      <div class="stat-mini" style="margin-top:8px"><span class="stat-mini-label">Evento CSIRT APURA registrado</span><span class="stat-mini-val"><span class="badge b-high">1</span></span></div>
+      <div class="stat-mini"><span class="stat-mini-label">Filtración de datos (categoría)</span><span class="stat-mini-val"><span class="badge b-crit">18 eventos</span></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title">Detalle Semanal — Credenciales Comprometidas</div>
+    <table style="margin-top:8px">
+      <thead><tr><th>Fecha</th><th>Institución</th><th>Credenciales</th><th>Nivel</th></tr></thead>
+      <tbody>
+        <tr><td>04-Mar-2026</td><td>UPS</td><td>122</td><td><span class="badge b-med">Alto</span></td></tr>
+        <tr><td>15-Mar-2026</td><td>UPS</td><td>25</td><td><span class="badge b-info">Moderado</span></td></tr>
+        <tr><td>17-Mar-2026</td><td>UPS</td><td>239</td><td><span class="badge b-high">Crítico</span></td></tr>
+        <tr><td>20-Mar-2026</td><td>UPS</td><td>162</td><td><span class="badge b-high">Crítico</span></td></tr>
+        <tr><td>23-Mar-2026</td><td>UPS</td><td>179</td><td><span class="badge b-high">Crítico</span></td></tr>
+        <tr><td>26-Mar-2026</td><td>UPS</td><td><strong>302</strong></td><td><span class="badge b-crit">🔴 Pico Máximo</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 5: TICKETS & EVENTOS ===== -->
+<div class="tab-content" id="tab-tickets">
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi">
+      <div class="kpi-val">62</div>
+      <div class="kpi-lbl">Tickets Totales</div>
+      <div class="kpi-sub">Período completo</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val ok">19</div>
+      <div class="kpi-lbl">Incidentes</div>
+      <div class="kpi-sub">0 abiertos · 19 cerrados</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val warn">43</div>
+      <div class="kpi-lbl">Solicitudes</div>
+      <div class="kpi-sub">1 abierta · 42 cerradas</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">42</div>
+      <div class="kpi-lbl">Eventos CSIRT</div>
+      <div class="kpi-sub">3 fuentes de origen</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="sec-title">Eventos CSIRT por Origen</div>
+      <div class="chart-wrap"><canvas id="chartOrigen"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="sec-title">Tickets por Tipo (Categorías Principales)</div>
+      <div class="chart-wrap"><canvas id="chartTipoTkt"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title">Desglose por Categoría de Evento</div>
+    <table style="margin-top:8px">
+      <thead><tr><th>Categoría</th><th>Cantidad</th><th>Relevancia</th></tr></thead>
+      <tbody>
+        <tr><td>Security Scorecard [SS]</td><td>37</td><td><span class="badge b-high">Principal</span></td></tr>
+        <tr><td>Filtración de datos</td><td>18</td><td><span class="badge b-crit">Crítico</span></td></tr>
+        <tr><td>Servicios CSIRT</td><td>4</td><td><span class="badge b-info">Monitoreo</span></td></tr>
+        <tr><td>Desfiguración de páginas web</td><td>1</td><td><span class="badge b-med">Atención</span></td></tr>
+        <tr><td>Servicios SOC</td><td>1</td><td><span class="badge b-info">Control</span></td></tr>
+        <tr><td>APURA [AP]</td><td>1</td><td><span class="badge b-med">Atención</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 6: INSIGHTS ===== -->
+<div class="tab-content" id="tab-insights">
+  <div class="sec-title" style="margin-bottom:16px">Análisis Ejecutivo — Universidad Politécnica Salesiana · Dic 2025 – Mar 2026</div>
+
+  <div class="insight insight-ok">
+    <strong>✅ Mejora sostenida del Security Score:</strong> La UPS inició el período con calificación C (70 puntos) en diciembre 2025 y cerró en grado B (87 puntos) en marzo 2026. Esta mejora de +17 puntos evidencia un trabajo activo de remediación y fortalecimiento de controles durante el período analizado.
+  </div>
+
+  <div class="insight insight-danger">
+    <strong>🔴 Alerta crítica — Credenciales comprometidas en aumento:</strong> Se detectaron 1 029 credenciales comprometidas, con pico máximo de 302 el 26 de marzo 2026. Esta es la alerta de mayor prioridad del período. El riesgo de acceso no autorizado a sistemas es inmediato y requiere activar protocolos de cambio masivo de contraseñas y revisión de accesos privilegiados.
+  </div>
+
+  <div class="insight insight-warn">
+    <strong>⚠️ 144 issues activas pendientes de remediación:</strong> De las issues identificadas por Security Scorecard, 144 siguen activas. Destacan: credenciales comprometidas (20), vulnerabilidades en hosts de severidad media-alta (15 + 14), y cadencia deficiente de parches críticos (9 casos). La resolución de estos vectores es prioritaria.
+  </div>
+
+  <div class="insight insight-warn">
+    <strong>⚠️ 18 eventos de filtración de datos registrados:</strong> Se registraron 18 eventos clasificados como "filtración de datos" — el segundo tipo más frecuente del período. Junto con las credenciales comprometidas, configura un escenario de riesgo de identidad y fuga de información que debe abordarse con urgencia.
+  </div>
+
+  <div class="insight">
+    <strong>📋 Incidentes gestionados correctamente:</strong> Los 19 incidentes del período se cerraron en su totalidad (0 abiertos), y solo 1 solicitud permanece abierta. Esto refleja una capacidad de respuesta operativa adecuada por parte del equipo SOC-CSIRT.
+  </div>
+
+  <div class="insight">
+    <strong>🔍 Vulnerabilidades Nessus bajo control relativo:</strong> Se identificaron 40 vulnerabilidades distribuidas en 59 hosts. El perfil es principalmente de severidad baja e informativa (35 de 40), con solo 2 en niveles crítico/alto. Los scores de escaneo BNS (78) y WAT (83) son aceptables pero mejorables.
+  </div>
+
+  <div class="insight insight-warn">
+    <strong>⚠️ Desfiguración de páginas web detectada:</strong> Se registró 1 evento de defacement (desfiguración de páginas web), lo que indica que actores externos lograron modificar contenido web institucional. Requiere revisión de controles de publicación y hardening de servidores web.
+  </div>
+
+  <div class="insight">
+    <strong>🎯 Prioridades de acción recomendadas:</strong><br>
+    1. <strong>Gestión urgente de credenciales comprometidas</strong> — activar protocolo de rotación y bloqueo.<br>
+    2. <strong>Remediación de issues activas</strong> críticas y altas de Security Scorecard.<br>
+    3. <strong>Revisión del incidente de desfiguración web</strong> y auditoría de integridad de sitios.<br>
+    4. <strong>Revisión de accesos privilegiados</strong> y activación de MFA en cuentas clave.<br>
+    5. <strong>Acelerar cadencia de parches</strong> en hosts con vulnerabilidades críticas identificadas por Nessus.
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+// Tab switching
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='overview') drawOverview();
+  if(id==='scorecard') drawScorecard();
+  if(id==='nessus') drawNessus();
+  if(id==='apura') drawApura();
+  if(id==='tickets') drawTickets();
+}
+
+const palette={blue:'#29c6ff',dark:'#0c0c43',red:'#ef4444',amber:'#f59e0b',green:'#22c55e',purple:'#a78bfa',gray:'#6b7280',orange:'#f97316'};
+
+const scores=[{d:'05-Dic',s:70,g:'C'},{d:'12-Dic',s:69,g:'D'},{d:'19-Dic',s:69,g:'D'},{d:'26-Dic',s:72,g:'C'},{d:'05-Ene',s:75,g:'C'},{d:'12-Ene',s:75,g:'C'},{d:'19-Ene',s:77,g:'C'},{d:'26-Ene',s:75,g:'C'},{d:'05-Feb',s:74,g:'C'},{d:'12-Feb',s:75,g:'C'},{d:'19-Feb',s:76,g:'C'},{d:'26-Feb',s:74,g:'C'},{d:'05-Mar',s:74,g:'C'},{d:'12-Mar',s:82,g:'B'},{d:'19-Mar',s:88,g:'B'},{d:'26-Mar',s:87,g:'B'}];
+
+// Timeline
+const tl=document.getElementById('tlScores');
+scores.forEach(s=>{
+  const col=s.g==='B'?palette.green:s.g==='C'?palette.amber:palette.orange;
+  tl.innerHTML+=`<div class="tl-item"><div class="tl-date">${s.d}</div><div class="tl-score" style="color:${col}">${s.s}</div><div class="tl-grade grade-${s.g}">${s.g}</div></div>`;
+});
+
+// Issues table
+const issues=[
+  {t:'compromised_credentials_found',q:20,sev:'high'},
+  {t:'service_vuln_host_v3_medium',q:15,sev:'medium'},
+  {t:'service_vuln_host_v3_high',q:14,sev:'high'},
+  {t:'historical_compromised_credentials_found',q:11,sev:'medium'},
+  {t:'service_vuln_host_v3_critical',q:9,sev:'critical'},
+  {t:'service_cloud_provider',q:7,sev:'info'},
+  {t:'service_vuln_host_medium',q:6,sev:'medium'},
+  {t:'patching_cadence_v3_high',q:6,sev:'high'},
+  {t:'open_port',q:5,sev:'low'},
+  {t:'tlscert_no_revocation',q:5,sev:'low'},
+  {t:'patching_cadence_v3_critical',q:3,sev:'critical'},
+  {t:'tlscert_self_signed',q:3,sev:'medium'},
+  {t:'tlscert_expired',q:2,sev:'high'},
+  {t:'patching_cadence_v3_medium',q:3,sev:'medium'},
+];
+const sevMap={critical:'b-crit',high:'b-high',medium:'b-med',low:'b-low',info:'b-info'};
+const tb=document.getElementById('tbIssues');
+issues.forEach((iss,i)=>{
+  tb.innerHTML+=`<tr><td>${i+1}</td><td><code style="font-size:10px">${iss.t}</code></td><td><strong>${iss.q}</strong></td><td><span class="badge ${sevMap[iss.sev]}">${iss.sev}</span></td></tr>`;
+});
+
+let drawn={overview:false,scorecard:false,nessus:false,apura:false,tickets:false};
+
+function drawOverview(){
+  if(drawn.overview)return; drawn.overview=true;
+  // Score trend
+  new Chart(document.getElementById('chartScore'),{type:'line',data:{labels:scores.map(s=>s.d),datasets:[{label:'Score',data:scores.map(s=>s.s),borderColor:palette.blue,backgroundColor:palette.blue+'22',tension:.35,pointRadius:4,pointBackgroundColor:scores.map(s=>s.g==='B'?palette.green:s.g==='C'?palette.amber:palette.orange),fill:true}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:60,max:100,ticks:{color:'#aaa',font:{size:10}},grid:{color:'#ffffff11'}},x:{ticks:{color:'#aaa',font:{size:9},maxRotation:45},grid:{display:false}}}}});
+  // Severidad doughnut
+  new Chart(document.getElementById('chartSev'),{type:'doughnut',data:{labels:['High (5)','Medium (10)','Low (72)','Info (57)'],datasets:[{data:[5,10,72,57],backgroundColor:[palette.red,palette.amber,palette.blue,palette.gray],borderWidth:2,borderColor:'#020029'}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#aaa',font:{size:10},padding:10}}}}});
+  // Cat chart
+  new Chart(document.getElementById('chartCat'),{type:'bar',data:{labels:['SS','Filtración','CSIRT','Defacement','SOC','APURA'],datasets:[{label:'Eventos',data:[37,18,4,1,1,1],backgroundColor:[palette.blue,palette.red,palette.purple,palette.orange,palette.green,palette.amber],borderRadius:6}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:'#aaa',font:{size:10}},grid:{color:'#ffffff11'}},x:{ticks:{color:'#aaa',font:{size:10}},grid:{display:false}}}}});
+}
+
+function drawScorecard(){
+  if(drawn.scorecard)return; drawn.scorecard=true;
+  new Chart(document.getElementById('chartEstado'),{type:'pie',data:{labels:['Activas (144)','Resueltas (19)','Departed (256)'],datasets:[{data:[144,19,256],backgroundColor:[palette.red,palette.green,palette.gray],borderWidth:2,borderColor:'#020029'}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#aaa',font:{size:10},padding:8}}}}});
+}
+
+function drawNessus(){
+  if(drawn.nessus)return; drawn.nessus=true;
+  new Chart(document.getElementById('chartNessus'),{type:'bar',data:{labels:['Info (18)','Low (17)','Medium (3)','Crit+High (2)'],datasets:[{label:'Vulns',data:[18,17,3,2],backgroundColor:[palette.gray,palette.blue,palette.amber,palette.red],borderRadius:6}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:'#aaa',font:{size:10}},grid:{color:'#ffffff11'}},x:{ticks:{color:'#aaa',font:{size:10}},grid:{display:false}}}}});
+}
+
+function drawApura(){
+  if(drawn.apura)return; drawn.apura=true;
+  new Chart(document.getElementById('chartApura'),{type:'bar',data:{labels:['04-Mar','15-Mar','17-Mar','20-Mar','23-Mar','26-Mar'],datasets:[{label:'Credenciales',data:[122,25,239,162,179,302],backgroundColor:[palette.amber,palette.blue,palette.red,palette.red,palette.red,'#dc2626'],borderRadius:6}]},options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:'#aaa',font:{size:10}},grid:{color:'#ffffff11'}},x:{ticks:{color:'#aaa',font:{size:10}},grid:{display:false}}}}});
+}
+
+function drawTickets(){
+  if(drawn.tickets)return; drawn.tickets=true;
+  new Chart(document.getElementById('chartOrigen'),{type:'doughnut',data:{labels:['Security Scorecard (37)','Servicios CSIRT (4)','APURA (1)'],datasets:[{data:[37,4,1],backgroundColor:[palette.blue,palette.purple,palette.amber],borderWidth:2,borderColor:'#020029'}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#aaa',font:{size:10},padding:8}}}}});
+  new Chart(document.getElementById('chartTipoTkt'),{type:'bar',data:{labels:['Eventos (43)','Incidentes (19)'],datasets:[{label:'Tickets',data:[43,19],backgroundColor:[palette.blue,palette.red],borderRadius:8}]},options:{maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#aaa',font:{size:10}},grid:{color:'#ffffff11'}},y:{ticks:{color:'#aaa',font:{size:10}},grid:{display:false}}}}});
+}
+
+// Init default tab charts
+drawOverview();
+</script>
+<script>
+/* ── Height reporting ─────────────────────────────────────────────────── */
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb   = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load',   reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+/* ── Chart.js global defaults ────────────────────────────────────────── */
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s         = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color       = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.font.family = '"Gotham","Montserrat","Arial",sans-serif';
+    Chart.defaults.plugins.legend.labels.color   = textColor;
+    Chart.defaults.plugins.legend.maxHeight      = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font    = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) leg.labels.boxWidth = leg.labels.boxWidth || 12;
+      }
+      chart.update();
+    });
+  }
+
+  /* ── SVG axis label stagger (prevents overlap on dense charts) ─────── */
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+    if (maxY - minY < 1) return;
+
+    var bandSize = 30, bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+    if (bestBand.length < 3 || (bestBand.length === items.length && maxY - minY > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it)     { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i+1].items.forEach(function(it)   { if (it.rect.left  < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+/* ── Chat bridge ─────────────────────────────────────────────────────── */
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+</body>
+</html>
