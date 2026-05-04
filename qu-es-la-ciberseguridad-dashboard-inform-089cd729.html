@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+:root {
+  /* Brand */
+  --cedia-primary:  #020029;
+  --cedia-accent:   #29c6ff;
+  --cedia-blue-1:   #0c0c43;
+  --cedia-blue-2:   #16207a;
+  --cedia-blue-3:   #1f2bb0;
+  --cedia-blue-4:   #273dd5;
+  --cedia-surface:  #e2e3d5;
+
+  /* Semantic text */
+  --color-text-primary:   #020029;
+  --color-text-secondary: #334155;
+  --color-text-tertiary:  #64748B;
+  --color-text-info:      #29C6FF;
+  --color-text-success:   #1D9E75;
+  --color-text-warning:   #C58A00;
+  --color-text-danger:    #C24141;
+
+  /* Semantic backgrounds */
+  --color-bg-primary:   #FFFFFF;
+  --color-bg-secondary: #F4F7FB;
+  --color-bg-tertiary:  #E2E3D5;
+
+  /* Semantic borders */
+  --color-border-tertiary:  rgba(2,0,41,0.12);
+  --color-border-secondary: rgba(2,0,41,0.22);
+  --color-border-primary:   rgba(2,0,41,0.32);
+
+  /* Typography */
+  --font-sans: "Gotham", "Montserrat", "Arial", sans-serif;
+  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+
+  /* Radii */
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  /* Color ramps (fill / stroke / heading / secondary text) */
+  --ramp-purple-fill: #EEF0FF; --ramp-purple-stroke: #273DD5;
+  --ramp-purple-th:   #18288F; --ramp-purple-ts:     #273DD5;
+
+  --ramp-teal-fill:   #E7FAFF; --ramp-teal-stroke:   #29C6FF;
+  --ramp-teal-th:     #0C7FA6; --ramp-teal-ts:       #169FCC;
+
+  --ramp-coral-fill:  #FFF1ED; --ramp-coral-stroke:  #D86A43;
+  --ramp-coral-th:    #9F4323; --ramp-coral-ts:      #B85732;
+
+  --ramp-pink-fill:   #FDF0F7; --ramp-pink-stroke:   #C85A93;
+  --ramp-pink-th:     #8F3265; --ramp-pink-ts:       #A94478;
+
+  --ramp-gray-fill:   #F3F5F7; --ramp-gray-stroke:   #7B8794;
+  --ramp-gray-th:     #475569; --ramp-gray-ts:       #64748B;
+
+  --ramp-blue-fill:   #EAF0FF; --ramp-blue-stroke:   #0C0C43;
+  --ramp-blue-th:     #020029; --ramp-blue-ts:       #1B256B;
+
+  --ramp-green-fill:  #EAF8F2; --ramp-green-stroke:  #1D9E75;
+  --ramp-green-th:    #116B4F; --ramp-green-ts:      #17815F;
+
+  --ramp-amber-fill:  #FFF7E8; --ramp-amber-stroke:  #C58A00;
+  --ramp-amber-th:    #8A6100; --ramp-amber-ts:      #A87400;
+
+  --ramp-red-fill:    #FDEEEE; --ramp-red-stroke:    #C24141;
+  --ramp-red-th:      #8F2D2D; --ramp-red-ts:        #A73737;
+}
+
+:root[data-theme="dark"] {
+  --cedia-primary:  #F5F7FA;
+  --cedia-accent:   #63D8FF;
+  --cedia-blue-1:   #111A52;
+  --cedia-blue-2:   #1B256B;
+  --cedia-blue-3:   #273DD5;
+  --cedia-blue-4:   #7F92FF;
+  --cedia-surface:  #334155;
+
+  --color-text-primary:   #F5F7FA;
+  --color-text-secondary: #C7D2E0;
+  --color-text-tertiary:  #94A3B8;
+  --color-text-info:      #63D8FF;
+  --color-text-success:   #52C69A;
+  --color-text-warning:   #E9B949;
+  --color-text-danger:    #F07C7C;
+
+  --color-bg-primary:   #020029;
+  --color-bg-secondary: #0C0C43;
+  --color-bg-tertiary:  #111A52;
+
+  --color-border-tertiary:  rgba(255,255,255,0.12);
+  --color-border-secondary: rgba(255,255,255,0.22);
+  --color-border-primary:   rgba(255,255,255,0.32);
+
+  --ramp-purple-fill: #18288F; --ramp-purple-stroke: #7F92FF;
+  --ramp-purple-th:   #D9E0FF; --ramp-purple-ts:     #AEBBFF;
+
+  --ramp-teal-fill:   #0A4D63; --ramp-teal-stroke:   #63D8FF;
+  --ramp-teal-th:     #D7F7FF; --ramp-teal-ts:       #9BE8FF;
+
+  --ramp-coral-fill:  #6D331F; --ramp-coral-stroke:  #F29A7A;
+  --ramp-coral-th:    #FFE0D4; --ramp-coral-ts:      #FFC2AE;
+
+  --ramp-pink-fill:   #6E2A4D; --ramp-pink-stroke:   #F09CC7;
+  --ramp-pink-th:     #FFE1EF; --ramp-pink-ts:       #F7BDD9;
+
+  --ramp-gray-fill:   #334155; --ramp-gray-stroke:   #A8B3C2;
+  --ramp-gray-th:     #F1F5F9; --ramp-gray-ts:       #D5DCE5;
+
+  --ramp-blue-fill:   #111A52; --ramp-blue-stroke:   #7EA2FF;
+  --ramp-blue-th:     #EEF2FF; --ramp-blue-ts:       #C6D4FF;
+
+  --ramp-green-fill:  #0F4F3D; --ramp-green-stroke:  #52C69A;
+  --ramp-green-th:    #DCFCEF; --ramp-green-ts:      #B7F1DA;
+
+  --ramp-amber-fill:  #5F4500; --ramp-amber-stroke:  #E9B949;
+  --ramp-amber-th:    #FFF1C7; --ramp-amber-ts:      #FFD978;
+
+  --ramp-red-fill:    #6B2424; --ramp-red-stroke:    #F07C7C;
+  --ramp-red-th:      #FFE1E1; --ramp-red-ts:        #FFC1C1;
+}
+
+
+.t   { font: 400 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+.ts  { font: 400 12px/1.4 var(--font-sans); fill: var(--color-text-secondary); }
+.th  { font: 500 14px/1.4 var(--font-sans); fill: var(--color-text-primary); }
+
+.box    { fill: var(--color-bg-secondary); stroke: var(--color-border-tertiary); stroke-width: 0.5; }
+.node   { cursor: pointer; }
+.node:hover { opacity: 0.85; }
+.arr    { stroke: var(--color-border-secondary); stroke-width: 1.5; fill: none; }
+.leader { stroke: var(--color-text-tertiary); stroke-width: 0.5; stroke-dasharray: 3 2; fill: none; }
+
+.c-purple > rect, .c-purple > circle, .c-purple > ellipse { fill: var(--ramp-purple-fill); stroke: var(--ramp-purple-stroke); stroke-width: .5; }
+.c-purple > .th { fill: var(--ramp-purple-th) !important; } .c-purple > .ts { fill: var(--ramp-purple-ts) !important; }
+.c-teal   > rect, .c-teal   > circle, .c-teal   > ellipse { fill: var(--ramp-teal-fill);   stroke: var(--ramp-teal-stroke);   stroke-width: .5; }
+.c-teal   > .th { fill: var(--ramp-teal-th)   !important; } .c-teal   > .ts { fill: var(--ramp-teal-ts)   !important; }
+.c-coral  > rect, .c-coral  > circle, .c-coral  > ellipse { fill: var(--ramp-coral-fill);  stroke: var(--ramp-coral-stroke);  stroke-width: .5; }
+.c-coral  > .th { fill: var(--ramp-coral-th)  !important; } .c-coral  > .ts { fill: var(--ramp-coral-ts)  !important; }
+.c-pink   > rect, .c-pink   > circle, .c-pink   > ellipse { fill: var(--ramp-pink-fill);   stroke: var(--ramp-pink-stroke);   stroke-width: .5; }
+.c-pink   > .th { fill: var(--ramp-pink-th)   !important; } .c-pink   > .ts { fill: var(--ramp-pink-ts)   !important; }
+.c-gray   > rect, .c-gray   > circle, .c-gray   > ellipse { fill: var(--ramp-gray-fill);   stroke: var(--ramp-gray-stroke);   stroke-width: .5; }
+.c-gray   > .th { fill: var(--ramp-gray-th)   !important; } .c-gray   > .ts { fill: var(--ramp-gray-ts)   !important; }
+.c-blue   > rect, .c-blue   > circle, .c-blue   > ellipse { fill: var(--ramp-blue-fill);   stroke: var(--ramp-blue-stroke);   stroke-width: .5; }
+.c-blue   > .th { fill: var(--ramp-blue-th)   !important; } .c-blue   > .ts { fill: var(--ramp-blue-ts)   !important; }
+.c-green  > rect, .c-green  > circle, .c-green  > ellipse { fill: var(--ramp-green-fill);  stroke: var(--ramp-green-stroke);  stroke-width: .5; }
+.c-green  > .th { fill: var(--ramp-green-th)  !important; } .c-green  > .ts { fill: var(--ramp-green-ts)  !important; }
+.c-amber  > rect, .c-amber  > circle, .c-amber  > ellipse { fill: var(--ramp-amber-fill);  stroke: var(--ramp-amber-stroke);  stroke-width: .5; }
+.c-amber  > .th { fill: var(--ramp-amber-th)  !important; } .c-amber  > .ts { fill: var(--ramp-amber-ts)  !important; }
+.c-red    > rect, .c-red    > circle, .c-red    > ellipse { fill: var(--ramp-red-fill);    stroke: var(--ramp-red-stroke);    stroke-width: .5; }
+.c-red    > .th { fill: var(--ramp-red-th)    !important; } .c-red    > .ts { fill: var(--ramp-red-ts)    !important; }
+
+
+* { box-sizing: border-box; margin: 0; font-family: var(--font-sans); }
+html, body { overflow: hidden; }
+body {
+  background: transparent;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  padding: 10px;
+}
+svg { overflow: visible; }
+svg text { fill: var(--color-text-primary); }
+
+h1 { font-size: 22px; font-weight: 600; color: var(--cedia-primary); margin-bottom: 12px; }
+h2 { font-size: 18px; font-weight: 500; color: var(--cedia-primary); margin-bottom: 8px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--cedia-primary); margin-bottom: 6px; }
+p  { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px; }
+
+button {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.15s;
+}
+button:hover  { background: var(--color-bg-tertiary); }
+button.active { background: var(--cedia-accent); color: var(--cedia-primary); border-color: var(--cedia-accent); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%; height: 4px;
+  background: var(--color-border-tertiary);
+  border-radius: 2px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--cedia-accent);
+  border: 0.5px solid var(--color-border-secondary);
+  cursor: pointer;
+}
+
+select {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-md);
+  padding: 6px 10px; font-size: 13px;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+code {
+  font-family: var(--font-mono); font-size: 13px;
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px; border-radius: 4px;
+}
+
+/* KPI card — reusable component */
+.kpi-card {
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+.kpi-value { font-size: 28px; font-weight: 700; color: var(--cedia-primary); }
+.kpi-label { font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; }
+.kpi-accent { color: var(--cedia-accent); }
+
+</style>
+<script>
+(function() {
+  function detectTheme(root) {
+    return root.classList.contains('dark')
+      || root.getAttribute('data-theme') === 'dark'
+      || getComputedStyle(root).colorScheme === 'dark';
+  }
+
+  function applyTheme(isDark) {
+    var theme = isDark ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') === theme) return;
+    document.documentElement.setAttribute('data-theme', theme);
+
+    /* Hot-update Chart.js if already initialised */
+    if (window.Chart && Chart.instances) {
+      var s  = getComputedStyle(document.documentElement);
+      var tc = s.getPropertyValue('--color-text-secondary').trim();
+      var gc = s.getPropertyValue('--color-border-tertiary').trim();
+      Chart.defaults.color       = tc;
+      Chart.defaults.borderColor = gc;
+      Object.values(Chart.instances).forEach(function(chart) {
+        Object.values(chart.options.scales || {}).forEach(function(scale) {
+          if (scale.ticks) scale.ticks.color = tc;
+          if (scale.grid)  scale.grid.color  = gc;
+        });
+        var leg = (chart.options.plugins || {}).legend;
+        if (leg && leg.labels) leg.labels.color = tc;
+        chart.update();
+      });
+    }
+  }
+
+  try {
+    var p = parent.document.documentElement;
+    applyTheme(detectTheme(p));
+    new MutationObserver(function() { applyTheme(detectTheme(p)); })
+      .observe(p, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] });
+  } catch(e) {
+    var mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq) { applyTheme(mq.matches); mq.addEventListener('change', function(e) { applyTheme(e.matches); }); }
+  }
+})();
+</script>
+</head>
+<body>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body, html {
+    height: 720px; max-height: 720px;
+    width: 100%; overflow: hidden;
+    font-family: var(--font-sans);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+  }
+
+  .wrapper {
+    display: flex; flex-direction: column;
+    height: 720px; max-height: 720px; overflow: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: #020029;
+    height: 56px; min-height: 56px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .header img { height: 32px; }
+  .header-title {
+    color: #fff;
+    font-size: 15px; font-weight: 600; letter-spacing: .4px;
+  }
+  .header-badge {
+    background: #29c6ff22; border: 1px solid #29c6ff55;
+    color: #29c6ff; font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px; letter-spacing: .5px;
+  }
+
+  /* TABS */
+  .tabs-nav {
+    background: #0c0c43;
+    height: 44px; min-height: 44px; flex-shrink: 0;
+    display: flex; align-items: center; padding: 0 20px; gap: 4px;
+    border-bottom: 1px solid #29c6ff33;
+  }
+  .tab-btn {
+    background: transparent; border: none; cursor: pointer;
+    color: #a0b4d0; font-size: 12.5px; font-weight: 500;
+    padding: 6px 14px; border-radius: 6px;
+    transition: all .2s; font-family: var(--font-sans);
+    letter-spacing: .3px;
+  }
+  .tab-btn:hover { background: #29c6ff22; color: #29c6ff; }
+  .tab-btn.active {
+    background: #29c6ff22; color: #29c6ff;
+    border-bottom: 2px solid #29c6ff;
+  }
+
+  /* CONTENT */
+  .tab-content {
+    display: none; flex: 1;
+    height: 600px; max-height: 600px;
+    overflow-y: auto; overflow-x: hidden;
+    padding: 20px 24px;
+  }
+  .tab-content.active { display: block; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0c0c43 0%, #1f2bb0 60%, #020029 100%);
+    border-radius: var(--radius-xl);
+    padding: 28px 32px; margin-bottom: 18px;
+    display: flex; align-items: center; gap: 28px;
+    border: 1px solid #29c6ff33;
+  }
+  .hero-icon { font-size: 52px; flex-shrink: 0; }
+  .hero h1 { color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .hero p { color: #a8c8e8; font-size: 13.5px; line-height: 1.7; }
+  .hero strong { color: #29c6ff; }
+
+  /* KPI CARDS */
+  .kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 18px; }
+  .kpi {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg); padding: 14px 16px;
+    text-align: center; transition: transform .2s;
+  }
+  .kpi:hover { transform: translateY(-2px); }
+  .kpi .val { font-size: 26px; font-weight: 700; color: #29c6ff; }
+  .kpi .lbl { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; line-height: 1.4; }
+  .kpi .ico { font-size: 20px; margin-bottom: 4px; }
+
+  /* PILLAR GRID */
+  .pillar-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 18px; }
+  .pillar {
+    border-radius: var(--radius-lg); padding: 16px;
+    border-left: 4px solid; transition: transform .2s;
+  }
+  .pillar:hover { transform: translateY(-2px); }
+  .pillar.p1 { background: #0c0c4333; border-color: #29c6ff; }
+  .pillar.p2 { background: #1f2bb022; border-color: #4f8fff; }
+  .pillar.p3 { background: #16207a22; border-color: #7b6fff; }
+  .pillar.p4 { background: #27356533; border-color: #ff7b9c; }
+  .pillar.p5 { background: #0a2a2a33; border-color: #00e5c0; }
+  .pillar.p6 { background: #2a1a0a33; border-color: #ffb84d; }
+  .pillar .p-icon { font-size: 22px; margin-bottom: 6px; }
+  .pillar .p-title { font-size: 13px; font-weight: 700; margin-bottom: 5px; color: var(--color-text-primary); }
+  .pillar .p-desc { font-size: 11.5px; color: var(--color-text-secondary); line-height: 1.55; }
+
+  /* THREATS */
+  .threats { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 18px; }
+  .threat-card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg); padding: 14px 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+    transition: border-color .2s;
+  }
+  .threat-card:hover { border-color: #29c6ff55; }
+  .threat-icon { font-size: 24px; flex-shrink: 0; }
+  .threat-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .threat-card p { font-size: 11.5px; color: var(--color-text-secondary); line-height: 1.55; }
+  .sev { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 5px; }
+  .sev.high { background: #ff3b3b22; color: #ff6b6b; border: 1px solid #ff3b3b44; }
+  .sev.med  { background: #ffb84d22; color: #ffd27d; border: 1px solid #ffb84d44; }
+  .sev.crit { background: #ff003344; color: #ff7799; border: 1px solid #ff003366; }
+
+  /* TIPS */
+  .tips-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 18px; }
+  .tip {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-lg); padding: 14px 16px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .tip .t-num {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, #29c6ff, #1f2bb0);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+  }
+  .tip h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .tip p  { font-size: 11.5px; color: var(--color-text-secondary); line-height: 1.55; }
+
+  /* CHART BAR */
+  .bar-section { margin-bottom: 16px; }
+  .bar-section h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--color-text-primary); }
+  .bar-item { margin-bottom: 10px; }
+  .bar-item .bi-label { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 4px; }
+  .bar-item .bi-track { background: var(--color-border-primary); border-radius: 4px; height: 10px; overflow: hidden; }
+  .bar-item .bi-fill  { height: 100%; border-radius: 4px; transition: width .8s ease; }
+
+  /* SECTION TITLE */
+  .sec-title {
+    font-size: 14px; font-weight: 700; color: var(--color-text-primary);
+    margin-bottom: 12px; padding-bottom: 6px;
+    border-bottom: 1px solid var(--color-border-secondary);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sec-title span { color: #29c6ff; }
+
+  /* CIA TRIAD */
+  .cia { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 18px; }
+  .cia-card {
+    background: linear-gradient(135deg, #0c0c43 0%, #1f2bb0 100%);
+    border: 1px solid #29c6ff44; border-radius: var(--radius-xl);
+    padding: 20px 16px; text-align: center;
+  }
+  .cia-card .c-ico { font-size: 32px; margin-bottom: 8px; }
+  .cia-card .c-title { font-size: 14px; font-weight: 700; color: #29c6ff; margin-bottom: 6px; }
+  .cia-card .c-sub   { font-size: 11.5px; color: #a8c8e8; line-height: 1.6; }
+
+  /* FOOTER */
+  .footer {
+    background: #020029;
+    height: 28px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: #29c6ff99; letter-spacing: .4px;
+  }
+</style>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <img src="https://cedia.edu.ec/wp-content/uploads/2023/01/CEDIA2023_b1-300x109.png" alt="CEDIA">
+    <span class="header-title">🛡️ ¿Qué es la Ciberseguridad?</span>
+    <span class="header-badge">GUÍA INFORMATIVA</span>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="showTab('overview',this)">📌 Visión General</button>
+    <button class="tab-btn" onclick="showTab('pillars',this)">🏛️ Pilares</button>
+    <button class="tab-btn" onclick="showTab('threats',this)">⚠️ Amenazas</button>
+    <button class="tab-btn" onclick="showTab('tips',this)">✅ Buenas Prácticas</button>
+  </div>
+
+  <!-- TAB: VISIÓN GENERAL -->
+  <div class="tab-content active" id="tab-overview">
+
+    <div class="hero">
+      <div class="hero-icon">🛡️</div>
+      <div>
+        <h1>Ciberseguridad</h1>
+        <p>
+          La <strong>ciberseguridad</strong> es el conjunto de tecnologías, procesos y prácticas
+          diseñadas para <strong>proteger sistemas, redes, dispositivos y datos</strong> de ataques,
+          accesos no autorizados, daños o robos digitales. Su objetivo es garantizar la
+          <strong>disponibilidad, integridad y confidencialidad</strong> de la información en el
+          entorno digital.
+        </p>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="ico">🌐</div>
+        <div class="val">2,200+</div>
+        <div class="lbl">Ataques por segundo<br>a nivel mundial</div>
+      </div>
+      <div class="kpi">
+        <div class="ico">💸</div>
+        <div class="val">$10.5T</div>
+        <div class="lbl">Costo global del<br>cibercrimen estimado 2025</div>
+      </div>
+      <div class="kpi">
+        <div class="ico">🏢</div>
+        <div class="val">95%</div>
+        <div class="lbl">Incidentes causados por<br>error humano</div>
+      </div>
+      <div class="kpi">
+        <div class="ico">⏱️</div>
+        <div class="val">207 días</div>
+        <div class="lbl">Tiempo promedio para<br>detectar una brecha</div>
+      </div>
+    </div>
+
+    <!-- CIA TRIAD -->
+    <div class="sec-title"><span>🔺</span> La Tríada CIA — Fundamentos de la Seguridad</div>
+    <div class="cia">
+      <div class="cia-card">
+        <div class="c-ico">🔒</div>
+        <div class="c-title">Confidencialidad</div>
+        <div class="c-sub">Solo personas autorizadas pueden acceder a la información. Protege datos sensibles de accesos no permitidos.</div>
+      </div>
+      <div class="cia-card">
+        <div class="c-ico">✅</div>
+        <div class="c-title">Integridad</div>
+        <div class="c-sub">La información no puede ser alterada sin autorización. Garantiza que los datos sean precisos y confiables.</div>
+      </div>
+      <div class="cia-card">
+        <div class="c-ico">🟢</div>
+        <div class="c-title">Disponibilidad</div>
+        <div class="c-sub">Los sistemas y datos deben estar accesibles cuando se necesiten. Evita interrupciones del servicio.</div>
+      </div>
+    </div>
+
+    <!-- Áreas -->
+    <div class="sec-title"><span>📊</span> Áreas Clave de la Ciberseguridad</div>
+    <div class="bar-section">
+      <div class="bar-item">
+        <div class="bi-label"><span>Seguridad de Red</span><span style="color:#29c6ff">Muy Alta</span></div>
+        <div class="bi-track"><div class="bi-fill" style="width:90%;background:linear-gradient(90deg,#1f2bb0,#29c6ff)"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bi-label"><span>Seguridad de Aplicaciones</span><span style="color:#29c6ff">Alta</span></div>
+        <div class="bi-track"><div class="bi-fill" style="width:80%;background:linear-gradient(90deg,#16207a,#4f8fff)"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bi-label"><span>Seguridad en la Nube</span><span style="color:#29c6ff">Alta</span></div>
+        <div class="bi-track"><div class="bi-fill" style="width:75%;background:linear-gradient(90deg,#1f2bb0,#7b6fff)"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bi-label"><span>Protección de Datos Personales</span><span style="color:#29c6ff">Alta</span></div>
+        <div class="bi-track"><div class="bi-fill" style="width:85%;background:linear-gradient(90deg,#16207a,#00e5c0)"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bi-label"><span>Gestión de Identidades (IAM)</span><span style="color:#29c6ff">Media-Alta</span></div>
+        <div class="bi-track"><div class="bi-fill" style="width:68%;background:linear-gradient(90deg,#0c0c43,#ffb84d)"></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TAB: PILARES -->
+  <div class="tab-content" id="tab-pillars">
+    <div class="sec-title"><span>🏛️</span> Los 6 Pilares de la Ciberseguridad</div>
+    <div class="pillar-grid">
+      <div class="pillar p1">
+        <div class="p-icon">🔍</div>
+        <div class="p-title">Identificación</div>
+        <div class="p-desc">Conocer y catalogar los activos digitales, usuarios, sistemas y datos que necesitan protección. Sin identificación, no hay protección efectiva.</div>
+      </div>
+      <div class="pillar p2">
+        <div class="p-icon">🛡️</div>
+        <div class="p-title">Protección</div>
+        <div class="p-desc">Implementar controles técnicos y administrativos para reducir el riesgo: firewalls, cifrado, control de acceso y capacitación al personal.</div>
+      </div>
+      <div class="pillar p3">
+        <div class="p-icon">👁️</div>
+        <div class="p-title">Detección</div>
+        <div class="p-desc">Monitorear continuamente los sistemas para identificar actividades sospechosas o anomalías que indiquen un posible incidente.</div>
+      </div>
+      <div class="pillar p4">
+        <div class="p-icon">🚨</div>
+        <div class="p-title">Respuesta</div>
+        <div class="p-desc">Tener planes claros para actuar frente a incidentes: contener, erradicar la amenaza y comunicar a los afectados en el menor tiempo posible.</div>
+      </div>
+      <div class="pillar p5">
+        <div class="p-icon">🔄</div>
+        <div class="p-title">Recuperación</div>
+        <div class="p-desc">Restaurar sistemas y datos afectados. Aprender del incidente para mejorar defensas y garantizar la continuidad del negocio.</div>
+      </div>
+      <div class="pillar p6">
+        <div class="p-icon">📋</div>
+        <div class="p-title">Cumplimiento</div>
+        <div class="p-desc">Alinearse con marcos normativos como ISO/IEC 27001, NIST, LOPDP (Ecuador) y otras regulaciones aplicables al sector.</div>
+      </div>
+    </div>
+
+    <!-- marcos -->
+    <div class="sec-title" style="margin-top:4px"><span>📐</span> Marcos y Estándares de Referencia</div>
+    <div class="threats">
+      <div class="threat-card">
+        <div class="threat-icon">📘</div>
+        <div>
+          <h4>ISO/IEC 27001</h4>
+          <p>Estándar internacional para Sistemas de Gestión de Seguridad de la Información (SGSI). Define requisitos para proteger activos de información de forma sistemática.</p>
+          <span class="sev high">Internacional</span>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🏛️</div>
+        <div>
+          <h4>NIST Cybersecurity Framework</h4>
+          <p>Marco del gobierno de EE.UU. para gestión del riesgo cibernético basado en 5 funciones: Identificar, Proteger, Detectar, Responder y Recuperar.</p>
+          <span class="sev med">EE.UU.</span>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🇪🇨</div>
+        <div>
+          <h4>LOPDP Ecuador</h4>
+          <p>Ley Orgánica de Protección de Datos Personales del Ecuador. Regula el tratamiento de datos personales y obliga a medidas de seguridad específicas.</p>
+          <span class="sev high">Ecuador</span>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">☁️</div>
+        <div>
+          <h4>CIS Controls</h4>
+          <p>Conjunto de 18 controles prioritarios para defensa cibernética efectiva, ampliamente adoptados por organizaciones de todo tamaño en el mundo.</p>
+          <span class="sev med">Global</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: AMENAZAS -->
+  <div class="tab-content" id="tab-threats">
+    <div class="sec-title"><span>⚠️</span> Principales Amenazas Cibernéticas</div>
+    <div class="threats">
+      <div class="threat-card">
+        <div class="threat-icon">🎣</div>
+        <div>
+          <h4>Phishing</h4>
+          <p>Engaño mediante correos, mensajes o sitios falsos para robar credenciales, datos bancarios o instalar malware. Es el vector de ataque más común a nivel global.</p>
+          <span class="sev crit">Crítico</span>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🔐</div>
+        <div>
+          <h4>Ransomware</h4>
+          <p>Software malicioso que cifra los archivos de la víctima y exige un rescate para liberarlos. Puede paralizar organizaciones enteras en minutos.</p>
+          <span class="sev crit">Crítico</span>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🕵️</div>
+        <div>
+          <h4>Amenazas Internas</h4>
+          <p>Empleados o colaboradores con acceso que de forma maliciosa o accidental comprometen la seguridad. Difíciles de detectar y frecuentemente subestimadas.</p>
+          <span class="sev high">Alta</span>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">💣</div>
+        <div>
+          <h4>Ataques DDoS</h4>
+          <p>Saturación de un sistema con tráfico masivo para dejarlo inoperativo. Afecta la disponibilidad de servicios críticos públicos y privados.</p>
+          <span class="sev high">Alta</span>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🧩</div>
+        <div>
+          <h4>Vulnerabilidades de Software</h4>
+          <p>Fallos en el código o configuración de sistemas que permiten a atacantes ganar acceso no autorizado o escalar privilegios dentro de una organización.</p>
+          <span class="sev high">Alta</span>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">📱</div>
+        <div>
+          <h4>Ingeniería Social</h4>
+          <p>Manipulación psicológica de personas para que revelen información confidencial o realicen acciones que comprometan la seguridad organizacional.</p>
+          <span class="sev med">Media-Alta</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- canvas chart -->
+    <div class="sec-title" style="margin-top:4px"><span>📊</span> Distribución de Vectores de Ataque más Comunes</div>
+    <div style="height:200px; max-height:200px;">
+      <canvas id="threatChart"></canvas>
+    </div>
+  </div>
+
+  <!-- TAB: BUENAS PRÁCTICAS -->
+  <div class="tab-content" id="tab-tips">
+    <div class="sec-title"><span>✅</span> Buenas Prácticas Esenciales</div>
+    <div class="tips-grid">
+      <div class="tip">
+        <div class="t-num">1</div>
+        <div>
+          <h4>Contraseñas Fuertes y Únicas</h4>
+          <p>Usa contraseñas de al menos 12 caracteres combinando letras, números y símbolos. Nunca reutilices la misma en diferentes servicios.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="t-num">2</div>
+        <div>
+          <h4>Autenticación Multifactor (MFA)</h4>
+          <p>Activa el segundo factor de autenticación en todas las cuentas posibles. Reduce en más del 99% el riesgo de acceso no autorizado.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="t-num">3</div>
+        <div>
+          <h4>Actualizaciones y Parches</h4>
+          <p>Mantén sistemas operativos, aplicaciones y firmware siempre actualizados. La mayoría de ataques explotan vulnerabilidades ya conocidas y corregidas.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="t-num">4</div>
+        <div>
+          <h4>Copias de Seguridad (Backups)</h4>
+          <p>Realiza respaldos periódicos y almacénalos en ubicaciones separadas. Verifica regularmente que puedan restaurarse correctamente.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="t-num">5</div>
+        <div>
+          <h4>Principio de Mínimo Privilegio</h4>
+          <p>Otorga a cada usuario solo los permisos estrictamente necesarios para su función. Limita el impacto de cuentas comprometidas.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="t-num">6</div>
+        <div>
+          <h4>Capacitación y Concienciación</h4>
+          <p>Forma continuamente al personal sobre amenazas actuales. El factor humano es la primera y más efectiva línea de defensa.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="t-num">7</div>
+        <div>
+          <h4>Monitoreo Continuo</h4>
+          <p>Implementa sistemas de monitoreo y alertas para detectar comportamientos anómalos en tiempo real, antes de que evolucionen a incidentes graves.</p>
+        </div>
+      </div>
+      <div class="tip">
+        <div class="t-num">8</div>
+        <div>
+          <h4>Plan de Respuesta a Incidentes</h4>
+          <p>Define y practica procedimientos claros de respuesta. La rapidez en la acción minimiza el daño y el costo de un incidente de seguridad.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero" style="margin-top:4px; padding:18px 24px;">
+      <div class="hero-icon" style="font-size:36px;">💡</div>
+      <div>
+        <h1 style="font-size:15px; margin-bottom:5px;">Recuerda: la ciberseguridad es responsabilidad de todos</h1>
+        <p style="font-size:12.5px;">No es solo un problema del área de tecnología. Cada persona que interactúa con sistemas digitales tiene un rol activo en la protección de la información institucional y personal.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">CEDIA · Centro de Seguridad · Información referencial y educativa</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    if (id === 'threats') renderThreatChart();
+  }
+
+  let threatChartInst = null;
+  function renderThreatChart() {
+    if (threatChartInst) return;
+    const ctx = document.getElementById('threatChart').getContext('2d');
+    threatChartInst = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Phishing', 'Ransomware', 'Ingeniería Social', 'DDoS', 'Vulnerabilidades SW', 'Amenazas Internas'],
+        datasets: [{
+          label: '% Prevalencia estimada',
+          data: [36, 22, 17, 12, 8, 5],
+          backgroundColor: [
+            '#ff6b6b88','#ff7b9c88','#ffb84d88','#29c6ff88','#7b6fff88','#00e5c088'
+          ],
+          borderColor: [
+            '#ff6b6b','#ff7b9c','#ffb84d','#29c6ff','#7b6fff','#00e5c0'
+          ],
+          borderWidth: 2, borderRadius: 6
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: '#ffffff11' }, ticks: { font: { size: 10 } } },
+          y: { grid: { color: '#ffffff11' }, ticks: { font: { size: 10 }, callback: v => v + '%' }, max: 40 }
+        }
+      }
+    });
+  }
+</script>
+<script>
+/* ── Height reporting ─────────────────────────────────────────────────── */
+function reportHeight() {
+  var b = document.body;
+  var svgOverflow = 0;
+  document.querySelectorAll('svg[viewBox]').forEach(function(svg) {
+    try {
+      var bbox = svg.getBBox();
+      var vb   = svg.viewBox.baseVal;
+      if (vb && vb.width > 0 && vb.height > 0) {
+        var overflow = bbox.y + bbox.height - (vb.y + vb.height);
+        if (overflow > 0) {
+          var scale = svg.getBoundingClientRect().width / vb.width;
+          svgOverflow += Math.ceil(overflow * scale);
+        }
+      }
+    } catch(e) {}
+  });
+  b.style.height = '0';
+  var h = b.scrollHeight + svgOverflow;
+  b.style.height = '';
+  parent.postMessage({ type: 'iframe:height', height: h }, '*');
+}
+
+window.addEventListener('load',   reportHeight);
+window.addEventListener('resize', reportHeight);
+new ResizeObserver(reportHeight).observe(document.body);
+document.addEventListener('toggle', function() { setTimeout(reportHeight, 50); }, true);
+
+/* ── Chart.js global defaults ────────────────────────────────────────── */
+window.addEventListener('load', function() {
+  if (window.Chart) {
+    var s         = getComputedStyle(document.documentElement);
+    var textColor = s.getPropertyValue('--color-text-secondary').trim();
+    var gridColor = s.getPropertyValue('--color-border-tertiary').trim();
+    Chart.defaults.color       = textColor;
+    Chart.defaults.borderColor = gridColor;
+    Chart.defaults.font.family = '"Gotham","Montserrat","Arial",sans-serif';
+    Chart.defaults.plugins.legend.labels.color   = textColor;
+    Chart.defaults.plugins.legend.maxHeight      = 120;
+    Chart.defaults.plugins.legend.labels.boxWidth = 12;
+    Chart.defaults.plugins.legend.labels.font    = { size: 11 };
+
+    Object.values(Chart.instances || {}).forEach(function(chart) {
+      var leg = chart.options.plugins && chart.options.plugins.legend;
+      if (leg) {
+        leg.maxHeight = leg.maxHeight || 120;
+        if (leg.labels) leg.labels.boxWidth = leg.labels.boxWidth || 12;
+      }
+      chart.update();
+    });
+  }
+
+  /* ── SVG axis label stagger (prevents overlap on dense charts) ─────── */
+  document.querySelectorAll('svg').forEach(function(svg) {
+    var texts = Array.from(svg.querySelectorAll('text'));
+    if (texts.length < 4) return;
+
+    var items = [];
+    texts.forEach(function(t) {
+      var r = t.getBoundingClientRect();
+      if (r.width < 1) return;
+      items.push({ el: t, rect: r, cx: r.left + r.width / 2, cy: r.top + r.height / 2 });
+    });
+    if (items.length < 4) return;
+
+    var minY = Infinity, maxY = -Infinity;
+    items.forEach(function(it) {
+      if (it.cy < minY) minY = it.cy;
+      if (it.cy > maxY) maxY = it.cy;
+    });
+    if (maxY - minY < 1) return;
+
+    var bandSize = 30, bestBand = [], bestCount = 0;
+    items.forEach(function(anchor) {
+      var band = items.filter(function(it) { return Math.abs(it.cy - anchor.cy) < bandSize; });
+      if (band.length > bestCount) { bestCount = band.length; bestBand = band; }
+    });
+    if (bestBand.length < 3 || (bestBand.length === items.length && maxY - minY > 60)) return;
+
+    var groups = [];
+    bestBand.forEach(function(it) {
+      for (var i = 0; i < groups.length; i++) {
+        if (Math.abs(groups[i].cx - it.cx) < 15) { groups[i].items.push(it); return; }
+      }
+      groups.push({ cx: it.cx, items: [it] });
+    });
+    if (groups.length < 3) return;
+    groups.sort(function(a, b) { return a.cx - b.cx; });
+
+    var needsStagger = false;
+    for (var i = 0; i < groups.length - 1; i++) {
+      var maxR = 0, minL = Infinity;
+      groups[i].items.forEach(function(it)     { if (it.rect.right > maxR) maxR = it.rect.right; });
+      groups[i+1].items.forEach(function(it)   { if (it.rect.left  < minL) minL = it.rect.left; });
+      if (maxR > minL - 2) { needsStagger = true; break; }
+    }
+    if (needsStagger) {
+      for (var i = 1; i < groups.length; i += 2) {
+        groups[i].items.forEach(function(it) {
+          var cy = parseFloat(it.el.getAttribute('y') || 0);
+          it.el.setAttribute('y', String(cy + 18));
+        });
+      }
+    }
+  });
+
+  setTimeout(reportHeight, 100);
+});
+
+/* ── Chat bridge ─────────────────────────────────────────────────────── */
+function sendPrompt(text) {
+  try { parent.postMessage({ type: 'input:prompt:submit', text: text }, '*'); } catch(e) {}
+}
+
+function openLink(url) {
+  try { parent.window.open(url, '_blank'); } catch(e) { window.open(url, '_blank'); }
+}
+</script>
+
+</body>
+</html>
